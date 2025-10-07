@@ -29,4 +29,5 @@ public class Event : IEntity<Guid>
     public ICollection<Post> Posts { get; set; }
     public ICollection<Participant> Participants { get; set; }
     public ICollection<OnlineSession> OnlineSessions { get; set; }
+    public ICollection<Booking> Bookings { get; set; }
 }
