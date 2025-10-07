@@ -16,6 +16,7 @@ public class Place : IEntity<int>
     // Navigation properties
     public Location Location { get; set; }
     public PlaceType Type { get; set; }
+    public ICollection<Booking> Bookings { get; set; }
     public ICollection<Equipment> Equipments { get; set; }
     public ICollection<PlacePhoto> Photos { get; set; }
 }
