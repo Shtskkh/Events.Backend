@@ -22,7 +22,7 @@ public class Event : IEntity<Guid>
     public int OrganizerId { get; set; }
     
     // Navigation properties
-    public EventType Type { get; set; }
+    public EventType EventType { get; set; }
     public EventFormat Format { get; set; }
     public User Organizer { get; set; }
     public ICollection<Tag> Tags { get; set; }
