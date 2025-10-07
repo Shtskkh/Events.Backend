@@ -17,7 +17,7 @@ public class Event : IEntity<Guid>
     public bool NeedsRegistration { get; set; }
     
     //FKs
-    public int TypeId { get; set; }
+    public int EventTypeId { get; set; }
     public int FormatId { get; set; }
     public int OrganizerId { get; set; }
     
