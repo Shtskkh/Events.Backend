@@ -6,4 +6,7 @@ public class Tag : IEntity<int>
 {
     public int Id { get; set; }
     public string Title { get; set; }
+    
+    // Navigation properties
+    public ICollection<Event> Events { get; set; }
 }

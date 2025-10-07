@@ -1,3 +1,4 @@
+using Events.Domain.JunctionEntities;
 using Events.Domain.SeedWorks;
 
 namespace Events.Domain.Entities;
@@ -10,15 +11,22 @@ public class Event : IEntity<Guid>
     public string Description { get; set; }
     public TimeSpan Duration { get; set; }
     public int MaxParticipants { get; set; }
-    public EventType Type { get; set; }
-    public EventFormat Format { get; set; }
-    public Person Organizer { get; set; }
     public Guid PreviewPhoto { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsPublic { get; set; }
     public bool NeedsRegistration { get; set; }
+    
+    //FKs
+    public int TypeId { get; set; }
+    public int FormatId { get; set; }
+    public int OrganizerId { get; set; }
+    
+    // Navigation properties
+    public EventType Type { get; set; }
+    public EventFormat Format { get; set; }
+    public User Organizer { get; set; }
     public ICollection<Tag> Tags { get; set; }
     public ICollection<Post> Posts { get; set; }
-    public ICollection<Person> Participants { get; set; }
+    public ICollection<Participant> Participants { get; set; }
     public ICollection<OnlineSession> OnlineSessions { get; set; }
 }

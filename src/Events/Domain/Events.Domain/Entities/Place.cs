@@ -8,8 +8,14 @@ public class Place : IEntity<int>
     public string Title { get; set; }
     public int Number { get; set; }
     public int Capacity { get; set; }
+    
+    // FKs
+    public int LocationId { get; set; }
+    public int TypeId { get; set; }
+    
+    // Navigation properties
     public Location Location { get; set; }
     public PlaceType Type { get; set; }
     public ICollection<Equipment> Equipments { get; set; }
-    public ICollection<Guid> Photos { get; set; }
+    public ICollection<PlacePhoto> Photos { get; set; }
 }
