@@ -18,12 +18,12 @@ public class Event : IEntity<Guid>
     
     //FKs
     public int EventTypeId { get; set; }
-    public int FormatId { get; set; }
+    public int EventFormatId { get; set; }
     public int OrganizerId { get; set; }
     
     // Navigation properties
     public EventType EventType { get; set; }
-    public EventFormat Format { get; set; }
+    public EventFormat EventFormat { get; set; }
     public User Organizer { get; set; }
     public ICollection<Tag> Tags { get; set; }
     public ICollection<Post> Posts { get; set; }
