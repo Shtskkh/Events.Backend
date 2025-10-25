@@ -1,8 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DFE69AD4-8450-43E1-89FD-C856885729C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Events", "Events", "{A237016A-97B9-4C30-95EC-68C8D71CD1F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{89370A93-B2AD-4971-8AC8-CB19691DE701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Domain", "src\Events\Domain\Events.Domain\Events.Domain.csproj", "{3EA7E825-750F-4598-B50A-FFD220F3DBF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A237016A-97B9-4C30-95EC-68C8D71CD1F1} = {DFE69AD4-8450-43E1-89FD-C856885729C7}
+		{89370A93-B2AD-4971-8AC8-CB19691DE701} = {A237016A-97B9-4C30-95EC-68C8D71CD1F1}
+		{3EA7E825-750F-4598-B50A-FFD220F3DBF7} = {89370A93-B2AD-4971-8AC8-CB19691DE701}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EA7E825-750F-4598-B50A-FFD220F3DBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EA7E825-750F-4598-B50A-FFD220F3DBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EA7E825-750F-4598-B50A-FFD220F3DBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EA7E825-750F-4598-B50A-FFD220F3DBF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
