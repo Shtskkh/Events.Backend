@@ -14,16 +14,6 @@ public class Event : IEntity<Guid>
 	public Guid Id { get; set; }
 
 	/// <summary>
-	///     Теги мероприятия.
-	/// </summary>
-	public ICollection<Tag> Tags { get; set; }
-
-	/// <summary>
-	///     Мероприятия с тегами.
-	/// </summary>
-	public ICollection<EventTag> EventsTags { get; set; }
-
-	/// <summary>
 	///     Идентификатор типа мероприятия.
 	/// </summary>
 	public int EventTypeId { get; set; }
@@ -42,4 +32,19 @@ public class Event : IEntity<Guid>
 	///     Формат мероприятия.
 	/// </summary>
 	public EventFormat EventFormat { get; set; }
+
+	/// <summary>
+	///     Теги мероприятия.
+	/// </summary>
+	public ICollection<Tag> Tags { get; set; }
+
+	/// <summary>
+	///     Мероприятия с тегами.
+	/// </summary>
+	public ICollection<EventTag> EventsTags { get; set; }
+
+	/// <summary>
+	///     Посты во внешних сервисах.
+	/// </summary>
+	public ICollection<PostInExternalService> Posts { get; set; }
 }
