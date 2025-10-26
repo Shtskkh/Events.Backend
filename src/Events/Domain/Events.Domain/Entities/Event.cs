@@ -24,6 +24,16 @@ public class Event : IEntity<Guid>
 	public ICollection<EventTag> EventsTags { get; set; }
 
 	/// <summary>
+	///     Идентификатор типа мероприятия.
+	/// </summary>
+	public int EventTypeId { get; set; }
+
+	/// <summary>
+	///     Тип мероприятия.
+	/// </summary>
+	public EventType EventType { get; set; }
+
+	/// <summary>
 	///     Идентификатор формата мероприятия.
 	/// </summary>
 	public int EventFormatId { get; set; }
