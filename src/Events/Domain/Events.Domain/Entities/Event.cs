@@ -47,4 +47,9 @@ public class Event : IEntity<Guid>
 	///     Посты во внешних сервисах.
 	/// </summary>
 	public ICollection<PostInExternalService> Posts { get; set; }
+
+	/// <summary>
+	///     Превью-фото мероприятия.
+	/// </summary>
+	public EventPreviewPhoto EventPreviewPhoto { get; set; }
 }
