@@ -1,7 +1,14 @@
 namespace Events.Domain.Shared;
 
+/// <summary>
+/// Абстрактный класс value objects.
+/// </summary>
 public abstract class ValueObject
 {
+	/// <summary>
+	/// Получить элементы для сравнения.
+	/// </summary>
+	/// <returns>Последовательность элементов для сравнения.</returns>
 	protected abstract IEnumerable<object> GetEqualityComponents();
 
 	public override bool Equals(object? obj)

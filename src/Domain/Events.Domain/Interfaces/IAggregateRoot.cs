@@ -1,7 +1,7 @@
 namespace Events.Domain.Interfaces;
 
 /// <summary>
-/// Маркер агрегирующей сущности.
+/// Агрегирующая сущность.
 /// </summary>
 public interface IAggregateRoot
 {

@@ -8,6 +8,9 @@ namespace Events.Domain.Shared;
 public abstract class Entity<TKey>(TKey id)
 	where TKey : IEquatable<TKey>
 {
+	/// <summary>
+	/// Идентификатор сущности.
+	/// </summary>
 	public TKey Id => id;
 
 	public override bool Equals(object? obj)

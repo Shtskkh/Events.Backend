@@ -3,10 +3,13 @@ using Events.Domain.Shared;
 namespace Events.Domain.ValueObjects;
 
 /// <summary>
-/// Название.
+/// Объект названия.
 /// </summary>
 public class Title : ValueObject
 {
+	/// <summary>
+	/// Строка названия.
+	/// </summary>
 	public string Value { get; }
 
 	public Title(string value)
@@ -21,6 +24,7 @@ public class Title : ValueObject
 		Value = value.Trim();
 	}
 
+	/// <inheritdoc/>
 	protected override IEnumerable<object> GetEqualityComponents()
 	{
 		yield return Value;
