@@ -1,5 +1,10 @@
 namespace Events.Domain.Shared;
 
+/// <summary>
+/// Абстрактный класс сущностей.
+/// </summary>
+/// <param name="id">Идентификатор.</param>
+/// <typeparam name="TKey">Тип идентификатора.</typeparam>
 public abstract class Entity<TKey>(TKey id)
 	where TKey : IEquatable<TKey>
 {
@@ -27,6 +32,13 @@ public abstract class Entity<TKey>(TKey id)
 		return !Equals(left, right);
 	}
 
+	/// <summary>
+	/// Проверка на присвоение сущности идентификатора.
+	/// </summary>
+	/// <returns>
+	/// True, если сущности присвоен
+	/// идентификатор, false иначе.
+	/// </returns>
 	public bool IsTransient()
 	{
 		return Id.Equals(default);
