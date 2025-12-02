@@ -1,3 +1,4 @@
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 
 namespace Events.Domain.ValueObjects;
@@ -7,24 +8,24 @@ namespace Events.Domain.ValueObjects;
 /// </summary>
 public class Title : ValueObject
 {
-	/// <summary>
-	/// Строка названия.
-	/// </summary>
-	public string Value { get; }
+    /// <summary>
+    /// Строка названия.
+    /// </summary>
+    public string Value { get; }
 
-	public Title(string value)
-	{
-		if (string.IsNullOrWhiteSpace(value))
-		{
-			throw new ArgumentException(DomainErrorMessage.TitleNullOrWhiteSpaceException);
-		}
+    public Title(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException(DomainErrorMessage.TitleNullOrWhiteSpace);
+        }
 
-		Value = value.Trim();
-	}
+        Value = value.Trim();
+    }
 
-	/// <inheritdoc/>
-	protected override IEnumerable<object> GetEqualityComponents()
-	{
-		yield return Value;
-	}
+    /// <inheritdoc/>
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
