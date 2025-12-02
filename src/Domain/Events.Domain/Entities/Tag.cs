@@ -19,9 +19,7 @@ public class Tag : Entity<int>
 
 		if (Title.Value.Contains(' '))
 		{
-			throw new ArgumentException(
-				"Название тэга не должно содержать пробелов."
-			);
+			throw new ArgumentException(DomainErrorMessage.TagContainsWhiteSpace);
 		}
 	}
 }

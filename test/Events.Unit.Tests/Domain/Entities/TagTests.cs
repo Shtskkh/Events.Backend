@@ -1,4 +1,5 @@
 using Events.Domain.Entities;
+using Events.Domain.Shared;
 using FluentAssertions;
 
 namespace Events.Unit.Tests.Domain.Entities;
@@ -12,7 +13,7 @@ public class TagTests
 
 		createTag.Should()
 			.Throw<ArgumentException>()
-			.WithMessage("Название тэга не должно содержать пробелов.");
+			.WithMessage(DomainErrorMessage.TagContainsWhiteSpace);
 	}
 
 	[Fact]
@@ -22,6 +23,6 @@ public class TagTests
 
 		createTag.Should()
 			.Throw<ArgumentException>()
-			.WithMessage("Название тэга не должно содержать пробелов.");
+			.WithMessage(DomainErrorMessage.TagContainsWhiteSpace);
 	}
 }

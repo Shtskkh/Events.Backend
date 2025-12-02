@@ -16,9 +16,7 @@ public class Title : ValueObject
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
-			throw new ArgumentException(
-				"Название не может быть null или пустым."
-			);
+			throw new ArgumentException(DomainErrorMessage.TitleNullOrWhiteSpaceException);
 		}
 
 		Value = value.Trim();

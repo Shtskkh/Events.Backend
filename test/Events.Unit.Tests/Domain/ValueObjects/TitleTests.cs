@@ -1,3 +1,4 @@
+using Events.Domain.Shared;
 using Events.Domain.ValueObjects;
 using FluentAssertions;
 
@@ -26,7 +27,7 @@ public class TitleTests
 
 		createTitle.Should()
 			.Throw<ArgumentException>()
-			.WithMessage("Название не может быть null или пустым.");
+			.WithMessage(DomainErrorMessage.TitleNullOrWhiteSpaceException);
 	}
 
 	[Fact]
@@ -36,7 +37,7 @@ public class TitleTests
 
 		createTitle.Should()
 			.Throw<ArgumentException>()
-			.WithMessage("Название не может быть null или пустым.");
+			.WithMessage(DomainErrorMessage.TitleNullOrWhiteSpaceException);
 	}
 
 	[Fact]
@@ -46,6 +47,6 @@ public class TitleTests
 
 		createTitle.Should()
 			.Throw<ArgumentException>()
-			.WithMessage("Название не может быть null или пустым.");
+			.WithMessage(DomainErrorMessage.TitleNullOrWhiteSpaceException);
 	}
 }
