@@ -14,7 +14,7 @@ public class TagTests
 
         createTag.Should()
             .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessage.TagContainsWhiteSpace);
+            .WithMessage(DomainErrorMessages.TagContainsWhiteSpace);
     }
 
     [Fact]
@@ -24,6 +24,6 @@ public class TagTests
 
         createTag.Should()
             .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessage.TagContainsWhiteSpace);
+            .WithMessage(DomainErrorMessages.TagContainsWhiteSpace);
     }
 }

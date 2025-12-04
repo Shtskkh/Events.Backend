@@ -42,7 +42,7 @@ public class EventTests
         // Assert
         addTag.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessage.TagAlreadyAdded);
+            .WithMessage(DomainErrorMessages.TagAlreadyAdded);
     }
 
     [Fact]
@@ -72,6 +72,6 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessage.TagNotFound);
+            .WithMessage(DomainErrorMessages.TagNotFound);
     }
 }

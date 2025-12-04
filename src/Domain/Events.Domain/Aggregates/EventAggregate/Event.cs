@@ -8,11 +8,17 @@ namespace Events.Domain.Aggregates.EventAggregate;
 public class Event : Entity<Guid>, IAggregateRoot
 {
     private readonly List<EventTag> _tags = [];
+    private readonly List<PostInExternalService> _posts = [];
 
     /// <summary>
     /// Тэги мероприятия.
     /// </summary>
     public IReadOnlyCollection<EventTag> Tags => _tags.AsReadOnly();
+
+    /// <summary>
+    /// Посты во внешних сервисах.
+    /// </summary>
+    public IReadOnlyCollection<PostInExternalService> Posts => _posts.AsReadOnly();
 
     public Event(Guid id) : base(id)
     {
@@ -29,7 +35,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (thisTagIsAdded)
         {
-            throw new DomainException(DomainErrorMessage.TagAlreadyAdded);
+            throw new DomainException(DomainErrorMessages.TagAlreadyAdded);
         }
 
         var newTag = new EventTag(Id, tag.Id);
@@ -47,9 +53,43 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (eventTag == null)
         {
-            throw new DomainException(DomainErrorMessage.TagNotFound);
+            throw new DomainException(DomainErrorMessages.TagNotFound);
         }
 
         _tags.Remove(eventTag);
+    }
+
+    /// <summary>
+    /// Добавить пост во внешнем сервисе.
+    /// </summary>
+    /// <param name="externalServiceId">Id внешнего сервиса.</param>
+    /// <param name="link">Ссылка на пост.</param>
+    /// <exception cref="DomainException">Пост для данного сервиса уже существует.</exception>
+    public void AddPost(int externalServiceId, Uri link)
+    {
+        if (_posts.Any(p => p.ExternalServiceId == externalServiceId))
+        {
+            throw new DomainException(DomainErrorMessages.PostAlreadyExistForService);
+        }
+
+        var post = new PostInExternalService(Id, externalServiceId, link);
+        _posts.Add(post);
+    }
+
+    /// <summary>
+    /// Удалить пост.
+    /// </summary>
+    /// <param name="externalServiceId">Id внешнего сервиса.</param>
+    /// <exception cref="DomainException">Пост во внешнем сервисе не найден.</exception>
+    public void RemovePost(int externalServiceId)
+    {
+        var post = _posts.FirstOrDefault(p => p.ExternalServiceId == externalServiceId);
+
+        if (post == null)
+        {
+            throw new DomainException(DomainErrorMessages.PostNotFoundInService);
+        }
+
+        _posts.Remove(post);
     }
 }

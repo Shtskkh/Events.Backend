@@ -3,7 +3,7 @@
 /// <summary>
 /// Сообщения об ошибках.
 /// </summary>
-public static class DomainErrorMessage
+public static class DomainErrorMessages
 {
     /// <summary>
     /// Если название пустое,
@@ -26,4 +26,15 @@ public static class DomainErrorMessage
     /// Тэг не найден.
     /// </summary>
     public const string TagNotFound = "Тэг не найден у мероприятия.";
+
+    /// <summary>
+    /// Пост уже существует.
+    /// </summary>
+    public const string PostAlreadyExistForService = "Пост в данном внешнем сервисе для" +
+                                                     "данного мероприятия уже существует.";
+
+    /// <summary>
+    /// Пост не найден.
+    /// </summary>
+    public const string PostNotFoundInService = "Пост не найден.";
 }

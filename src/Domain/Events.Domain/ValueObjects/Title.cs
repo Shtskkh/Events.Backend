@@ -17,7 +17,7 @@ public class Title : ValueObject
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException(DomainErrorMessage.TitleNullOrWhiteSpace);
+            throw new ArgumentException(DomainErrorMessages.TitleNullOrWhiteSpace);
         }
 
         Value = value.Trim();
