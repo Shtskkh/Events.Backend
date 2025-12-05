@@ -7,67 +7,74 @@ namespace Events.Unit.Tests.Domain.Aggregates;
 
 public class EventTests
 {
-    private readonly Guid _eventId = Guid.NewGuid();
-    private const int TagId = 1;
-    private const string TagTitle = "Test";
+    private static readonly Guid EventId = Guid.NewGuid();
+    private readonly Event _event = new(EventId);
 
     [Fact]
-    public void AddTag_ShouldAddNewTag_WhenTagNotExists()
+    public void AddTag_ShouldAddTag_WhenTagNotExists()
     {
         // Arrange
-        var eventEntity = new Event(_eventId);
-        var tag = new Tag(TagId, TagTitle);
+        const int tagId = 1;
 
         // Act
-        eventEntity.AddTag(tag);
+        _event.AddTag(tagId);
 
         // Assert
-        eventEntity.Tags.Should().HaveCount(1);
-
-        var addedTag = eventEntity.Tags.First();
-        addedTag.TagId.Should().Be(TagId);
+        _event.Tags.Should().HaveCount(1);
+        _event.Tags.Single().TagId.Should().Be(tagId);
+        _event.Tags.Single().EventId.Should().Be(EventId);
     }
 
     [Fact]
-    public void AddTag_ShouldThrowDomainException_WhenTagExists()
+    public void AddTag_ShouldThrowDomainException_WhenTagAlreadyAdded()
     {
         // Arrange
-        var eventEntity = new Event(_eventId);
-        var tag = new Tag(TagId, TagTitle);
+        const int tagId = 1;
+        _event.AddTag(tagId);
 
         // Act
-        eventEntity.AddTag(tag);
-        var addTag = () => eventEntity.AddTag(tag);
+        var act = () => _event.AddTag(tagId);
 
         // Assert
-        addTag.Should()
+        act.Should()
             .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.TagAlreadyAdded);
     }
 
     [Fact]
-    public void RemoveTag_ShouldRemoveTag_WhenTagExists()
+    public void AddTag_ShouldAllowDifferentTags()
     {
-        // Arrange
-        var eventEntity = new Event(_eventId);
-        var tag = new Tag(TagId, TagTitle);
-
         // Act
-        eventEntity.AddTag(tag);
+        _event.AddTag(1);
+        _event.AddTag(2);
+        _event.AddTag(3);
 
         // Assert
-        eventEntity.RemoveTag(TagId);
-        eventEntity.Tags.Should().BeEmpty();
+        _event.Tags.Should().HaveCount(3);
     }
 
     [Fact]
-    public void RemoveTag_ShouldThrowInvalidOperationException_WhenTagNotExists()
+    public void RemoveTag_ShouldRemoveTag_WhenExists()
     {
         // Arrange
-        var eventEntity = new Event(_eventId);
+        const int tagId = 1;
+        _event.AddTag(tagId);
 
         // Act
-        var act = () => eventEntity.RemoveTag(TagId);
+        _event.RemoveTag(tagId);
+
+        // Assert
+        _event.Tags.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void RemoveTag_ShouldThrowDomainException_WhenTagNotFound()
+    {
+        // Arrange
+        const int tagId = 1;
+
+        // Act
+        var act = () => _event.RemoveTag(tagId);
 
         // Assert
         act.Should()

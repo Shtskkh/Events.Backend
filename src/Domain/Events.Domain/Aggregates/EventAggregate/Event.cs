@@ -1,5 +1,4 @@
-﻿using Events.Domain.Entities;
-using Events.Domain.Exceptions;
+﻿using Events.Domain.Exceptions;
 using Events.Domain.Interfaces;
 using Events.Domain.Shared;
 
@@ -27,18 +26,18 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Добавить тэг мероприятию.
     /// </summary>
-    /// <param name="tag">Тэг.</param>
+    /// <param name="tagId">Id тэга.</param>
     /// <exception cref="DomainException">Тэг уже добавлен.</exception>
-    public void AddTag(Tag tag)
+    public void AddTag(int tagId)
     {
-        var thisTagIsAdded = _tags.Any(et => et.TagId == tag.Id);
+        var thisTagIsAdded = _tags.Any(et => et.TagId == tagId);
 
         if (thisTagIsAdded)
         {
             throw new DomainException(DomainErrorMessages.TagAlreadyAdded);
         }
 
-        var newTag = new EventTag(Id, tag.Id);
+        var newTag = new EventTag(Id, tagId);
         _tags.Add(newTag);
     }
 
