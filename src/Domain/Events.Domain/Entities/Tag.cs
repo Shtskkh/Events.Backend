@@ -20,7 +20,7 @@ public class Tag : Entity<int>
 
         if (Title.Value.Contains(' '))
         {
-            throw new DomainException(DomainErrorMessages.TagContainsWhiteSpace);
+            throw new DomainException(DomainErrorMessages.Tag.TagContainsWhiteSpace);
         }
     }
 }

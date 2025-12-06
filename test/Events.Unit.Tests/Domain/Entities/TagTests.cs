@@ -1,6 +1,5 @@
 using Events.Domain.Entities;
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 using FluentAssertions;
 
 namespace Events.Unit.Tests.Domain.Entities;
@@ -13,8 +12,8 @@ public class TagTests
         var createTag = () => new Tag(1, "Hello World");
 
         createTag.Should()
-            .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessages.TagContainsWhiteSpace);
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.Tag.TagContainsWhiteSpace);
     }
 
     [Fact]
@@ -23,7 +22,7 @@ public class TagTests
         var createTag = () => new Tag(1, " Hello World ");
 
         createTag.Should()
-            .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessages.TagContainsWhiteSpace);
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.Tag.TagContainsWhiteSpace);
     }
 }

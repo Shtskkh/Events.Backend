@@ -1,5 +1,4 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Entities;
 using Events.Domain.Exceptions;
 using FluentAssertions;
 
@@ -38,7 +37,7 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.TagAlreadyAdded);
+            .WithMessage(DomainErrorMessages.Tag.TagAlreadyAdded);
     }
 
     [Fact]
@@ -79,7 +78,7 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.TagNotFound);
+            .WithMessage(DomainErrorMessages.Tag.TagNotFound);
     }
 
     [Fact]
@@ -114,7 +113,7 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.PostAlreadyExistForService);
+            .WithMessage(DomainErrorMessages.Post.PostAlreadyExistForService);
     }
 
     [Fact]
@@ -151,6 +150,6 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.PostNotFoundInService);
+            .WithMessage(DomainErrorMessages.Post.PostNotFoundInService);
     }
 }

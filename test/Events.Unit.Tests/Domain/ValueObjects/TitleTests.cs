@@ -1,5 +1,4 @@
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 using Events.Domain.ValueObjects;
 using FluentAssertions;
 
@@ -28,7 +27,7 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessages.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 
     [Fact]
@@ -38,7 +37,7 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessages.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 
     [Fact]
@@ -48,6 +47,6 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<ArgumentException>()
-            .WithMessage(DomainErrorMessages.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 }

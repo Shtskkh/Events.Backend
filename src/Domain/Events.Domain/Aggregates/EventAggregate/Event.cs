@@ -34,7 +34,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (thisTagIsAdded)
         {
-            throw new DomainException(DomainErrorMessages.TagAlreadyAdded);
+            throw new DomainException(DomainErrorMessages.Tag.TagAlreadyAdded);
         }
 
         var newTag = new EventTag(Id, tagId);
@@ -52,7 +52,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (eventTag == null)
         {
-            throw new DomainException(DomainErrorMessages.TagNotFound);
+            throw new DomainException(DomainErrorMessages.Tag.TagNotFound);
         }
 
         _tags.Remove(eventTag);
@@ -68,7 +68,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     {
         if (_posts.Any(p => p.ExternalServiceId == externalServiceId))
         {
-            throw new DomainException(DomainErrorMessages.PostAlreadyExistForService);
+            throw new DomainException(DomainErrorMessages.Post.PostAlreadyExistForService);
         }
 
         var post = new PostInExternalService(Id, externalServiceId, link);
@@ -86,7 +86,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (post == null)
         {
-            throw new DomainException(DomainErrorMessages.PostNotFoundInService);
+            throw new DomainException(DomainErrorMessages.Post.PostNotFoundInService);
         }
 
         _posts.Remove(post);
