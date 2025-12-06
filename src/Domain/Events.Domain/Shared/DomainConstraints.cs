@@ -22,6 +22,22 @@ public static class DomainConstraints
     }
 
     /// <summary>
+    /// Константы анонса мероприятия.
+    /// </summary>
+    public static class EventAnnouncement
+    {
+        /// <summary>
+        /// Минимальная длина анонса мероприяития.
+        /// </summary>
+        public const int MinLength = 2;
+
+        /// <summary>
+        /// Максимальная длина анонса мероприятия.
+        /// </summary>
+        public const int MaxLength = 64;
+    }
+
+    /// <summary>
     /// Константы тэга.
     /// </summary>
     public static class Tag

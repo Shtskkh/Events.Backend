@@ -22,7 +22,7 @@ public class EventTitle : Title
                 throw new DomainException(DomainErrorMessages.EventTitle.EventTitleLessThanMinLength);
 
             case > DomainConstraints.EventTitle.MaxLength:
-                throw new DomainException(DomainErrorMessages.EventTitle.EventTitleGreaterThenMaxLength);
+                throw new DomainException(DomainErrorMessages.EventTitle.EventTitleGreaterThanMaxLength);
         }
     }
 }

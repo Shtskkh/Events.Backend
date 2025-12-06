@@ -28,6 +28,6 @@ public class EventTitleTests
         // Assert
         createEventTitle.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventTitle.EventTitleGreaterThenMaxLength);
+            .WithMessage(DomainErrorMessages.EventTitle.EventTitleGreaterThanMaxLength);
     }
 }

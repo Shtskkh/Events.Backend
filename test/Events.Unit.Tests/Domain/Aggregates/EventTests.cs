@@ -9,10 +9,12 @@ public class EventTests
 {
     private static readonly Guid EventId = Guid.NewGuid();
     private const string EventTitle = "Test test";
+    private const string EventAnnouncement = "Test Announcement";
 
     private readonly Event _event = new(
         id: EventId,
-        title: EventTitle
+        title: EventTitle,
+        announcement: EventAnnouncement
     );
 
     [Fact]
@@ -21,6 +23,14 @@ public class EventTests
         const string newTitle = "New Title";
         _event.ChangeTitle(newTitle);
         _event.Title.Value.Should().Be(newTitle);
+    }
+
+    [Fact]
+    public void ChangeAnnouncement_ShouldChangeAnnouncement()
+    {
+        const string newAnnouncement = "New Announcement";
+        _event.ChangeAnnouncement(newAnnouncement);
+        _event.Announcement.Value.Should().Be(newAnnouncement);
     }
 
     [Fact]

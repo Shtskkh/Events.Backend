@@ -30,7 +30,28 @@ public static class DomainErrorMessages
         /// <summary>
         /// Название мероприятия больше максимальной длины.
         /// </summary>
-        public const string EventTitleGreaterThenMaxLength = "Название мероприятия больше максимальной длины.";
+        public const string EventTitleGreaterThanMaxLength = "Название мероприятия больше максимальной длины.";
+    }
+
+    /// <summary>
+    /// Ошибки анонса мероприятия.
+    /// </summary>
+    public static class EventAnnouncement
+    {
+        /// <summary>
+        /// Анонс мероприятия null или пусто.
+        /// </summary>
+        public const string EventAnnouncementNullOrWhiteSpace = "Анонс мероприятия null или пусто.";
+
+        /// <summary>
+        /// Анонс мероприятия меньше минимальной длины.
+        /// </summary>
+        public const string EventAnnouncementLessThanMinLength = "Анонс мероприятия меньше минимальной длины.";
+
+        /// <summary>
+        /// Анонс мероприятия больше максимальной длины.
+        /// </summary>
+        public const string EventAnnouncementGreaterThanMaxLength = "Анонс мероприятия больше максимальной длины.";
     }
 
     /// <summary>
