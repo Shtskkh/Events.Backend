@@ -131,67 +131,44 @@ public class EventTests
     }
 
     [Fact]
-    public void AddPostToExternalService_ShouldAddPost_WhenServiceNotUsedYet()
+    public void AddPost_ShouldAddPost()
     {
         // Arrange
-        var link = new Uri("https://vk.com/wall123");
+        const int postId = 1;
+        const int serviceId = 1;
+        var link = new Uri("https://test.com/test");
 
         // Act
-        _event.AddPost(1, link);
+        _event.AddPost(postId, serviceId, link);
 
         // Assert
         _event.Posts.Should().HaveCount(1);
         var post = _event.Posts.Single();
+
+        post.Id.Should().Be(postId);
         post.EventId.Should().Be(EventId);
-        post.ExternalServiceId.Should().Be(1);
+        post.ExternalServiceId.Should().Be(serviceId);
         post.Link.Should().Be(link);
     }
 
     [Fact]
-    public void AddPost_ShouldThrow_WhenSameServiceAlreadyHasPost()
+    public void RemovePost_ShouldRemovePost()
     {
         // Arrange
-        var link1 = new Uri("https://vk.com/wall1");
-        var link2 = new Uri("https://vk.com/wall2");
-
-        _event.AddPost(1, link1);
-
-        // Act
-        var act = () => _event.AddPost(1, link2);
-
-        // Assert
-        act.Should()
-            .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Post.PostAlreadyExistForService);
-    }
-
-    [Fact]
-    public void AddPost_ShouldAllowDifferentServices()
-    {
-        // Act
-        _event.AddPost(1, new Uri("https://vk.com/1"));
-        _event.AddPost(2, new Uri("https://t.me/1"));
-        _event.AddPost(3, new Uri("https://twitter.com/1"));
-
-        // Assert
-        _event.Posts.Should().HaveCount(3);
-    }
-
-    [Fact]
-    public void RemovePost_ShouldRemovePost_WhenExists()
-    {
-        // Arrange
-        _event.AddPost(1, new Uri("https://example.com"));
+        const int postId = 1;
+        const int serviceId = 1;
+        var link = new Uri("https://test.com/test");
 
         // Act
-        _event.RemovePost(1);
+        _event.AddPost(postId, serviceId, link);
+        _event.RemovePost(postId);
 
         // Assert
         _event.Posts.Should().BeEmpty();
     }
 
     [Fact]
-    public void RemovePost_ShouldThrow_WhenNoPostForService()
+    public void RemovePost_ShouldThrowDomainException_WhenPostNotFound()
     {
         // Act
         var act = () => _event.RemovePost(1);
@@ -199,6 +176,6 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Post.PostNotFoundInService);
+            .WithMessage(DomainErrorMessages.Post.PostNotFound);
     }
 }

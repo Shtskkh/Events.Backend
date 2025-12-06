@@ -1,8 +1,10 @@
 ﻿using Events.Domain.Entities;
+using Events.Domain.Exceptions;
+using Events.Domain.Shared;
 
 namespace Events.Domain.Aggregates.EventAggregate;
 
-public class PostInExternalService
+public class PostInExternalService : Entity<int>
 {
     /// <summary>
     /// Id мероприятия.
@@ -32,10 +34,16 @@ public class PostInExternalService
     /// <summary>
     /// Конструктор.
     /// </summary>
+    /// <param name="id">Id поста.</param>
     /// <param name="eventId">Id мероприятия.</param>
     /// <param name="externalServiceId">Id внешнего сервиса.</param>
     /// <param name="link">Ссылка на пост.</param>
-    public PostInExternalService(Guid eventId, int externalServiceId, Uri link)
+    public PostInExternalService(
+        int id,
+        Guid eventId,
+        int externalServiceId,
+        Uri link)
+        : base(id)
     {
         EventId = eventId;
         ExternalServiceId = externalServiceId;

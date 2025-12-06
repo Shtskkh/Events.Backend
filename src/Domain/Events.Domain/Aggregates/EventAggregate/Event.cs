@@ -119,32 +119,27 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Добавить пост во внешнем сервисе.
     /// </summary>
+    /// <param name="postId">Id поста.</param>
     /// <param name="externalServiceId">Id внешнего сервиса.</param>
     /// <param name="link">Ссылка на пост.</param>
-    /// <exception cref="DomainException">Пост для данного сервиса уже существует.</exception>
-    public void AddPost(int externalServiceId, Uri link)
+    public void AddPost(int postId, int externalServiceId, Uri link)
     {
-        if (_posts.Any(p => p.ExternalServiceId == externalServiceId))
-        {
-            throw new DomainException(DomainErrorMessages.Post.PostAlreadyExistForService);
-        }
-
-        var post = new PostInExternalService(Id, externalServiceId, link);
+        var post = new PostInExternalService(postId, Id, externalServiceId, link);
         _posts.Add(post);
     }
 
     /// <summary>
     /// Удалить пост.
     /// </summary>
-    /// <param name="externalServiceId">Id внешнего сервиса.</param>
+    /// <param name="postId">Id поста.</param>
     /// <exception cref="DomainException">Пост во внешнем сервисе не найден.</exception>
-    public void RemovePost(int externalServiceId)
+    public void RemovePost(int postId)
     {
-        var post = _posts.FirstOrDefault(p => p.ExternalServiceId == externalServiceId);
+        var post = _posts.FirstOrDefault(p => p.Id == postId);
 
         if (post == null)
         {
-            throw new DomainException(DomainErrorMessages.Post.PostNotFoundInService);
+            throw new DomainException(DomainErrorMessages.Post.PostNotFound);
         }
 
         _posts.Remove(post);

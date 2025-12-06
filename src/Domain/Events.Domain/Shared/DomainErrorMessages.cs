@@ -109,14 +109,8 @@ public static class DomainErrorMessages
     public static class Post
     {
         /// <summary>
-        /// Пост уже существует.
-        /// </summary>
-        public const string PostAlreadyExistForService = "Пост в данном внешнем сервисе для" +
-                                                         "данного мероприятия уже существует.";
-
-        /// <summary>
         /// Пост не найден.
         /// </summary>
-        public const string PostNotFoundInService = "Пост не найден.";
+        public const string PostNotFound = "Пост не найден.";
     }
 }
