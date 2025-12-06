@@ -11,12 +11,14 @@ public class EventTests
     private const string EventTitle = "Test test";
     private const string EventAnnouncement = "Test Announcement";
     private const string EventDescription = "Test Description";
+    private const bool EventIsPublic = true;
 
     private readonly Event _event = new(
         id: EventId,
         title: EventTitle,
         announcement: EventAnnouncement,
-        description: EventDescription
+        description: EventDescription,
+        isPublic: EventIsPublic
     );
 
     [Fact]
@@ -43,6 +45,19 @@ public class EventTests
 
         // Assert
         _event.Announcement.Value.Should().Be(newAnnouncement);
+    }
+
+    [Fact]
+    public void ChangeIsPublic_ShouldChangeIsPublic()
+    {
+        // Arrange
+        const bool isNotPublic = false;
+
+        // Act
+        _event.ChangeIsPublic(isNotPublic);
+
+        // Assert
+        _event.IsPublic.Should().Be(isNotPublic);
     }
 
     [Fact]

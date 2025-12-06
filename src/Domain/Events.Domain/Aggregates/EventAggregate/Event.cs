@@ -26,6 +26,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventDescription Description { get; private set; }
 
     /// <summary>
+    /// Флаг публичности.
+    /// </summary>
+    public bool IsPublic { get; private set; } = false;
+
+    /// <summary>
     /// Тэги мероприятия.
     /// </summary>
     public IReadOnlyCollection<EventTag> Tags => _tags.AsReadOnly();
@@ -42,16 +47,19 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
+    /// <param name="isPublic">Флаг публичности.</param>
     public Event(
         Guid id,
         string title,
         string announcement,
-        string description
+        string description,
+        bool isPublic
     ) : base(id)
     {
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
         Description = new EventDescription(description);
+        IsPublic = isPublic;
     }
 
     /// <summary>
@@ -79,6 +87,15 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeDescription(string description)
     {
         Description = new EventDescription(description);
+    }
+
+    /// <summary>
+    /// Изменить статус публичности мероприятия.
+    /// </summary>
+    /// <param name="flag">Флаг.</param>
+    public void ChangeIsPublic(bool flag)
+    {
+        IsPublic = flag;
     }
 
     /// <summary>
