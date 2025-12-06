@@ -10,7 +10,14 @@ public static class DomainConstraints
     /// </summary>
     public static class Tag
     {
+        /// <summary>
+        /// Минимальная длина тэга.
+        /// </summary>
         public const int MinLength = 2;
+
+        /// <summary>
+        /// Максимальная длина тэга.
+        /// </summary>
         public const int MaxLength = 32;
     }
 }

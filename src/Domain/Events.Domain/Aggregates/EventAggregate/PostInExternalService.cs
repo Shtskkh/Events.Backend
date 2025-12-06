@@ -29,6 +29,12 @@ public class PostInExternalService
     /// </summary>
     public Uri Link { get; private set; }
 
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="eventId">Id мероприятия.</param>
+    /// <param name="externalServiceId">Id внешнего сервиса.</param>
+    /// <param name="link">Ссылка на пост.</param>
     public PostInExternalService(Guid eventId, int externalServiceId, Uri link)
     {
         EventId = eventId;

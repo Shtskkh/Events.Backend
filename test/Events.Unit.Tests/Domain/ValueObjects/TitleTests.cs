@@ -21,32 +21,32 @@ public class TitleTests
     }
 
     [Fact]
-    public void Constructor_WithNullValue_ThrowsArgumentException()
+    public void Constructor_WithNullValue_ThrowsDomainException()
     {
         var createTitle = () => new Title(null);
 
         createTitle.Should()
-            .Throw<ArgumentException>()
+            .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 
     [Fact]
-    public void Constructor_WithEmptyTitle_ThrowsArgumentException()
+    public void Constructor_WithEmptyTitle_ThrowsDomainException()
     {
         var createTitle = () => new Title(string.Empty);
 
         createTitle.Should()
-            .Throw<ArgumentException>()
+            .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 
     [Fact]
-    public void Constructor_WithWhitespaceOnlyTitle_ThrowsArgumentException()
+    public void Constructor_WithWhitespaceOnlyTitle_ThrowsDomainException()
     {
         var createTitle = () => new Title(" ");
 
         createTitle.Should()
-            .Throw<ArgumentException>()
+            .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
     }
 }

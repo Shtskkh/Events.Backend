@@ -5,6 +5,9 @@
 /// </summary>
 public static class DomainErrorMessages
 {
+    /// <summary>
+    /// Ошибки названия.
+    /// </summary>
     public static class Title
     {
         /// <summary>
@@ -45,6 +48,9 @@ public static class DomainErrorMessages
         public const string TagNotFound = "Тэг не найден.";
     }
 
+    /// <summary>
+    /// Ошибки поста.
+    /// </summary>
     public static class Post
     {
         /// <summary>

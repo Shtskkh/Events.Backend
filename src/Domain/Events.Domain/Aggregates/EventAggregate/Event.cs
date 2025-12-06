@@ -19,6 +19,10 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// </summary>
     public IReadOnlyCollection<PostInExternalService> Posts => _posts.AsReadOnly();
 
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="id">Id.</param>
     public Event(Guid id) : base(id)
     {
     }

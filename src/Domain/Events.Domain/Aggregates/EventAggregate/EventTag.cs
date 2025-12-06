@@ -27,6 +27,11 @@ public class EventTag
     /// </summary>
     public Tag Tag { get; private set; }
 
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="eventId">Id мероприятия.</param>
+    /// <param name="tagId">Id тэга.</param>
     public EventTag(Guid eventId, int tagId)
     {
         EventId = eventId;

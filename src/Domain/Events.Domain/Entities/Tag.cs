@@ -5,12 +5,12 @@ using Events.Domain.ValueObjects;
 namespace Events.Domain.Entities;
 
 /// <summary>
-/// Тэг мероприятия.
+/// Тэг.
 /// </summary>
 public class Tag : Entity<int>
 {
     /// <summary>
-    /// Наименование тэга.
+    /// Наименование.
     /// </summary>
     public Title Title { get; }
 
@@ -18,7 +18,7 @@ public class Tag : Entity<int>
     /// Конструктор.
     /// </summary>
     /// <param name="id">Id тэга.</param>
-    /// <param name="title">Наименование тэга.</param>
+    /// <param name="title">Наименование.</param>
     /// <exception cref="DomainException"><see cref="DomainErrorMessages.Tag"/></exception>
     public Tag(int id, string title) : base(id)
     {

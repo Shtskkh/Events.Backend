@@ -13,11 +13,16 @@ public class Title : ValueObject
     /// </summary>
     public string Value { get; }
 
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="value">Значение для названия.</param>
+    /// <exception cref="DomainException"><see cref="DomainErrorMessages.Title"/></exception>
     public Title(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
+            throw new DomainException(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
         }
 
         Value = value.Trim();
