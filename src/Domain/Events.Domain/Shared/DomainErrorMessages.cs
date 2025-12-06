@@ -1,4 +1,4 @@
-﻿namespace Events.Domain.Exceptions;
+﻿namespace Events.Domain.Shared;
 
 /// <summary>
 /// Сообщения об ошибках.
@@ -18,6 +18,22 @@ public static class DomainErrorMessages
     }
 
     /// <summary>
+    /// Ошибки названия мероприятия.
+    /// </summary>
+    public static class EventTitle
+    {
+        /// <summary>
+        /// Название мероприятия меньше минимальной длины. 
+        /// </summary>
+        public const string EventTitleLessThanMinLength = "Название мероприятия меньше минимальной длины.";
+
+        /// <summary>
+        /// Название мероприятия больше максимальной длины.
+        /// </summary>
+        public const string EventTitleGreaterThenMaxLength = "Название мероприятия больше максимальной длины.";
+    }
+
+    /// <summary>
     /// Ошибки тэга.
     /// </summary>
     public static class Tag
@@ -25,12 +41,12 @@ public static class DomainErrorMessages
         /// <summary>
         /// Тэг меньше минимальной длинны.
         /// </summary>
-        public const string TagLessThanMinLength = "Тэг меньше минимальной длинны.";
+        public const string TagLessThanMinLength = "Тэг меньше минимальной длины.";
 
         /// <summary>
         /// Тэг больше максимальной длинны.
         /// </summary>
-        public const string TagGreaterThanMaxLength = "Тэг больше максимальной длинны.";
+        public const string TagGreaterThanMaxLength = "Тэг больше максимальной длины.";
 
         /// <summary>
         /// Тэг не должен содержать пробелов.

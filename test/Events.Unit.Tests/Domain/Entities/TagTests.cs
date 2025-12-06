@@ -1,5 +1,6 @@
 using Events.Domain.Entities;
 using Events.Domain.Exceptions;
+using Events.Domain.Shared;
 using FluentAssertions;
 
 namespace Events.Unit.Tests.Domain.Entities;

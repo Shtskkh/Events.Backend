@@ -1,4 +1,5 @@
 using Events.Domain.Exceptions;
+using Events.Domain.Shared;
 using Events.Domain.ValueObjects;
 using FluentAssertions;
 

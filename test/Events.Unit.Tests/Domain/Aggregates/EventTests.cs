@@ -1,5 +1,6 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Exceptions;
+using Events.Domain.Shared;
 using FluentAssertions;
 
 namespace Events.Unit.Tests.Domain.Aggregates;
@@ -7,7 +8,12 @@ namespace Events.Unit.Tests.Domain.Aggregates;
 public class EventTests
 {
     private static readonly Guid EventId = Guid.NewGuid();
-    private readonly Event _event = new(EventId);
+    private const string EventTitle = "Test test";
+
+    private readonly Event _event = new(
+        id: EventId,
+        title: EventTitle
+    );
 
     [Fact]
     public void AddTag_ShouldAddTag_WhenTagNotExists()

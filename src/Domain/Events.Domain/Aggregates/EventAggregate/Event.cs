@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+using Events.Domain.Exceptions;
 using Events.Domain.Interfaces;
 using Events.Domain.Shared;
 
@@ -8,6 +9,8 @@ public class Event : Entity<Guid>, IAggregateRoot
 {
     private readonly List<EventTag> _tags = [];
     private readonly List<PostInExternalService> _posts = [];
+
+    public readonly EventTitle Title;
 
     /// <summary>
     /// Тэги мероприятия.
@@ -23,8 +26,13 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// Конструктор.
     /// </summary>
     /// <param name="id">Id.</param>
-    public Event(Guid id) : base(id)
+    /// <param name="title">Название.</param>
+    public Event(
+        Guid id,
+        string title
+    ) : base(id)
     {
+        Title = new EventTitle(title);
     }
 
     /// <summary>
