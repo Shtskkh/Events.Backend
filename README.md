@@ -22,4 +22,4 @@
 
 ## Схема базы данных
 
-![image](./Database.png)
+![image](./Database.svg)
