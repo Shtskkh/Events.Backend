@@ -31,6 +31,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public bool IsPublic { get; private set; } = false;
 
     /// <summary>
+    /// Флаг необходимости регистрации.
+    /// </summary>
+    public bool IsNeedsRegistration { get; private set; } = false;
+
+    /// <summary>
     /// Тэги мероприятия.
     /// </summary>
     public IReadOnlyCollection<EventTag> Tags => _tags.AsReadOnly();
@@ -48,18 +53,21 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
     /// <param name="isPublic">Флаг публичности.</param>
+    /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
     public Event(
         Guid id,
         string title,
         string announcement,
         string description,
-        bool isPublic
+        bool isPublic,
+        bool isNeedsRegistration
     ) : base(id)
     {
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
         Description = new EventDescription(description);
         IsPublic = isPublic;
+        IsNeedsRegistration = isNeedsRegistration;
     }
 
     /// <summary>
@@ -92,10 +100,19 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Изменить статус публичности мероприятия.
     /// </summary>
-    /// <param name="flag">Флаг.</param>
+    /// <param name="flag">True или false.</param>
     public void ChangeIsPublic(bool flag)
     {
         IsPublic = flag;
+    }
+
+    /// <summary>
+    /// Изменить статус необходимости регистрации.
+    /// </summary>
+    /// <param name="flag">True или false.</param>
+    public void ChangeIsNeedsRegistration(bool flag)
+    {
+        IsNeedsRegistration = flag;
     }
 
     /// <summary>

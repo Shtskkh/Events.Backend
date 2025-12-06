@@ -12,13 +12,15 @@ public class EventTests
     private const string EventAnnouncement = "Test Announcement";
     private const string EventDescription = "Test Description";
     private const bool EventIsPublic = true;
+    private const bool EventNeedsRegistration = true;
 
     private readonly Event _event = new(
         id: EventId,
         title: EventTitle,
         announcement: EventAnnouncement,
         description: EventDescription,
-        isPublic: EventIsPublic
+        isPublic: EventIsPublic,
+        isNeedsRegistration: EventNeedsRegistration
     );
 
     [Fact]
@@ -71,6 +73,19 @@ public class EventTests
 
         // Assert
         _event.Description.Value.Should().Be(newDescription);
+    }
+
+    [Fact]
+    public void ChangeIsNeedsRegistration_ShouldChangeIsNeedsRegistration()
+    {
+        // Arrange
+        const bool isNotNeedsRegistration = false;
+        
+        // Act
+        _event.ChangeIsNeedsRegistration(isNotNeedsRegistration);
+        
+        // Assert
+        _event.IsNeedsRegistration.Should().Be(isNotNeedsRegistration);
     }
 
     [Fact]
