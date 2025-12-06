@@ -13,16 +13,16 @@ public class EventTitle : Title
     /// Конструктор.
     /// </summary>
     /// <param name="title">Название.</param>
-    /// <exception cref="DomainException"><see cref="DomainErrorMessages.EventTitle"/></exception>
+    /// <exception cref="DomainException"><see cref="DomainErrorMessages.EventTitleErrors"/></exception>
     public EventTitle(string title) : base(title)
     {
         switch (title.Length)
         {
             case < DomainConstraints.EventTitle.MinLength:
-                throw new DomainException(DomainErrorMessages.EventTitle.EventTitleLessThanMinLength);
+                throw new DomainException(DomainErrorMessages.EventTitleErrors.EventTitleLessThanMinLength);
 
             case > DomainConstraints.EventTitle.MaxLength:
-                throw new DomainException(DomainErrorMessages.EventTitle.EventTitleGreaterThanMaxLength);
+                throw new DomainException(DomainErrorMessages.EventTitleErrors.EventTitleGreaterThanMaxLength);
         }
     }
 }

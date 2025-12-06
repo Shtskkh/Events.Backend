@@ -80,10 +80,10 @@ public class EventTests
     {
         // Arrange
         const bool isNotNeedsRegistration = false;
-        
+
         // Act
         _event.ChangeIsNeedsRegistration(isNotNeedsRegistration);
-        
+
         // Assert
         _event.IsNeedsRegistration.Should().Be(isNotNeedsRegistration);
     }
@@ -116,7 +116,7 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagAlreadyAdded);
+            .WithMessage(DomainErrorMessages.TagErrors.TagAlreadyAdded);
     }
 
     [Fact]
@@ -157,7 +157,7 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagNotFound);
+            .WithMessage(DomainErrorMessages.TagErrors.TagNotFound);
     }
 
     [Fact]
@@ -206,6 +206,6 @@ public class EventTests
         // Assert
         act.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Post.PostNotFound);
+            .WithMessage(DomainErrorMessages.PostErrors.PostNotFound);
     }
 }

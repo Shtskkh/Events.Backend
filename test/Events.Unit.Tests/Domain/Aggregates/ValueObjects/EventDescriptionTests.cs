@@ -14,7 +14,7 @@ public class EventDescriptionTests
 
         createEventDescription.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventDescription.EventDescriptionNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class EventDescriptionTests
 
         createEventDescription.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventDescription.EventDescriptionNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public class EventDescriptionTests
 
         createEventDescription.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventDescription.EventDescriptionNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class EventDescriptionTests
         // Assert
         createEventDescription.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventDescription.EventDescriptionLessThanMinLength);
+            .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionLessThanMinLength);
     }
 
     [Fact]
@@ -60,6 +60,6 @@ public class EventDescriptionTests
         // Assert
         createEventDescription.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.EventDescription.EventDescriptionGreaterThanMaxLength);
+            .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionGreaterThanMaxLength);
     }
 }

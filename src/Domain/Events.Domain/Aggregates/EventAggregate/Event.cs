@@ -26,6 +26,26 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventDescription Description { get; private set; }
 
     /// <summary>
+    /// Максимальное число участников.
+    /// </summary>
+    /// <exception cref="DomainException">
+    /// Если максимальное число участников меньше минимального.
+    /// </exception>
+    public int EventMaxParticipants
+    {
+        get;
+        private set
+        {
+            field = value switch
+            {
+                0 => 0,
+                > DomainConstraints.Event.MinParticipantsCount => value,
+                _ => throw new DomainException(DomainErrorMessages.EventErrors.MaxParticipantsCountLessThanMin)
+            };
+        }
+    }
+
+    /// <summary>
     /// Флаг публичности.
     /// </summary>
     public bool IsPublic { get; private set; }
@@ -52,6 +72,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
+    /// <param name="maxParticipant">Максимальное число участников.</param>
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
     public Event(
@@ -59,6 +80,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         string title,
         string announcement,
         string description,
+        int maxParticipant = 0,
         bool isPublic = false,
         bool isNeedsRegistration = false
     ) : base(id)
@@ -66,6 +88,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
         Description = new EventDescription(description);
+        EventMaxParticipants = maxParticipant;
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
     }
@@ -126,7 +149,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (thisTagIsAdded)
         {
-            throw new DomainException(DomainErrorMessages.Tag.TagAlreadyAdded);
+            throw new DomainException(DomainErrorMessages.TagErrors.TagAlreadyAdded);
         }
 
         var newTag = new EventTag(Id, tagId);
@@ -144,7 +167,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (eventTag == null)
         {
-            throw new DomainException(DomainErrorMessages.Tag.TagNotFound);
+            throw new DomainException(DomainErrorMessages.TagErrors.TagNotFound);
         }
 
         _tags.Remove(eventTag);
@@ -173,7 +196,7 @@ public class Event : Entity<Guid>, IAggregateRoot
 
         if (post == null)
         {
-            throw new DomainException(DomainErrorMessages.Post.PostNotFound);
+            throw new DomainException(DomainErrorMessages.PostErrors.PostNotFound);
         }
 
         _posts.Remove(post);

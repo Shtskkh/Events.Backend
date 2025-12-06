@@ -14,7 +14,7 @@ public class TagTests
 
         createTag.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagContainsWhiteSpace);
+            .WithMessage(DomainErrorMessages.TagErrors.TagContainsWhiteSpace);
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public class TagTests
 
         createTag.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagContainsWhiteSpace);
+            .WithMessage(DomainErrorMessages.TagErrors.TagContainsWhiteSpace);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public class TagTests
 
         createTag.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagLessThanMinLength);
+            .WithMessage(DomainErrorMessages.TagErrors.TagLessThanMinLength);
     }
 
     [Fact]
@@ -44,6 +44,6 @@ public class TagTests
 
         createTag.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Tag.TagGreaterThanMaxLength);
+            .WithMessage(DomainErrorMessages.TagErrors.TagGreaterThanMaxLength);
     }
 }

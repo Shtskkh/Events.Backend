@@ -6,6 +6,17 @@
 public static class DomainConstraints
 {
     /// <summary>
+    /// Константы мероприятия.
+    /// </summary>
+    public static class Event
+    {
+        /// <summary>
+        /// Минимальное число участников мероприятия.
+        /// </summary>
+        public const int MinParticipantsCount = 1;
+    }
+
+    /// <summary>
     /// Константы названия мероприятия.
     /// </summary>
     public static class EventTitle

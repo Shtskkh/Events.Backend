@@ -28,7 +28,7 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.TitleErrors.TitleNullOrWhiteSpace);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.TitleErrors.TitleNullOrWhiteSpace);
     }
 
     [Fact]
@@ -48,6 +48,6 @@ public class TitleTests
 
         createTitle.Should()
             .Throw<DomainException>()
-            .WithMessage(DomainErrorMessages.Title.TitleNullOrWhiteSpace);
+            .WithMessage(DomainErrorMessages.TitleErrors.TitleNullOrWhiteSpace);
     }
 }

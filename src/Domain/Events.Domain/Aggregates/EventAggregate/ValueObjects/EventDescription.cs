@@ -17,16 +17,17 @@ public class EventDescription : ValueObject
     {
         if (string.IsNullOrWhiteSpace(description))
         {
-            throw new DomainException(DomainErrorMessages.EventDescription.EventDescriptionNullOrWhiteSpace);
+            throw new DomainException(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
         }
 
         switch (description.Length)
         {
             case < DomainConstraints.EventDescription.MinLength:
-                throw new DomainException(DomainErrorMessages.EventDescription.EventDescriptionLessThanMinLength);
+                throw new DomainException(DomainErrorMessages.EventDescriptionErrors.EventDescriptionLessThanMinLength);
 
             case > DomainConstraints.EventDescription.MaxLength:
-                throw new DomainException(DomainErrorMessages.EventDescription.EventDescriptionGreaterThanMaxLength);
+                throw new DomainException(DomainErrorMessages.EventDescriptionErrors
+                    .EventDescriptionGreaterThanMaxLength);
         }
 
         Value = description.Trim();

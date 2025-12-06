@@ -18,22 +18,24 @@ public class EventAnnouncement : ValueObject
     /// </summary>
     /// <param name="announcement">Строка анонса.</param>
     /// <exception cref="DomainException">
-    /// <see cref="DomainErrorMessages.EventAnnouncement"/>
+    /// <see cref="DomainErrorMessages.EventAnnouncementErrors"/>
     /// </exception>
     public EventAnnouncement(string announcement)
     {
         if (string.IsNullOrWhiteSpace(announcement))
         {
-            throw new DomainException(DomainErrorMessages.EventAnnouncement.EventAnnouncementNullOrWhiteSpace);
+            throw new DomainException(DomainErrorMessages.EventAnnouncementErrors.EventAnnouncementNullOrWhiteSpace);
         }
 
         switch (announcement.Length)
         {
             case < DomainConstraints.EventAnnouncement.MinLength:
-                throw new DomainException(DomainErrorMessages.EventAnnouncement.EventAnnouncementLessThanMinLength);
+                throw new DomainException(
+                    DomainErrorMessages.EventAnnouncementErrors.EventAnnouncementLessThanMinLength);
 
             case > DomainConstraints.EventAnnouncement.MaxLength:
-                throw new DomainException(DomainErrorMessages.EventAnnouncement.EventAnnouncementGreaterThanMaxLength);
+                throw new DomainException(DomainErrorMessages.EventAnnouncementErrors
+                    .EventAnnouncementGreaterThanMaxLength);
         }
 
         Value = announcement.Trim();

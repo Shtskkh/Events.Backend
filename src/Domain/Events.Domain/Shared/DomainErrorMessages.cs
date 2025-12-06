@@ -8,109 +8,72 @@ public static class DomainErrorMessages
     /// <summary>
     /// Ошибки названия.
     /// </summary>
-    public static class Title
+    public static class TitleErrors
     {
-        /// <summary>
-        /// Если название пустое,
-        /// состоит из пробелов или null.
-        /// </summary>
         public const string TitleNullOrWhiteSpace = "Название не может быть null или пустым";
+    }
+
+    /// <summary>
+    /// Ошибки мероприятия.
+    /// </summary>
+    public static class EventErrors
+    {
+        public const string MaxParticipantsCountLessThanMin =
+            "Максимальное количество участников меньше минимально возможного.";
     }
 
     /// <summary>
     /// Ошибки названия мероприятия.
     /// </summary>
-    public static class EventTitle
+    public static class EventTitleErrors
     {
-        /// <summary>
-        /// Название мероприятия меньше минимальной длины. 
-        /// </summary>
         public const string EventTitleLessThanMinLength = "Название мероприятия меньше минимальной длины.";
 
-        /// <summary>
-        /// Название мероприятия больше максимальной длины.
-        /// </summary>
         public const string EventTitleGreaterThanMaxLength = "Название мероприятия больше максимальной длины.";
     }
 
     /// <summary>
     /// Ошибки анонса мероприятия.
     /// </summary>
-    public static class EventAnnouncement
+    public static class EventAnnouncementErrors
     {
-        /// <summary>
-        /// Анонс мероприятия null или пусто.
-        /// </summary>
         public const string EventAnnouncementNullOrWhiteSpace = "Анонс мероприятия null или пусто.";
 
-        /// <summary>
-        /// Анонс мероприятия меньше минимальной длины.
-        /// </summary>
         public const string EventAnnouncementLessThanMinLength = "Анонс мероприятия меньше минимальной длины.";
 
-        /// <summary>
-        /// Анонс мероприятия больше максимальной длины.
-        /// </summary>
         public const string EventAnnouncementGreaterThanMaxLength = "Анонс мероприятия больше максимальной длины.";
     }
 
-    public static class EventDescription
+    public static class EventDescriptionErrors
     {
-        /// <summary>
-        /// Описание мероприятия null или пусто.
-        /// </summary>
         public const string EventDescriptionNullOrWhiteSpace = "Описание мероприятия null или пусто.";
 
-        /// <summary>
-        /// Описание мероприятия меньше минимальной длины.
-        /// </summary>
         public const string EventDescriptionLessThanMinLength = "Описание мероприятия меньше минимальной длины.";
 
-        /// <summary>
-        /// Описание мероприятия больше максимальной длины.
-        /// </summary>
         public const string EventDescriptionGreaterThanMaxLength = "Описание мероприятия больше максимальной длины.";
     }
 
     /// <summary>
     /// Ошибки тэга.
     /// </summary>
-    public static class Tag
+    public static class TagErrors
     {
-        /// <summary>
-        /// Тэг меньше минимальной длины.
-        /// </summary>
         public const string TagLessThanMinLength = "Тэг меньше минимальной длины.";
 
-        /// <summary>
-        /// Тэг больше максимальной длины.
-        /// </summary>
         public const string TagGreaterThanMaxLength = "Тэг больше максимальной длины.";
 
-        /// <summary>
-        /// Тэг не должен содержать пробелов.
-        /// </summary>
         public const string TagContainsWhiteSpace = "Тэг не должен содержать пробелов.";
 
-        /// <summary>
-        /// Тэг уже добавлен.
-        /// </summary>
         public const string TagAlreadyAdded = "Тэг уже добавлен.";
 
-        /// <summary>
-        /// Тэг не найден.
-        /// </summary>
         public const string TagNotFound = "Тэг не найден.";
     }
 
     /// <summary>
     /// Ошибки поста.
     /// </summary>
-    public static class Post
+    public static class PostErrors
     {
-        /// <summary>
-        /// Пост не найден.
-        /// </summary>
         public const string PostNotFound = "Пост не найден.";
     }
 }
