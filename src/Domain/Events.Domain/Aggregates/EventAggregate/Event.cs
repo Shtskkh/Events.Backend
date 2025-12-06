@@ -28,12 +28,12 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Флаг публичности.
     /// </summary>
-    public bool IsPublic { get; private set; } = false;
+    public bool IsPublic { get; private set; }
 
     /// <summary>
     /// Флаг необходимости регистрации.
     /// </summary>
-    public bool IsNeedsRegistration { get; private set; } = false;
+    public bool IsNeedsRegistration { get; private set; }
 
     /// <summary>
     /// Тэги мероприятия.
@@ -59,8 +59,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         string title,
         string announcement,
         string description,
-        bool isPublic,
-        bool isNeedsRegistration
+        bool isPublic = false,
+        bool isNeedsRegistration = false
     ) : base(id)
     {
         Title = new EventTitle(title);
