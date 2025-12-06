@@ -10,7 +10,10 @@ public class Event : Entity<Guid>, IAggregateRoot
     private readonly List<EventTag> _tags = [];
     private readonly List<PostInExternalService> _posts = [];
 
-    public readonly EventTitle Title;
+    /// <summary>
+    /// Название.
+    /// </summary>
+    public EventTitle Title { get; private set; }
 
     /// <summary>
     /// Тэги мероприятия.
@@ -31,6 +34,15 @@ public class Event : Entity<Guid>, IAggregateRoot
         Guid id,
         string title
     ) : base(id)
+    {
+        Title = new EventTitle(title);
+    }
+
+    /// <summary>
+    /// Изменить название мероприятия.
+    /// </summary>
+    /// <param name="title">Новое название.</param>
+    public void ChangeTitle(string title)
     {
         Title = new EventTitle(title);
     }

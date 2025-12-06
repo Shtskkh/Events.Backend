@@ -16,6 +16,14 @@ public class EventTests
     );
 
     [Fact]
+    public void ChangeTitle_ShouldChangeTitle()
+    {
+        const string newTitle = "New Title";
+        _event.ChangeTitle(newTitle);
+        _event.Title.Value.Should().Be(newTitle);
+    }
+
+    [Fact]
     public void AddTag_ShouldAddTag_WhenTagNotExists()
     {
         // Arrange
