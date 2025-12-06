@@ -21,6 +21,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventAnnouncement Announcement { get; private set; }
 
     /// <summary>
+    /// Описание.
+    /// </summary>
+    public EventDescription Description { get; private set; }
+
+    /// <summary>
     /// Тэги мероприятия.
     /// </summary>
     public IReadOnlyCollection<EventTag> Tags => _tags.AsReadOnly();
@@ -36,14 +41,17 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="id">Id.</param>
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
+    /// <param name="description">Описание.</param>
     public Event(
         Guid id,
         string title,
-        string announcement
+        string announcement,
+        string description
     ) : base(id)
     {
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
+        Description = new EventDescription(description);
     }
 
     /// <summary>
@@ -62,6 +70,15 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeAnnouncement(string announcement)
     {
         Announcement = new EventAnnouncement(announcement);
+    }
+
+    /// <summary>
+    /// Изменить описание мероприятия.
+    /// </summary>
+    /// <param name="description">Новое описание.</param>
+    public void ChangeDescription(string description)
+    {
+        Description = new EventDescription(description);
     }
 
     /// <summary>

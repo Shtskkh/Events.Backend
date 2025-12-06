@@ -10,27 +10,52 @@ public class EventTests
     private static readonly Guid EventId = Guid.NewGuid();
     private const string EventTitle = "Test test";
     private const string EventAnnouncement = "Test Announcement";
+    private const string EventDescription = "Test Description";
 
     private readonly Event _event = new(
         id: EventId,
         title: EventTitle,
-        announcement: EventAnnouncement
+        announcement: EventAnnouncement,
+        description: EventDescription
     );
 
     [Fact]
     public void ChangeTitle_ShouldChangeTitle()
     {
+        // Arrange
         const string newTitle = "New Title";
+
+        // Act
         _event.ChangeTitle(newTitle);
+
+        // Assert
         _event.Title.Value.Should().Be(newTitle);
     }
 
     [Fact]
     public void ChangeAnnouncement_ShouldChangeAnnouncement()
     {
+        // Arrange
         const string newAnnouncement = "New Announcement";
+
+        // Act
         _event.ChangeAnnouncement(newAnnouncement);
+
+        // Assert
         _event.Announcement.Value.Should().Be(newAnnouncement);
+    }
+
+    [Fact]
+    public void ChangeDescription_ShouldChangeDescription()
+    {
+        // Arrange
+        const string newDescription = "New Description";
+
+        // Act
+        _event.ChangeDescription(newDescription);
+
+        // Assert
+        _event.Description.Value.Should().Be(newDescription);
     }
 
     [Fact]

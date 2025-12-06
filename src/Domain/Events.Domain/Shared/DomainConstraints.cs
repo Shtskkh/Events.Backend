@@ -27,7 +27,7 @@ public static class DomainConstraints
     public static class EventAnnouncement
     {
         /// <summary>
-        /// Минимальная длина анонса мероприяития.
+        /// Минимальная длина анонса мероприятия.
         /// </summary>
         public const int MinLength = 2;
 
@@ -35,6 +35,22 @@ public static class DomainConstraints
         /// Максимальная длина анонса мероприятия.
         /// </summary>
         public const int MaxLength = 64;
+    }
+
+    /// <summary>
+    /// Константы описания мероприятия.
+    /// </summary>
+    public static class EventDescription
+    {
+        /// <summary>
+        /// Минимальная длина описания мероприятия.
+        /// </summary>
+        public const int MinLength = 2;
+
+        /// <summary>
+        /// Максимальная длина описания мероприятия.
+        /// </summary>
+        public const int MaxLength = 512;
     }
 
     /// <summary>

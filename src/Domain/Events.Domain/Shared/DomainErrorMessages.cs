@@ -54,18 +54,36 @@ public static class DomainErrorMessages
         public const string EventAnnouncementGreaterThanMaxLength = "Анонс мероприятия больше максимальной длины.";
     }
 
+    public static class EventDescription
+    {
+        /// <summary>
+        /// Описание мероприятия null или пусто.
+        /// </summary>
+        public const string EventDescriptionNullOrWhiteSpace = "Описание мероприятия null или пусто.";
+
+        /// <summary>
+        /// Описание мероприятия меньше минимальной длины.
+        /// </summary>
+        public const string EventDescriptionLessThanMinLength = "Описание мероприятия меньше минимальной длины.";
+
+        /// <summary>
+        /// Описание мероприятия больше максимальной длины.
+        /// </summary>
+        public const string EventDescriptionGreaterThanMaxLength = "Описание мероприятия больше максимальной длины.";
+    }
+
     /// <summary>
     /// Ошибки тэга.
     /// </summary>
     public static class Tag
     {
         /// <summary>
-        /// Тэг меньше минимальной длинны.
+        /// Тэг меньше минимальной длины.
         /// </summary>
         public const string TagLessThanMinLength = "Тэг меньше минимальной длины.";
 
         /// <summary>
-        /// Тэг больше максимальной длинны.
+        /// Тэг больше максимальной длины.
         /// </summary>
         public const string TagGreaterThanMaxLength = "Тэг больше максимальной длины.";
 
