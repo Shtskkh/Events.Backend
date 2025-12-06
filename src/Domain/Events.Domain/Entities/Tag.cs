@@ -14,6 +14,12 @@ public class Tag : Entity<int>
     /// </summary>
     public Title Title { get; }
 
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="id">Id тэга.</param>
+    /// <param name="title">Наименование тэга.</param>
+    /// <exception cref="DomainException"><see cref="DomainErrorMessages.Tag"/></exception>
     public Tag(int id, string title) : base(id)
     {
         Title = new Title(title);
@@ -21,6 +27,15 @@ public class Tag : Entity<int>
         if (Title.Value.Contains(' '))
         {
             throw new DomainException(DomainErrorMessages.Tag.TagContainsWhiteSpace);
+        }
+
+        switch (Title.Value.Length)
+        {
+            case < DomainConstraints.Tag.MinLength:
+                throw new DomainException(DomainErrorMessages.Tag.TagLessThanMinLength);
+
+            case > DomainConstraints.Tag.MaxLength:
+                throw new DomainException(DomainErrorMessages.Tag.TagGreaterThanMaxLength);
         }
     }
 }

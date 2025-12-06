@@ -14,12 +14,25 @@ public static class DomainErrorMessages
         public const string TitleNullOrWhiteSpace = "Название не может быть null или пустым";
     }
 
+    /// <summary>
+    /// Ошибки тэга.
+    /// </summary>
     public static class Tag
     {
         /// <summary>
-        /// Название тэга не должно содержать пробелов.
+        /// Тэг меньше минимальной длинны.
         /// </summary>
-        public const string TagContainsWhiteSpace = "Название тэга не должно содержать пробелов.";
+        public const string TagLessThanMinLength = "Тэг меньше минимальной длинны.";
+
+        /// <summary>
+        /// Тэг больше максимальной длинны.
+        /// </summary>
+        public const string TagGreaterThanMaxLength = "Тэг больше максимальной длинны.";
+
+        /// <summary>
+        /// Тэг не должен содержать пробелов.
+        /// </summary>
+        public const string TagContainsWhiteSpace = "Тэг не должен содержать пробелов.";
 
         /// <summary>
         /// Тэг уже добавлен.

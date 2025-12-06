@@ -7,7 +7,7 @@ namespace Events.Unit.Tests.Domain.Entities;
 public class TagTests
 {
     [Fact]
-    public void Constructor_WithTitleContainingSpaces_ThrowsArgumentException()
+    public void Constructor_WithTitleContainingSpaces_ThrowsThrowsDomainException()
     {
         var createTag = () => new Tag(1, "Hello World");
 
@@ -17,12 +17,32 @@ public class TagTests
     }
 
     [Fact]
-    public void Constructor_WithTitleContainingSpacesAfterTrim_ThrowsArgumentException()
+    public void Constructor_WithTitleContainingSpacesAfterTrim_ThrowsDomainException()
     {
         var createTag = () => new Tag(1, " Hello World ");
 
         createTag.Should()
             .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.Tag.TagContainsWhiteSpace);
+    }
+
+    [Fact]
+    public void Constructor_WithTitleLengthLessThanConstraint_ThrowsDomainException()
+    {
+        var createTag = () => new Tag(1, "a");
+
+        createTag.Should()
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.Tag.TagLessThanMinLength);
+    }
+
+    [Fact]
+    public void Constructor_WithTitleLengthGreaterThanConstraint_ThrowsDomainException()
+    {
+        var createTag = () => new Tag(1, new string('a', 33));
+
+        createTag.Should()
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.Tag.TagGreaterThanMaxLength);
     }
 }
