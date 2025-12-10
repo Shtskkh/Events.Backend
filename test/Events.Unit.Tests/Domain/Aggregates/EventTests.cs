@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Entities;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using FluentAssertions;
@@ -168,26 +169,25 @@ public class EventTests
     public void AddTag_ShouldAddTag_WhenTagNotExists()
     {
         // Arrange
-        const int tagId = 1;
+        var tag = new Tag(1, "test");
 
         // Act
-        _event.AddTag(tagId);
+        _event.AddTag(tag);
 
         // Assert
         _event.Tags.Should().HaveCount(1);
-        _event.Tags.Single().TagId.Should().Be(tagId);
-        _event.Tags.Single().EventId.Should().Be(EventId);
+        _event.Tags.Single().Should().Be(tag);
     }
 
     [Fact]
     public void AddTag_ShouldThrowDomainException_WhenTagAlreadyAdded()
     {
         // Arrange
-        const int tagId = 1;
-        _event.AddTag(tagId);
+        var tag = new Tag(1, "test");
+        _event.AddTag(tag);
 
         // Act
-        var act = () => _event.AddTag(tagId);
+        var act = () => _event.AddTag(tag);
 
         // Assert
         act.Should()
@@ -199,9 +199,9 @@ public class EventTests
     public void AddTag_ShouldAllowDifferentTags()
     {
         // Act
-        _event.AddTag(1);
-        _event.AddTag(2);
-        _event.AddTag(3);
+        _event.AddTag(new Tag(1, "test"));
+        _event.AddTag(new Tag(2, "test"));
+        _event.AddTag(new Tag(3, "test"));
 
         // Assert
         _event.Tags.Should().HaveCount(3);
@@ -211,11 +211,11 @@ public class EventTests
     public void RemoveTag_ShouldRemoveTag_WhenExists()
     {
         // Arrange
-        const int tagId = 1;
-        _event.AddTag(tagId);
+        var tag = new Tag(1, "test");
+        _event.AddTag(tag);
 
         // Act
-        _event.RemoveTag(tagId);
+        _event.RemoveTag(tag);
 
         // Assert
         _event.Tags.Should().BeEmpty();
@@ -225,10 +225,10 @@ public class EventTests
     public void RemoveTag_ShouldThrowDomainException_WhenTagNotFound()
     {
         // Arrange
-        const int tagId = 1;
+        var tag = new Tag(1, "test");
 
         // Act
-        var act = () => _event.RemoveTag(tagId);
+        var act = () => _event.RemoveTag(tag);
 
         // Assert
         act.Should()

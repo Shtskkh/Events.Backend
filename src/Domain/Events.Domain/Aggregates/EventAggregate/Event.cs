@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+using Events.Domain.Entities;
 using Events.Domain.Exceptions;
 using Events.Domain.Interfaces;
 using Events.Domain.Shared;
@@ -7,7 +8,7 @@ namespace Events.Domain.Aggregates.EventAggregate;
 
 public class Event : Entity<Guid>, IAggregateRoot
 {
-    private readonly List<EventTag> _tags = [];
+    private readonly List<Tag> _tags = [];
     private readonly List<PostInExternalService> _posts = [];
 
     /// <summary>
@@ -58,7 +59,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Тэги мероприятия.
     /// </summary>
-    public IReadOnlyCollection<EventTag> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
 
     /// <summary>
     /// Посты во внешних сервисах.
@@ -150,29 +151,28 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Добавить тэг мероприятию.
     /// </summary>
-    /// <param name="tagId">Id тэга.</param>
+    /// <param name="tag">Тэг.</param>
     /// <exception cref="DomainException">Тэг уже добавлен.</exception>
-    public void AddTag(int tagId)
+    public void AddTag(Tag tag)
     {
-        var thisTagIsAdded = _tags.Any(et => et.TagId == tagId);
+        var thisTagIsAdded = _tags.Any(et => et == tag);
 
         if (thisTagIsAdded)
         {
             throw new DomainException(DomainErrorMessages.TagErrors.TagAlreadyAdded);
         }
 
-        var newTag = new EventTag(Id, tagId);
-        _tags.Add(newTag);
+        _tags.Add(tag);
     }
 
     /// <summary>
     /// Убрать тэг мероприятия.
     /// </summary>
-    /// <param name="tagId">Id тэга.</param>
+    /// <param name="tag">Тэг.</param>
     /// <exception cref="DomainException">Тэг не найден.</exception>
-    public void RemoveTag(int tagId)
+    public void RemoveTag(Tag tag)
     {
-        var eventTag = _tags.FirstOrDefault(et => et.TagId == tagId);
+        var eventTag = _tags.FirstOrDefault(et => et == tag);
 
         if (eventTag == null)
         {
