@@ -139,6 +139,15 @@ public class Event : Entity<Guid>, IAggregateRoot
     }
 
     /// <summary>
+    /// Изменить максимальное число участников мероприятия.
+    /// </summary>
+    /// <param name="newMaxParticipants">Новое максимальное число участников.</param>
+    public void ChangeMaxParticipants(int newMaxParticipants)
+    {
+        EventMaxParticipants = newMaxParticipants;
+    }
+
+    /// <summary>
     /// Добавить тэг мероприятию.
     /// </summary>
     /// <param name="tagId">Id тэга.</param>

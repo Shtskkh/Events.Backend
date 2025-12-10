@@ -24,6 +24,82 @@ public class EventTests
     );
 
     [Fact]
+    public void Constructor_ShouldSetMaxParticipantsToZero_ByDefault()
+    {
+        // Assert
+        _event.EventMaxParticipants.Should().Be(0);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(2)]
+    [InlineData(100)]
+    public void Constructor_WithValidMaxParticipants_ShouldSetCorrectly(int maxParticipants)
+    {
+        // Act
+        var @event = new Event(
+            Guid.NewGuid(),
+            EventTitle,
+            EventAnnouncement,
+            EventDescription,
+            maxParticipants,
+            EventIsPublic,
+            EventNeedsRegistration
+        );
+
+        // Assert
+        @event.EventMaxParticipants.Should().Be(maxParticipants);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(1)]
+    public void Constructor_WithInvalidMaxParticipants_ShouldThrowDomainException(int maxParticipants)
+    {
+        // Act
+        var act = () => new Event(
+            Guid.NewGuid(),
+            EventTitle,
+            EventAnnouncement,
+            EventDescription,
+            maxParticipants,
+            EventIsPublic,
+            EventNeedsRegistration
+        );
+
+        // Assert
+        act.Should()
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.EventErrors.MaxParticipantsCountLessThanMin);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(2)]
+    [InlineData(100)]
+    public void ChangeMaxParticipants_WithValidValue_ShouldChangeCorrectly(int newMaxParticipants)
+    {
+        // Act
+        _event.ChangeMaxParticipants(newMaxParticipants);
+
+        // Assert
+        _event.EventMaxParticipants.Should().Be(newMaxParticipants);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(1)]
+    public void ChangeMaxParticipants_WithInvalidValue_ShouldThrowDomainException(int newMaxParticipants)
+    {
+        // Act
+        var act = () => _event.ChangeMaxParticipants(newMaxParticipants);
+
+        act.Should()
+            .Throw<DomainException>()
+            .WithMessage(DomainErrorMessages.EventErrors.MaxParticipantsCountLessThanMin);
+    }
+
+    [Fact]
     public void ChangeTitle_ShouldChangeTitle()
     {
         // Arrange
