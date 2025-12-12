@@ -136,18 +136,16 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Добавить тэг мероприятию.
     /// </summary>
-    /// <param name="tag">Тэг.</param>
+    /// <param name="newTag">Тэг.</param>
     /// <exception cref="DomainException">Тэг уже добавлен.</exception>
-    public void AddTag(Tag tag)
+    public void AddTag(Tag newTag)
     {
-        var thisTagIsAdded = _tags.Any(et => et == tag);
-
-        if (thisTagIsAdded)
+        if (_tags.Any(et => et == newTag))
         {
             throw new DomainException(DomainErrorMessages.TagErrors.TagAlreadyAdded);
         }
 
-        _tags.Add(tag);
+        _tags.Add(newTag);
     }
 
     /// <summary>

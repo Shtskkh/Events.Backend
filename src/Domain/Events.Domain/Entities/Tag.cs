@@ -19,7 +19,9 @@ public class Tag : Entity<int>
     /// </summary>
     /// <param name="id">Id тэга.</param>
     /// <param name="title">Наименование.</param>
-    /// <exception cref="DomainException"><see cref="DomainErrorMessages.TagErrors"/></exception>
+    /// <exception cref="DomainException">
+    /// <see cref="DomainErrorMessages.TagErrors"/>
+    /// </exception>
     public Tag(int id, string title) : base(id)
     {
         Title = new Title(title);
