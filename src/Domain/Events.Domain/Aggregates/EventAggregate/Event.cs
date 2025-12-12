@@ -32,7 +32,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <exception cref="DomainException">
     /// Если максимальное число участников меньше минимального.
     /// </exception>
-    public int EventMaxParticipants
+    public int MaxParticipants
     {
         get;
         private set
@@ -40,7 +40,7 @@ public class Event : Entity<Guid>, IAggregateRoot
             field = value switch
             {
                 0 => 0,
-                > DomainConstraints.Event.MinParticipantsCount => value,
+                >= DomainConstraints.Event.MinParticipantsCount => value,
                 _ => throw new DomainException(DomainErrorMessages.EventErrors.MaxParticipantsCountLessThanMin)
             };
         }
@@ -89,7 +89,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
         Description = new EventDescription(description);
-        EventMaxParticipants = maxParticipant;
+        MaxParticipants = maxParticipant;
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
     }
@@ -145,7 +145,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="newMaxParticipants">Новое максимальное число участников.</param>
     public void ChangeMaxParticipants(int newMaxParticipants)
     {
-        EventMaxParticipants = newMaxParticipants;
+        MaxParticipants = newMaxParticipants;
     }
 
     /// <summary>

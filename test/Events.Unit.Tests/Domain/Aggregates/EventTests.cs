@@ -25,13 +25,6 @@ public class EventTests
         isNeedsRegistration: EventNeedsRegistration
     );
 
-    [Fact]
-    public void Constructor_ShouldSetMaxParticipantsToZero_ByDefault()
-    {
-        // Assert
-        _event.EventMaxParticipants.Should().Be(0);
-    }
-
     [Theory]
     [InlineData(0)]
     [InlineData(2)]
@@ -50,7 +43,7 @@ public class EventTests
         );
 
         // Assert
-        @event.EventMaxParticipants.Should().Be(maxParticipants);
+        @event.MaxParticipants.Should().Be(maxParticipants);
     }
 
     [Theory]
@@ -85,7 +78,7 @@ public class EventTests
         _event.ChangeMaxParticipants(newMaxParticipants);
 
         // Assert
-        _event.EventMaxParticipants.Should().Be(newMaxParticipants);
+        _event.MaxParticipants.Should().Be(newMaxParticipants);
     }
 
     [Theory]

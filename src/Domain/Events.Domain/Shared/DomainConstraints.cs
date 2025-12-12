@@ -13,7 +13,7 @@ public static class DomainConstraints
         /// <summary>
         /// Минимальное число участников мероприятия.
         /// </summary>
-        public const int MinParticipantsCount = 1;
+        public const int MinParticipantsCount = 2;
     }
 
     /// <summary>
