@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Shared;
 
 namespace Events.Unit.Tests.Domain.Aggregates.Helpers;
 
@@ -8,7 +9,7 @@ public class EventTestBuilder
     private string _title = "Test title";
     private string _announcement = "Test announcement";
     private string _description = "Test description";
-    private int _maxParticipant = 0;
+    private int _maxParticipant = DomainConstraints.Event.MinParticipantsCount;
     private bool _isPublic = false;
     private bool _isNeedsRegistration = false;
 
