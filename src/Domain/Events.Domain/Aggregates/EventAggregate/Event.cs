@@ -29,22 +29,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Максимальное число участников.
     /// </summary>
-    /// <exception cref="DomainException">
-    /// Если максимальное число участников меньше минимального.
-    /// </exception>
-    public int MaxParticipants
-    {
-        get;
-        private set
-        {
-            field = value switch
-            {
-                0 => 0,
-                >= DomainConstraints.Event.MinParticipantsCount => value,
-                _ => throw new DomainException(DomainErrorMessages.EventErrors.MaxParticipantsCountLessThanMin)
-            };
-        }
-    }
+    public EventMaxParticipants MaxParticipants { get; private set; }
 
     /// <summary>
     /// Флаг публичности.
@@ -73,7 +58,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
-    /// <param name="maxParticipant">Максимальное число участников.</param>
+    /// <param name="maxParticipants">Максимальное число участников.</param>
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
     public Event(
@@ -81,7 +66,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         string title,
         string announcement,
         string description,
-        int maxParticipant,
+        int maxParticipants,
         bool isPublic,
         bool isNeedsRegistration
     ) : base(id)
@@ -89,7 +74,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
         Description = new EventDescription(description);
-        MaxParticipants = maxParticipant;
+        MaxParticipants = new EventMaxParticipants(maxParticipants);
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
     }
@@ -145,7 +130,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="newMaxParticipants">Новое максимальное число участников.</param>
     public void ChangeMaxParticipants(int newMaxParticipants)
     {
-        MaxParticipants = newMaxParticipants;
+        MaxParticipants = new EventMaxParticipants(newMaxParticipants);
     }
 
     /// <summary>

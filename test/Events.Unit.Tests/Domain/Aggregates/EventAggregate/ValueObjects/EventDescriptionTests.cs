@@ -3,15 +3,17 @@ using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using FluentAssertions;
 
-namespace Events.Unit.Tests.Domain.Aggregates.ValueObjects;
+namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.ValueObjects;
 
 public class EventDescriptionTests
 {
     [Fact]
     public void Constructor_WithNullDescription_ThrowsDomainException()
     {
+        // Act
         var createEventDescription = () => new EventDescription(null);
 
+        // Assert
         createEventDescription.Should()
             .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
@@ -20,8 +22,10 @@ public class EventDescriptionTests
     [Fact]
     public void Constructor_WithEmptyDescription_ThrowsDomainException()
     {
+        // Act
         var createEventDescription = () => new EventDescription(string.Empty);
 
+        // Assert
         createEventDescription.Should()
             .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);
@@ -30,8 +34,10 @@ public class EventDescriptionTests
     [Fact]
     public void Constructor_WithWhitespaceOnlyDescription_ThrowsDomainException()
     {
+        // Act
         var createEventDescription = () => new EventDescription(new string(' ', 10));
 
+        // Assert
         createEventDescription.Should()
             .Throw<DomainException>()
             .WithMessage(DomainErrorMessages.EventDescriptionErrors.EventDescriptionNullOrWhiteSpace);

@@ -1,7 +1,7 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Shared;
 
-namespace Events.Unit.Tests.Domain.Aggregates.Helpers;
+namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.Helpers;
 
 public class EventTestBuilder
 {
@@ -9,9 +9,9 @@ public class EventTestBuilder
     private string _title = "Test title";
     private string _announcement = "Test announcement";
     private string _description = "Test description";
-    private int _maxParticipant = DomainConstraints.Event.MinParticipantsCount;
-    private bool _isPublic = false;
-    private bool _isNeedsRegistration = false;
+    private int _maxParticipants = DomainConstraints.Event.MinParticipantsCount;
+    private bool _isPublic = true;
+    private bool _needsRegistration = true;
 
     public EventTestBuilder WithId(Guid id)
     {
@@ -37,9 +37,9 @@ public class EventTestBuilder
         return this;
     }
 
-    public EventTestBuilder WithMaxParticipant(int maxParticipant)
+    public EventTestBuilder WithMaxParticipants(int maxParticipants)
     {
-        _maxParticipant = maxParticipant;
+        _maxParticipants = maxParticipants;
         return this;
     }
 
@@ -49,9 +49,9 @@ public class EventTestBuilder
         return this;
     }
 
-    public EventTestBuilder WithIsNeedsRegistration(bool isNeedsRegistration)
+    public EventTestBuilder WithNeedsRegistration(bool needsRegistration)
     {
-        _isNeedsRegistration = isNeedsRegistration;
+        _needsRegistration = needsRegistration;
         return this;
     }
 
@@ -62,9 +62,9 @@ public class EventTestBuilder
             title: _title,
             announcement: _announcement,
             description: _description,
-            maxParticipant: _maxParticipant,
+            maxParticipants: _maxParticipants,
             isPublic: _isPublic,
-            isNeedsRegistration: _isNeedsRegistration
+            isNeedsRegistration: _needsRegistration
         );
     }
 }
