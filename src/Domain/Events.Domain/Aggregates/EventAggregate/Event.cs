@@ -81,9 +81,9 @@ public class Event : Entity<Guid>, IAggregateRoot
         string title,
         string announcement,
         string description,
-        int maxParticipant = 0,
-        bool isPublic = false,
-        bool isNeedsRegistration = false
+        int maxParticipant,
+        bool isPublic,
+        bool isNeedsRegistration
     ) : base(id)
     {
         Title = new EventTitle(title);

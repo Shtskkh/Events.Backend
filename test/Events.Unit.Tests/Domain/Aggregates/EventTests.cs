@@ -20,6 +20,7 @@ public class EventTests
         title: EventTitle,
         announcement: EventAnnouncement,
         description: EventDescription,
+        maxParticipant: 0,
         isPublic: EventIsPublic,
         isNeedsRegistration: EventNeedsRegistration
     );
