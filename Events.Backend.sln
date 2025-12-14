@@ -1,8 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F646F9AA-4325-4515-A69E-55A237801F8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{E23B933C-353A-4C92-82C0-60182ACE072B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Domain", "src\Domain\Events.Domain\Events.Domain.csproj", "{983083C5-CC18-4E34-99F1-7303304FDD68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{087401EC-1BB8-4F79-9A4B-6115D89CE6C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Unit.Tests", "test\Events.Unit.Tests\Events.Unit.Tests.csproj", "{043F4148-F792-4D56-B225-1114561E7838}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E23B933C-353A-4C92-82C0-60182ACE072B} = {F646F9AA-4325-4515-A69E-55A237801F8E}
+		{983083C5-CC18-4E34-99F1-7303304FDD68} = {E23B933C-353A-4C92-82C0-60182ACE072B}
+		{043F4148-F792-4D56-B225-1114561E7838} = {087401EC-1BB8-4F79-9A4B-6115D89CE6C0}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{983083C5-CC18-4E34-99F1-7303304FDD68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{983083C5-CC18-4E34-99F1-7303304FDD68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{983083C5-CC18-4E34-99F1-7303304FDD68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{983083C5-CC18-4E34-99F1-7303304FDD68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{043F4148-F792-4D56-B225-1114561E7838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{043F4148-F792-4D56-B225-1114561E7838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{043F4148-F792-4D56-B225-1114561E7838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{043F4148-F792-4D56-B225-1114561E7838}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

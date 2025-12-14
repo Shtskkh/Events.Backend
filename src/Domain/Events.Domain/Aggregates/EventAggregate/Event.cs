@@ -1,0 +1,169 @@
+﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+using Events.Domain.Entities;
+using Events.Domain.Exceptions;
+using Events.Domain.Interfaces;
+using Events.Domain.Shared;
+
+namespace Events.Domain.Aggregates.EventAggregate;
+
+public class Event : Entity<Guid>, IAggregateRoot
+{
+    /// <summary>
+    /// Название.
+    /// </summary>
+    public EventTitle Title { get; private set; }
+
+    /// <summary>
+    /// Анонс.
+    /// </summary>
+    public EventAnnouncement Announcement { get; private set; }
+
+    /// <summary>
+    /// Описание.
+    /// </summary>
+    public EventDescription Description { get; private set; }
+
+    /// <summary>
+    /// Максимальное число участников.
+    /// </summary>
+    public EventMaxParticipants MaxParticipants { get; private set; }
+
+    /// <summary>
+    /// Флаг публичности.
+    /// </summary>
+    public bool IsPublic { get; private set; }
+
+    /// <summary>
+    /// Флаг необходимости регистрации.
+    /// </summary>
+    public bool IsNeedsRegistration { get; private set; }
+
+    private readonly List<Tag> _tags = [];
+
+    /// <summary>
+    /// Тэги мероприятия.
+    /// </summary>
+    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+
+    /// <summary>
+    /// Организатор мероприятия (создатель)
+    /// </summary>
+    public Guid OrganizerId { get; private set; }
+
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="id">Id.</param>
+    /// <param name="title">Название.</param>
+    /// <param name="announcement">Анонс.</param>
+    /// <param name="description">Описание.</param>
+    /// <param name="maxParticipants">Максимальное число участников.</param>
+    /// <param name="isPublic">Флаг публичности.</param>
+    /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
+    /// <param name="organizerId">Организатор мероприятия (создатель).</param>
+    public Event(
+        Guid id,
+        string title,
+        string announcement,
+        string description,
+        int maxParticipants,
+        bool isPublic,
+        bool isNeedsRegistration,
+        Guid organizerId
+    ) : base(id)
+    {
+        Title = new EventTitle(title);
+        Announcement = new EventAnnouncement(announcement);
+        Description = new EventDescription(description);
+        MaxParticipants = new EventMaxParticipants(maxParticipants);
+        IsPublic = isPublic;
+        IsNeedsRegistration = isNeedsRegistration;
+        OrganizerId = organizerId;
+    }
+
+    /// <summary>
+    /// Изменить название мероприятия.
+    /// </summary>
+    /// <param name="title">Новое название.</param>
+    public void ChangeTitle(string title)
+    {
+        Title = new EventTitle(title);
+    }
+
+    /// <summary>
+    /// Изменить анонс мероприятия.
+    /// </summary>
+    /// <param name="announcement">Новый анонс.</param>
+    public void ChangeAnnouncement(string announcement)
+    {
+        Announcement = new EventAnnouncement(announcement);
+    }
+
+    /// <summary>
+    /// Изменить описание мероприятия.
+    /// </summary>
+    /// <param name="description">Новое описание.</param>
+    public void ChangeDescription(string description)
+    {
+        Description = new EventDescription(description);
+    }
+
+    /// <summary>
+    /// Изменить статус публичности мероприятия.
+    /// </summary>
+    /// <param name="flag">True или false.</param>
+    public void ChangeIsPublic(bool flag)
+    {
+        IsPublic = flag;
+    }
+
+    /// <summary>
+    /// Изменить статус необходимости регистрации.
+    /// </summary>
+    /// <param name="flag">True или false.</param>
+    public void ChangeIsNeedsRegistration(bool flag)
+    {
+        IsNeedsRegistration = flag;
+    }
+
+    /// <summary>
+    /// Изменить максимальное число участников мероприятия.
+    /// </summary>
+    /// <param name="newMaxParticipants">Новое максимальное число участников.</param>
+    public void ChangeMaxParticipants(int newMaxParticipants)
+    {
+        MaxParticipants = new EventMaxParticipants(newMaxParticipants);
+    }
+
+    /// <summary>
+    /// Добавить тэг мероприятию.
+    /// </summary>
+    /// <param name="newTag">Тэг.</param>
+    /// <exception cref="DomainException">Тэг уже добавлен.</exception>
+    public void AddTag(Tag newTag)
+    {
+        if (_tags.Any(et => et == newTag))
+        {
+            throw new DomainException(DomainErrorMessages.TagErrors.TagAlreadyAdded);
+        }
+
+        _tags.Add(newTag);
+    }
+
+    /// <summary>
+    /// Убрать тэг мероприятия.
+    /// </summary>
+    /// <param name="tag">Тэг.</param>
+    /// <exception cref="DomainException">Тэг не найден.</exception>
+    public void RemoveTag(Tag tag)
+    {
+        var eventTag = _tags.FirstOrDefault(et => et == tag);
+
+        if (eventTag == null)
+        {
+            throw new DomainException(DomainErrorMessages.TagErrors.TagNotFound);
+        }
+
+        _tags.Remove(eventTag);
+    }
+}
