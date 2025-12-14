@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Domain.Shared;
 
 namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.Helpers;
@@ -12,6 +13,7 @@ public class EventTestBuilder
     private int _maxParticipants = DomainConstraints.Event.MinParticipantsCount;
     private bool _isPublic = true;
     private bool _needsRegistration = true;
+    private EventFormat _format = EventFormat.Offline;
 
     public EventTestBuilder WithId(Guid id)
     {
@@ -55,6 +57,12 @@ public class EventTestBuilder
         return this;
     }
 
+    public EventTestBuilder WithFormat(EventFormat format)
+    {
+        _format = format;
+        return this;
+    }
+
     public Event Build()
     {
         return new Event(
@@ -65,7 +73,8 @@ public class EventTestBuilder
             maxParticipants: _maxParticipants,
             isPublic: _isPublic,
             isNeedsRegistration: _needsRegistration,
-            organizerId: Guid.NewGuid()
+            organizerId: Guid.NewGuid(),
+            eventFormat: _format
         );
     }
 }

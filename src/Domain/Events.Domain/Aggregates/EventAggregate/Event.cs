@@ -29,6 +29,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventMaxParticipants MaxParticipants { get; private set; }
 
     /// <summary>
+    /// Формат мероприятия.
+    /// </summary>
+    public EventFormat Format { get; private set; }
+
+    /// <summary>
     /// Флаг публичности.
     /// </summary>
     public bool IsPublic { get; private set; }
@@ -61,6 +66,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="organizerId">Организатор мероприятия (создатель).</param>
+    /// <param name="eventFormat">Формат мероприятия.</param>
     public Event(
         Guid id,
         string title,
@@ -69,7 +75,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         int maxParticipants,
         bool isPublic,
         bool isNeedsRegistration,
-        Guid organizerId
+        Guid organizerId,
+        EventFormat eventFormat
     ) : base(id)
     {
         Title = new EventTitle(title);
@@ -79,6 +86,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
         OrganizerId = organizerId;
+        Format = eventFormat;
     }
 
     /// <summary>
@@ -133,6 +141,15 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeMaxParticipants(int newMaxParticipants)
     {
         MaxParticipants = new EventMaxParticipants(newMaxParticipants);
+    }
+
+    /// <summary>
+    /// Изменить формат мероприятия.
+    /// </summary>
+    /// <param name="eventFormat">Новый формат.</param>
+    public void ChangeFormat(EventFormat eventFormat)
+    {
+        Format = eventFormat;
     }
 
     /// <summary>
