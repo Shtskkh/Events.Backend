@@ -64,7 +64,8 @@ public class EventTestBuilder
             description: _description,
             maxParticipants: _maxParticipants,
             isPublic: _isPublic,
-            isNeedsRegistration: _needsRegistration
+            isNeedsRegistration: _needsRegistration,
+            organizerId: Guid.NewGuid()
         );
     }
 }
