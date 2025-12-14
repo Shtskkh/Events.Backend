@@ -46,6 +46,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
 
     /// <summary>
+    /// Организатор мероприятия (создатель)
+    /// </summary>
+    public Guid OrganizerId { get; private set; }
+
+    /// <summary>
     /// Конструктор.
     /// </summary>
     /// <param name="id">Id.</param>
@@ -55,6 +60,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="maxParticipants">Максимальное число участников.</param>
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
+    /// <param name="organizerId">Организатор мероприятия (создатель).</param>
     public Event(
         Guid id,
         string title,
@@ -62,7 +68,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         string description,
         int maxParticipants,
         bool isPublic,
-        bool isNeedsRegistration
+        bool isNeedsRegistration,
+        Guid organizerId
     ) : base(id)
     {
         Title = new EventTitle(title);
@@ -71,6 +78,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         MaxParticipants = new EventMaxParticipants(maxParticipants);
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
+        OrganizerId = organizerId;
     }
 
     /// <summary>
