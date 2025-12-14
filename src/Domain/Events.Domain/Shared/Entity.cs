@@ -13,6 +13,11 @@ public abstract class Entity<TKey>(TKey id)
     /// </summary>
     public TKey Id => id;
 
+    /// <summary>
+    /// Дата и время создания сущности.
+    /// </summary>
+    public readonly DateTimeOffset CreatedAt = CurrentDateTimeWithOffset.Now();
+
     public override bool Equals(object? obj)
     {
         if (obj is not Entity<TKey> other) return false;
