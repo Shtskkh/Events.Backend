@@ -8,9 +8,6 @@ namespace Events.Domain.Aggregates.EventAggregate;
 
 public class Event : Entity<Guid>, IAggregateRoot
 {
-    private readonly List<Tag> _tags = [];
-    private readonly List<PostInExternalService> _posts = [];
-
     /// <summary>
     /// Название.
     /// </summary>
@@ -41,15 +38,12 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// </summary>
     public bool IsNeedsRegistration { get; private set; }
 
+    private readonly List<Tag> _tags = [];
+
     /// <summary>
     /// Тэги мероприятия.
     /// </summary>
     public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
-
-    /// <summary>
-    /// Посты во внешних сервисах.
-    /// </summary>
-    public IReadOnlyCollection<PostInExternalService> Posts => _posts.AsReadOnly();
 
     /// <summary>
     /// Конструктор.
@@ -163,34 +157,5 @@ public class Event : Entity<Guid>, IAggregateRoot
         }
 
         _tags.Remove(eventTag);
-    }
-
-    /// <summary>
-    /// Добавить пост во внешнем сервисе.
-    /// </summary>
-    /// <param name="postId">Id поста.</param>
-    /// <param name="externalServiceId">Id внешнего сервиса.</param>
-    /// <param name="link">Ссылка на пост.</param>
-    public void AddPost(int postId, int externalServiceId, Uri link)
-    {
-        var post = new PostInExternalService(postId, Id, externalServiceId, link);
-        _posts.Add(post);
-    }
-
-    /// <summary>
-    /// Удалить пост.
-    /// </summary>
-    /// <param name="postId">Id поста.</param>
-    /// <exception cref="DomainException">Пост во внешнем сервисе не найден.</exception>
-    public void RemovePost(int postId)
-    {
-        var post = _posts.FirstOrDefault(p => p.Id == postId);
-
-        if (post == null)
-        {
-            throw new DomainException(DomainErrorMessages.PostErrors.PostNotFound);
-        }
-
-        _posts.Remove(post);
     }
 }
