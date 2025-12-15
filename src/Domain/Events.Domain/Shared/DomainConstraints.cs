@@ -14,6 +14,11 @@ public static class DomainConstraints
         /// Минимальное число участников мероприятия.
         /// </summary>
         public const int MinParticipantsCount = 2;
+
+        /// <summary>
+        /// Максимальное число дней мероприятия.
+        /// </summary>
+        public const int MaxDurationInDays = 7;
     }
 
     /// <summary>

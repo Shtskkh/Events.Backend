@@ -29,6 +29,16 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventMaxParticipants MaxParticipants { get; private set; }
 
     /// <summary>
+    /// Дата и время начала мероприятия.
+    /// </summary>
+    public DateTimeOffset StarDateTime { get; private set; }
+
+    /// <summary>
+    /// Дата и время окончания мероприятия.
+    /// </summary>
+    public DateTimeOffset EndDateTime { get; private set; }
+
+    /// <summary>
     /// Формат мероприятия.
     /// </summary>
     public EventFormat Format { get; private set; }
@@ -68,6 +78,8 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
+    /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="maxParticipants">Максимальное число участников.</param>
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
@@ -77,6 +89,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         string title,
         string announcement,
         string description,
+        DateTimeOffset startDateTime,
+        DateTimeOffset endDateTime,
         int maxParticipants,
         bool isPublic,
         bool isNeedsRegistration,
@@ -92,6 +106,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         IsNeedsRegistration = isNeedsRegistration;
         OrganizerId = organizerId;
         Format = eventFormat;
+
+        SetDateRange(startDateTime, endDateTime);
     }
 
     /// <summary>
@@ -119,6 +135,22 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeDescription(string description)
     {
         Description = new EventDescription(description);
+    }
+
+    private void SetDateRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        if (start >= end)
+        {
+            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.StartDateCannotBeLaterThanEndDate);
+        }
+
+        if (end - start < TimeSpan.FromDays(DomainConstraints.Event.MaxDurationInDays))
+        {
+            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.StartDateCannotBeLaterThanEndDate);
+        }
+
+        StarDateTime = start;
+        EndDateTime = end;
     }
 
     /// <summary>
