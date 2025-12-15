@@ -66,7 +66,6 @@ public class EventTestBuilder
     public Event Build()
     {
         return new Event(
-            id: _id,
             title: _title,
             announcement: _announcement,
             description: _description,

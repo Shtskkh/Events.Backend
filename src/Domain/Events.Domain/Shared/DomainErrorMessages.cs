@@ -70,9 +70,9 @@ public static class DomainErrorMessages
     }
 
     /// <summary>
-    /// Ошибки поста.
+    /// Ошибки поста мероприятия.
     /// </summary>
-    public static class PostErrors
+    public static class EventPostErrors
     {
         public const string PostNotFound = "Пост не найден.";
     }

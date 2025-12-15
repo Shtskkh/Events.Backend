@@ -48,7 +48,14 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Тэги мероприятия.
     /// </summary>
-    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags => _tags;
+
+    private readonly List<EventPost> _posts = [];
+
+    /// <summary>
+    /// Посты во внешних сервисах.
+    /// </summary>
+    public IReadOnlyCollection<EventPost> Posts => _posts;
 
     /// <summary>
     /// Организатор мероприятия (создатель)
@@ -58,7 +65,6 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Конструктор.
     /// </summary>
-    /// <param name="id">Id.</param>
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
@@ -68,7 +74,6 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="organizerId">Организатор мероприятия (создатель).</param>
     /// <param name="eventFormat">Формат мероприятия.</param>
     public Event(
-        Guid id,
         string title,
         string announcement,
         string description,
@@ -77,7 +82,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         bool isNeedsRegistration,
         Guid organizerId,
         EventFormat eventFormat
-    ) : base(id)
+    ) : base(Guid.NewGuid())
     {
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
@@ -182,5 +187,35 @@ public class Event : Entity<Guid>, IAggregateRoot
         }
 
         _tags.Remove(eventTag);
+    }
+
+    /// <summary>
+    /// Добавить пост.
+    /// </summary>
+    /// <param name="externalService">Внешний сервис.</param>
+    /// <param name="link">Ссылка во внешнем сервисе.</param>
+    public void AddPost(ExternalService externalService, Uri link)
+    {
+        var post = new EventPost(externalService, link);
+        _posts.Add(post);
+    }
+
+    /// <summary>
+    /// Удалить пост.
+    /// </summary>
+    /// <param name="post">Пост для удаления.</param>
+    /// <exception cref="DomainException">
+    ///     <see cref="DomainErrorMessages.EventPostErrors.PostNotFound"/>
+    /// </exception>
+    public void RemovePost(EventPost post)
+    {
+        var eventPost = _posts.FirstOrDefault(et => et == post);
+
+        if (eventPost == null)
+        {
+            throw new DomainException(DomainErrorMessages.EventPostErrors.PostNotFound);
+        }
+
+        _posts.Remove(eventPost);
     }
 }
