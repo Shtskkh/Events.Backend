@@ -144,9 +144,9 @@ public class Event : Entity<Guid>, IAggregateRoot
             throw new DomainException(DomainErrorMessages.EventDateTimeErrors.StartDateCannotBeLaterThanEndDate);
         }
 
-        if (end - start < TimeSpan.FromDays(DomainConstraints.Event.MaxDurationInDays))
+        if (end - start > TimeSpan.FromDays(DomainConstraints.Event.MaxDurationInDays))
         {
-            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.StartDateCannotBeLaterThanEndDate);
+            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.DurationGreaterThanMax);
         }
 
         StarDateTime = start;

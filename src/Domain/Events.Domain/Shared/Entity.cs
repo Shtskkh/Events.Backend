@@ -1,22 +1,39 @@
+using Events.Domain.Shared.Extensions;
+
 namespace Events.Domain.Shared;
 
 /// <summary>
-/// Абстрактный класс сущностей.
+/// Абстрактный класс сущности.
 /// </summary>
-/// <param name="id">Идентификатор.</param>
 /// <typeparam name="TKey">Тип идентификатора.</typeparam>
-public abstract class Entity<TKey>(TKey id)
+public abstract class Entity<TKey>
     where TKey : IEquatable<TKey>
 {
     /// <summary>
     /// Идентификатор сущности.
     /// </summary>
-    public TKey Id => id;
+    public TKey Id { get; }
 
     /// <summary>
     /// Дата и время создания сущности.
     /// </summary>
-    public readonly DateTimeOffset CreatedAt = CurrentDateTimeWithOffset.Now();
+    public readonly DateTimeOffset CreatedAt;
+
+    /// <summary>
+    /// Дата и время обновления сущности.
+    /// </summary>
+    public DateTimeOffset UpdatedAt;
+
+    /// <summary>
+    /// Конструктор.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    protected Entity(TKey id)
+    {
+        Id = id;
+        CreatedAt = DateTimeOffset.UtcNowWithServerOffset();
+        UpdatedAt = DateTimeOffset.UtcNowWithServerOffset();
+    }
 
     public override bool Equals(object? obj)
     {
@@ -28,7 +45,7 @@ public abstract class Entity<TKey>(TKey id)
         return Id.Equals(other.Id);
     }
 
-    public override int GetHashCode() => id.GetHashCode();
+    public override int GetHashCode() => Id.GetHashCode();
 
     /// <summary>
     /// Проверка равенства сущностей.
