@@ -137,6 +137,16 @@ public class Event : Entity<Guid>, IAggregateRoot
         Description = new EventDescription(description);
     }
 
+    /// <summary>
+    /// Изменить дату начала и окончания мероприятия.
+    /// </summary>
+    /// <param name="start">Дата и время начала.</param>
+    /// <param name="end">Дата и время окончания.</param>
+    public void ChangeDateTimeRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        SetDateTimeRange(start, end);
+    }
+
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
         if (start >= end)

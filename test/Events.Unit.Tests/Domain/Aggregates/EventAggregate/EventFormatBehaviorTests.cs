@@ -1,5 +1,4 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Unit.Tests.Domain.Aggregates.EventAggregate.Helpers;
 using FluentAssertions;
 
