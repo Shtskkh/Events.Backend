@@ -107,7 +107,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         OrganizerId = organizerId;
         Format = eventFormat;
 
-        SetDateRange(startDateTime, endDateTime);
+        SetDateTimeRange(startDateTime, endDateTime);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Description = new EventDescription(description);
     }
 
-    private void SetDateRange(DateTimeOffset start, DateTimeOffset end)
+    private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
         if (start >= end)
         {
