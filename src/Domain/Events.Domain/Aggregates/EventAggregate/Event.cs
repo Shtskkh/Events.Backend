@@ -44,6 +44,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventFormat Format { get; private set; }
 
     /// <summary>
+    /// Тип мероприятия.
+    /// </summary>
+    public EventType Type { get; private set; }
+
+    /// <summary>
     /// Флаг публичности.
     /// </summary>
     public bool IsPublic { get; private set; }
@@ -95,7 +100,8 @@ public class Event : Entity<Guid>, IAggregateRoot
         bool isPublic,
         bool isNeedsRegistration,
         Guid organizerId,
-        EventFormat eventFormat
+        EventFormat eventFormat,
+        EventType eventType
     ) : base(Guid.NewGuid())
     {
         Title = new EventTitle(title);
@@ -106,6 +112,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         IsNeedsRegistration = isNeedsRegistration;
         OrganizerId = organizerId;
         Format = eventFormat;
+        Type = eventType;
 
         SetDateTimeRange(startDateTime, endDateTime);
     }
@@ -197,6 +204,15 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeFormat(EventFormat eventFormat)
     {
         Format = eventFormat;
+    }
+
+    /// <summary>
+    /// Изменить тип мероприятия.
+    /// </summary>
+    /// <param name="eventType">Новый тип.</param>
+    public void ChangeType(EventType eventType)
+    {
+        Type = eventType;
     }
 
     /// <summary>

@@ -16,6 +16,7 @@ public class EventTestBuilder
     private bool _isPublic = true;
     private bool _needsRegistration = true;
     private EventFormat _format = EventFormat.Offline;
+    private EventType _type = new EventType(1, "Test type");
 
     public EventTestBuilder WithId(Guid id)
     {
@@ -84,7 +85,8 @@ public class EventTestBuilder
             isPublic: _isPublic,
             isNeedsRegistration: _needsRegistration,
             organizerId: Guid.NewGuid(),
-            eventFormat: _format
+            eventFormat: _format,
+            eventType: _type
         );
     }
 }
