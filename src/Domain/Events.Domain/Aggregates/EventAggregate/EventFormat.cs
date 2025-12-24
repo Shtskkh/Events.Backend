@@ -26,10 +26,10 @@ public class EventFormat : Entity<int>
     /// <summary>
     /// Именование формата.
     /// </summary>
-    public Title Value { get; }
+    public Title Title { get; }
 
     private EventFormat(int id, string title) : base(id)
     {
-        Value = new Title(title);
+        Title = new Title(title);
     }
 }
