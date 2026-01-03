@@ -70,10 +70,22 @@ public static class DomainErrorMessages
     }
 
     /// <summary>
-    /// Ошибки поста.
+    /// Ошибки поста мероприятия.
     /// </summary>
-    public static class PostErrors
+    public static class EventPostErrors
     {
         public const string PostNotFound = "Пост не найден.";
+    }
+
+    /// <summary>
+    /// Ошибки времени мероприятия.
+    /// </summary>
+    public static class EventDateTimeErrors
+    {
+        public const string StartDateCannotBeLaterThanEndDate =
+            "Дата начала мероприятия не может быть позже даты окончания.";
+
+        public const string DurationGreaterThanMax =
+            "Продолжительность мероприятия не может быть больше максимально допустимой";
     }
 }

@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.EventAggregate;
+﻿using System.Diagnostics;
+using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Shared;
 
 namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.Helpers;
@@ -10,8 +11,12 @@ public class EventTestBuilder
     private string _announcement = "Test announcement";
     private string _description = "Test description";
     private int _maxParticipants = DomainConstraints.Event.MinParticipantsCount;
+    private DateTimeOffset _startTime = DateTimeOffset.Now;
+    private DateTimeOffset _endTime = DateTimeOffset.Now + TimeSpan.FromDays(1);
     private bool _isPublic = true;
     private bool _needsRegistration = true;
+    private EventFormat _format = EventFormat.Offline;
+    private EventType _type = new EventType(1, "Test type");
 
     public EventTestBuilder WithId(Guid id)
     {
@@ -43,6 +48,13 @@ public class EventTestBuilder
         return this;
     }
 
+    public EventTestBuilder WithDateTimeRange(DateTimeOffset startTime, DateTimeOffset endTime)
+    {
+        _startTime = startTime;
+        _endTime = endTime;
+        return this;
+    }
+
     public EventTestBuilder WithIsPublic(bool isPublic)
     {
         _isPublic = isPublic;
@@ -55,17 +67,26 @@ public class EventTestBuilder
         return this;
     }
 
+    public EventTestBuilder WithFormat(EventFormat format)
+    {
+        _format = format;
+        return this;
+    }
+
     public Event Build()
     {
         return new Event(
-            id: _id,
             title: _title,
             announcement: _announcement,
             description: _description,
             maxParticipants: _maxParticipants,
+            startDateTime: _startTime,
+            endDateTime: _endTime,
             isPublic: _isPublic,
             isNeedsRegistration: _needsRegistration,
-            organizerId: Guid.NewGuid()
+            organizerId: Guid.NewGuid(),
+            eventFormat: _format,
+            eventType: _type
         );
     }
 }

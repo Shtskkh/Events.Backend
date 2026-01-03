@@ -29,6 +29,26 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventMaxParticipants MaxParticipants { get; private set; }
 
     /// <summary>
+    /// Дата и время начала мероприятия.
+    /// </summary>
+    public DateTimeOffset StarDateTime { get; private set; }
+
+    /// <summary>
+    /// Дата и время окончания мероприятия.
+    /// </summary>
+    public DateTimeOffset EndDateTime { get; private set; }
+
+    /// <summary>
+    /// Формат мероприятия.
+    /// </summary>
+    public EventFormat Format { get; private set; }
+
+    /// <summary>
+    /// Тип мероприятия.
+    /// </summary>
+    public EventType Type { get; private set; }
+
+    /// <summary>
     /// Флаг публичности.
     /// </summary>
     public bool IsPublic { get; private set; }
@@ -43,7 +63,14 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Тэги мероприятия.
     /// </summary>
-    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags => _tags;
+
+    private readonly List<EventPost> _posts = [];
+
+    /// <summary>
+    /// Посты во внешних сервисах.
+    /// </summary>
+    public IReadOnlyCollection<EventPost> Posts => _posts;
 
     /// <summary>
     /// Организатор мероприятия (создатель)
@@ -53,24 +80,29 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     /// Конструктор.
     /// </summary>
-    /// <param name="id">Id.</param>
     /// <param name="title">Название.</param>
     /// <param name="announcement">Анонс.</param>
     /// <param name="description">Описание.</param>
+    /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="maxParticipants">Максимальное число участников.</param>
     /// <param name="isPublic">Флаг публичности.</param>
     /// <param name="isNeedsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="organizerId">Организатор мероприятия (создатель).</param>
+    /// <param name="eventFormat">Формат мероприятия.</param>
     public Event(
-        Guid id,
         string title,
         string announcement,
         string description,
+        DateTimeOffset startDateTime,
+        DateTimeOffset endDateTime,
         int maxParticipants,
         bool isPublic,
         bool isNeedsRegistration,
-        Guid organizerId
-    ) : base(id)
+        Guid organizerId,
+        EventFormat eventFormat,
+        EventType eventType
+    ) : base(Guid.NewGuid())
     {
         Title = new EventTitle(title);
         Announcement = new EventAnnouncement(announcement);
@@ -79,6 +111,10 @@ public class Event : Entity<Guid>, IAggregateRoot
         IsPublic = isPublic;
         IsNeedsRegistration = isNeedsRegistration;
         OrganizerId = organizerId;
+        Format = eventFormat;
+        Type = eventType;
+
+        SetDateTimeRange(startDateTime, endDateTime);
     }
 
     /// <summary>
@@ -109,6 +145,32 @@ public class Event : Entity<Guid>, IAggregateRoot
     }
 
     /// <summary>
+    /// Изменить дату начала и окончания мероприятия.
+    /// </summary>
+    /// <param name="start">Дата и время начала.</param>
+    /// <param name="end">Дата и время окончания.</param>
+    public void ChangeDateTimeRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        SetDateTimeRange(start, end);
+    }
+
+    private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        if (start >= end)
+        {
+            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.StartDateCannotBeLaterThanEndDate);
+        }
+
+        if (end - start > TimeSpan.FromDays(DomainConstraints.Event.MaxDurationInDays))
+        {
+            throw new DomainException(DomainErrorMessages.EventDateTimeErrors.DurationGreaterThanMax);
+        }
+
+        StarDateTime = start;
+        EndDateTime = end;
+    }
+
+    /// <summary>
     /// Изменить статус публичности мероприятия.
     /// </summary>
     /// <param name="flag">True или false.</param>
@@ -133,6 +195,24 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeMaxParticipants(int newMaxParticipants)
     {
         MaxParticipants = new EventMaxParticipants(newMaxParticipants);
+    }
+
+    /// <summary>
+    /// Изменить формат мероприятия.
+    /// </summary>
+    /// <param name="eventFormat">Новый формат.</param>
+    public void ChangeFormat(EventFormat eventFormat)
+    {
+        Format = eventFormat;
+    }
+
+    /// <summary>
+    /// Изменить тип мероприятия.
+    /// </summary>
+    /// <param name="eventType">Новый тип.</param>
+    public void ChangeType(EventType eventType)
+    {
+        Type = eventType;
     }
 
     /// <summary>
@@ -165,5 +245,35 @@ public class Event : Entity<Guid>, IAggregateRoot
         }
 
         _tags.Remove(eventTag);
+    }
+
+    /// <summary>
+    /// Добавить пост.
+    /// </summary>
+    /// <param name="externalService">Внешний сервис.</param>
+    /// <param name="link">Ссылка во внешнем сервисе.</param>
+    public void AddPost(ExternalService externalService, Uri link)
+    {
+        var post = new EventPost(externalService, link);
+        _posts.Add(post);
+    }
+
+    /// <summary>
+    /// Удалить пост.
+    /// </summary>
+    /// <param name="post">Пост для удаления.</param>
+    /// <exception cref="DomainException">
+    ///     <see cref="DomainErrorMessages.EventPostErrors.PostNotFound"/>
+    /// </exception>
+    public void RemovePost(EventPost post)
+    {
+        var eventPost = _posts.FirstOrDefault(et => et == post);
+
+        if (eventPost == null)
+        {
+            throw new DomainException(DomainErrorMessages.EventPostErrors.PostNotFound);
+        }
+
+        _posts.Remove(eventPost);
     }
 }
