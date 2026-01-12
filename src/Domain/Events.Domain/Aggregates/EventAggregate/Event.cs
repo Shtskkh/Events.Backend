@@ -11,4 +11,9 @@ public class Event : Entity<Guid>
     }
 
     public EventTitle Title { get; private set; }
+
+    public void ChangeTitle(string title)
+    {
+        Title = new EventTitle(title);
+    }
 }
