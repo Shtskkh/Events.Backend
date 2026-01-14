@@ -15,5 +15,12 @@ public static class DomainErrorMessages
 
             public const string GreaterThanMaxLength = "Название мероприятия больше максимальной длины.";
         }
+
+        public static class Announcement
+        {
+            public const string LessThanMinLenght = "Анонс мероприятия меньше минимальной длины.";
+
+            public const string GreaterThanMaxLength = "Анонс мероприятия больше максимальной длины.";
+        }
     }
 }

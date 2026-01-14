@@ -10,5 +10,12 @@ public static class DomainConstraints
 
             public const int MaxLength = 128;
         }
+
+        public static class Announcement
+        {
+            public const int MinLength = 5;
+
+            public const int MaxLength = 64;
+        }
     }
 }
