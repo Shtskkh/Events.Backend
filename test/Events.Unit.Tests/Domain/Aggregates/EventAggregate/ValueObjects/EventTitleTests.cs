@@ -11,8 +11,8 @@ public class EventTitleTests
     public void Constructor_ValidValues_DoesNotThrow()
     {
         // Arrange
-        var titleValidFirst = new string('t', DomainConstraints.Event.EventTitle.MaxLength - 1);
-        var titleValidSecond = new string('t', DomainConstraints.Event.EventTitle.MinLength + 1);
+        var titleValidFirst = new string('t', DomainConstraints.Event.Title.MaxLength - 1);
+        var titleValidSecond = new string('t', DomainConstraints.Event.Title.MinLength + 1);
 
         // Act
         var createEventTitleFirst = () => new EventTitle(titleValidFirst);
@@ -34,7 +34,7 @@ public class EventTitleTests
     public void Constructor_ValueLessThanMin_ThrowsDomainException()
     {
         // Arrange
-        var title = new string('t', DomainConstraints.Event.EventTitle.MinLength - 1);
+        var title = new string('t', DomainConstraints.Event.Title.MinLength - 1);
 
         // Act
         var createEventTitle = () => new EventTitle(title);
@@ -48,7 +48,7 @@ public class EventTitleTests
     public void Constructor_ValueGreaterThanMax_ThrowsDomainException()
     {
         // Arrange
-        var title = new string('t', DomainConstraints.Event.EventTitle.MaxLength + 1);
+        var title = new string('t', DomainConstraints.Event.Title.MaxLength + 1);
 
         // Act
         var createEventTitle = () => new EventTitle(title);

@@ -4,7 +4,7 @@ public static class DomainConstraints
 {
     public static class Event
     {
-        public static class EventTitle
+        public static class Title
         {
             public const int MinLength = 5;
 

@@ -17,7 +17,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                 v => v.Value,
                 v => new EventTitle(v)
             )
-            .HasMaxLength(DomainConstraints.Event.EventTitle.MaxLength)
+            .HasMaxLength(DomainConstraints.Event.Title.MaxLength)
             .IsRequired();
     }
 }

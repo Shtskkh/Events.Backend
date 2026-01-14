@@ -4,7 +4,7 @@ using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.EventAggregate.ValueObjects;
 
-public class EventTitle
+public class EventTitle : ValueObject
 {
     public EventTitle(string title)
     {
@@ -12,10 +12,10 @@ public class EventTitle
 
         switch (Text.Value.Length)
         {
-            case < DomainConstraints.Event.EventTitle.MinLength:
+            case < DomainConstraints.Event.Title.MinLength:
                 throw new DomainException(DomainErrorMessages.Event.Title.LessThanMinLenght);
 
-            case > DomainConstraints.Event.EventTitle.MaxLength:
+            case > DomainConstraints.Event.Title.MaxLength:
                 throw new DomainException(DomainErrorMessages.Event.Title.GreaterThanMaxLength);
         }
     }
@@ -23,4 +23,9 @@ public class EventTitle
     private Text Text { get; }
 
     public string Value => Text.Value;
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
 }
