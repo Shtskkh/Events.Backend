@@ -5,9 +5,9 @@ namespace Events.Domain.Aggregates.EventAggregate;
 
 public class Event : Entity<Guid>
 {
-    public Event(Guid id, string title) : base(id)
+    public Event(Guid id, EventTitle title) : base(id)
     {
-        Title = new EventTitle(title);
+        Title = title;
     }
 
     public EventTitle Title { get; private set; }
