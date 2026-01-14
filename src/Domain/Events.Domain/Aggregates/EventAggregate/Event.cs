@@ -5,12 +5,12 @@ namespace Events.Domain.Aggregates.EventAggregate;
 
 public class Event : Entity<Guid>
 {
-    public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription eventDescription) :
+    public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
-        Description = eventDescription;
+        Description = description;
     }
 
     public EventTitle Title { get; private set; }

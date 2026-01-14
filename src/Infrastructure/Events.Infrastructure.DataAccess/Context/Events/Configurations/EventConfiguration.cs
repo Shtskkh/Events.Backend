@@ -26,5 +26,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                 v => new EventAnnouncement(v))
             .HasMaxLength(DomainConstraints.Event.Announcement.MaxLength)
             .IsRequired();
+
+        builder.Property(e => e.Description)
+            .HasConversion(
+                v => v.Value,
+                v => new EventDescription(v))
+            .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
+            .IsRequired();
     }
 }
