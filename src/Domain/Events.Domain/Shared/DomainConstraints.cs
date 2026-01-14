@@ -17,5 +17,12 @@ public static class DomainConstraints
 
             public const int MaxLength = 64;
         }
+
+        public static class Description
+        {
+            public const int MinLength = 5;
+
+            public const int MaxLength = 512;
+        }
     }
 }
