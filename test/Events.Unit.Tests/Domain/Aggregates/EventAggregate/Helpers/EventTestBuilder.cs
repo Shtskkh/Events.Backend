@@ -7,6 +7,7 @@ public class EventTestBuilder
 {
     private readonly Guid _id = Guid.NewGuid();
     private EventAnnouncement _announcement = new("Test announcement");
+    private EventDescription _description = new("Test description");
     private EventTitle _title = new("Test title");
 
     public Event Build()
@@ -14,7 +15,8 @@ public class EventTestBuilder
         return new Event(
             _id,
             _title,
-            _announcement
+            _announcement,
+            _description
         );
     }
 
@@ -27,6 +29,12 @@ public class EventTestBuilder
     public EventTestBuilder WithAnnouncement(string announcement)
     {
         _announcement = new EventAnnouncement(announcement);
+        return this;
+    }
+
+    public EventTestBuilder WithDescription(string description)
+    {
+        _description = new EventDescription(description);
         return this;
     }
 }
