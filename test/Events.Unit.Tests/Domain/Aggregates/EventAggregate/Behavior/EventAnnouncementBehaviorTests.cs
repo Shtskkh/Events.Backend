@@ -3,19 +3,19 @@ using FluentAssertions;
 
 namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.Behavior;
 
-public class EventTitleBehavior
+public class EventAnnouncementBehaviorTests
 {
     [Fact]
-    public void ChangeTitle_ShouldChangeTitle()
+    public void ChangeAnnouncement_ShouldChangeAnnouncement()
     {
         // Arrange
         var @event = new EventTestBuilder().Build();
-        const string newTitle = "New title";
+        const string newAnnouncement = "New announcement";
 
         // Act
-        @event.ChangeTitle(newTitle);
+        @event.ChangeAnnouncement(newAnnouncement);
 
         // Assert
-        @event.Title.Value.Should().Be(newTitle);
+        @event.Announcement.Value.Should().Be(newAnnouncement);
     }
 }
