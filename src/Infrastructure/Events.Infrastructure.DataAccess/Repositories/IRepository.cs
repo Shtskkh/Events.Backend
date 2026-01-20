@@ -9,9 +9,9 @@ public interface IRepository<TEntity, in TKey, TContext>
     where TContext : DbContext
 {
     IQueryable<TEntity> GetAllAsync();
-    Task<TEntity> GetByIdAsync(TKey id);
+    Task<TEntity?> GetByIdAsync(TKey id);
     Task<bool> IsExistsAsync(TKey id);
     Task AddAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);
-    Task DeleteAsync(TKey id);
+    Task DeleteAsync(TEntity entity);
 }
