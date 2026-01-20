@@ -3,13 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Repositories;
 
-public class Repository<TEntity, TKey, TContext>(TContext context) : IRepository<TEntity, TKey, TContext>
+public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TContext>
     where TEntity : Entity<TKey>
     where TKey : IEquatable<TKey>
     where TContext : DbContext
 {
-    private readonly TContext _context = context;
-    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    private readonly TContext _context;
+    private readonly DbSet<TEntity> _dbSet;
+
+    public Repository(TContext context)
+    {
+        _context = context;
+        _dbSet = _context.Set<TEntity>();
+    }
 
     public IQueryable<TEntity> GetAllAsync()
     {
