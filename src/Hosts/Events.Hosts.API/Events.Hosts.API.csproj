@@ -6,4 +6,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\Infrastructure\Events.Infrastructure.DependencyInjection\Events.Infrastructure.DependencyInjection.csproj"/>
+    </ItemGroup>
+
 </Project>

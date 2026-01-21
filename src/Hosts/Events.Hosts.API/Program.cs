@@ -1,6 +1,10 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Events.Infrastructure.DependencyInjection;
 
-app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddInfrastructure();
+
+var app = builder.Build();
 
 app.Run();
