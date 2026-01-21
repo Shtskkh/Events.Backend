@@ -4,10 +4,16 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\Infrastructure\Events.Infrastructure.DependencyInjection\Events.Infrastructure.DependencyInjection.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
+        <PackageReference Include="Scalar.AspNetCore" Version="2.12.12"/>
     </ItemGroup>
 
 </Project>
