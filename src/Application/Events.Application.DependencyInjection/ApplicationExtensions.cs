@@ -10,6 +10,8 @@ public static class ApplicationExtensions
         public void AddApplication()
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()));
         }
     }
 }
