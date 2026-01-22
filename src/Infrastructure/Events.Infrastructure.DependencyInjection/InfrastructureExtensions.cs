@@ -1,4 +1,6 @@
-﻿using Events.Infrastructure.DataAccess;
+﻿using Events.Domain.Aggregates.EventAggregate.Repositories;
+using Events.Infrastructure.DataAccess;
+using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,8 @@ public static class InfrastructureExtensions
             services.ConfigureDbConnection(configuration);
 
             services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
+
+            services.RegisterRepositories();
         }
 
         private void ConfigureDbConnection(IConfiguration configuration)
@@ -22,6 +26,11 @@ public static class InfrastructureExtensions
             var connectionString = configuration.GetConnectionString("DbConnection");
             services.AddDbContextPool<EventsDbContext>(options => options.UseNpgsql(connectionString,
                 optionBuilder => { optionBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery); }));
+        }
+
+        private void RegisterRepositories()
+        {
+            services.AddScoped<IEventRepository, EventRepository>();
         }
     }
 }
