@@ -13,6 +13,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApiWithMetadata();
 
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
