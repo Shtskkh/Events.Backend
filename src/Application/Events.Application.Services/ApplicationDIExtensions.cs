@@ -1,0 +1,17 @@
+﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Events.Application.Services;
+
+public static class ApplicationDIExtensions
+{
+    extension(IServiceCollection services)
+    {
+        public void AddApplication()
+        {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()));
+        }
+    }
+}

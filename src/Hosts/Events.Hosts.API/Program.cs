@@ -1,4 +1,4 @@
-using Events.Application.DependencyInjection;
+using Events.Application.Services;
 using Events.Hosts.API.Extensions;
 using Events.Infrastructure.DependencyInjection;
 using Scalar.AspNetCore;

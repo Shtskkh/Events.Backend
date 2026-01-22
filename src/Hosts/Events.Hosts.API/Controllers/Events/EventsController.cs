@@ -1,4 +1,4 @@
-﻿using Events.AppServices.Features.Events.Queries.GetById;
+﻿using Events.Application.Services.Features.Events.Queries.GetById;
 using Events.Domain.Aggregates.EventAggregate;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

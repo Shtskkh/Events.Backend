@@ -2,7 +2,7 @@
 using Events.Contracts.Features.Events.DTOs;
 using Events.Domain.Aggregates.EventAggregate;
 
-namespace Events.AppServices.Features.Events.Mappings;
+namespace Events.Application.Services.Features.Events.Mappings;
 
 public class EventProfile : Profile
 {

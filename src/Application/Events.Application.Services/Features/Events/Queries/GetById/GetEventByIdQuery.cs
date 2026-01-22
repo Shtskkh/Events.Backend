@@ -1,7 +1,7 @@
 ﻿using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 
-namespace Events.AppServices.Features.Events.Queries.GetById;
+namespace Events.Application.Services.Features.Events.Queries.GetById;
 
 public class GetEventByIdQuery(Guid id) : IRequest<ShortEventDto>
 {
