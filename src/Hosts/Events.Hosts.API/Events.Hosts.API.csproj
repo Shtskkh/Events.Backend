@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Application\Events.Application.DependencyInjection\Events.Application.DependencyInjection.csproj"/>
+        <ProjectReference Include="..\..\Application\Events.AppServices\Events.AppServices.csproj"/>
         <ProjectReference Include="..\..\Infrastructure\Events.Infrastructure.DependencyInjection\Events.Infrastructure.DependencyInjection.csproj"/>
     </ItemGroup>
 

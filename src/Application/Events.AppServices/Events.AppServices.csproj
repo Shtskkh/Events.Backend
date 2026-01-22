@@ -9,11 +9,12 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="16.0.0"/>
-        <PackageReference Include="MediatR" Version="14.0.0" />
+        <PackageReference Include="MediatR" Version="14.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Events\Queries\GetById\" />
+        <ProjectReference Include="..\..\Contracts\Events.Contracts\Events.Contracts.csproj"/>
+        <ProjectReference Include="..\..\Domain\Events.Domain\Events.Domain.csproj"/>
     </ItemGroup>
 
 </Project>
