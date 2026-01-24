@@ -11,11 +11,6 @@ public class EventDto
     public required string Title { get; set; }
 
     /// <summary>
-    ///     Анонс (краткое описание) мероприятия.
-    /// </summary>
-    public required string Announcement { get; set; }
-
-    /// <summary>
     ///     Описание мероприятия.
     /// </summary>
     public required string Description { get; set; }
