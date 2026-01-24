@@ -1,9 +1,9 @@
 ﻿namespace Events.Contracts.Features.Events.DTOs;
 
 /// <summary>
-///     Краткая информация о мероприятии.
+///     Полная информация о мероприятии.
 /// </summary>
-public class ShortEventDto
+public class EventDto
 {
     /// <summary>
     ///     Название мероприятия.

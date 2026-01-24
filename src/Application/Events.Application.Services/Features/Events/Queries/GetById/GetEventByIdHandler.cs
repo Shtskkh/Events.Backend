@@ -6,11 +6,11 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetById;
 
 public class GetEventByIdHandler(IEventRepository eventRepository, IMapper mapper)
-    : IRequestHandler<GetEventByIdQuery, ShortEventDto>
+    : IRequestHandler<GetEventByIdQuery, EventDto>
 {
-    public async Task<ShortEventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
+    public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
         var @event = await eventRepository.GetByIdAsync(request.Id);
-        return mapper.Map<ShortEventDto>(@event);
+        return mapper.Map<EventDto>(@event);
     }
 }
