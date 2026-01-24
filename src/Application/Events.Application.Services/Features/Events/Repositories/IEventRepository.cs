@@ -1,4 +1,6 @@
-﻿namespace Events.Domain.Aggregates.EventAggregate.Repositories;
+﻿using Events.Domain.Aggregates.EventAggregate;
+
+namespace Events.Application.Services.Features.Events.Repositories;
 
 /// <summary>
 ///     Репозиторий мероприятий.

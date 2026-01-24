@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.EventAggregate.Repositories;
+﻿using Events.Application.Services.Features.Events.Repositories;
 using Events.Infrastructure.DataAccess;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
