@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Features.Events.Queries.GetById;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,13 +7,13 @@ namespace Events.Hosts.API.Controllers.Events;
 
 [ApiController]
 [Route("api/v/1/[controller]")]
-public class EventsController(IMediator mediator) : ControllerBase
+public class EventsController(IMediator mediator, ILogger<EventsController> logger) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(ICollection<Event>), StatusCodes.Status200OK, "application/json")]
-    public async Task<IActionResult> GetAllAsync()
+    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json")]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter)
     {
-        throw new NotImplementedException();
+        return Ok();
     }
 
     [HttpGet("{id:guid}")]
