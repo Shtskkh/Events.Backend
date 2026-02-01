@@ -1,9 +1,15 @@
 ﻿namespace Events.Hosts.API.Extensions;
 
+/// <summary>
+///     Расширение для добавления OpenAPI.
+/// </summary>
 public static class OpenApiExtensions
 {
     extension(IServiceCollection services)
     {
+        /// <summary>
+        ///     Метод добавления OpenAPI с метаданными.
+        /// </summary>
         public void AddOpenApiWithMetadata()
         {
             services.AddOpenApi(options =>

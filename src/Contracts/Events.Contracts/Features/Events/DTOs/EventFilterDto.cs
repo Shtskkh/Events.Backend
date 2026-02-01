@@ -7,9 +7,13 @@ namespace Events.Contracts.Features.Events.DTOs;
 /// </summary>
 public class EventFilterDto : IPagination
 {
-    /// <inheritdoc />
+    /// <summary>
+    ///     Размер выборки.
+    /// </summary>
     public int Size { get; set; }
 
-    /// <inheritdoc />
+    /// <summary>
+    ///     Страница выборки.
+    /// </summary>
     public int Page { get; set; }
 }

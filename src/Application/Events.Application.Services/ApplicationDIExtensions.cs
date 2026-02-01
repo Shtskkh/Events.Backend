@@ -5,10 +5,16 @@ using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 namespace Events.Application.Services;
 
-public static class ApplicationDIExtensions
+/// <summary>
+///     Расширение для внедрения application в приложение.
+/// </summary>
+public static class ApplicationDiExtensions
 {
     extension(IServiceCollection services)
     {
+        /// <summary>
+        ///     Метод внедрения application.
+        /// </summary>
         public void AddApplication()
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

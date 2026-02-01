@@ -8,10 +8,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Events.Infrastructure.DependencyInjection;
 
+/// <summary>
+///     Расширение для внедрения инфраструктуры в приложение.
+/// </summary>
 public static class InfrastructureExtensions
 {
     extension(IServiceCollection services)
     {
+        /// <summary>
+        ///     Метод добавления инфраструктуры в приложение.
+        /// </summary>
+        /// <param name="configuration">Конфигурация приложения.</param>
         public void AddInfrastructure(IConfiguration configuration)
         {
             services.ConfigureDbConnection(configuration);

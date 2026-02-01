@@ -9,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 
+/// <inheritdoc />
 public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
 {
+    /// <inheritdoc />
     public async Task<Event> GetByIdAsync(Guid id)
     {
         var isExists = await repository.IsExistsAsync(id);
@@ -20,6 +22,7 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
         return (await repository.GetByIdAsync(id))!;
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec)
     {
         var events = await repository

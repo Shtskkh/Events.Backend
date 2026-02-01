@@ -4,6 +4,9 @@ using Events.Domain.Aggregates.EventAggregate;
 
 namespace Events.Application.Services.Features.Events.Mappings;
 
+/// <summary>
+///     Профиль маппинга для мероприятий.
+/// </summary>
 public class EventProfile : Profile
 {
     public EventProfile()

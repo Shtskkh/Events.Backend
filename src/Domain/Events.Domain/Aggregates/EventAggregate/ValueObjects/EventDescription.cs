@@ -4,8 +4,18 @@ using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.EventAggregate.ValueObjects;
 
+/// <summary>
+///     Описание мероприятия.
+/// </summary>
 public class EventDescription : ValueObject
 {
+    /// <summary>
+    ///     Конструктор описания мероприятия.
+    /// </summary>
+    /// <param name="description">Описание мероприятия.</param>
+    /// <exception cref="DomainException">
+    ///     Ошибка правил домена.
+    /// </exception>
     public EventDescription(string description)
     {
         Description = new Text(description);
@@ -22,8 +32,12 @@ public class EventDescription : ValueObject
 
     private Text Description { get; }
 
+    /// <summary>
+    ///     Строка описания мероприятия.
+    /// </summary>
     public string Value => Description.Value;
 
+    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

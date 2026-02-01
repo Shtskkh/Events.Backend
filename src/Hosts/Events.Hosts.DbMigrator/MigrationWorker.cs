@@ -2,12 +2,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Events.Hosts.DbMigrator;
 
+/// <summary>
+///     Worker мигратора.
+/// </summary>
+/// <param name="serviceProvider">
+///     Проводник сервисов для создания scope.
+/// </param>
+/// <param name="applicationLifetime">
+///     Для завершения работы после миграций.
+/// </param>
+/// <param name="logger">Логгер.</param>
 public class MigrationWorker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime applicationLifetime,
     ILogger<MigrationWorker> logger
 ) : BackgroundService
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         if (!stoppingToken.IsCancellationRequested)

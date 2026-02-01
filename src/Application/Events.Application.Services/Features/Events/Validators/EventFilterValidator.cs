@@ -9,6 +9,9 @@ namespace Events.Application.Services.Features.Events.Validators;
 /// </summary>
 public class EventFilterValidator : AbstractValidator<EventFilterDto>
 {
+    /// <summary>
+    ///     Конструктор валидатора фильтра мероприятий.
+    /// </summary>
     public EventFilterValidator()
     {
         RuleFor(filter => filter.Page)
