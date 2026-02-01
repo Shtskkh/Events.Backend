@@ -17,7 +17,7 @@ public static class OpenApiExtensions
                 options.AddDocumentTransformer((document, context, cancellationToken) =>
                 {
                     document.Info.Title = "Events API";
-                    document.Info.Version = "v0.26.1";
+                    document.Info.Version = "v0.26.2";
                     document.Info.Description = "API сервиса управления мероприятиями.";
 
                     return Task.CompletedTask;
