@@ -8,10 +8,20 @@ public class EventDto
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    public required string Title { get; set; }
+    public string Title { get; init; } = null!;
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
-    public required string Description { get; set; }
+    public string Description { get; init; } = null!;
+
+    /// <summary>
+    ///     Дата и время начала мероприятия.
+    /// </summary>
+    public DateTimeOffset StartDateTime { get; init; }
+
+    /// <summary>
+    ///     Дата и время окончания мероприятия.
+    /// </summary>
+    public DateTimeOffset EndDateTime { get; init; }
 }

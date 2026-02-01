@@ -8,10 +8,20 @@ public class ShortEventDto
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    public required string Title { get; init; }
+    public string Title { get; init; } = null!;
 
     /// <summary>
     ///     Анонс (краткое описание) мероприятия.
     /// </summary>
-    public required string Announcement { get; init; }
+    public string Announcement { get; init; } = null!;
+
+    /// <summary>
+    ///     Дата и время начала мероприятия.
+    /// </summary>
+    public DateTimeOffset StartDateTime { get; init; }
+
+    /// <summary>
+    ///     Дата и время окончания мероприятия.
+    /// </summary>
+    public DateTimeOffset EndDateTime { get; init; }
 }

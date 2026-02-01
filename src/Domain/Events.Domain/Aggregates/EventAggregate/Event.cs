@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
 
@@ -16,12 +17,17 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="title">Название мероприятия.</param>
     /// <param name="announcement">Анонс (краткое описание) мероприятия.</param>
     /// <param name="description">Описание мероприятия.</param>
-    public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description) :
+    /// <param name="startDateTime">Дата и время начала мероприятия.</param>
+    /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
+
+        SetDateTimeRange(startDateTime, endDateTime);
     }
 
 
@@ -39,6 +45,28 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Описание мероприятия.
     /// </summary>
     public EventDescription Description { get; private set; }
+
+    /// <summary>
+    ///     Дата и время начала мероприятия.
+    /// </summary>
+    public DateTimeOffset StartDateTime { get; private set; }
+
+    /// <summary>
+    ///     Дата и время окончания мероприятия.
+    /// </summary>
+    public DateTimeOffset EndDateTime { get; private set; }
+
+    private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        if (start >= end)
+            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.StartLaterThanEnd);
+
+        if (end - start > TimeSpan.FromDays(DomainConstraints.Event.DateTimeRange.MaxDurationInDays))
+            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.DurationGreaterThanMax);
+
+        StartDateTime = start;
+        EndDateTime = end;
+    }
 
     /// <summary>
     ///     Метод изменения названия мероприятия.

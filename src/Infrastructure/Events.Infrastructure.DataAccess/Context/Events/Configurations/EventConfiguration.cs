@@ -33,5 +33,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                 v => new EventDescription(v))
             .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
             .IsRequired();
+
+        builder.Property(e => e.StartDateTime)
+            .IsRequired();
+
+        builder.Property(e => e.EndDateTime)
+            .IsRequired();
     }
 }

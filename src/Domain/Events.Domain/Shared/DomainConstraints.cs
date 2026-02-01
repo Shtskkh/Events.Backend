@@ -57,5 +57,16 @@ public static class DomainConstraints
             /// </summary>
             public const int MaxLength = 512;
         }
+
+        /// <summary>
+        ///     Константы временного промежутка мероприятия.
+        /// </summary>
+        public static class DateTimeRange
+        {
+            /// <summary>
+            ///     Максимальная длина мероприятия в днях.
+            /// </summary>
+            public const int MaxDurationInDays = 31;
+        }
     }
 }

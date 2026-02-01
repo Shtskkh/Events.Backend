@@ -68,5 +68,22 @@ public static class DomainErrorMessages
             /// </summary>
             public const string GreaterThanMaxLength = "Описание мероприятия больше максимальной длины.";
         }
+
+        /// <summary>
+        ///     Ошибки временного промежутка мероприятия.
+        /// </summary>
+        public static class DateTimeRange
+        {
+            /// <summary>
+            ///     Дата и время начала мероприятия не может быть равно или позднее дате и времени окончания.
+            /// </summary>
+            public const string StartLaterThanEnd =
+                "Дата и время начала мероприятия не может быть равно или позднее дате и времени окончания";
+
+            /// <summary>
+            ///     Продолжительность мероприятия больше максимального количества в днях.
+            /// </summary>
+            public const string DurationGreaterThanMax = "Длина мероприятия больше максимальной длины.";
+        }
     }
 }
