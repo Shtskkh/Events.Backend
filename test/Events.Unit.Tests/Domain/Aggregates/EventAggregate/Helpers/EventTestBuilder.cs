@@ -8,6 +8,8 @@ public class EventTestBuilder
     private readonly Guid _id = Guid.NewGuid();
     private EventAnnouncement _announcement = new("Test announcement");
     private EventDescription _description = new("Test description");
+    private DateTimeOffset _endDateTime = DateTimeOffset.Now + TimeSpan.FromDays(7);
+    private DateTimeOffset _startDateTime = DateTimeOffset.Now;
     private EventTitle _title = new("Test title");
 
     public Event Build()
@@ -16,7 +18,9 @@ public class EventTestBuilder
             _id,
             _title,
             _announcement,
-            _description
+            _description,
+            _endDateTime,
+            _startDateTime
         );
     }
 
@@ -35,6 +39,18 @@ public class EventTestBuilder
     public EventTestBuilder WithDescription(string description)
     {
         _description = new EventDescription(description);
+        return this;
+    }
+
+    public EventTestBuilder WithStartDateTime(DateTimeOffset startDateTime)
+    {
+        _startDateTime = startDateTime;
+        return this;
+    }
+
+    public EventTestBuilder WithEndDateTime(DateTimeOffset endDateTime)
+    {
+        _endDateTime = endDateTime;
         return this;
     }
 }
