@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
+        <ProjectReference Include="..\..\Domain\Events.Domain\Events.Domain.csproj"/>
+    </ItemGroup>
+
+</Project>
