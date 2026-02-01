@@ -13,5 +13,11 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description.Value));
+
+        CreateMap<Event, ShortEventDto>()
+            .ForMember(dest => dest.Title,
+                opt => opt.MapFrom(src => src.Title.Value))
+            .ForMember(dest => dest.Announcement,
+                opt => opt.MapFrom(src => src.Announcement.Value));
     }
 }
