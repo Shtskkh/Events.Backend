@@ -1,4 +1,6 @@
-﻿using Events.Application.Services.Features.Events.Repositories;
+﻿using Amazon.Runtime;
+using Amazon.S3;
+using Events.Application.Services.Features.Events.Repositories;
 using Events.Infrastructure.DataAccess;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
@@ -23,6 +25,8 @@ public static class InfrastructureExtensions
         {
             services.ConfigureDbConnection(configuration);
 
+            services.AddS3(configuration);
+
             services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
 
             services.RegisterRepositories();
@@ -38,6 +42,26 @@ public static class InfrastructureExtensions
         private void RegisterRepositories()
         {
             services.AddScoped<IEventRepository, EventRepository>();
+        }
+
+        private void AddS3(IConfiguration configuration)
+        {
+            services.AddSingleton<IAmazonS3>(_ =>
+            {
+                var endpoint = configuration["S3:Endpoint"];
+                var accessKey = configuration["S3:AccessKey"];
+                var secretKey = configuration["S3:SecretKey"];
+
+                var config = new AmazonS3Config
+                {
+                    ServiceURL = $"http://{endpoint}",
+                    ForcePathStyle = true
+                };
+
+                var credentials = new BasicAWSCredentials(accessKey, secretKey);
+
+                return new AmazonS3Client(credentials, config);
+            });
         }
     }
 }

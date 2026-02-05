@@ -11,11 +11,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DbConnection=Host=db_postgres;Database=Events;Username=postgres;Password=1
+      - S3__Endpoint=rustfs:9000
+      - S3__AccessKey:rustfsadmin
+      - S3__SecretKey:rustfsadmin
     depends_on:
-      migrator:
-        condition: service_completed_successfully
       db_postgres:
         condition: service_healthy
+      rustfs:
+        condition: service_started
+      migrator:
+        condition: service_completed_successfully
 
   db_postgres:
     image: postgres:latest
@@ -54,6 +59,8 @@ services:
       - RUSTFS_ADDRESS=:9000
       - RUSTFS_CONSOLE_ADDRESS=:9001
       - RUSTFS_VOLUMES:/data
+      - RUSTFS_ACCESS_KEY=rustfsadmin
+      - RUSTFS_SECRET_KEY=rustfsadmin
     volumes:
       - rustfs:/data
 
