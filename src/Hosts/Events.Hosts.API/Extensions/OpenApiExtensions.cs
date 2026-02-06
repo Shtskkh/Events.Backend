@@ -24,8 +24,13 @@ public static class OpenApiExtensions
                     Description = "Документация API сервиса управления мероприятиями."
                 });
 
-                var xmlFilename = $"{Assembly.Load("Events.Contracts").GetName().Name}.xml";
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                // Комментарии для API.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+
+                // Комментарии и аннотации для DTO.
+                var modelsXmlFilename = $"{Assembly.Load("Events.Contracts").GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, modelsXmlFilename));
             });
         }
     }
