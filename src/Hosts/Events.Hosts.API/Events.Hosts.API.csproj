@@ -16,6 +16,7 @@
         <PackageReference Include="AWSSDK.S3" Version="4.0.18.2"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
         <PackageReference Include="Scalar.AspNetCore" Version="2.12.12"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.2"/>
     </ItemGroup>
 
 </Project>

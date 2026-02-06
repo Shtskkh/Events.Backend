@@ -1,4 +1,7 @@
-﻿namespace Events.Hosts.API.Extensions;
+﻿using System.Reflection;
+using Microsoft.OpenApi;
+
+namespace Events.Hosts.API.Extensions;
 
 /// <summary>
 ///     Расширение для добавления OpenAPI.
@@ -12,16 +15,17 @@ public static class OpenApiExtensions
         /// </summary>
         public void AddOpenApiWithMetadata()
         {
-            services.AddOpenApi(options =>
+            services.AddSwaggerGen(options =>
             {
-                options.AddDocumentTransformer((document, context, cancellationToken) =>
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    document.Info.Title = "Events API";
-                    document.Info.Version = "v0.26.2";
-                    document.Info.Description = "API сервиса управления мероприятиями.";
-
-                    return Task.CompletedTask;
+                    Version = "0.26.2",
+                    Title = "Events API",
+                    Description = "Документация API сервиса управления мероприятиями."
                 });
+
+                var xmlFilename = $"{Assembly.Load("Events.Contracts").GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
     }
