@@ -23,7 +23,7 @@ services:
         condition: service_completed_successfully
 
   db_postgres:
-    image: postgres:latest
+    image: postgres:alpine
     container_name: postgres
     environment:
       POSTGRES_DB: Events
