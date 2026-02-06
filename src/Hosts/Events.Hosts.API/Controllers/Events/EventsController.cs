@@ -50,8 +50,15 @@ public class EventsController(IMediator mediator) : ControllerBase
         return Ok(@event);
     }
 
+    /// <summary>
+    ///     Создать мероприятие.
+    /// </summary>
+    /// <param name="dto"> Форма создания мероприятия. </param>
+    /// <returns> UUID созданного мероприятия. </returns>
     [HttpPost]
-    public async Task<IActionResult> CreateAsync()
+    [Consumes("multipart/form-data")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain")]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto dto)
     {
         throw new NotImplementedException();
     }
