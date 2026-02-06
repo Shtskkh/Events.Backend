@@ -1,4 +1,5 @@
-﻿using Events.Contracts.Shared;
+﻿using System.ComponentModel.DataAnnotations;
+using Events.Contracts.Shared;
 
 namespace Events.Contracts.Features.Events.DTOs;
 
@@ -10,10 +11,12 @@ public class EventFilterDto : IPagination
     /// <summary>
     ///     Размер выборки.
     /// </summary>
-    public int Size { get; set; }
+    [Range(1, int.MaxValue)]
+    public required int Size { get; set; }
 
     /// <summary>
     ///     Страница выборки.
     /// </summary>
-    public int Page { get; set; }
+    [Range(1, int.MaxValue)]
+    public required int Page { get; set; }
 }
