@@ -27,8 +27,6 @@ public static class InfrastructureExtensions
 
             services.AddS3(configuration);
 
-            services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
-
             services.RegisterRepositories();
         }
 
@@ -41,6 +39,7 @@ public static class InfrastructureExtensions
 
         private void RegisterRepositories()
         {
+            services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
             services.AddScoped<IEventRepository, EventRepository>();
         }
 
