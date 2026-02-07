@@ -21,6 +21,6 @@ public interface IEventFactory
         string description,
         DateTimeOffset startDateTime,
         DateTimeOffset endDateTime,
-        Guid? previewFilename
+        Guid? previewFilename = null
     );
 }
