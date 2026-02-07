@@ -1,5 +1,6 @@
 ﻿using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
+using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ public class EventsController(IMediator mediator) : ControllerBase
     /// </returns>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json")]
-    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound, "application/problem+json")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json")]
     public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter)
     {
         var events = await mediator.Send(new GetEventsByFilterQuery(filter));
@@ -42,7 +43,7 @@ public class EventsController(IMediator mediator) : ControllerBase
     /// </returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK, "application/json")]
-    [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound, "application/problem+json")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         var @event = await mediator.Send(new GetEventByIdQuery(id));
@@ -58,6 +59,7 @@ public class EventsController(IMediator mediator) : ControllerBase
     [HttpPost]
     [Consumes("multipart/form-data")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json")]
     public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto dto)
     {
         throw new NotImplementedException();
