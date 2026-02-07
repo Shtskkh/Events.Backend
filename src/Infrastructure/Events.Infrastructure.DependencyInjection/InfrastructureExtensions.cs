@@ -1,9 +1,11 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Files;
 using Events.Infrastructure.DataAccess;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
+using Events.Infrastructure.DataAccess.Services.RustFS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,8 @@ public static class InfrastructureExtensions
             services.AddS3(configuration);
 
             services.RegisterRepositories();
+
+            services.RegisterInfrastructureServices();
         }
 
         private void ConfigureDbConnection(IConfiguration configuration)
@@ -61,6 +65,11 @@ public static class InfrastructureExtensions
 
                 return new AmazonS3Client(credentials, config);
             });
+        }
+
+        private void RegisterInfrastructureServices()
+        {
+            services.AddScoped<IFileStorageService, RustFsFileStorageService>();
         }
     }
 }
