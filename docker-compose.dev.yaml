@@ -25,6 +25,8 @@ services:
   db_postgres:
     image: postgres:alpine
     container_name: postgres
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_DB: Events
       POSTGRES_USER: postgres
