@@ -23,4 +23,10 @@ public interface IEventRepository
     /// <param name="spec">Спецификация фильтра.</param>
     /// <returns>Иммутабельная коллекция мероприятий.</returns>
     Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec);
+
+    /// <summary>
+    ///     Добавить мероприятие.
+    /// </summary>
+    /// <param name="event">Объект мероприятия.</param>
+    Task AddAsync(Event @event);
 }

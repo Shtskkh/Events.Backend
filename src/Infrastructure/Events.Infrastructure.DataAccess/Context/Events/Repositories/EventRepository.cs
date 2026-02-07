@@ -32,4 +32,10 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
 
         return events.AsReadOnly();
     }
+
+    /// <inheritdoc />
+    public async Task AddAsync(Event @event)
+    {
+        await repository.AddAsync(@event);
+    }
 }
