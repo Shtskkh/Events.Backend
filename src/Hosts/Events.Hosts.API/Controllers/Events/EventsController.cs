@@ -13,6 +13,8 @@ namespace Events.Hosts.API.Controllers.Events;
 /// <param name="mediator">Медиатор.</param>
 [ApiController]
 [Route("api/v/1/[controller]")]
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError, "application/problem+json",
+    Description = "Неожиданная ошибка сервера.")]
 public class EventsController(IMediator mediator) : ControllerBase
 {
     /// <summary>

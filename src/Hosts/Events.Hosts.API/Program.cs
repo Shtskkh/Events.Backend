@@ -1,5 +1,6 @@
 using Events.Application.Services;
 using Events.Hosts.API.Extensions;
+using Events.Hosts.API.Middlewares;
 using Events.Infrastructure.DependencyInjection;
 using Scalar.AspNetCore;
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.MapScalarApiReference(options => { options.WithOpenApiRoutePattern("/swagger/v1/swagger.json"); });
 }
+
+app.AddMiddlewares();
 
 app.MapControllers();
 
