@@ -19,17 +19,19 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="description">Описание мероприятия.</param>
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    /// <param name="previewFileName">Название превью файла.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime) :
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime, Guid? previewFileName) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
 
+        if (previewFileName != null && previewFileName != Guid.Empty) PreviewFileName = previewFileName;
+
         SetDateTimeRange(startDateTime, endDateTime);
     }
-
 
     /// <summary>
     ///     Название мероприятия.
@@ -37,7 +39,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     public EventTitle Title { get; private set; }
 
     /// <summary>
-    ///     Анонс (краткое описание мероприятия).
+    ///     Анонс (краткое описание) мероприятия.
     /// </summary>
     public EventAnnouncement Announcement { get; private set; }
 
@@ -55,6 +57,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Дата и время окончания мероприятия.
     /// </summary>
     public DateTimeOffset EndDateTime { get; private set; }
+
+    /// <summary>
+    ///     Название файла превью.
+    /// </summary>
+    public Guid? PreviewFileName { get; private set; }
 
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
@@ -93,5 +100,14 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeDescription(string description)
     {
         Description = new EventDescription(description);
+    }
+
+    /// <summary>
+    ///     Изменить название файла превью.
+    /// </summary>
+    /// <param name="previewFileName">Название нового файла.</param>
+    public void ChangePreviewFilename(Guid previewFileName)
+    {
+        PreviewFileName = previewFileName;
     }
 }
