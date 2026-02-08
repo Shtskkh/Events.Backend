@@ -39,5 +39,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(e => e.EndDateTime)
             .IsRequired();
+
+        builder.Property(e => e.PreviewFilename);
     }
 }

@@ -19,16 +19,16 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="description">Описание мероприятия.</param>
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
-    /// <param name="previewFileName">Название превью файла.</param>
+    /// <param name="previewFilename">Название превью файла.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime, Guid? previewFileName) :
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime, Guid? previewFilename = null) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
 
-        if (previewFileName != null && previewFileName != Guid.Empty) PreviewFileName = previewFileName;
+        if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
 
         SetDateTimeRange(startDateTime, endDateTime);
     }
@@ -61,7 +61,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     ///     Название файла превью.
     /// </summary>
-    public Guid? PreviewFileName { get; private set; }
+    public Guid? PreviewFilename { get; private set; }
 
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
@@ -108,6 +108,6 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="previewFileName">Название нового файла.</param>
     public void ChangePreviewFilename(Guid previewFileName)
     {
-        PreviewFileName = previewFileName;
+        PreviewFilename = previewFileName;
     }
 }
