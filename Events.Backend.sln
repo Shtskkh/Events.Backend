@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Hosts.DbMigrator", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Infrastructure.DependencyInjection", "src\Infrastructure\Events.Infrastructure.DependencyInjection\Events.Infrastructure.DependencyInjection.csproj", "{3CD65D35-F5BA-411A-886E-E8347326D90A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events.Hosts.S3Migrator", "src\Hosts\Events.Hosts.S3Migrator\Events.Hosts.S3Migrator.csproj", "{AD226D71-A804-43C7-837A-27007E28A180}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,7 @@ Global
 		{C922F20D-1A10-4DFB-8EBC-DA1E43CA77FD} = {EAA92262-C9CA-457B-B69F-8B782F55EE93}
 		{59481D8C-CEAF-4BA7-A790-D741F7EA434B} = {E89BC9B4-2AB7-4E09-A6DC-9823E80BDF16}
 		{3CD65D35-F5BA-411A-886E-E8347326D90A} = {10B4DB25-2629-48F3-93DF-15ECBC798352}
+		{AD226D71-A804-43C7-837A-27007E28A180} = {E89BC9B4-2AB7-4E09-A6DC-9823E80BDF16}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{07EF9362-BAC4-49FB-BC3B-3C42C3B8D128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -87,5 +90,9 @@ Global
 		{3CD65D35-F5BA-411A-886E-E8347326D90A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CD65D35-F5BA-411A-886E-E8347326D90A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CD65D35-F5BA-411A-886E-E8347326D90A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD226D71-A804-43C7-837A-27007E28A180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD226D71-A804-43C7-837A-27007E28A180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD226D71-A804-43C7-837A-27007E28A180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD226D71-A804-43C7-837A-27007E28A180}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

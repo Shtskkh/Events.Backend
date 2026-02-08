@@ -19,7 +19,9 @@ services:
         condition: service_healthy
       rustfs:
         condition: service_started
-      migrator:
+      db_migrator:
+        condition: service_completed_successfully
+      s3_migrator:
         condition: service_completed_successfully
 
   db_postgres:
@@ -39,11 +41,11 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/18/docker
 
-  migrator:
+  db_migrator:
     build:
       context: ./src/
       dockerfile: Migrator.Dockerfile
-    container_name: migrator
+    container_name: db_migrator
     restart: no
     environment:
       - ConnectionStrings__DbConnection=Host=db_postgres;Database=Events;Username=postgres;Password=1
@@ -75,6 +77,18 @@ services:
       retries: 3
     volumes:
       - rustfs:/data
+  
+  s3_migrator:
+    build: ./src/Hosts/Events.Hosts.S3Migrator
+    container_name: s3_migrator
+    restart: no
+    environment:
+      - S3__Endpoint=rustfs:9000
+      - S3__AccessKey:rustfsadmin
+      - S3__SecretKey:rustfsadmin
+    depends_on:
+      rustfs:
+        condition: service_healthy
 
 volumes:
   pg_data:
