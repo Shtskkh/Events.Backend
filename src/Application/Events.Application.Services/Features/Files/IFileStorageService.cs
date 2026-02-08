@@ -12,4 +12,10 @@ public interface IFileStorageService
     /// </summary>
     /// <param name="request">Запрос на добавление.</param>
     Task PutObjectAsync(PutObjectRequest request);
+
+    /// <summary>
+    /// Удалить файл из хранилища.
+    /// </summary>
+    /// <param name="request">Запрос на удаление.</param>
+    Task DeleteObjectAsync(DeleteObjectRequest request);
 }
