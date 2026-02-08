@@ -2,7 +2,6 @@
 using Amazon.S3;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
-using Events.Infrastructure.DataAccess;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
@@ -10,28 +9,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Events.Infrastructure.DependencyInjection;
+namespace Events.Infrastructure.DataAccess;
 
 /// <summary>
-///     Расширение для внедрения инфраструктуры в приложение.
+///     Расширение для внедрения data access в приложение.
 /// </summary>
-public static class InfrastructureExtensions
+public static class DataAccessExtensions
 {
     extension(IServiceCollection services)
     {
         /// <summary>
-        ///     Метод добавления инфраструктуры в приложение.
+        ///     Метод добавления data access в приложение.
         /// </summary>
         /// <param name="configuration">Конфигурация приложения.</param>
-        public void AddInfrastructure(IConfiguration configuration)
+        public void AddDataAccess(IConfiguration configuration)
         {
             services.ConfigureDbConnection(configuration);
 
-            services.AddS3(configuration);
+            services.AddS3Client(configuration);
 
             services.RegisterRepositories();
 
-            services.RegisterInfrastructureServices();
+            services.RegisterDataAccessServices();
         }
 
         private void ConfigureDbConnection(IConfiguration configuration)
@@ -47,7 +46,7 @@ public static class InfrastructureExtensions
             services.AddScoped<IEventRepository, EventRepository>();
         }
 
-        private void AddS3(IConfiguration configuration)
+        private void AddS3Client(IConfiguration configuration)
         {
             services.AddSingleton<IAmazonS3>(_ =>
             {
@@ -67,7 +66,7 @@ public static class InfrastructureExtensions
             });
         }
 
-        private void RegisterInfrastructureServices()
+        private void RegisterDataAccessServices()
         {
             services.AddScoped<IFileStorageService, RustFsFileStorageService>();
         }
