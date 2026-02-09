@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Util;
+using Events.Application.Services.Features.Files;
 
 namespace Events.Hosts.S3Migrator;
 
@@ -17,30 +18,27 @@ public class S3MigrationWorker(
                 logger.LogInformation("Start S3 migration: {time}", DateTimeOffset.Now);
 
             using var scope = serviceProvider.CreateScope();
-            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             var s3Client = scope.ServiceProvider.GetRequiredService<IAmazonS3>();
-            var buckets = configuration.GetSection("S3:Buckets").GetChildren();
+            var buckets = S3Buckets.GetAll();
 
             foreach (var bucket in buckets)
             {
-                var bucketName = bucket.Value;
-
                 if (logger.IsEnabled(LogLevel.Information))
-                    logger.LogInformation("Migrating bucket: {bucketName}", bucketName);
+                    logger.LogInformation("Migrating bucket: {bucketName}", bucket);
 
-                var bucketExists = await AmazonS3Util.DoesS3BucketExistV2Async(s3Client, bucketName);
+                var bucketExists = await AmazonS3Util.DoesS3BucketExistV2Async(s3Client, bucket);
 
                 if (!bucketExists)
                 {
-                    await s3Client.PutBucketAsync(bucketName, cancellationToken);
+                    await s3Client.PutBucketAsync(bucket, cancellationToken);
 
                     if (logger.IsEnabled(LogLevel.Information))
-                        logger.LogInformation("Bucket created: {bucketName}", bucketName);
+                        logger.LogInformation("Bucket created: {bucketName}", bucket);
                 }
                 else
                 {
                     if (logger.IsEnabled(LogLevel.Information))
-                        logger.LogInformation("Bucket already exists: {bucketName}", bucketName);
+                        logger.LogInformation("Bucket already exists: {bucketName}", bucket);
                 }
             }
 
