@@ -16,10 +16,4 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
     </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
 </Project>

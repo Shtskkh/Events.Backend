@@ -79,7 +79,9 @@ services:
       - rustfs:/data
   
   s3_migrator:
-    build: ./src/Hosts/Events.Hosts.S3Migrator
+    build:
+      context: ./src/
+      dockerfile: S3Migrator.Dockerfile
     container_name: s3_migrator
     restart: no
     environment:
