@@ -1,11 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
 WORKDIR /src/Hosts/Events.Hosts.API
 RUN dotnet restore
-RUN dotnet publish -o out
+RUN dotnet publish -c $BUILD_CONFIGURATION -o publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
-COPY --from=build /src/Hosts/Events.Hosts.API/out .
+COPY --from=build /src/Hosts/Events.Hosts.API/publish .
 ENTRYPOINT ["dotnet", "Events.Hosts.API.dll"]
