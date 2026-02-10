@@ -1,4 +1,5 @@
-﻿using Events.Application.Services.Features.Events.Queries.GetByFilter;
+﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
+using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
@@ -56,15 +57,17 @@ public class EventsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Создать мероприятие.
     /// </summary>
-    /// <param name="dto"> Форма создания мероприятия. </param>
-    /// <returns> UUID созданного мероприятия. </returns>
+    /// <param name="dto">Форма создания мероприятия.</param>
+    /// <returns>UUID созданного мероприятия.</returns>
     [HttpPost]
     [Consumes("multipart/form-data")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json")]
     public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto dto)
     {
-        throw new NotImplementedException();
+        var id = await mediator.Send(new CreateEventCommand(dto));
+
+        return StatusCode(StatusCodes.Status201Created, id);
     }
 
     [HttpPatch("{id:guid}")]
