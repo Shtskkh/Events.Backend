@@ -22,7 +22,7 @@ public static class S3MigratorExtensions
 
                 var config = new AmazonS3Config
                 {
-                    ServiceURL = $"http://{endpoint}",
+                    ServiceURL = endpoint,
                     ForcePathStyle = true
                 };
 

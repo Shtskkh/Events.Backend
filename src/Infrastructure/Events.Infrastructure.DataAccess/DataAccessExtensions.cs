@@ -56,7 +56,7 @@ public static class DataAccessExtensions
 
                 var config = new AmazonS3Config
                 {
-                    ServiceURL = $"http://{endpoint}",
+                    ServiceURL = endpoint,
                     ForcePathStyle = true
                 };
 
