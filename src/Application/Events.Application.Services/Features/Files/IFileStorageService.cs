@@ -14,7 +14,16 @@ public interface IFileStorageService
     Task PutObjectAsync(PutObjectRequest request);
 
     /// <summary>
-    /// Удалить файл из хранилища.
+    ///     Сгенерировать ссылку на скачивание файла.
+    /// </summary>
+    /// <param name="request">Запрос на скачивание файла.</param>
+    /// <returns>
+    ///     Строковое представление ссылки на скачивание.
+    /// </returns>
+    Task<string> GeneratePresignedUrlAsync(GetPreSignedUrlRequest request);
+
+    /// <summary>
+    ///     Удалить файл из хранилища.
     /// </summary>
     /// <param name="request">Запрос на удаление.</param>
     Task DeleteObjectAsync(DeleteObjectRequest request);
