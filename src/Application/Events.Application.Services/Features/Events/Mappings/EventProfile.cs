@@ -15,7 +15,8 @@ public class EventProfile : Profile
             .ForMember(dest => dest.Title,
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
-                opt => opt.MapFrom(src => src.Description.Value));
+                opt => opt.MapFrom(src => src.Description.Value))
+            .ForMember(dest => dest.PreviewDownloadLink, opt => opt.Ignore());
 
         CreateMap<Event, ShortEventDto>()
             .ForMember(dest => dest.Title,

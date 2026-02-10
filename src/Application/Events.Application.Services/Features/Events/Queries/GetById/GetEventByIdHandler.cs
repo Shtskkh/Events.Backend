@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 
@@ -10,7 +13,10 @@ namespace Events.Application.Services.Features.Events.Queries.GetById;
 /// </summary>
 /// <param name="eventRepository">Репозиторий мероприятий.</param>
 /// <param name="mapper">Маппер.</param>
-public class GetEventByIdHandler(IEventRepository eventRepository, IMapper mapper)
+public class GetEventByIdHandler(
+    IEventRepository eventRepository,
+    IFileStorageService storageService,
+    IMapper mapper)
     : IRequestHandler<GetEventByIdQuery, EventDto>
 {
     /// <summary>
@@ -24,6 +30,20 @@ public class GetEventByIdHandler(IEventRepository eventRepository, IMapper mappe
     public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
         var @event = await eventRepository.GetByIdAsync(request.Id);
-        return mapper.Map<EventDto>(@event);
+
+        var downloadPreviewRequest = new GetPreSignedUrlRequest
+        {
+            BucketName = S3Buckets.EventPreviews,
+            Key = @event.PreviewFilename.ToString(),
+            Expires = DateTime.Now.AddMinutes(5),
+            Protocol = Protocol.HTTP
+        };
+        
+        var url = await storageService.GeneratePresignedUrlAsync(downloadPreviewRequest);
+
+        var dto = mapper.Map<EventDto>(@event);
+        dto.PreviewDownloadLink = new Uri(url);
+
+        return dto;
     }
 }

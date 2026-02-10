@@ -24,4 +24,9 @@ public class EventDto
     ///     Дата и время окончания мероприятия.
     /// </summary>
     public DateTimeOffset EndDateTime { get; init; }
+
+    /// <summary>
+    ///     Ссылка на загрузку превью мероприятия.
+    /// </summary>
+    public Uri PreviewDownloadLink { get; set; } = null!;
 }
