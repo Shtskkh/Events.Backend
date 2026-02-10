@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{54902353-30A
 	ProjectSection(SolutionItems) = preProject
 		src\Dockerfile = src\Dockerfile
 		src\Migrator.Dockerfile = src\Migrator.Dockerfile
+		src\S3Migrator.Dockerfile = src\S3Migrator.Dockerfile
+		src\.dockerignore = src\.dockerignore
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EAA92262-C9CA-457B-B69F-8B782F55EE93}"
