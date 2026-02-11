@@ -16,6 +16,11 @@ public class ShortEventDto
     public string Announcement { get; init; } = null!;
 
     /// <summary>
+    ///     Тип мероприятия.
+    /// </summary>
+    public string Type { get; init; } = null!;
+
+    /// <summary>
     ///     Дата и время начала мероприятия.
     /// </summary>
     public DateTimeOffset StartDateTime { get; init; }

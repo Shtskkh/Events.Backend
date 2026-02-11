@@ -7,6 +7,10 @@ namespace Events.Domain.Shared;
 public abstract class Entity<TKey>
     where TKey : IEquatable<TKey>
 {
+    protected Entity()
+    {
+    }
+
     /// <summary>
     ///     Конструктор сущности.
     /// </summary>

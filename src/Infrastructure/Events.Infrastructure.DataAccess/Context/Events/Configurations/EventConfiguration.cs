@@ -10,6 +10,8 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 {
     public void Configure(EntityTypeBuilder<Event> builder)
     {
+        builder.ToTable("Events");
+
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Title)
@@ -41,5 +43,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsRequired();
 
         builder.Property(e => e.PreviewFilename);
+
+        builder.HasOne(e => e.EventType)
+            .WithMany()
+            .IsRequired();
+
+        builder.Navigation(e => e.EventType).AutoInclude();
     }
 }

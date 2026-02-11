@@ -10,6 +10,10 @@ namespace Events.Domain.Aggregates.EventAggregate;
 /// </summary>
 public class Event : Entity<Guid>, IAggregateRoot
 {
+    private Event()
+    {
+    }
+
     /// <summary>
     ///     Конструктор мероприятия.
     /// </summary>
@@ -19,14 +23,16 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="description">Описание мероприятия.</param>
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    /// <param name="eventType">Тип мероприятия.</param>
     /// <param name="previewFilename">Название превью файла.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime, Guid? previewFilename = null) :
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, Guid? previewFilename = null) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
+        EventType = eventType;
 
         if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
 
@@ -62,6 +68,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Название файла превью.
     /// </summary>
     public Guid? PreviewFilename { get; private set; }
+
+    /// <summary>
+    ///     Тип мероприятия.
+    /// </summary>
+    public EventType EventType { get; private set; }
 
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
@@ -109,5 +120,14 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangePreviewFilename(Guid previewFileName)
     {
         PreviewFilename = previewFileName;
+    }
+
+    /// <summary>
+    ///     Изменить тип мероприятия.
+    /// </summary>
+    /// <param name="eventType">Новый тип мероприятия.</param>
+    public void ChangeEventType(EventType eventType)
+    {
+        EventType = eventType;
     }
 }

@@ -16,7 +16,7 @@ namespace Events.Hosts.API.Controllers.Events;
 [Route("api/v/1/[controller]")]
 [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError, "application/problem+json",
     Description = "Неожиданная ошибка сервера.")]
-public class EventsController(IMediator mediator) : ControllerBase
+public class EventsController(IMediator mediator, ILogger<EventsController> logger) : ControllerBase
 {
     /// <summary>
     ///     Получить информацию о мероприятиях, удовлетворяющих фильтру.

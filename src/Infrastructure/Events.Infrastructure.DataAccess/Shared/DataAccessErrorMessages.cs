@@ -14,5 +14,16 @@ public static class DataAccessErrorMessages
         ///     Мероприятие не найдено.
         /// </summary>
         public const string NotFound = "Мероприятие не найдено.";
+
+        /// <summary>
+        ///     Ошибки типа мероприятия.
+        /// </summary>
+        public static class Type
+        {
+            /// <summary>
+            ///     Тип мероприятия не найден.
+            /// </summary>
+            public const string NotFound = "Тип мероприятия не найден.";
+        }
     }
 }

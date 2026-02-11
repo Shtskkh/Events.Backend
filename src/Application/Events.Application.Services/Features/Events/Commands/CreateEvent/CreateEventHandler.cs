@@ -13,6 +13,7 @@ namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
 /// <param name="fileStorageService">Сервис хранения файлов.</param>
 public class CreateEventHandler(
     IEventRepository eventRepository,
+    IEventTypeRepository eventTypeRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
@@ -35,6 +36,8 @@ public class CreateEventHandler(
                 await fileStorageService.PutObjectAsync(putRequest);
             }
 
+            var eventType = await eventTypeRepository.GetById(dto.EventTypeId);
+
             var eventFactory = new EventFactory();
             var @event = eventFactory.Create(
                 dto.Title,
@@ -42,6 +45,7 @@ public class CreateEventHandler(
                 dto.Description,
                 dto.StartDateTime,
                 dto.EndDateTime,
+                eventType,
                 filenameGuid
             );
 

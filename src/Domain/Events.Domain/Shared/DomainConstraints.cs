@@ -68,5 +68,21 @@ public static class DomainConstraints
             /// </summary>
             public const int MaxDurationInDays = 31;
         }
+
+        /// <summary>
+        ///     Константы типа мероприятия.
+        /// </summary>
+        public static class Type
+        {
+            /// <summary>
+            ///     Минимальная длина названия типа мероприятия.
+            /// </summary>
+            public const int MinLength = 2;
+
+            /// <summary>
+            ///     Максимальная длина названия типа мероприятия.
+            /// </summary>
+            public const int MaxLength = 16;
+        }
     }
 }

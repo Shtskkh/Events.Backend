@@ -46,4 +46,9 @@ public class CreateEventDto
     ///     Превью изображения для мероприятия.
     /// </summary>
     public IFormFile? Preview { get; set; }
+
+    /// <summary>
+    ///     ID типа мероприятия.
+    /// </summary>
+    public required int EventTypeId { get; set; }
 }

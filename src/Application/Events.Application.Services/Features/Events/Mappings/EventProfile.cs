@@ -16,12 +16,16 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description.Value))
-            .ForMember(dest => dest.PreviewDownloadLink, opt => opt.Ignore());
+            .ForMember(dest => dest.PreviewDownloadLink, opt => opt.Ignore())
+            .ForMember(dest => dest.Type,
+                opt => opt.MapFrom(e => e.EventType.Title));
 
         CreateMap<Event, ShortEventDto>()
             .ForMember(dest => dest.Title,
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Announcement,
-                opt => opt.MapFrom(src => src.Announcement.Value));
+                opt => opt.MapFrom(src => src.Announcement.Value))
+            .ForMember(dest => dest.Type,
+                opt => opt.MapFrom(e => e.EventType.Title));
     }
 }

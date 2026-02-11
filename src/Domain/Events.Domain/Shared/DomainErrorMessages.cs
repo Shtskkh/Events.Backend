@@ -85,5 +85,21 @@ public static class DomainErrorMessages
             /// </summary>
             public const string DurationGreaterThanMax = "Длина мероприятия больше максимальной длины.";
         }
+
+        /// <summary>
+        ///     Ошибки типа мероприятия.
+        /// </summary>
+        public static class Type
+        {
+            /// <summary>
+            ///     Длина описания мероприятия меньше минимальной длины.
+            /// </summary>
+            public const string LessThanMinLenght = "Название типа мероприятия меньше минимальной длины.";
+
+            /// <summary>
+            ///     Длина описания мероприятия меньше минимальной длины.
+            /// </summary>
+            public const string GreaterThanMaxLenght = "Название типа мероприятия больше максимальной длины.";
+        }
     }
 }

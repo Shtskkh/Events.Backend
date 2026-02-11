@@ -9,6 +9,7 @@ public class EventTestBuilder
     private EventAnnouncement _announcement = new("Test announcement");
     private EventDescription _description = new("Test description");
     private DateTimeOffset _endDateTime = DateTimeOffset.Now + TimeSpan.FromDays(7);
+    private EventType _eventType = EventType.Conference;
     private DateTimeOffset _startDateTime = DateTimeOffset.Now;
     private EventTitle _title = new("Test title");
 
@@ -20,7 +21,8 @@ public class EventTestBuilder
             _announcement,
             _description,
             _endDateTime,
-            _startDateTime
+            _startDateTime,
+            _eventType
         );
     }
 
@@ -51,6 +53,12 @@ public class EventTestBuilder
     public EventTestBuilder WithEndDateTime(DateTimeOffset endDateTime)
     {
         _endDateTime = endDateTime;
+        return this;
+    }
+
+    public EventTestBuilder WithEventType(EventType eventType)
+    {
+        _eventType = eventType;
         return this;
     }
 }

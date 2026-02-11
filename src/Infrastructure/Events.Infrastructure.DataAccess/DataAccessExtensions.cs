@@ -44,6 +44,7 @@ public static class DataAccessExtensions
         {
             services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventTypeRepository, EventTypeRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)
