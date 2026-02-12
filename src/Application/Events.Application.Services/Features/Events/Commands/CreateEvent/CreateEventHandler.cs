@@ -27,7 +27,7 @@ public class CreateEventHandler(
             {
                 var putRequest = new PutObjectRequest
                 {
-                    BucketName = S3Buckets.EventPreviews,
+                    BucketName = S3Buckets.EventsPreviews,
                     Key = filenameGuid.ToString(),
                     ContentType = dto.Preview.ContentType,
                     InputStream = dto.Preview.OpenReadStream()
@@ -59,7 +59,7 @@ public class CreateEventHandler(
             {
                 var deleteRequest = new DeleteObjectRequest
                 {
-                    BucketName = S3Buckets.EventPreviews,
+                    BucketName = S3Buckets.EventsPreviews,
                     Key = filenameGuid.ToString()
                 };
 

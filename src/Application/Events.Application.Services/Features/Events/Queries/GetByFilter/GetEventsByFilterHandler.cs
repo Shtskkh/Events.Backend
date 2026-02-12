@@ -35,7 +35,7 @@ public class GetEventsByFilterHandler(IEventRepository repository, IFileStorageS
         {
             var downloadPreviewRequest = new GetPreSignedUrlRequest
             {
-                BucketName = S3Buckets.EventPreviews,
+                BucketName = S3Buckets.EventsPreviews,
                 Key = e.PreviewFilename.ToString(),
                 Expires = DateTime.Now.AddMinutes(5),
                 Protocol = Protocol.HTTP

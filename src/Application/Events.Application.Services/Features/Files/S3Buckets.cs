@@ -8,7 +8,7 @@ public static class S3Buckets
     /// <summary>
     ///     Превью изображения мероприятий.
     /// </summary>
-    public const string EventPreviews = "events-previews";
+    public const string EventsPreviews = "events-previews";
 
     /// <summary>
     ///     Получить все buckets.
@@ -18,6 +18,6 @@ public static class S3Buckets
     /// </returns>
     public static IEnumerable<string> GetAll()
     {
-        yield return EventPreviews;
+        yield return EventsPreviews;
     }
 }

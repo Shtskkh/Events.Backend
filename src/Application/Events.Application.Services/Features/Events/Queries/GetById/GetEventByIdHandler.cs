@@ -33,12 +33,12 @@ public class GetEventByIdHandler(
 
         var downloadPreviewRequest = new GetPreSignedUrlRequest
         {
-            BucketName = S3Buckets.EventPreviews,
+            BucketName = S3Buckets.EventsPreviews,
             Key = @event.PreviewFilename.ToString(),
             Expires = DateTime.Now.AddMinutes(5),
             Protocol = Protocol.HTTP
         };
-        
+
         var url = await storageService.GeneratePresignedUrlAsync(downloadPreviewRequest);
 
         var dto = mapper.Map<EventDto>(@event);
