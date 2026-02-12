@@ -11,6 +11,11 @@ public static class S3Buckets
     public const string EventsPreviews = "events-previews";
 
     /// <summary>
+    ///     Плейсхолдеры превью изображений мероприятий.
+    /// </summary>
+    public const string EventsPlaceholders = "events-placeholders";
+
+    /// <summary>
     ///     Получить все buckets.
     /// </summary>
     /// <returns>
