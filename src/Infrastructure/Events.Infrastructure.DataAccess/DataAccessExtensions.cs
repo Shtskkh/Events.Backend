@@ -54,12 +54,20 @@ public static class DataAccessExtensions
                 var endpoint = configuration["S3:Endpoint"];
                 var accessKey = configuration["S3:AccessKey"];
                 var secretKey = configuration["S3:SecretKey"];
+                var proxyHost = configuration["S3:ProxyHost"];
+                var proxyPort = configuration["S3:ProxyPort"];
 
                 var config = new AmazonS3Config
                 {
                     ServiceURL = endpoint,
                     ForcePathStyle = true
                 };
+
+                if (proxyHost != null && proxyPort != null)
+                {
+                    config.ProxyHost = proxyHost;
+                    config.ProxyPort = int.Parse(proxyPort);
+                }
 
                 var credentials = new BasicAWSCredentials(accessKey, secretKey);
 
