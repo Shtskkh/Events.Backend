@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
+using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 
@@ -11,7 +14,7 @@ namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
 /// </summary>
 /// <param name="repository">Репозиторий мероприятий.</param>
 /// <param name="mapper">Маппер.</param>
-public class GetEventsByFilterHandler(IEventRepository repository, IMapper mapper)
+public class GetEventsByFilterHandler(IEventRepository repository, IFileStorageService storageService, IMapper mapper)
     : IRequestHandler<GetEventsByFilterQuery, IReadOnlyCollection<ShortEventDto>>
 {
     /// <summary>
@@ -26,6 +29,25 @@ public class GetEventsByFilterHandler(IEventRepository repository, IMapper mappe
         var spec = new EventFilterSpecification(request.filter);
         var events = await repository.GetByFilterAsync(spec);
 
-        return mapper.Map<IReadOnlyCollection<ShortEventDto>>(events);
+        var dtos = mapper.Map<List<ShortEventDto>>(events);
+
+        var urlTasks = events.Select(async (e, index) =>
+        {
+            var downloadPreviewRequest = new GetPreSignedUrlRequest
+            {
+                BucketName = S3Buckets.EventPreviews,
+                Key = e.PreviewFilename.ToString(),
+                Expires = DateTime.Now.AddMinutes(5),
+                Protocol = Protocol.HTTP
+            };
+
+            var url = await storageService.GeneratePresignedUrlAsync(downloadPreviewRequest);
+
+            dtos[index].PreviewDownloadLink = new Uri(url);
+        });
+
+        await Task.WhenAll(urlTasks);
+
+        return dtos.AsReadOnly();
     }
 }
