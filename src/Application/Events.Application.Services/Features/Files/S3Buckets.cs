@@ -24,5 +24,6 @@ public static class S3Buckets
     public static IEnumerable<string> GetAll()
     {
         yield return EventsPreviews;
+        yield return EventsPlaceholders;
     }
 }
