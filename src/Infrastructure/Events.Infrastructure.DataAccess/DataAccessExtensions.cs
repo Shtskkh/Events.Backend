@@ -4,6 +4,7 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.EventsTypes.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
+using Events.Infrastructure.DataAccess.Context.EventsTypes.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
 using Microsoft.EntityFrameworkCore;

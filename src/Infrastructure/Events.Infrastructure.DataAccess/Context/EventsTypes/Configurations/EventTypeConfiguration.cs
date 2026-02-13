@@ -3,7 +3,7 @@ using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
+namespace Events.Infrastructure.DataAccess.Context.EventsTypes.Configurations;
 
 public class EventTypeConfiguration : IEntityTypeConfiguration<EventType>
 {
