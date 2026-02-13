@@ -46,7 +46,8 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.HasOne(e => e.EventType)
             .WithMany()
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Navigation(e => e.EventType).AutoInclude();
     }
