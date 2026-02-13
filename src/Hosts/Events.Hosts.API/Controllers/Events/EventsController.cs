@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Events.Hosts.API.Controllers.Events;
 
 /// <summary>
-///     Контроллер для мероприятий.
+///     Контроллер мероприятий.
 /// </summary>
 /// <param name="mediator">Медиатор.</param>
 [ApiController]
@@ -26,8 +26,10 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     ///     Массив кратких описаний мероприятий, удовлетворяющих фильтру.
     /// </returns>
     [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятия по заданному фильтру не найдены.")]
     public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter)
     {
         var events = await mediator.Send(new GetEventsByFilterQuery(filter));
@@ -45,8 +47,9 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     ///     Полная информация о мероприятии.
     /// </returns>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK, "application/json")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json")]
+    [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK, "application/json", Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие не найдено.")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
         var @event = await mediator.Send(new GetEventByIdQuery(id));
@@ -61,8 +64,10 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <returns>UUID созданного мероприятия.</returns>
     [HttpPost]
     [Consumes("multipart/form-data")]
-    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain",
+        Description = "Мероприятие создано.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
     public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto dto)
     {
         var id = await mediator.Send(new CreateEventCommand(dto));
