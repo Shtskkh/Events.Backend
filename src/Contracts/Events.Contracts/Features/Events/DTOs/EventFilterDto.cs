@@ -9,6 +9,11 @@ namespace Events.Contracts.Features.Events.DTOs;
 public class EventFilterDto : IPagination
 {
     /// <summary>
+    ///     Тип мероприятия.
+    /// </summary>
+    public int? EventTypeId { get; set; }
+
+    /// <summary>
     ///     Размер выборки.
     /// </summary>
     [Range(1, int.MaxValue)]
