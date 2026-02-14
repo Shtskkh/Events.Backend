@@ -18,6 +18,9 @@ public class EventFilterSpecification : Specification<Event>
         if (filter.EventTypeId != null)
             Query.Where(e => e.Type.Id == filter.EventTypeId);
 
+        if (filter.EventFormatId != null)
+            Query.Where(e => e.Format.Id == filter.EventFormatId);
+
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);

@@ -14,6 +14,11 @@ public class EventFilterDto : IPagination
     public int? EventTypeId { get; set; }
 
     /// <summary>
+    ///     Формат мероприятия.
+    /// </summary>
+    public int? EventFormatId { get; set; }
+
+    /// <summary>
     ///     Размер выборки.
     /// </summary>
     [Range(1, int.MaxValue)]
