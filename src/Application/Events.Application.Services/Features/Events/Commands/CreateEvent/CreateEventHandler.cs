@@ -47,6 +47,7 @@ public class CreateEventHandler(
                 dto.StartDateTime,
                 dto.EndDateTime,
                 eventType,
+                dto.NeedsRegistration,
                 filenameGuid
             );
 

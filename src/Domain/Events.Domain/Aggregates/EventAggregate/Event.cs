@@ -24,15 +24,18 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
     /// <param name="eventType">Тип мероприятия.</param>
+    /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название превью файла.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, Guid? previewFilename = null) :
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, bool needsRegistration,
+        Guid? previewFilename = null) :
         base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
         EventType = eventType;
+        NeedsRegistration = needsRegistration;
 
         if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
 
@@ -73,6 +76,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Тип мероприятия.
     /// </summary>
     public EventType EventType { get; private set; }
+
+    /// <summary>
+    ///     Флаг необходимости регистрации на мероприятие.
+    /// </summary>
+    public bool NeedsRegistration { get; private set; }
 
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
@@ -129,5 +137,14 @@ public class Event : Entity<Guid>, IAggregateRoot
     public void ChangeEventType(EventType eventType)
     {
         EventType = eventType;
+    }
+
+    /// <summary>
+    ///     Изменить флаг необходимости регистрации.
+    /// </summary>
+    /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
+    public void ChangeNeedsRegistration(bool needsRegistration)
+    {
+        NeedsRegistration = needsRegistration;
     }
 }

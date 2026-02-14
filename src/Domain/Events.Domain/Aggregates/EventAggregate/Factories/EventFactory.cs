@@ -7,7 +7,7 @@ public class EventFactory : IEventFactory
 {
     /// <inheritdoc />
     public Event Create(string title, string announcement, string description, DateTimeOffset startDateTime,
-        DateTimeOffset endDateTime, EventType eventType, Guid? previewFilename = null)
+        DateTimeOffset endDateTime, EventType eventType, bool needRegistration, Guid? previewFilename = null)
     {
         var id = Guid.NewGuid();
         var titleVo = new EventTitle(title);
@@ -22,6 +22,7 @@ public class EventFactory : IEventFactory
             startDateTime,
             endDateTime,
             eventType,
+            needRegistration,
             previewFilename
         );
     }

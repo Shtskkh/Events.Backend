@@ -14,6 +14,7 @@ public interface IEventFactory
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
     /// <param name="eventType">Тип мероприятия.</param>
+    /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <returns>Объект созданного мероприятия.</returns>
     Event Create(
@@ -23,6 +24,7 @@ public interface IEventFactory
         DateTimeOffset startDateTime,
         DateTimeOffset endDateTime,
         EventType eventType,
+        bool needsRegistration,
         Guid? previewFilename = null
     );
 }

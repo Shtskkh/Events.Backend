@@ -6,6 +6,7 @@ namespace Events.Unit.Tests.Domain.Aggregates.EventAggregate.Helpers;
 public class EventTestBuilder
 {
     private readonly Guid _id = Guid.NewGuid();
+    private readonly bool _needRegistration = false;
     private EventAnnouncement _announcement = new("Test announcement");
     private EventDescription _description = new("Test description");
     private DateTimeOffset _endDateTime = DateTimeOffset.Now + TimeSpan.FromDays(7);
@@ -22,7 +23,8 @@ public class EventTestBuilder
             _description,
             _endDateTime,
             _startDateTime,
-            _eventType
+            _eventType,
+            _needRegistration
         );
     }
 

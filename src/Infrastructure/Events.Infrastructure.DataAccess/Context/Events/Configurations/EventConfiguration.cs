@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
 
+/// <summary>
+///     Конфигурация сущности мероприятия.
+/// </summary>
 public class EventConfiguration : IEntityTypeConfiguration<Event>
 {
     public void Configure(EntityTypeBuilder<Event> builder)
@@ -43,6 +46,9 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsRequired();
 
         builder.Property(e => e.PreviewFilename);
+
+        builder.Property(e => e.NeedsRegistration)
+            .IsRequired();
 
         builder.HasOne(e => e.EventType)
             .WithMany()

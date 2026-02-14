@@ -51,4 +51,9 @@ public class CreateEventDto
     ///     ID типа мероприятия.
     /// </summary>
     public required int EventTypeId { get; set; }
+
+    /// <summary>
+    ///     Флаг необходимости регистрации.
+    /// </summary>
+    public required bool NeedsRegistration { get; set; }
 }
