@@ -13,5 +13,5 @@ public class EventFormatDto
     /// <summary>
     ///     Название.
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; init; } = null!;
 }
