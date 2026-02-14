@@ -38,4 +38,10 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     {
         await repository.AddAsync(@event);
     }
+
+    /// <inheritdoc />
+    public async Task DeleteAsync(Event @event)
+    {
+        await repository.DeleteAsync(@event);
+    }
 }

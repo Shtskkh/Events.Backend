@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
+using Events.Application.Services.Features.Events.Commands.Delete;
 using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
 using Events.Application.Services.Features.EventsTypes.Queries.GetAll;
@@ -83,10 +84,21 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Удалить мероприятие.
+    /// </summary>
+    /// <param name="id">Идентификатор мероприятия.</param>
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успешное удаление.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие не найдено.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new DeleteEventQuery(id));
+
+        return Ok();
     }
 
     /// <summary>

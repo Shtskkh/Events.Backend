@@ -29,4 +29,10 @@ public interface IEventRepository
     /// </summary>
     /// <param name="event">Объект мероприятия.</param>
     Task AddAsync(Event @event);
+
+    /// <summary>
+    ///     Удалить мероприятие.
+    /// </summary>
+    /// <param name="event">Сущность мероприятия для удаления.</param>
+    Task DeleteAsync(Event @event);
 }
