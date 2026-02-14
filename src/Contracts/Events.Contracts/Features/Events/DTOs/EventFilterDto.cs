@@ -9,6 +9,11 @@ namespace Events.Contracts.Features.Events.DTOs;
 public class EventFilterDto : IPagination
 {
     /// <summary>
+    ///     Текст.
+    /// </summary>
+    public string? Text { get; set; }
+
+    /// <summary>
     ///     Тип мероприятия.
     /// </summary>
     public int? TypeId { get; set; }

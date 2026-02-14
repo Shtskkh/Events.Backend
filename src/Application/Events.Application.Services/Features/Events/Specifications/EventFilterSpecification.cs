@@ -15,6 +15,18 @@ public class EventFilterSpecification : Specification<Event>
     /// <param name="filter">DTO фильтра.</param>
     public EventFilterSpecification(EventFilterDto filter)
     {
+        if (filter.Text != null)
+        {
+            var words = filter.Text
+                .Split([' ', ',', '.', '\t', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Distinct();
+
+            foreach (var word in words)
+                Query.Search(e => e.Title.Value, '%' + word + '%')
+                    .Search(e => e.Announcement.Value, '%' + word + '%')
+                    .Search(e => e.Description.Value, '%' + word + '%');
+        }
+
         if (filter.TypeId != null)
             Query.Where(e => e.Type.Id == filter.TypeId);
 
