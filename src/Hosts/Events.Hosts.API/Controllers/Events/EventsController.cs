@@ -7,7 +7,7 @@ using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
 using Events.Contracts.Features.Events.EventsFormats;
-using Events.Contracts.Features.EventsTypes;
+using Events.Contracts.Features.Events.EventsTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,4 @@
-﻿namespace Events.Contracts.Features.EventsTypes;
+﻿namespace Events.Contracts.Features.Events.EventsTypes;
 
 /// <summary>
 ///     Информация о типе мероприятия.
@@ -8,10 +8,10 @@ public class EventTypeDto
     /// <summary>
     ///     Идентификатор типа мероприятия.
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
 
     /// <summary>
     ///     Название типа мероприятия.
     /// </summary>
-    public string Title { get; set; } = null!;
+    public string Title { get; init; } = null!;
 }

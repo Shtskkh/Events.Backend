@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.EventsTypes;
+﻿using Events.Contracts.Features.Events.EventsTypes;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
