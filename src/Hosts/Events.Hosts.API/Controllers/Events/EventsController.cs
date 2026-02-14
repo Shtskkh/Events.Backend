@@ -112,7 +112,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Типы мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllTypesAsync()
     {
         var types = await mediator.Send(new GetAllEventsTypesQuery());
 
