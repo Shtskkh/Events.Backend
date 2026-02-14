@@ -13,4 +13,10 @@ public interface IEventFormatRepository
     /// <param name="id">Идентификатор формата мероприятия.</param>
     /// <returns>Сущность формата мероприятия.</returns>
     Task<EventFormat> GetByIdAsync(int id);
+
+    /// <summary>
+    ///     Получить все форматы мероприятий.
+    /// </summary>
+    /// <returns>Коллекция форматов мероприятий.</returns>
+    Task<IReadOnlyCollection<EventFormat>> GetAllAsync();
 }

@@ -2,9 +2,11 @@
 using Events.Application.Services.Features.Events.Commands.Delete;
 using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
+using Events.Application.Services.Features.EventsFormats.Queries.GetAll;
 using Events.Application.Services.Features.EventsTypes.Queries.GetAll;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Features.Events.EventsFormats;
 using Events.Contracts.Features.EventsTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -119,5 +121,23 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         if (types.Count == 0) return NotFound();
 
         return Ok(types);
+    }
+
+    /// <summary>
+    ///     Получить все форматы мероприятий.
+    /// </summary>
+    /// <returns>Массив форматов мероприятий.</returns>
+    [HttpGet("Formats")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Форматы мероприятий не найдены.")]
+    public async Task<IActionResult> GetAllFormatsAsync()
+    {
+        var formats = await mediator.Send(new GetAllEventsFormatsQuery());
+
+        if (formats.Count == 0) return NotFound();
+
+        return Ok(formats);
     }
 }

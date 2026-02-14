@@ -3,6 +3,7 @@ using Events.Domain.Aggregates.EventAggregate;
 using Events.Infrastructure.DataAccess.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 
@@ -17,5 +18,13 @@ public class EventFormatRepository(IRepository<EventFormat, int, EventsDbContext
         if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.Format.NotFound);
 
         return (await repository.GetByIdAsync(id))!;
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<EventFormat>> GetAllAsync()
+    {
+        var types = await repository.GetAllAsync().AsNoTracking().ToListAsync();
+
+        return types.AsReadOnly();
     }
 }
