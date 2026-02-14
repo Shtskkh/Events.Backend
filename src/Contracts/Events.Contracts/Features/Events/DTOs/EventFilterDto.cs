@@ -11,12 +11,12 @@ public class EventFilterDto : IPagination
     /// <summary>
     ///     Тип мероприятия.
     /// </summary>
-    public int? EventTypeId { get; set; }
+    public int? TypeId { get; set; }
 
     /// <summary>
     ///     Формат мероприятия.
     /// </summary>
-    public int? EventFormatId { get; set; }
+    public int? FormatId { get; set; }
 
     /// <summary>
     ///     Размер выборки.

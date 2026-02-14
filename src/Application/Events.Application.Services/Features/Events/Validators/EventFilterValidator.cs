@@ -14,6 +14,14 @@ public class EventFilterValidator : AbstractValidator<EventFilterDto>
     /// </summary>
     public EventFilterValidator()
     {
+        RuleFor(filter => filter.TypeId)
+            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.TypeIdLessOrEqualToZero)
+            .When(filter => filter.TypeId.HasValue);
+        
+        RuleFor(filter => filter.FormatId)
+            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.FormatIdLessOrEqualToZero)
+            .When(filter => filter.TypeId.HasValue);
+
         RuleFor(filter => filter.Page)
             .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.PageLessOrEqualToZero);
 

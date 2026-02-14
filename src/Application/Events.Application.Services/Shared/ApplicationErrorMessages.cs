@@ -21,6 +21,10 @@ public static class ApplicationErrorMessages
 
             public static readonly string SizeGreaterThanMax =
                 $"Размер выборки должен быть меньше чем {ApplicationConstraints.Event.Filter.MaxSize}.";
+
+            public const string TypeIdLessOrEqualToZero = "ID типа мероприятия должен быть больше 0.";
+            
+            public const string FormatIdLessOrEqualToZero = "ID формата мероприятия должен быть больше 0.";
         }
     }
 }

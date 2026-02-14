@@ -15,11 +15,11 @@ public class EventFilterSpecification : Specification<Event>
     /// <param name="filter">DTO фильтра.</param>
     public EventFilterSpecification(EventFilterDto filter)
     {
-        if (filter.EventTypeId != null)
-            Query.Where(e => e.Type.Id == filter.EventTypeId);
+        if (filter.TypeId != null)
+            Query.Where(e => e.Type.Id == filter.TypeId);
 
-        if (filter.EventFormatId != null)
-            Query.Where(e => e.Format.Id == filter.EventFormatId);
+        if (filter.FormatId != null)
+            Query.Where(e => e.Format.Id == filter.FormatId);
 
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
