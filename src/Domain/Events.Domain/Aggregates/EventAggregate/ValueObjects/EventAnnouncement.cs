@@ -9,6 +9,10 @@ namespace Events.Domain.Aggregates.EventAggregate.ValueObjects;
 /// </summary>
 public class EventAnnouncement : ValueObject
 {
+    private EventAnnouncement()
+    {
+    }
+
     /// <summary>
     ///     Конструктор анонса мероприятия.
     /// </summary>
@@ -18,9 +22,9 @@ public class EventAnnouncement : ValueObject
     /// </exception>
     public EventAnnouncement(string announcement)
     {
-        Announcement = new Text(announcement);
+        Value = new Text(announcement).Value;
 
-        switch (Announcement.Value.Length)
+        switch (Value.Length)
         {
             case < DomainConstraints.Event.Announcement.MinLength:
                 throw new DomainException(DomainErrorMessages.Event.Announcement.LessThanMinLenght);
@@ -30,12 +34,10 @@ public class EventAnnouncement : ValueObject
         }
     }
 
-    private Text Announcement { get; }
-
     /// <summary>
     ///     Строка анонса мероприятия.
     /// </summary>
-    public string Value => Announcement.Value;
+    public string Value { get; } = null!;
 
     /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()

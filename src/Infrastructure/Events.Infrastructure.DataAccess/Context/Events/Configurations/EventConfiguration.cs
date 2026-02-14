@@ -17,25 +17,23 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.HasKey(e => e.Id);
 
-        builder.Property(e => e.Title)
-            .HasConversion(
-                v => v.Value,
-                v => new EventTitle(v)
-            )
+        builder.OwnsOne(e => e.Title)
+            .Property(t => t.Value)
+            .HasColumnName("Title")
             .HasMaxLength(DomainConstraints.Event.Title.MaxLength)
             .IsRequired();
 
-        builder.Property(e => e.Announcement)
-            .HasConversion(
-                v => v.Value,
-                v => new EventAnnouncement(v))
+        builder
+            .OwnsOne(e => e.Announcement)
+            .Property(a => a.Value)
+            .HasColumnName("Announcement")
             .HasMaxLength(DomainConstraints.Event.Announcement.MaxLength)
             .IsRequired();
 
-        builder.Property(e => e.Description)
-            .HasConversion(
-                v => v.Value,
-                v => new EventDescription(v))
+        builder
+            .OwnsOne(e => e.Description)
+            .Property(e => e.Value)
+            .HasColumnName("Description")
             .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
             .IsRequired();
 
