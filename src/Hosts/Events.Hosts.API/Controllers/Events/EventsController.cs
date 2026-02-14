@@ -1,8 +1,10 @@
 ﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
 using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
+using Events.Application.Services.Features.EventsTypes.Queries.GetAll;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Features.EventsTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -85,5 +87,25 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    ///     Получить все типы мероприятий.
+    /// </summary>
+    /// <returns>
+    ///     Массив типов мероприятий.
+    /// </returns>
+    [HttpGet("Types")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Типы мероприятий не найдены.")]
+    public async Task<IActionResult> GetAllAsync()
+    {
+        var types = await mediator.Send(new GetAllEventsTypesQuery());
+
+        if (types.Count == 0) return NotFound();
+
+        return Ok(types);
     }
 }
