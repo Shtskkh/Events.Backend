@@ -10,6 +10,11 @@ public static class ApplicationErrorMessages
     /// </summary>
     public static class Event
     {
+        public static class Title
+        {
+            public const string Empty = "Название мероприятия не может быть пустым";
+        }
+
         /// <summary>
         ///     Ошибки фильтра мероприятий.
         /// </summary>
@@ -19,12 +24,12 @@ public static class ApplicationErrorMessages
 
             public const string SizeLessOrEqualToZero = "Размер выборки должен быть больше 0.";
 
+            public const string TypeIdLessOrEqualToZero = "ID типа мероприятия должен быть больше 0.";
+
+            public const string FormatIdLessOrEqualToZero = "ID формата мероприятия должен быть больше 0.";
+
             public static readonly string SizeGreaterThanMax =
                 $"Размер выборки должен быть меньше чем {ApplicationConstraints.Event.Filter.MaxSize}.";
-
-            public const string TypeIdLessOrEqualToZero = "ID типа мероприятия должен быть больше 0.";
-            
-            public const string FormatIdLessOrEqualToZero = "ID формата мероприятия должен быть больше 0.";
         }
     }
 }
