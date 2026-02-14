@@ -1,9 +1,11 @@
 ﻿using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.EventsFormats.Repositories;
 using Events.Application.Services.Features.EventsTypes.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
 
@@ -15,6 +17,8 @@ namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
 public class CreateEventHandler(
     IEventRepository eventRepository,
     IEventTypeRepository eventTypeRepository,
+    IEventFormatRepository eventFormatRepository,
+    ILogger<CreateEventHandler> logger,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
@@ -38,6 +42,8 @@ public class CreateEventHandler(
             }
 
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId);
+            var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId);
+            logger.LogInformation($"Created event {filenameGuid} with format {dto.EventFormatId} {eventFormat.Title}");
 
             var eventFactory = new EventFactory();
             var @event = eventFactory.Create(
@@ -47,6 +53,7 @@ public class CreateEventHandler(
                 dto.StartDateTime,
                 dto.EndDateTime,
                 eventType,
+                eventFormat,
                 dto.NeedsRegistration,
                 filenameGuid
             );

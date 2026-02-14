@@ -1,0 +1,21 @@
+﻿using Events.Application.Services.Features.EventsFormats.Repositories;
+using Events.Domain.Aggregates.EventAggregate;
+using Events.Infrastructure.DataAccess.Exceptions;
+using Events.Infrastructure.DataAccess.Repositories;
+using Events.Infrastructure.DataAccess.Shared;
+
+namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
+
+/// <inheritdoc />
+public class EventFormatRepository(IRepository<EventFormat, int, EventsDbContext> repository) : IEventFormatRepository
+{
+    /// <inheritdoc />
+    public async Task<EventFormat> GetByIdAsync(int id)
+    {
+        var isExists = await repository.IsExistsAsync(id);
+
+        if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.Format.NotFound);
+
+        return (await repository.GetByIdAsync(id))!;
+    }
+}

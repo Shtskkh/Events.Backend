@@ -53,6 +53,11 @@ public class CreateEventDto
     public required int EventTypeId { get; set; }
 
     /// <summary>
+    ///     Формат мероприятия.
+    /// </summary>
+    public required int EventFormatId { get; set; }
+
+    /// <summary>
     ///     Флаг необходимости регистрации.
     /// </summary>
     public required bool NeedsRegistration { get; set; }

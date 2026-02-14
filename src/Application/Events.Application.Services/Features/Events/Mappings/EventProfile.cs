@@ -18,7 +18,9 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Description.Value))
             .ForMember(dest => dest.PreviewDownloadLink, opt => opt.Ignore())
             .ForMember(dest => dest.Type,
-                opt => opt.MapFrom(e => e.EventType.Title));
+                opt => opt.MapFrom(e => e.EventType.Title))
+            .ForMember(dest => dest.Format,
+                opt => opt.MapFrom(e => e.Format.Title));
 
         CreateMap<Event, ShortEventDto>()
             .ForMember(dest => dest.Title,
@@ -26,6 +28,8 @@ public class EventProfile : Profile
             .ForMember(dest => dest.Announcement,
                 opt => opt.MapFrom(src => src.Announcement.Value))
             .ForMember(dest => dest.Type,
-                opt => opt.MapFrom(e => e.EventType.Title));
+                opt => opt.MapFrom(e => e.EventType.Title))
+            .ForMember(dest => dest.Format,
+                opt => opt.MapFrom(e => e.Format.Title));
     }
 }

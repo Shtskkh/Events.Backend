@@ -21,6 +21,11 @@ public class EventDto
     public string Type { get; init; } = null!;
 
     /// <summary>
+    ///     Формат мероприятия.
+    /// </summary>
+    public string Format { get; init; } = null!;
+
+    /// <summary>
     ///     Дата и время начала мероприятия.
     /// </summary>
     public DateTimeOffset StartDateTime { get; init; }

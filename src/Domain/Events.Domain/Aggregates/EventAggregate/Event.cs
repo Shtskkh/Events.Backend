@@ -24,10 +24,12 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="startDateTime">Дата и время начала мероприятия.</param>
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
     /// <param name="eventType">Тип мероприятия.</param>
+    /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название превью файла.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, bool needsRegistration,
+        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
+        bool needsRegistration,
         Guid? previewFilename = null) :
         base(id)
     {
@@ -35,6 +37,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Announcement = announcement;
         Description = description;
         EventType = eventType;
+        Format = eventFormat;
         NeedsRegistration = needsRegistration;
 
         if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
@@ -76,6 +79,11 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Тип мероприятия.
     /// </summary>
     public EventType EventType { get; private set; }
+
+    /// <summary>
+    ///     Формат мероприятия.
+    /// </summary>
+    public EventFormat Format { get; private set; }
 
     /// <summary>
     ///     Флаг необходимости регистрации на мероприятие.

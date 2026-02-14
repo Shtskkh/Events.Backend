@@ -56,5 +56,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Navigation(e => e.EventType).AutoInclude();
+
+        builder.HasOne(e => e.Format)
+            .WithMany()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Format).AutoInclude();
     }
 }

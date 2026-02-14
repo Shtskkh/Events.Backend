@@ -10,6 +10,7 @@ public class EventTestBuilder
     private EventAnnouncement _announcement = new("Test announcement");
     private EventDescription _description = new("Test description");
     private DateTimeOffset _endDateTime = DateTimeOffset.Now + TimeSpan.FromDays(7);
+    private EventFormat _eventFormat = EventFormat.Offline;
     private EventType _eventType = EventType.Conference;
     private DateTimeOffset _startDateTime = DateTimeOffset.Now;
     private EventTitle _title = new("Test title");
@@ -24,6 +25,7 @@ public class EventTestBuilder
             _endDateTime,
             _startDateTime,
             _eventType,
+            _eventFormat,
             _needRegistration
         );
     }
@@ -61,6 +63,12 @@ public class EventTestBuilder
     public EventTestBuilder WithEventType(EventType eventType)
     {
         _eventType = eventType;
+        return this;
+    }
+
+    public EventTestBuilder WithEventFormat(EventFormat eventFormat)
+    {
+        _eventFormat = eventFormat;
         return this;
     }
 }
