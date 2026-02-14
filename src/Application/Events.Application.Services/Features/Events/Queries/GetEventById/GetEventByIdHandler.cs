@@ -6,7 +6,7 @@ using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 
-namespace Events.Application.Services.Features.Events.Queries.GetById;
+namespace Events.Application.Services.Features.Events.Queries.GetEventById;
 
 /// <summary>
 ///     Handler для получения мероприятия по ID.

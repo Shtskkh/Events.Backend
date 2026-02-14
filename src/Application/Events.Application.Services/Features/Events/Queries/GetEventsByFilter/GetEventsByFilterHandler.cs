@@ -7,7 +7,7 @@ using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Events.DTOs;
 using MediatR;
 
-namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
+namespace Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
 
 /// <summary>
 ///     Handler для получения мероприятий по фильтрам.

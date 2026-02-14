@@ -1,9 +1,9 @@
 ﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
-using Events.Application.Services.Features.Events.Commands.Delete;
-using Events.Application.Services.Features.Events.Queries.GetByFilter;
-using Events.Application.Services.Features.Events.Queries.GetById;
-using Events.Application.Services.Features.EventsFormats.Queries.GetAll;
-using Events.Application.Services.Features.EventsTypes.Queries.GetAll;
+using Events.Application.Services.Features.Events.Commands.DeleteEvent;
+using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
+using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
+using Events.Application.Services.Features.Events.Queries.GetEventById;
+using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
 using Events.Contracts.Features.Events.EventsFormats;

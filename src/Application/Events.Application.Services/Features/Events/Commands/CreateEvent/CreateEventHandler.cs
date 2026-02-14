@@ -1,7 +1,5 @@
 ﻿using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.EventsFormats.Repositories;
-using Events.Application.Services.Features.EventsTypes.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using MediatR;

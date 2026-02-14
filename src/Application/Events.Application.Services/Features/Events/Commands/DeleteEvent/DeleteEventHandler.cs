@@ -1,7 +1,7 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
 using MediatR;
 
-namespace Events.Application.Services.Features.Events.Commands.Delete;
+namespace Events.Application.Services.Features.Events.Commands.DeleteEvent;
 
 /// <summary>
 ///     Handler для удаления мероприятия.

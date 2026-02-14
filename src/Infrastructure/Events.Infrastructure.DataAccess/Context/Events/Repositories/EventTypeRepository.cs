@@ -1,11 +1,11 @@
-﻿using Events.Application.Services.Features.EventsTypes.Repositories;
+﻿using Events.Application.Services.Features.Events.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
 using Events.Infrastructure.DataAccess.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace Events.Infrastructure.DataAccess.Context.EventsTypes.Repositories;
+namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 
 /// <inheritdoc />
 public class EventTypeRepository(IRepository<EventType, int, EventsDbContext> repository) : IEventTypeRepository

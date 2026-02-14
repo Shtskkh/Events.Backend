@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Events.Application.Services.Features.Events.Commands.Delete;
+namespace Events.Application.Services.Features.Events.Commands.DeleteEvent;
 
 /// <summary>
 ///     Удалить мероприятие.

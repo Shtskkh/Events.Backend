@@ -2,7 +2,7 @@
 using Events.Contracts.Features.EventsTypes;
 using Events.Domain.Aggregates.EventAggregate;
 
-namespace Events.Application.Services.Features.EventsTypes.Mappings;
+namespace Events.Application.Services.Features.Events.Mappings;
 
 /// <summary>
 ///     Профили маппинга для типов мероприятий.

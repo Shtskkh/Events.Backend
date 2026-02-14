@@ -3,8 +3,11 @@ using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Events.Infrastructure.DataAccess.Context.EventsTypes.Configurations;
+namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
 
+/// <summary>
+///     Конфигурация типов мероприятий.
+/// </summary>
 public class EventTypeConfiguration : IEntityTypeConfiguration<EventType>
 {
     public void Configure(EntityTypeBuilder<EventType> builder)

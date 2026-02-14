@@ -1,6 +1,6 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
 
-namespace Events.Application.Services.Features.EventsTypes.Repositories;
+namespace Events.Application.Services.Features.Events.Repositories;
 
 /// <summary>
 ///     Репозиторий типов мероприятий.

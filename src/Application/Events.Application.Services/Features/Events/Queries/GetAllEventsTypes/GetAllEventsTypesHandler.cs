@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Events.Application.Services.Features.EventsTypes.Repositories;
+using Events.Application.Services.Features.Events.Repositories;
 using Events.Contracts.Features.EventsTypes;
 using MediatR;
 
-namespace Events.Application.Services.Features.EventsTypes.Queries.GetAll;
+namespace Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
 
 /// <summary>
 ///     Handler для получения всех типов мероприятий.
