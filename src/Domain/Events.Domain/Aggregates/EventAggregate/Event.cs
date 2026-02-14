@@ -36,7 +36,7 @@ public class Event : Entity<Guid>, IAggregateRoot
         Title = title;
         Announcement = announcement;
         Description = description;
-        EventType = eventType;
+        Type = eventType;
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
 
@@ -78,7 +78,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <summary>
     ///     Тип мероприятия.
     /// </summary>
-    public EventType EventType { get; private set; }
+    public EventType Type { get; private set; }
 
     /// <summary>
     ///     Формат мероприятия.
@@ -144,7 +144,7 @@ public class Event : Entity<Guid>, IAggregateRoot
     /// <param name="eventType">Новый тип мероприятия.</param>
     public void ChangeEventType(EventType eventType)
     {
-        EventType = eventType;
+        Type = eventType;
     }
 
     /// <summary>

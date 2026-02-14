@@ -50,12 +50,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.Property(e => e.NeedsRegistration)
             .IsRequired();
 
-        builder.HasOne(e => e.EventType)
+        builder.HasOne(e => e.Type)
             .WithMany()
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Navigation(e => e.EventType).AutoInclude();
+        builder.Navigation(e => e.Type).AutoInclude();
 
         builder.HasOne(e => e.Format)
             .WithMany()
