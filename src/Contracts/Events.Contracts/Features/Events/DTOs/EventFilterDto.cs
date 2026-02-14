@@ -21,7 +21,7 @@ public class EventFilterDto : IPagination
     /// <summary>
     ///     Размер выборки.
     /// </summary>
-    [Range(1, int.MaxValue)]
+    [Range(1, 30)]
     public required int Size { get; set; }
 
     /// <summary>
