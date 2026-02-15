@@ -33,6 +33,7 @@ public class EventFilterSpecification : Specification<Event>
         if (filter.FormatId != null)
             Query.Where(e => e.Format.Id == filter.FormatId);
 
+        Query.OrderByDescending(e => e.CreatedAt);
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);
