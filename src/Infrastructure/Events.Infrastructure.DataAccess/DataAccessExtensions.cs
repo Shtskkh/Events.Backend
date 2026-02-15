@@ -5,6 +5,7 @@ using Events.Application.Services.Features.Files;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
+using Events.Infrastructure.DataAccess.Shared.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,11 @@ public static class DataAccessExtensions
         {
             var connectionString = configuration.GetConnectionString("DbConnection");
             services.AddDbContextPool<EventsDbContext>(options => options.UseNpgsql(connectionString,
-                optionBuilder => { optionBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery); }));
+                optionBuilder =>
+                {
+                    optionBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    options.AddInterceptors(new AuditInterceptor());
+                }));
         }
 
         private void RegisterRepositories()
