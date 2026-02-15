@@ -8,7 +8,7 @@ namespace Events.Domain.Aggregates.EventAggregate;
 /// <summary>
 ///     Сущность мероприятия.
 /// </summary>
-public class Event : Entity<Guid>, IAggregateRoot
+public class Event : Entity<Guid>, IAuditable, IAggregateRoot
 {
     private Event()
     {
@@ -43,6 +43,9 @@ public class Event : Entity<Guid>, IAggregateRoot
         if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
 
         SetDateTimeRange(startDateTime, endDateTime);
+
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -89,6 +92,12 @@ public class Event : Entity<Guid>, IAggregateRoot
     ///     Флаг необходимости регистрации на мероприятие.
     /// </summary>
     public bool NeedsRegistration { get; private set; }
+
+    /// <inheritdoc />
+    public DateTime CreatedAt { get; }
+
+    /// <inheritdoc />
+    public DateTime UpdatedAt { get; }
 
     private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {

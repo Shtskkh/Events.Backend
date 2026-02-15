@@ -1,7 +1,7 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
@@ -61,5 +61,12 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Navigation(e => e.Format).AutoInclude();
+
+        builder.Property(e => e.CreatedAt)
+            .IsRequired()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
+
+        builder.Property(e => e.UpdatedAt)
+            .IsRequired();
     }
 }
