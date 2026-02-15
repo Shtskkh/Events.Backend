@@ -14,6 +14,16 @@ public class EventFilterDto : IPagination
     public string? Text { get; set; }
 
     /// <summary>
+    ///     Дата начала.
+    /// </summary>
+    public DateTimeOffset? StartDateTime { get; set; }
+
+    /// <summary>
+    ///     Дата окончания.
+    /// </summary>
+    public DateTimeOffset? EndDateTime { get; set; }
+
+    /// <summary>
     ///     Тип мероприятия.
     /// </summary>
     public int? TypeId { get; set; }

@@ -27,6 +27,12 @@ public class EventFilterSpecification : Specification<Event>
                     .Search(e => e.Description.Value, '%' + word + '%');
         }
 
+        if (filter.StartDateTime != null)
+            Query.Where(e => e.StartDateTime >= filter.StartDateTime);
+
+        if (filter.EndDateTime != null)
+            Query.Where(e => e.EndDateTime <= filter.EndDateTime);
+
         if (filter.TypeId != null)
             Query.Where(e => e.Type.Id == filter.TypeId);
 
