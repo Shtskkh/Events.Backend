@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Util;
 using Events.Application.Services.Features.Files;
 
@@ -15,7 +16,7 @@ public class S3MigrationWorker(
         try
         {
             if (logger.IsEnabled(LogLevel.Information))
-                logger.LogInformation("Start S3 migration: {time}", DateTimeOffset.Now);
+                logger.LogInformation("Старт миграции S3 хранилища: {time}", DateTimeOffset.Now);
 
             using var scope = serviceProvider.CreateScope();
             var s3Client = scope.ServiceProvider.GetRequiredService<IAmazonS3>();
@@ -33,26 +34,60 @@ public class S3MigrationWorker(
                     await s3Client.PutBucketAsync(bucket, cancellationToken);
 
                     if (logger.IsEnabled(LogLevel.Information))
-                        logger.LogInformation("Bucket created: {bucketName}", bucket);
+                        logger.LogInformation("Bucket создан: {bucketName}", bucket);
                 }
                 else
                 {
                     if (logger.IsEnabled(LogLevel.Information))
-                        logger.LogInformation("Bucket already exists: {bucketName}", bucket);
+                        logger.LogInformation("Bucket уже существует: {bucketName}", bucket);
                 }
             }
 
+            await MigrateEventsPlaceholdersAsync(s3Client, logger);
+
             if (logger.IsEnabled(LogLevel.Information))
-                logger.LogInformation("End S3 migration: {time}", DateTimeOffset.Now);
+                logger.LogInformation("Конец миграции S3 хранилища. {time}", DateTime.Now);
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error during S3 migration");
-            throw;
+            logger.LogError(e, "Ошибка миграции S3 хранилища.");
         }
         finally
         {
             applicationLifetime.StopApplication();
+        }
+    }
+
+    private static async Task MigrateEventsPlaceholdersAsync(IAmazonS3 s3Client, ILogger<S3MigrationWorker> logger)
+    {
+        try
+        {
+            if (logger.IsEnabled(LogLevel.Information))
+                logger.LogInformation("Начата миграция плейсхолдеров мероприятий. {time}", DateTimeOffset.Now);
+
+            var filesPaths = Directory.GetFiles(
+                @"../../Application/Events.Application.Services/Features/Files/Placeholders/EventsPreviews");
+
+            foreach (var filePath in filesPaths)
+            {
+                var file = File.OpenRead(filePath);
+                var filename = Path.GetFileName(filePath);
+
+                if (logger.IsEnabled(LogLevel.Information))
+                    logger.LogInformation("Начата миграция файла: {fileName}. {time}", filename, DateTime.Now);
+
+                await s3Client.PutObjectAsync(new PutObjectRequest
+                {
+                    BucketName = S3Buckets.EventsPlaceholders,
+                    Key = filename,
+                    InputStream = file
+                });
+            }
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Ошибка при миграции плейсхолдеров мероприятий.");
+            throw;
         }
     }
 }
