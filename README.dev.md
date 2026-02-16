@@ -3,7 +3,7 @@
 Команда для запуска после обновления (в папке с проектом):
 
 ```shell
-docker compose -f .\docker-compose.dev.yaml up --build
+docker compose -f .\docker-compose.dev.yaml up --build --force-recreate
 ```
 
 Команда запуска (в папке с проектом):
