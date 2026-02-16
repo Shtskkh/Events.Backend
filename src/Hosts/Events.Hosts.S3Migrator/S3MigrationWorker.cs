@@ -71,7 +71,7 @@ public class S3MigrationWorker(
             foreach (var filePath in filesPaths)
             {
                 var file = File.OpenRead(filePath);
-                var filename = Path.GetFileName(filePath);
+                var filename = Path.GetFileName(filePath).Split('.').First();
 
                 if (logger.IsEnabled(LogLevel.Information))
                     logger.LogInformation("Начата миграция файла: {fileName}. {time}", filename, DateTime.Now);
