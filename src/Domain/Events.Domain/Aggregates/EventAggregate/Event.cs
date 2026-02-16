@@ -27,10 +27,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название превью файла.</param>
+    /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
         DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
         bool needsRegistration,
-        Guid? previewFilename = null) :
+        Guid? previewFilename = null,
+        string? placeholderFilename = null) :
         base(id)
     {
         Title = title;
@@ -41,6 +43,9 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         NeedsRegistration = needsRegistration;
 
         if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
+        
+        if (!string.IsNullOrWhiteSpace(placeholderFilename))
+            PlaceholderFilename = placeholderFilename;
 
         SetDateTimeRange(startDateTime, endDateTime);
 
@@ -77,6 +82,11 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     ///     Название файла превью.
     /// </summary>
     public Guid? PreviewFilename { get; private set; }
+
+    /// <summary>
+    ///     Название файла плейсхолдера превью.
+    /// </summary>
+    public string? PlaceholderFilename { get; private set; }
 
     /// <summary>
     ///     Тип мероприятия.

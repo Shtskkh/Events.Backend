@@ -23,7 +23,6 @@ public class CreateEventDto
     [MaxLength(DomainConstraints.Event.Announcement.MaxLength)]
     public required string Announcement { get; set; }
 
-
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
@@ -36,7 +35,6 @@ public class CreateEventDto
     /// </summary>
     public required DateTimeOffset StartDateTime { get; set; }
 
-
     /// <summary>
     ///     Дата и время окончания мероприятия.
     /// </summary>
@@ -46,6 +44,11 @@ public class CreateEventDto
     ///     Превью изображения для мероприятия.
     /// </summary>
     public IFormFile? Preview { get; set; }
+
+    /// <summary>
+    ///     Имя плейсхолдера файла для превью мероприятия.
+    /// </summary>
+    public string? Placeholder { get; set; }
 
     /// <summary>
     ///     ID типа мероприятия.

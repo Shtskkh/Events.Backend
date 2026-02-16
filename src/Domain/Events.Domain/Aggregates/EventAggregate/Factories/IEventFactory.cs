@@ -17,6 +17,7 @@ public interface IEventFactory
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название файла превью.</param>
+    /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     /// <returns>Объект созданного мероприятия.</returns>
     Event Create(
         string title,
@@ -27,6 +28,7 @@ public interface IEventFactory
         EventType eventType,
         EventFormat eventFormat,
         bool needsRegistration,
-        Guid? previewFilename = null
+        Guid? previewFilename = null,
+        string? placeholderFilename = null
     );
 }

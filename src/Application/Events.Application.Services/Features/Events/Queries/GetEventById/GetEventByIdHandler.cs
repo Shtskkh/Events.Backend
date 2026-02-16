@@ -31,10 +31,13 @@ public class GetEventByIdHandler(
     {
         var @event = await eventRepository.GetByIdAsync(request.Id);
 
+        var key = @event.PreviewFilename == null ? @event.PlaceholderFilename : @event.PreviewFilename.ToString();
+        var bucket = @event.PreviewFilename == null ? S3Buckets.EventsPlaceholders : S3Buckets.EventsPreviews;
+        
         var downloadPreviewRequest = new GetPreSignedUrlRequest
         {
-            BucketName = S3Buckets.EventsPreviews,
-            Key = @event.PreviewFilename.ToString(),
+            BucketName = bucket,
+            Key = key,
             Expires = DateTime.Now.AddMinutes(5),
             Protocol = Protocol.HTTP
         };

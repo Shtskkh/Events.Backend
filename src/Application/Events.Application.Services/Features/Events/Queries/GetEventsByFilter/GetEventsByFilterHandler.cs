@@ -33,10 +33,13 @@ public class GetEventsByFilterHandler(IEventRepository repository, IFileStorageS
 
         var urlTasks = events.Select(async (e, index) =>
         {
+            var key = e.PreviewFilename == null ? e.PlaceholderFilename : e.PreviewFilename.ToString();
+            var bucket = e.PreviewFilename == null ? S3Buckets.EventsPlaceholders : S3Buckets.EventsPreviews;
+
             var downloadPreviewRequest = new GetPreSignedUrlRequest
             {
-                BucketName = S3Buckets.EventsPreviews,
-                Key = e.PreviewFilename.ToString(),
+                BucketName = bucket,
+                Key = key,
                 Expires = DateTime.Now.AddMinutes(5),
                 Protocol = Protocol.HTTP
             };

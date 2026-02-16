@@ -3,7 +3,6 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
 
@@ -16,22 +15,23 @@ public class CreateEventHandler(
     IEventRepository eventRepository,
     IEventTypeRepository eventTypeRepository,
     IEventFormatRepository eventFormatRepository,
-    ILogger<CreateEventHandler> logger,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
     public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
-        var filenameGuid = Guid.NewGuid();
+        Guid? previewFilename = null;
         var dto = request.Dto;
+        
         try
         {
             if (dto.Preview != null)
             {
+                previewFilename = Guid.NewGuid();
                 var putRequest = new PutObjectRequest
                 {
                     BucketName = S3Buckets.EventsPreviews,
-                    Key = filenameGuid.ToString(),
+                    Key = previewFilename.ToString(),
                     ContentType = dto.Preview.ContentType,
                     InputStream = dto.Preview.OpenReadStream()
                 };
@@ -41,7 +41,6 @@ public class CreateEventHandler(
 
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId);
-            logger.LogInformation($"Created event {filenameGuid} with format {dto.EventFormatId} {eventFormat.Title}");
 
             var eventFactory = new EventFactory();
             var @event = eventFactory.Create(
@@ -53,7 +52,8 @@ public class CreateEventHandler(
                 eventType,
                 eventFormat,
                 dto.NeedsRegistration,
-                filenameGuid
+                previewFilename,
+                dto.Placeholder
             );
 
             await eventRepository.AddAsync(@event);
@@ -62,12 +62,12 @@ public class CreateEventHandler(
         }
         catch
         {
-            if (dto.Preview != null)
+            if (previewFilename.HasValue)
             {
                 var deleteRequest = new DeleteObjectRequest
                 {
                     BucketName = S3Buckets.EventsPreviews,
-                    Key = filenameGuid.ToString()
+                    Key = previewFilename.ToString()
                 };
 
                 await fileStorageService.DeleteObjectAsync(deleteRequest);

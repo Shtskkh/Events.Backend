@@ -45,6 +45,8 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(e => e.PreviewFilename);
 
+        builder.Property(e => e.PlaceholderFilename);
+
         builder.Property(e => e.NeedsRegistration)
             .IsRequired();
 
