@@ -1,6 +1,7 @@
 ﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
 using Events.Application.Services.Features.Events.Commands.DeleteEvent;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
+using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholders;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
 using Events.Application.Services.Features.Events.Queries.GetEventById;
 using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
@@ -139,5 +140,23 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         if (formats.Count == 0) return NotFound();
 
         return Ok(formats);
+    }
+
+    /// <summary>
+    ///     Получить все плейсхолдеры для мероприятий.
+    /// </summary>
+    /// <returns>Массив плейсхолдеров.</returns>
+    [HttpGet("Placeholders")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventPlaceholderDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Плейсхолдеры мероприятий не найдены.")]
+    public async Task<IActionResult> GetAllEventsPlaceholders()
+    {
+        var dtos = await mediator.Send(new GetAllEventsPlaceholdersQuery());
+
+        if (dtos.Count == 0) return NotFound();
+
+        return Ok(dtos);
     }
 }
