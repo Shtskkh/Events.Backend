@@ -14,6 +14,13 @@ public interface IFileStorageService
     Task PutObjectAsync(PutObjectRequest request);
 
     /// <summary>
+    ///     Получить информацию о всех объектах.
+    /// </summary>
+    /// <param name="request">Запрос.</param>
+    /// <returns>Объект с данными о всех объектах.</returns>
+    Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request);
+
+    /// <summary>
     ///     Сгенерировать ссылку на скачивание файла.
     /// </summary>
     /// <param name="request">Запрос на скачивание файла.</param>

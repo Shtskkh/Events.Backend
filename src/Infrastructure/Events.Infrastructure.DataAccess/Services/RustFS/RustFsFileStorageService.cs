@@ -26,4 +26,10 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
     {
         return await s3Client.GetPreSignedURLAsync(request);
     }
+
+    /// <inheritdoc />
+    public async Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request)
+    {
+        return await s3Client.ListObjectsV2Async(request);
+    }
 }
