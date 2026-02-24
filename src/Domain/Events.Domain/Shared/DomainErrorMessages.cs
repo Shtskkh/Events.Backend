@@ -141,7 +141,7 @@ public static class DomainErrorMessages
             ///     Длина адреса больше максимальной.
             /// </summary>
             public static readonly string GreaterThanMaxLength =
-                $"Название локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
+                $"Адрес локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
         }
     }
 }
