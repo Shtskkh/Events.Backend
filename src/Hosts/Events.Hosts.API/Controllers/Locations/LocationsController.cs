@@ -82,7 +82,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <returns>
     ///     Коллекций типов помещений.
     /// </returns>
-    [HttpGet("/places/types")]
+    [HttpGet("places/types")]
     [ProducesResponseType(typeof(IReadOnlyCollection<PlaceTypeDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
