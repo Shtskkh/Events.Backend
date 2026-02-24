@@ -11,6 +11,6 @@ public class LocationFactory : ILocationFactory
         var titleVo = new LocationTitle(title);
         var addressVo = new LocationAddress(address);
 
-        return new Location(0, titleVo, addressVo);
+        return new Location(default, titleVo, addressVo);
     }
 }

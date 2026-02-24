@@ -1,4 +1,5 @@
-﻿using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
+﻿using Events.Application.Services.Features.Locations.Commands.CreateLocation;
+using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Locations.DTOs;
@@ -41,9 +42,11 @@ public class LocationsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync()
+    public async Task<IActionResult> CreateAsync([FromForm] CreateLocationDto dto)
     {
-        throw new NotImplementedException();
+        var id = await mediator.Send(new CreateLocationCommand(dto));
+
+        return StatusCode(StatusCodes.Status201Created, id);
     }
 
     [HttpPatch("{id:int}")]

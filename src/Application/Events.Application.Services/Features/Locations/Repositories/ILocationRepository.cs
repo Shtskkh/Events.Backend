@@ -12,4 +12,11 @@ public interface ILocationRepository
     /// </summary>
     /// <returns>Коллекция локаций.</returns>
     Task<IReadOnlyCollection<Location>> GetAllAsync();
+
+    /// <summary>
+    ///     Добавить локацию.
+    /// </summary>
+    /// <param name="location">Локация.</param>
+    /// <returns>ID добавленной локации.</returns>
+    Task<int> AddAsync(Location location);
 }

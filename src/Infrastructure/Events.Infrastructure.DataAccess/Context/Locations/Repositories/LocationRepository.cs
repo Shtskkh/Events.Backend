@@ -20,4 +20,12 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
 
         return locations.AsReadOnly();
     }
+
+    /// <inheritdoc />
+    public async Task<int> AddAsync(Location location)
+    {
+        await repository.AddAsync(location);
+
+        return location.Id;
+    }
 }
