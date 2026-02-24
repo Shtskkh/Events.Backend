@@ -14,6 +14,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApiWithMetadata();
 
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
