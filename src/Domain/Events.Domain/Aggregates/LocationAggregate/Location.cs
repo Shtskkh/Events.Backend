@@ -39,6 +39,11 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public LocationAddress Address { get; private set; } = null!;
 
     /// <summary>
+    ///     Помещения в локации.
+    /// </summary>
+    public List<Place> Places { get; private set; } = [];
+
+    /// <summary>
     ///     Дата создания.
     /// </summary>
     public DateTime CreatedAt { get; }

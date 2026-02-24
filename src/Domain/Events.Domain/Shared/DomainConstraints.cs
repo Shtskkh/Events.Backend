@@ -123,4 +123,58 @@ public static class DomainConstraints
             public const int MaxLength = 256;
         }
     }
+
+    /// <summary>
+    ///     Константы помещений.
+    /// </summary>
+    public static class Place
+    {
+        /// <summary>
+        ///     Константы названия помещения.
+        /// </summary>
+        public static class Title
+        {
+            /// <summary>
+            ///     Минимальная длина.
+            /// </summary>
+            public const int MinLength = 1;
+
+            /// <summary>
+            ///     Максимальная длина.
+            /// </summary>
+            public const int MaxLength = 64;
+        }
+
+        /// <summary>
+        ///     Константы номеров помещений.
+        /// </summary>
+        public static class Number
+        {
+            /// <summary>
+            ///     Минимальная длина.
+            /// </summary>
+            public const int MinLength = 1;
+
+            /// <summary>
+            ///     Максимальная длина.
+            /// </summary>
+            public const int MaxLength = 4;
+        }
+
+        /// <summary>
+        ///     Константы типа помещения.
+        /// </summary>
+        public static class Type
+        {
+            /// <summary>
+            ///     Минимальная длина названия типа помещения.
+            /// </summary>
+            public const int MinLength = 1;
+
+            /// <summary>
+            ///     Максимальная длина названия типа помещения.
+            /// </summary>
+            public const int MaxLength = 16;
+        }
+    }
 }

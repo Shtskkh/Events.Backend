@@ -33,12 +33,16 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             .HasColumnName("Address")
             .HasMaxLength(DomainConstraints.Location.Address.MaxLength)
             .IsRequired();
-        
-        builder.Property(e => e.CreatedAt)
+
+        builder.Property(l => l.CreatedAt)
             .IsRequired()
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
 
-        builder.Property(e => e.UpdatedAt)
+        builder.HasMany(l => l.Places)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(l => l.UpdatedAt)
             .IsRequired();
     }
 }

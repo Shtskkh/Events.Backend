@@ -144,4 +144,70 @@ public static class DomainErrorMessages
                 $"Адрес локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
         }
     }
+
+    /// <summary>
+    ///     Ошибки помещений.
+    /// </summary>
+    public static class Place
+    {
+        /// <summary>
+        ///     Ошибки названия помещения.
+        /// </summary>
+        public static class Title
+        {
+            /// <summary>
+            ///     Длина названия меньше минимальной.
+            /// </summary>
+            public static readonly string LessThanMinLength =
+                $"Название локации меньше минимальной длины в {DomainConstraints.Place.Title.MinLength} символ(-ов).";
+
+            /// <summary>
+            ///     Длина названия больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Название помещения больше максимальной длины в {DomainConstraints.Place.Title.MaxLength} символ(-ов).";
+        }
+
+        /// <summary>
+        ///     Ошибки номера помещения.
+        /// </summary>
+        public static class Number
+        {
+            /// <summary>
+            ///     Номер содержит минус.
+            /// </summary>
+            public const string ContainsMinus =
+                "Номер помещения не может быть отрицательным.";
+
+            /// <summary>
+            ///     Длина номера меньше минимальной.
+            /// </summary>
+            public static readonly string LessThanMinLength =
+                $"Номер помещения меньше минимальной длины в {DomainConstraints.Place.Number.MinLength} символ(-ов).";
+
+            /// <summary>
+            ///     Длина номера больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Номер помещения больше максимальной длины в {DomainConstraints.Place.Number.MaxLength} символ(-ов).";
+        }
+
+        /// <summary>
+        ///     Ошибки типа помещения.
+        /// </summary>
+        public static class Type
+        {
+            /// <summary>
+            ///     Длина названия типа меньше минимальной.
+            /// </summary>
+            public static readonly string LessThanMinLength =
+                $"Название типа помещения меньше минимальной длины в {DomainConstraints.Place.Type.MinLength} символ(-ов).";
+
+            /// <summary>
+            ///     Длина номера больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Название типа помещения больше максимальной длины в {DomainConstraints.Place.Type.MaxLength} символ(-ов).";
+        }
+    }
 }
