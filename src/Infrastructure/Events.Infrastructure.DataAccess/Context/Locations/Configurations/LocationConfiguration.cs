@@ -1,6 +1,7 @@
 ﻿using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Events.Infrastructure.DataAccess.Context.Locations.Configurations;
@@ -31,6 +32,13 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             .Property(a => a.Value)
             .HasColumnName("Address")
             .HasMaxLength(DomainConstraints.Location.Address.MaxLength)
+            .IsRequired();
+        
+        builder.Property(e => e.CreatedAt)
+            .IsRequired()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
+
+        builder.Property(e => e.UpdatedAt)
             .IsRequired();
     }
 }
