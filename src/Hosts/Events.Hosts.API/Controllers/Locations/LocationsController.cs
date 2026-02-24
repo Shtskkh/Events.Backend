@@ -1,4 +1,6 @@
-﻿using Events.Contracts.Errors;
+﻿using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
+using Events.Contracts.Errors;
+using Events.Contracts.Features.Locations.PlacesTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,6 +74,24 @@ public class LocationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> DeletePlaceAsync(int locationId, int placeId)
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    ///     Получить все типы помещений.
+    /// </summary>
+    /// <returns>
+    ///     Коллекций типов помещений.
+    /// </returns>
+    [HttpGet("/places/types")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<PlaceTypeDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Типы помещений не найдены.")]
+    public async Task<IActionResult> GetAllPlacesTypes()
+    {
+        var dtos = await mediator.Send(new GetAllPlacesTypesQuery());
+
+        return Ok(dtos);
     }
 
     [HttpGet("{locationId:int}/places/{placeId:int}/equipment")]

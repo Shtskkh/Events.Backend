@@ -37,4 +37,18 @@ public static class DataAccessErrorMessages
             public const string NotFound = "Формат мероприятия не найден.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки помещений.
+    /// </summary>
+    public static class Places
+    {
+        /// <summary>
+        ///     Ошибки типов помещений.
+        /// </summary>
+        public static class Types
+        {
+            public const string NotFoundAny = "Типы помещений не найдены.";
+        }
+    }
 }

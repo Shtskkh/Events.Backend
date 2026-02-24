@@ -2,7 +2,9 @@
 using Amazon.S3;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
+using Events.Application.Services.Features.Locations.Repositories;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
+using Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
 using Events.Infrastructure.DataAccess.Shared.Interceptors;
@@ -51,6 +53,8 @@ public static class DataAccessExtensions
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IEventTypeRepository, EventTypeRepository>();
             services.AddScoped<IEventFormatRepository, EventFormatRepository>();
+
+            services.AddScoped<IPlaceTypeRepository, PlaceTypeRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)

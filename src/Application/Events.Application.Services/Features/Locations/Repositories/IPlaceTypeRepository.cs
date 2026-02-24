@@ -1,0 +1,15 @@
+﻿using Events.Domain.Aggregates.LocationAggregate;
+
+namespace Events.Application.Services.Features.Locations.Repositories;
+
+/// <summary>
+///     Репозиторий типов помещений.
+/// </summary>
+public interface IPlaceTypeRepository
+{
+    /// <summary>
+    ///     Получить все типы помещений.
+    /// </summary>
+    /// <returns>Коллекция типов помещений.</returns>
+    Task<IReadOnlyCollection<PlaceType>> GetAllAsync();
+}
