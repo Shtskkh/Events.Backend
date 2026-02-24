@@ -41,7 +41,16 @@ public class LocationsController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Создать локацию.
+    /// </summary>
+    /// <param name="dto">Форма создания локации.</param>
+    /// <returns>ID созданной локации.</returns>
     [HttpPost]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
+        Description = "Локация создана.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
     public async Task<IActionResult> CreateAsync([FromForm] CreateLocationDto dto)
     {
         var id = await mediator.Send(new CreateLocationCommand(dto));
