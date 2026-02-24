@@ -102,4 +102,46 @@ public static class DomainErrorMessages
             public const string GreaterThanMaxLenght = "Название типа мероприятия больше максимальной длины.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки локаций.
+    /// </summary>
+    public static class Location
+    {
+        /// <summary>
+        ///     Ошибки названия локации.
+        /// </summary>
+        public static class Title
+        {
+            /// <summary>
+            ///     Длина названия локации меньше минимальной.
+            /// </summary>
+            public static readonly string LessThanMinLength =
+                $"Название локации меньше минимальной длины в {DomainConstraints.Location.Title.MinLength} символ(-ов).";
+
+            /// <summary>
+            ///     Длина названия локации больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Название локации больше максимальной длины в {DomainConstraints.Location.Title.MaxLength} символ(-ов).";
+        }
+
+        /// <summary>
+        ///     Ошибки адреса локации.
+        /// </summary>
+        public static class Address
+        {
+            /// <summary>
+            ///     Длина адреса меньше минимальной.
+            /// </summary>
+            public static readonly string LessThanMinLength =
+                $"Адрес локации меньше минимальной длины в {DomainConstraints.Location.Address.MinLength} символ(-ов).";
+
+            /// <summary>
+            ///     Длина адреса больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Название локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
+        }
+    }
 }

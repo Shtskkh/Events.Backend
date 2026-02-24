@@ -85,4 +85,42 @@ public static class DomainConstraints
             public const int MaxLength = 16;
         }
     }
+
+    /// <summary>
+    ///     Константы локаций.
+    /// </summary>
+    public static class Location
+    {
+        /// <summary>
+        ///     Константы названия локации.
+        /// </summary>
+        public static class Title
+        {
+            /// <summary>
+            ///     Минимальная длина.
+            /// </summary>
+            public const int MinLength = 1;
+
+            /// <summary>
+            ///     Максимальная длина.
+            /// </summary>
+            public const int MaxLength = 256;
+        }
+
+        /// <summary>
+        ///     Константы адреса локации.
+        /// </summary>
+        public static class Address
+        {
+            /// <summary>
+            ///     Минимальная длина.
+            /// </summary>
+            public const int MinLength = 1;
+
+            /// <summary>
+            ///     Максимальная длина.
+            /// </summary>
+            public const int MaxLength = 256;
+        }
+    }
 }
