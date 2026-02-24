@@ -1,5 +1,7 @@
-﻿using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
+﻿using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
+using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Contracts.Errors;
+using Events.Contracts.Features.Locations.DTOs;
 using Events.Contracts.Features.Locations.PlacesTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +18,20 @@ namespace Events.Hosts.API.Controllers.Locations;
     Description = "Неожиданная ошибка сервера.")]
 public class LocationsController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    ///     Получить все локации.
+    /// </summary>
+    /// <returns>Коллекция локаций.</returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IReadOnlyCollection<LocationDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локации не найдены.")]
     public async Task<IActionResult> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var locations = await mediator.Send(new GetAllLocationsQuery());
+
+        return Ok(locations);
     }
 
     [HttpGet("{id:int}")]

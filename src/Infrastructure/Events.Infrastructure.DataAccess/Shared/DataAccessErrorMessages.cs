@@ -39,6 +39,14 @@ public static class DataAccessErrorMessages
     }
 
     /// <summary>
+    ///     Ошибки локаций.
+    /// </summary>
+    public static class Location
+    {
+        public const string NotFoundAny = "Локации не найдены";
+    }
+
+    /// <summary>
     ///     Ошибки помещений.
     /// </summary>
     public static class Places
