@@ -18,7 +18,6 @@ public class Place : Entity<int>, IAuditable
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <param name="number">Номер помещения.</param>
-    /// <param name="location">Локация помещения.</param>
     /// <param name="type">Тип помещения.</param>
     /// <param name="title">Название помещения.</param>
     public Place(int id, PlaceNumber number, PlaceType type, PlaceTitle? title = null) : base(id)
