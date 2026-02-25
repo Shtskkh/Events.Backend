@@ -91,6 +91,12 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <param name="dto">Модель создания помещения.</param>
     /// <returns>ID созданного помещения.</returns>
     [HttpPost("{locationId:int}/places")]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
+        Description = "Помещение создано.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Представленные в запросе данные не найдены.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
     public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto)
     {
         var id = await mediator.Send(new CreatePlaceCommand(locationId, dto));
