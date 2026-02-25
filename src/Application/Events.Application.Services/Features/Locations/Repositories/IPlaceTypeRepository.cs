@@ -12,4 +12,11 @@ public interface IPlaceTypeRepository
     /// </summary>
     /// <returns>Коллекция типов помещений.</returns>
     Task<IReadOnlyCollection<PlaceType>> GetAllAsync();
+
+    /// <summary>
+    ///     Получить тип помещения по ID.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <returns>Объект типа помещения.</returns>
+    Task<PlaceType> GetByIdAsync(int id);
 }

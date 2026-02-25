@@ -57,6 +57,7 @@ public static class DataAccessErrorMessages
         public static class Types
         {
             public const string NotFoundAny = "Типы помещений не найдены.";
+            public const string NotFound = "Тип помещения не найден.";
         }
     }
 }

@@ -20,4 +20,15 @@ public class PlaceTypeRepository(IRepository<PlaceType, int, EventsDbContext> re
 
         return types.AsReadOnly();
     }
+
+    /// <inheritdoc />
+    public async Task<PlaceType> GetByIdAsync(int id)
+    {
+        var type = await repository.GetByIdAsync(id);
+
+        if (type == null)
+            throw new NotFoundException(DataAccessErrorMessages.Places.Types.NotFound);
+
+        return type;
+    }
 }
