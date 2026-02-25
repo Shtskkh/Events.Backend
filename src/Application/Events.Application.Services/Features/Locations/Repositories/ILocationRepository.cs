@@ -14,6 +14,13 @@ public interface ILocationRepository
     Task<IReadOnlyCollection<Location>> GetAllAsync();
 
     /// <summary>
+    ///     Получить локацию по ID.
+    /// </summary>
+    /// <param name="id">Идентификатор локации.</param>
+    /// <returns>Объект локации.</returns>
+    Task<Location> GetByIdAsync(int id);
+
+    /// <summary>
     ///     Добавить локацию.
     /// </summary>
     /// <param name="location">Локация.</param>

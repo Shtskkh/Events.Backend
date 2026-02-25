@@ -22,6 +22,17 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
+    public async Task<Location> GetByIdAsync(int id)
+    {
+        var location = await repository.GetByIdAsync(id);
+
+        if (location == null)
+            throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
+
+        return location;
+    }
+
+    /// <inheritdoc />
     public async Task<int> AddAsync(Location location)
     {
         await repository.AddAsync(location);

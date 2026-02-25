@@ -43,7 +43,8 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Location
     {
-        public const string NotFoundAny = "Локации не найдены";
+        public const string NotFoundAny = "Локации не найдены.";
+        public const string NotFound = "Локация не найдена.";
     }
 
     /// <summary>
