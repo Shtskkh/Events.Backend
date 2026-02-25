@@ -12,7 +12,7 @@ public class LocationProfile : Profile
     /// <inheritdoc />
     public LocationProfile()
     {
-        CreateMap<Location, LocationDto>()
+        CreateMap<Location, ShortLocationDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address.Value));

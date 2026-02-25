@@ -6,4 +6,4 @@ namespace Events.Application.Services.Features.Locations.Queries.GetAllLocations
 /// <summary>
 ///     Запрос на получение всех локаций.
 /// </summary>
-public record GetAllLocationsQuery : IRequest<IReadOnlyCollection<LocationDto>>;
+public record GetAllLocationsQuery : IRequest<IReadOnlyCollection<ShortLocationDto>>;

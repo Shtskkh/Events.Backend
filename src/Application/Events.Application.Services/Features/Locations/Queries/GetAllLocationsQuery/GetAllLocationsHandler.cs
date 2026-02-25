@@ -11,14 +11,14 @@ namespace Events.Application.Services.Features.Locations.Queries.GetAllLocations
 /// <param name="locationRepository">Репозиторий локаций.</param>
 /// <param name="mapper">Маппер.</param>
 public class GetAllLocationsHandler(ILocationRepository locationRepository, IMapper mapper)
-    : IRequestHandler<GetAllLocationsQuery, IReadOnlyCollection<LocationDto>>
+    : IRequestHandler<GetAllLocationsQuery, IReadOnlyCollection<ShortLocationDto>>
 {
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<LocationDto>> Handle(GetAllLocationsQuery request,
+    public async Task<IReadOnlyCollection<ShortLocationDto>> Handle(GetAllLocationsQuery request,
         CancellationToken cancellationToken)
     {
         var locations = await locationRepository.GetAllAsync();
 
-        return mapper.Map<IReadOnlyCollection<LocationDto>>(locations);
+        return mapper.Map<IReadOnlyCollection<ShortLocationDto>>(locations);
     }
 }

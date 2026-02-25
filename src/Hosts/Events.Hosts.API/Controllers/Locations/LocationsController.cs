@@ -26,7 +26,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <returns>Коллекция локаций.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyCollection<LocationDto>), StatusCodes.Status200OK, "application/json",
+    [ProducesResponseType(typeof(IReadOnlyCollection<ShortLocationDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Локации не найдены.")]

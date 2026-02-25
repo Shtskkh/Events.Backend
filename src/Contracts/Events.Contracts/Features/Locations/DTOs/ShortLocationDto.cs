@@ -1,9 +1,9 @@
 ﻿namespace Events.Contracts.Features.Locations.DTOs;
 
 /// <summary>
-///     Информация о локации.
+///     Краткая информация о локации.
 /// </summary>
-public class LocationDto
+public class ShortLocationDto
 {
     /// <summary>
     ///     Идентификатор.
