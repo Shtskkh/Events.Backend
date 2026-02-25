@@ -29,7 +29,7 @@ public class AuditInterceptor : SaveChangesInterceptor
             if (entry.State == EntityState.Modified)
             {
                 entry.Property(e => e.CreatedAt).IsModified = false;
-                entry.Property(e => e.UpdatedAt).CurrentValue = DateTime.Now;
+                entry.Property(e => e.UpdatedAt).CurrentValue = DateTime.UtcNow;
             }
     }
 }
