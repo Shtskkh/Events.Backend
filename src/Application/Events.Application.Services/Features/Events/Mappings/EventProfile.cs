@@ -12,6 +12,7 @@ public class EventProfile : Profile
     public EventProfile()
     {
         CreateMap<Event, EventDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title,
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
