@@ -56,6 +56,7 @@ public static class DataAccessExtensions
 
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IPlaceTypeRepository, PlaceTypeRepository>();
+            services.AddScoped<IPlaceRepository, PlaceRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)
