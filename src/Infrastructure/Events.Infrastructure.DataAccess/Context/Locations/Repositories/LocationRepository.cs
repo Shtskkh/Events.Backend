@@ -13,7 +13,9 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<Location>> GetAllAsync()
     {
-        var locations = await repository.GetAllAsync().ToListAsync();
+        var locations = await repository.GetAllAsync()
+            .AsNoTracking()
+            .ToListAsync();
 
         if (locations.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Location.NotFoundAny);
@@ -42,7 +44,6 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     public async Task<int> AddAsync(Location location)
     {
         await repository.AddAsync(location);
-
         return location.Id;
     }
 }

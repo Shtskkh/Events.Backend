@@ -13,7 +13,9 @@ public class PlaceTypeRepository(IRepository<PlaceType, int, EventsDbContext> re
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<PlaceType>> GetAllAsync()
     {
-        var types = await repository.GetAllAsync().ToListAsync();
+        var types = await repository.GetAllAsync()
+            .AsNoTracking()
+            .ToListAsync();
 
         if (types.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Places.Types.NotFoundAny);
