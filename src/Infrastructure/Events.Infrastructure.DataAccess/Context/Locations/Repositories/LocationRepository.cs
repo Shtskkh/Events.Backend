@@ -33,6 +33,12 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
+    public async Task UpdateAsync(Location location)
+    {
+        await repository.UpdateAsync(location);
+    }
+
+    /// <inheritdoc />
     public async Task<int> AddAsync(Location location)
     {
         await repository.AddAsync(location);

@@ -21,6 +21,12 @@ public interface ILocationRepository
     Task<Location> GetByIdAsync(int id);
 
     /// <summary>
+    ///     Обновить локацию.
+    /// </summary>
+    /// <param name="location">Обновлённый объект локации.</param>
+    Task UpdateAsync(Location location);
+
+    /// <summary>
     ///     Добавить локацию.
     /// </summary>
     /// <param name="location">Локация.</param>

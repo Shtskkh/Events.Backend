@@ -180,6 +180,11 @@ public static class DomainErrorMessages
                 "Номер помещения не может быть отрицательным.";
 
             /// <summary>
+            ///     Помещение с таким номером уже существует.
+            /// </summary>
+            public const string AlreadyExists = "Помещение с таким номером в данной локации уже существует.";
+
+            /// <summary>
             ///     Длина номера меньше минимальной.
             /// </summary>
             public static readonly string LessThanMinLength =

@@ -1,8 +1,10 @@
 ﻿using Events.Application.Services.Features.Locations.Commands.CreateLocation;
+using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Locations.DTOs;
+using Events.Contracts.Features.Locations.Places;
 using Events.Contracts.Features.Locations.PlacesTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -82,10 +84,18 @@ public class LocationsController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Создать помещение в локации.
+    /// </summary>
+    /// <param name="locationId">ID локации.</param>
+    /// <param name="dto">Модель создания помещения.</param>
+    /// <returns>ID созданного помещения.</returns>
     [HttpPost("{locationId:int}/places")]
-    public async Task<IActionResult> CreatePlaceAsync(int locationId)
+    public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto)
     {
-        throw new NotImplementedException();
+        var id = await mediator.Send(new CreatePlaceCommand(locationId, dto));
+
+        return StatusCode(StatusCodes.Status201Created, id);
     }
 
     [HttpPatch("{locationId:int}/places/{placeId:int}")]

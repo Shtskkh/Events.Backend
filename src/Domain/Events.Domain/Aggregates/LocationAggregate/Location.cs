@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
 
@@ -41,7 +42,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Помещения в локации.
     /// </summary>
-    public List<Place> Places { get; private set; } = [];
+    public List<Place> Places { get; } = [];
 
     /// <summary>
     ///     Дата создания.
@@ -52,4 +53,19 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     ///     Дата обновления.
     /// </summary>
     public DateTime UpdatedAt { get; }
+
+    /// <summary>
+    ///     Добавить помещение в локацию.
+    /// </summary>
+    /// <param name="place">Новое помещение.</param>
+    /// <exception cref="DomainException">
+    ///     Ошибка правил домена.
+    /// </exception>
+    public void AddPlace(Place place)
+    {
+        if (Places.Any(p => p.Number == place.Number))
+            throw new DomainException(DomainErrorMessages.Place.Number.AlreadyExists);
+
+        Places.Add(place);
+    }
 }
