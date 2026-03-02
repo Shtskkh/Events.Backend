@@ -6,6 +6,11 @@
 public class ShortEventDto
 {
     /// <summary>
+    ///     ID мероприятия.
+    /// </summary>
+    public Guid Id { get; init; }
+
+    /// <summary>
     ///     Название мероприятия.
     /// </summary>
     public string Title { get; init; } = null!;
