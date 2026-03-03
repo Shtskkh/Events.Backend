@@ -1,4 +1,5 @@
-﻿using Amazon.S3.Model;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Domain.Aggregates.EventAggregate.Factories;
@@ -22,7 +23,7 @@ public class CreateEventHandler(
     {
         Guid? previewFilename = null;
         var dto = request.Dto;
-        
+
         try
         {
             if (dto.Preview != null)
@@ -33,7 +34,8 @@ public class CreateEventHandler(
                     BucketName = S3Buckets.EventsPreviews,
                     Key = previewFilename.ToString(),
                     ContentType = dto.Preview.ContentType,
-                    InputStream = dto.Preview.OpenReadStream()
+                    InputStream = dto.Preview.OpenReadStream(),
+                    CannedACL = S3CannedACL.PublicRead
                 };
 
                 await fileStorageService.PutObjectAsync(putRequest);
