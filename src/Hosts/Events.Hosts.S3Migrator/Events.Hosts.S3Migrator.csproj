@@ -9,11 +9,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AWSSDK.S3" Version="4.0.18.7" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+        <PackageReference Include="AWSSDK.S3" Version="4.0.18.7"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="..\..\Application\Events.Application.Services\Features\Files\Placeholders\EventsPreviews\*.*">
+            <Link>Placeholders\EventsPreviews\%(Filename)%(Extension)</Link>
+        </EmbeddedResource>
     </ItemGroup>
 </Project>

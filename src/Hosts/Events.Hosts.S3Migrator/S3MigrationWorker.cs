@@ -1,4 +1,5 @@
-﻿using Amazon.S3;
+﻿using System.Reflection;
+using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
 using Events.Application.Services.Features.Files;
@@ -65,13 +66,23 @@ public class S3MigrationWorker(
             if (logger.IsEnabled(LogLevel.Information))
                 logger.LogInformation("Начата миграция плейсхолдеров мероприятий. {time}", DateTimeOffset.Now);
 
-            var filesPaths = Directory.GetFiles(
-                @"../../Application/Events.Application.Services/Features/Files/Placeholders/EventsPreviews");
+            var assembly = Assembly.GetExecutingAssembly();
+            var prefix = $"{assembly.GetName().Name}.Placeholders.EventsPreviews.";
+            var resources = assembly.GetManifestResourceNames().Where(r => r.StartsWith(prefix));
 
-            foreach (var filePath in filesPaths)
+            foreach (var resource in resources)
             {
-                var file = File.OpenRead(filePath);
-                var filename = Path.GetFileName(filePath).Split('.').First();
+                await using var stream = assembly.GetManifestResourceStream(resource);
+
+                if (stream == null)
+                {
+                    logger.LogWarning("Не удалось загрузить поток для ресурса: {resourceName}", resource);
+                    continue;
+                }
+
+                var fileNameParts = resource[prefix.Length..].Split('.');
+                var filename = fileNameParts[0];
+                var contentType = fileNameParts[1];
 
                 if (logger.IsEnabled(LogLevel.Information))
                     logger.LogInformation("Начата миграция файла: {fileName}. {time}", filename, DateTime.Now);
@@ -80,7 +91,9 @@ public class S3MigrationWorker(
                 {
                     BucketName = S3Buckets.EventsPlaceholders,
                     Key = filename,
-                    InputStream = file
+                    InputStream = stream,
+                    CannedACL = S3CannedACL.PublicRead,
+                    ContentType = $"image/{contentType}"
                 });
             }
         }
