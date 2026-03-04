@@ -31,5 +31,19 @@ public static class ApplicationErrorMessages
             public static readonly string SizeGreaterThanMax =
                 $"Размер выборки должен быть меньше чем {ApplicationConstraints.Event.Filter.MaxSize}.";
         }
+
+        /// <summary>
+        ///     Ошибки создания мероприятия.
+        /// </summary>
+        public static class Creation
+        {
+            public const string PlaceholderAndPreviewCannotBothBeSet =
+                "Нельзя указать одновременно превью и плейсхолдер.";
+
+            public const string PlaceholderAndPreviewCannotBothBeEmpty =
+                "Необходимо указать либо превью, либо плейсхолдер.";
+
+            public const string PreviewFileSizeExceedsLimit = "Размер файла превью не должен превышать 5 МБ.";
+        }
     }
 }
