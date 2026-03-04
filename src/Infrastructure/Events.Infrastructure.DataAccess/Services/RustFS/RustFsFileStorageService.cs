@@ -21,7 +21,14 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
     /// <inheritdoc />
     public async Task DeleteObjectAsync(DeleteObjectRequest request)
     {
-        await s3Client.DeleteObjectAsync(request);
+        try
+        {
+            await s3Client.DeleteObjectAsync(request);
+        }
+        catch (AmazonS3Exception e) when (e.StatusCode == HttpStatusCode.NotFound)
+        {
+            throw new NotFoundException(DataAccessErrorMessages.Files.NotFound);
+        }
     }
 
     /// <inheritdoc />
