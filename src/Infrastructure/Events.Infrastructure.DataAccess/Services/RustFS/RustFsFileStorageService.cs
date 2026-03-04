@@ -53,6 +53,11 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
     /// <inheritdoc />
     public async Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request)
     {
-        return await s3Client.ListObjectsV2Async(request);
+        var objects = await s3Client.ListObjectsV2Async(request);
+
+        if (objects.S3Objects == null || objects.S3Objects.Count == 0)
+            throw new NotFoundException(DataAccessErrorMessages.Files.NotFoundAny);
+
+        return objects;
     }
 }

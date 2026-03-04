@@ -71,5 +71,10 @@ public static class DataAccessErrorMessages
         ///     Файл не найден.
         /// </summary>
         public const string NotFound = "Файл не найден.";
+
+        /// <summary>
+        ///     Файлы не найдены.
+        /// </summary>
+        public const string NotFoundAny = "Файлы не найдены.";
     }
 }
