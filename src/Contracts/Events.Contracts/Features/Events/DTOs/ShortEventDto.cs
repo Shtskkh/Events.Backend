@@ -1,4 +1,6 @@
-﻿namespace Events.Contracts.Features.Events.DTOs;
+﻿using Events.Contracts.Features.Files;
+
+namespace Events.Contracts.Features.Events.DTOs;
 
 /// <summary>
 ///     Краткая информация о мероприятии.
@@ -41,7 +43,7 @@ public class ShortEventDto
     public DateTimeOffset EndDateTime { get; init; }
 
     /// <summary>
-    ///     Ссылка на загрузку превью мероприятия.
+    ///     Информация о превью мероприятия.
     /// </summary>
-    public Uri PreviewDownloadLink { get; set; } = null!;
+    public S3FileDto PreviewInfo { get; init; } = null!;
 }

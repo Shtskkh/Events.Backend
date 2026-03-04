@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Features.Files;
 using Events.Domain.Aggregates.EventAggregate;
 
 namespace Events.Application.Services.Features.Events.Mappings;
@@ -9,6 +11,7 @@ namespace Events.Application.Services.Features.Events.Mappings;
 /// </summary>
 public class EventProfile : Profile
 {
+    /// <inheritdoc />
     public EventProfile()
     {
         CreateMap<Event, EventDto>()
@@ -17,11 +20,24 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description.Value))
-            .ForMember(dest => dest.PreviewDownloadLink, opt => opt.Ignore())
             .ForMember(dest => dest.Type,
                 opt => opt.MapFrom(e => e.Type.Title))
             .ForMember(dest => dest.Format,
-                opt => opt.MapFrom(e => e.Format.Title));
+                opt => opt.MapFrom(e => e.Format.Title))
+            .ForMember(dest => dest.PreviewInfo,
+                opt =>
+                    opt.MapFrom(src => src.PreviewFilename == null || src.PreviewFilename == Guid.Empty
+                        ? new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPlaceholders,
+                            Key = src.PlaceholderFilename
+                        }
+                        : new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPreviews,
+                            Key = src.PreviewFilename.ToString()
+                        }));
+
 
         CreateMap<Event, ShortEventDto>()
             .ForMember(dest => dest.Title,
@@ -31,6 +47,19 @@ public class EventProfile : Profile
             .ForMember(dest => dest.Type,
                 opt => opt.MapFrom(e => e.Type.Title))
             .ForMember(dest => dest.Format,
-                opt => opt.MapFrom(e => e.Format.Title));
+                opt => opt.MapFrom(e => e.Format.Title))
+            .ForMember(dest => dest.PreviewInfo,
+                opt =>
+                    opt.MapFrom(src => src.PreviewFilename == null || src.PreviewFilename == Guid.Empty
+                        ? new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPlaceholders,
+                            Key = src.PlaceholderFilename
+                        }
+                        : new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPreviews,
+                            Key = src.PreviewFilename.ToString()
+                        }));
     }
 }
