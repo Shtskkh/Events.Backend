@@ -3,6 +3,7 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
 using Events.Application.Services.Features.Files;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace Events.Hosts.S3Migrator;
 
@@ -80,9 +81,9 @@ public class S3MigrationWorker(
                     continue;
                 }
 
-                var fileNameParts = resource[prefix.Length..].Split('.');
-                var filename = fileNameParts[0];
-                var contentType = fileNameParts[1];
+                var filename = resource[prefix.Length..];
+                var contentTypeProvider = new FileExtensionContentTypeProvider();
+                contentTypeProvider.TryGetContentType(filename, out var contentType);
 
                 if (logger.IsEnabled(LogLevel.Information))
                     logger.LogInformation("Начата миграция файла: {fileName}. {time}", filename, DateTime.Now);
@@ -90,10 +91,10 @@ public class S3MigrationWorker(
                 await s3Client.PutObjectAsync(new PutObjectRequest
                 {
                     BucketName = S3Buckets.EventsPlaceholders,
-                    Key = filename,
+                    Key = Path.GetFileNameWithoutExtension(filename),
                     InputStream = stream,
                     CannedACL = S3CannedACL.PublicRead,
-                    ContentType = $"image/{contentType}"
+                    ContentType = contentType
                 });
             }
         }
