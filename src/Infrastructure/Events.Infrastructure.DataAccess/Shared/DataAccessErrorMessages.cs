@@ -61,4 +61,15 @@ public static class DataAccessErrorMessages
             public const string NotFound = "Тип помещения не найден.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки файлов.
+    /// </summary>
+    public static class Files
+    {
+        /// <summary>
+        ///     Файл не найден.
+        /// </summary>
+        public const string NotFound = "Файл не найден.";
+    }
 }

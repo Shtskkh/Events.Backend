@@ -21,6 +21,13 @@ public interface IFileStorageService
     Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request);
 
     /// <summary>
+    ///     Получить файл.
+    /// </summary>
+    /// <param name="request">Запрос.</param>
+    /// <returns>Объект с данными о файле.</returns>
+    Task<GetObjectResponse> GetObjectAsync(GetObjectRequest request);
+
+    /// <summary>
     ///     Сгенерировать ссылку на скачивание файла.
     /// </summary>
     /// <param name="request">Запрос на скачивание файла.</param>
