@@ -1,18 +1,31 @@
-﻿using Events.Application.Services.Features.Events.Repositories;
+﻿using Amazon.S3.Model;
+using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Files;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.DeleteEvent;
 
-/// <summary>
-///     Handler для удаления мероприятия.
-/// </summary>
-/// <param name="eventRepository">Репозиторий мероприятий.</param>
-public class DeleteEventHandler(IEventRepository eventRepository) : IRequestHandler<DeleteEventQuery>
+/// <inheritdoc />
+public class DeleteEventHandler(IEventRepository eventRepository, IFileStorageService storageService)
+    : IRequestHandler<DeleteEventQuery>
 {
+    /// <inheritdoc />
     public async Task Handle(DeleteEventQuery request, CancellationToken cancellationToken)
     {
         var @event = await eventRepository.GetByIdAsync(request.EventId);
+        var previewFilename = @event.PreviewFilename?.ToString();
 
         await eventRepository.DeleteAsync(@event);
+
+        if (previewFilename != null)
+        {
+            var deleteObjectRequest = new DeleteObjectRequest
+            {
+                BucketName = S3Buckets.EventsPreviews,
+                Key = previewFilename
+            };
+
+            await storageService.DeleteObjectAsync(deleteObjectRequest);
+        }
     }
 }
