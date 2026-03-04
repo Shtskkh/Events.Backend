@@ -143,20 +143,18 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     }
 
     /// <summary>
-    ///     Получить все плейсхолдеры для мероприятий.
+    ///     Получить ключи файлов плейсхолдеров для мероприятий.
     /// </summary>
     /// <returns>Массив плейсхолдеров.</returns>
     [HttpGet("Placeholders")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventPlaceholderDto>), StatusCodes.Status200OK, "application/json",
+    [ProducesResponseType(typeof(IReadOnlyCollection<string>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Плейсхолдеры мероприятий не найдены.")]
     public async Task<IActionResult> GetAllEventsPlaceholders()
     {
-        var dtos = await mediator.Send(new GetAllEventsPlaceholdersQuery());
+        var dtoList = await mediator.Send(new GetAllEventsPlaceholdersQuery());
 
-        if (dtos.Count == 0) return NotFound();
-
-        return Ok(dtos);
+        return Ok(dtoList);
     }
 }
