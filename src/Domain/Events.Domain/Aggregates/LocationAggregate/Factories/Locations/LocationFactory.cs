@@ -1,6 +1,6 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects;
+﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Locations;
 
-namespace Events.Domain.Aggregates.LocationAggregate.Factories;
+namespace Events.Domain.Aggregates.LocationAggregate.Factories.Locations;
 
 /// <inheritdoc />
 public class LocationFactory : ILocationFactory

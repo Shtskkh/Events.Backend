@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Place;
+﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Places;
 
 namespace Events.Domain.Aggregates.LocationAggregate.Factories.Places;
 

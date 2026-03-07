@@ -2,7 +2,7 @@
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
-namespace Events.Domain.Aggregates.LocationAggregate.ValueObjects;
+namespace Events.Domain.Aggregates.LocationAggregate.ValueObjects.Locations;
 
 /// <summary>
 ///     Адрес локации.

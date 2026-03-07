@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects;
+﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Locations;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;

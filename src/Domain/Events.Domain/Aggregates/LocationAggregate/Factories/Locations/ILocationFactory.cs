@@ -1,4 +1,4 @@
-﻿namespace Events.Domain.Aggregates.LocationAggregate.Factories;
+﻿namespace Events.Domain.Aggregates.LocationAggregate.Factories.Locations;
 
 /// <summary>
 ///     Фабрика локации.

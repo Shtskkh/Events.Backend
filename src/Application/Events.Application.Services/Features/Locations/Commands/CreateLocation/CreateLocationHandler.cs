@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Features.Locations.Repositories;
-using Events.Domain.Aggregates.LocationAggregate.Factories;
+using Events.Domain.Aggregates.LocationAggregate.Factories.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.CreateLocation;
