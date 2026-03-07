@@ -94,8 +94,23 @@ services:
       rustfs:
         condition: service_healthy
 
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest-alpine
+    container_name: clickhouse
+    ports:
+      - "8123:8123"
+      - "9002:9002"
+    environment:
+      CLICKHOUSE_DB: Events
+      CLICKHOUSE_PASSWORD: 1
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse/
+      - ./configs/clickhouse/ports.yaml:/etc/clickhouse-server/config.d/ports.yaml
+
 volumes:
   pg_data:
     driver: local
   rustfs:
+    driver: local
+  clickhouse_data:
     driver: local
