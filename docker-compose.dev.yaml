@@ -17,14 +17,12 @@ services:
       - S3__AccessKey:rustfsadmin
       - S3__SecretKey:rustfsadmin
     depends_on:
-      db_postgres:
-        condition: service_healthy
-      rustfs:
-        condition: service_started
       db_migrator:
         condition: service_completed_successfully
       s3_migrator:
         condition: service_completed_successfully
+      clickhouse:
+        condition: service_healthy
 
   db_postgres:
     image: postgres:alpine
@@ -103,6 +101,11 @@ services:
     environment:
       CLICKHOUSE_DB: Events
       CLICKHOUSE_PASSWORD: 1
+    healthcheck:
+      test: wget --no-verbose --tries=1 http://127.0.0.1:8123/ping || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 1
     volumes:
       - clickhouse_data:/var/lib/clickhouse/
       - ./configs/clickhouse/ports.yaml:/etc/clickhouse-server/config.d/ports.yaml
