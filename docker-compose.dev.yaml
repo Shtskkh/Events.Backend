@@ -102,13 +102,26 @@ services:
       CLICKHOUSE_DB: Events
       CLICKHOUSE_PASSWORD: 1
     healthcheck:
-      test: wget --no-verbose --tries=1 http://127.0.0.1:8123/ping || exit 1
+      test: [ "CMD", "clickhouse-client", "--port", "9002", "--query", "SELECT 1" ]
       interval: 10s
       timeout: 10s
-      retries: 1
+      retries: 3
     volumes:
       - clickhouse_data:/var/lib/clickhouse/
       - ./configs/clickhouse/ports.yaml:/etc/clickhouse-server/config.d/ports.yaml
+  
+  otel_collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel_collector
+    command:
+      - --config=/etc/otelcol-contrib/otel-collector-config.yaml
+    ports:
+      - "4318:4318"
+    volumes:
+      - ./configs/otel/otel-collector-config.yaml:/etc/otelcol-contrib/otel-collector-config.yaml
+    depends_on:
+      clickhouse:
+        condition: service_healthy
 
 volumes:
   pg_data:
