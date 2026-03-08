@@ -177,4 +177,32 @@ public static class DomainConstraints
             public const int MaxLength = 16;
         }
     }
+
+    /// <summary>
+    ///     Константы пользователей.
+    /// </summary>
+    public static class User
+    {
+        /// <summary>
+        ///     Константы ролей пользователей.
+        /// </summary>
+        public static class Role
+        {
+            /// <summary>
+            ///     Максимальная длина названия роли.
+            /// </summary>
+            public const int MaxLength = 16;
+        }
+    }
+
+    /// <summary>
+    ///     Константы почтового адреса.
+    /// </summary>
+    public static class Email
+    {
+        /// <summary>
+        ///     Максимальная длина почтового адреса.
+        /// </summary>
+        public const int MaxLength = 512;
+    }
 }

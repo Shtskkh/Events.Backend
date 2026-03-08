@@ -215,4 +215,49 @@ public static class DomainErrorMessages
                 $"Название типа помещения больше максимальной длины в {DomainConstraints.Place.Type.MaxLength} символ(-ов).";
         }
     }
+
+    /// <summary>
+    ///     Ошибки пользователей.
+    /// </summary>
+    public static class User
+    {
+        /// <summary>
+        ///     Роль уже присвоена.
+        /// </summary>
+        public const string RoleAlreadyAssigned = "Роль уже присвоена.";
+
+        /// <summary>
+        ///     Почтовый адрес уже используется.
+        /// </summary>
+        public const string EmailAlreadyInUse = "Почтовый адрес уже используется.";
+
+        /// <summary>
+        ///     Ошибки ролей пользователей.
+        /// </summary>
+        public static class Role
+        {
+            /// <summary>
+            ///     Длина названия роли больше максимальной.
+            /// </summary>
+            public static readonly string GreaterThanMaxLength =
+                $"Название роли пользователя больше максимальной длины в {DomainConstraints.User.Role.MaxLength} символ(-ов).";
+        }
+    }
+
+    /// <summary>
+    ///     Ошибки почтового адреса.
+    /// </summary>
+    public static class Email
+    {
+        /// <summary>
+        ///     Неверный формат.
+        /// </summary>
+        public const string Invalid = "Неверный формат почтового адреса.";
+
+        /// <summary>
+        ///     Длина почтового адреса большей максимальной.
+        /// </summary>
+        public static readonly string GreaterThanMaxLength =
+            $"Длина почтового адреса больше максимальной длины в {DomainConstraints.Email.MaxLength} символ(-ов).";
+    }
 }
