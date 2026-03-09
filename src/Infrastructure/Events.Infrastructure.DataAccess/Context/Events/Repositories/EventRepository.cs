@@ -38,7 +38,7 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
         Specification<Event> spec,
         string? textQuery = null,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     )
     {
         var query = repository
@@ -57,7 +57,7 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
                     .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
         }
 
-        var events = await query.ToListAsync(cancellationToken);
+        var events = await query.ToListAsync(ct);
 
         return events.AsReadOnly();
     }

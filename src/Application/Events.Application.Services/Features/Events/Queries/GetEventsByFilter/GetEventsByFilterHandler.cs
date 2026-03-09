@@ -12,10 +12,10 @@ public class GetEventsByFilterHandler(IEventRepository repository, IMapper mappe
 {
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<ShortEventDto>> Handle(GetEventsByFilterQuery request,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        var spec = new EventFilterSpecification(request.filter);
-        var events = await repository.GetByFilterAsync(spec, request.filter.Text, cancellationToken);
+        var spec = new EventFilterSpecification(request.Filter);
+        var events = await repository.GetByFilterAsync(spec, request.Filter.Text, ct);
 
         var dtoList = mapper.Map<List<ShortEventDto>>(events);
 

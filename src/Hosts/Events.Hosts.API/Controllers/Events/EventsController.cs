@@ -28,6 +28,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     ///     Получить информацию о мероприятиях, удовлетворяющих фильтру.
     /// </summary>
     /// <param name="filter">Фильтр.</param>
+    /// <param name="ct">Токен отмены.</param>
     /// <returns>
     ///     Массив кратких описаний мероприятий, удовлетворяющих фильтру.
     /// </returns>
@@ -36,9 +37,9 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Мероприятия по заданному фильтру не найдены.")]
-    public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter)
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter, CancellationToken ct)
     {
-        var events = await mediator.Send(new GetEventsByFilterQuery(filter));
+        var events = await mediator.Send(new GetEventsByFilterQuery(filter), ct);
 
         if (events.Count == 0) return NotFound();
 
