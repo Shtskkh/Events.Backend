@@ -21,8 +21,14 @@ public interface IEventRepository
     ///     Получить мероприятия, удовлетворяющие фильтру.
     /// </summary>
     /// <param name="spec">Спецификация фильтра.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="textQuery">Запрос текстового поиска.</param>
     /// <returns>Иммутабельная коллекция мероприятий.</returns>
-    Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec);
+    Task<IReadOnlyCollection<Event>> GetByFilterAsync(
+        Specification<Event> spec,
+        string? textQuery = null,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     ///     Добавить мероприятие.

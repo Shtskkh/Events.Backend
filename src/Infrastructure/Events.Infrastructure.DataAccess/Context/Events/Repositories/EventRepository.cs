@@ -23,17 +23,6 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec)
-    {
-        var events = await repository
-            .GetAllAsync()
-            .WithSpecification(spec)
-            .ToListAsync();
-
-        return events.AsReadOnly();
-    }
-
-    /// <inheritdoc />
     public async Task AddAsync(Event @event)
     {
         await repository.AddAsync(@event);
@@ -43,5 +32,43 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     public async Task DeleteAsync(Event @event)
     {
         await repository.DeleteAsync(@event);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
+        Specification<Event> spec,
+        string? textQuery = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var query = repository
+            .GetAllAsync()
+            .WithSpecification(spec);
+
+        if (textQuery != null)
+        {
+            var preparedText = PrepareQuery(textQuery);
+            query = query.Where(e =>
+                EF.Functions.ToTsVector(
+                        "russian",
+                        e.Title.Value + ' ' +
+                        e.Announcement.Value + ' ' +
+                        e.Description.Value)
+                    .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
+        }
+
+        var events = await query.ToListAsync(cancellationToken);
+
+        return events.AsReadOnly();
+    }
+
+    private static string PrepareQuery(string text)
+    {
+        var prepared = string.Join(" & ", text
+            .Split([' ', ',', '.', '\t', '\n'], StringSplitOptions.RemoveEmptyEntries)
+            .Distinct()
+            .Select(w => w.Trim()));
+
+        return prepared;
     }
 }
