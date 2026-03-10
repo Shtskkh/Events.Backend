@@ -19,11 +19,13 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <param name="email">Почтовый адрес.</param>
+    /// <param name="password">Пароль.</param>
     /// <param name="userRole">Роль.</param>
-    public User(Guid id, Email email, UserRole userRole) : base(id)
+    public User(Guid id, Email email, Password password, UserRole userRole) : base(id)
     {
         Email = email;
         Role = userRole;
+        Password = password;
 
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -33,6 +35,11 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     ///     Почтовый адрес пользователя.
     /// </summary>
     public Email Email { get; private set; } = null!;
+
+    /// <summary>
+    ///     Пароль пользователя.
+    /// </summary>
+    public Password Password { get; private set; } = null!;
 
     /// <summary>
     ///     Роль пользователя.
@@ -57,6 +64,15 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
             throw new DomainException(DomainErrorMessages.User.EmailAlreadyInUse);
 
         Email = email;
+    }
+
+    /// <summary>
+    ///     Изменить пароль.
+    /// </summary>
+    /// <param name="newPassword">Новый пароль.</param>
+    public void ChangePassword(string newPassword)
+    {
+        Password = new Password(newPassword);
     }
 
     /// <summary>

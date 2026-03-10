@@ -260,4 +260,40 @@ public static class DomainErrorMessages
         public static readonly string GreaterThanMaxLength =
             $"Длина почтового адреса больше максимальной длины в {DomainConstraints.Email.MaxLength} символ(-ов).";
     }
+
+    /// <summary>
+    ///     Ошибки паролей.
+    /// </summary>
+    public static class Password
+    {
+        /// <summary>
+        ///     Пароль содержит недопустимые символы.
+        /// </summary>
+        public static readonly string Invalid =
+            $"Пароль не может содержать следующие символы: " +
+            $"{string.Join(", ", DomainConstraints.Password.InvalidCharacters.Select(FormatChar))}.";
+
+        /// <summary>
+        ///     Длина пароля меньше минимальной.
+        /// </summary>
+        public static readonly string LessThanMinLength =
+            $"Длина пароля меньше минимальной длины в {DomainConstraints.Password.MinLength} символ(-ов).";
+
+        /// <summary>
+        ///     Длина пароля большей максимальной.
+        /// </summary>
+        public static readonly string GreaterThanMaxLength =
+            $"Длина пароля больше максимальной длины в {DomainConstraints.Password.MaxLength} символ(-ов).";
+
+        private static string FormatChar(char c)
+        {
+            return c switch
+            {
+                ' ' => "пробел",
+                '\t' => "табуляция",
+                '\n' => "перенос строки",
+                _ => c.ToString()
+            };
+        }
+    }
 }

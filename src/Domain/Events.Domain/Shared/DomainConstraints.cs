@@ -205,4 +205,25 @@ public static class DomainConstraints
         /// </summary>
         public const int MaxLength = 512;
     }
+
+    /// <summary>
+    ///     Константы паролей.
+    /// </summary>
+    public static class Password
+    {
+        /// <summary>
+        ///     Минимальная длина пароля.
+        /// </summary>
+        public const int MinLength = 6;
+
+        /// <summary>
+        ///     Максимальная длина пароля.
+        /// </summary>
+        public const int MaxLength = 512;
+
+        /// <summary>
+        ///     Недопустимые символы в пароле.
+        /// </summary>
+        public static readonly char[] InvalidCharacters = [' ', '\t', '\n'];
+    }
 }
