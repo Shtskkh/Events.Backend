@@ -18,7 +18,7 @@ public class GetFileHandler(IFileStorageService storageService, ILogger<GetFileH
             Key = request.Key
         };
 
-        var response = await storageService.GetObjectAsync(getObjectRequest);
+        var response = await storageService.GetObjectAsync(getObjectRequest, cancellationToken);
 
         var stream = response.ResponseStream;
         var contentType = response.Headers.ContentType;

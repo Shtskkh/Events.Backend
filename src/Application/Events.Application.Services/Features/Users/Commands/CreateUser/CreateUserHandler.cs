@@ -35,7 +35,7 @@ public class CreateUserHandler(
                     CannedACL = S3CannedACL.PublicRead
                 };
 
-                await fileStorageService.PutObjectAsync(putRequest);
+                await fileStorageService.PutObjectAsync(putRequest, cancellationToken);
             }
 
             var userRole = await userRoleRepository.GetById(UserRole.User.Id, cancellationToken);
@@ -64,7 +64,7 @@ public class CreateUserHandler(
                     Key = avatarFilename.ToString()
                 };
 
-                await fileStorageService.DeleteObjectAsync(deleteRequest);
+                await fileStorageService.DeleteObjectAsync(deleteRequest, cancellationToken);
             }
 
             throw;

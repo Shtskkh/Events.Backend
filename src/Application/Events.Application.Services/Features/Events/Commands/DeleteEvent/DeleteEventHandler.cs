@@ -25,7 +25,7 @@ public class DeleteEventHandler(IEventRepository eventRepository, IFileStorageSe
                 Key = previewFilename
             };
 
-            await storageService.DeleteObjectAsync(deleteObjectRequest);
+            await storageService.DeleteObjectAsync(deleteObjectRequest, cancellationToken);
         }
     }
 }

@@ -17,7 +17,7 @@ public class GetAllEventsPlaceholdersHandler(IFileStorageService storageService)
             BucketName = S3Buckets.EventsPlaceholders
         };
 
-        var response = await storageService.ListObjectsAsync(listObjectsV2Request);
+        var response = await storageService.ListObjectsAsync(listObjectsV2Request, cancellationToken);
 
         return response.S3Objects.Select(obj => obj.Key).ToList();
     }

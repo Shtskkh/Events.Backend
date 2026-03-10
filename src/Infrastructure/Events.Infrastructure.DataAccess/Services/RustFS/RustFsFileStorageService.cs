@@ -13,17 +13,17 @@ namespace Events.Infrastructure.DataAccess.Services.RustFS;
 public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
 {
     /// <inheritdoc />
-    public async Task PutObjectAsync(PutObjectRequest request)
+    public async Task PutObjectAsync(PutObjectRequest request, CancellationToken cancellationToken)
     {
-        await s3Client.PutObjectAsync(request);
+        await s3Client.PutObjectAsync(request, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task DeleteObjectAsync(DeleteObjectRequest request)
+    public async Task DeleteObjectAsync(DeleteObjectRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            await s3Client.DeleteObjectAsync(request);
+            await s3Client.DeleteObjectAsync(request, cancellationToken);
         }
         catch (AmazonS3Exception e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
@@ -32,11 +32,11 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
     }
 
     /// <inheritdoc />
-    public async Task<GetObjectResponse> GetObjectAsync(GetObjectRequest request)
+    public async Task<GetObjectResponse> GetObjectAsync(GetObjectRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            return await s3Client.GetObjectAsync(request);
+            return await s3Client.GetObjectAsync(request, cancellationToken);
         }
         catch (AmazonS3Exception e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
@@ -45,15 +45,10 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
     }
 
     /// <inheritdoc />
-    public async Task<string> GeneratePresignedUrlAsync(GetPreSignedUrlRequest request)
+    public async Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request,
+        CancellationToken cancellationToken)
     {
-        return await s3Client.GetPreSignedURLAsync(request);
-    }
-
-    /// <inheritdoc />
-    public async Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request)
-    {
-        var objects = await s3Client.ListObjectsV2Async(request);
+        var objects = await s3Client.ListObjectsV2Async(request, cancellationToken);
 
         if (objects.S3Objects == null || objects.S3Objects.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Files.NotFoundAny);

@@ -11,34 +11,29 @@ public interface IFileStorageService
     ///     Загрузить файл в хранилище.
     /// </summary>
     /// <param name="request">Запрос на добавление.</param>
-    Task PutObjectAsync(PutObjectRequest request);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task PutObjectAsync(PutObjectRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить информацию о всех объектах.
     /// </summary>
     /// <param name="request">Запрос.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект с данными о всех объектах.</returns>
-    Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request);
+    Task<ListObjectsV2Response> ListObjectsAsync(ListObjectsV2Request request, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить файл.
     /// </summary>
     /// <param name="request">Запрос.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект с данными о файле.</returns>
-    Task<GetObjectResponse> GetObjectAsync(GetObjectRequest request);
-
-    /// <summary>
-    ///     Сгенерировать ссылку на скачивание файла.
-    /// </summary>
-    /// <param name="request">Запрос на скачивание файла.</param>
-    /// <returns>
-    ///     Строковое представление ссылки на скачивание.
-    /// </returns>
-    Task<string> GeneratePresignedUrlAsync(GetPreSignedUrlRequest request);
+    Task<GetObjectResponse> GetObjectAsync(GetObjectRequest request, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Удалить файл из хранилища.
     /// </summary>
     /// <param name="request">Запрос на удаление.</param>
-    Task DeleteObjectAsync(DeleteObjectRequest request);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task DeleteObjectAsync(DeleteObjectRequest request, CancellationToken cancellationToken);
 }

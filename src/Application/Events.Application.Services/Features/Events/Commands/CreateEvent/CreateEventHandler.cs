@@ -35,7 +35,7 @@ public class CreateEventHandler(
                     CannedACL = S3CannedACL.PublicRead
                 };
 
-                await fileStorageService.PutObjectAsync(putRequest);
+                await fileStorageService.PutObjectAsync(putRequest, cancellationToken);
             }
 
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
@@ -69,7 +69,7 @@ public class CreateEventHandler(
                     Key = previewFilename.ToString()
                 };
 
-                await fileStorageService.DeleteObjectAsync(deleteRequest);
+                await fileStorageService.DeleteObjectAsync(deleteRequest, cancellationToken);
             }
 
             throw;
