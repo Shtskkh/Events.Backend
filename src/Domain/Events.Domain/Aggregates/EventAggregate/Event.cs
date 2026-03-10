@@ -25,12 +25,14 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
     /// <param name="eventType">Тип мероприятия.</param>
     /// <param name="eventFormat">Формат мероприятия.</param>
+    /// <param name="userId">ID пользователя.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     /// <param name="previewFilename">Название превью файла.</param>
     /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
         DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
-        bool needsRegistration, string? previewFilename = null, string? placeholderFilename = null) : base(id)
+        Guid userId, bool needsRegistration, string? previewFilename = null,
+        string? placeholderFilename = null) : base(id)
     {
         Title = title;
         Announcement = announcement;
@@ -40,6 +42,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         NeedsRegistration = needsRegistration;
         PreviewFilename = previewFilename;
         PlaceholderFilename = placeholderFilename;
+        UserId = userId;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
 
@@ -49,17 +52,17 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    public EventTitle Title { get; private set; }
+    public EventTitle Title { get; private set; } = null!;
 
     /// <summary>
     ///     Анонс (краткое описание) мероприятия.
     /// </summary>
-    public EventAnnouncement Announcement { get; private set; }
+    public EventAnnouncement Announcement { get; private set; } = null!;
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
-    public EventDescription Description { get; private set; }
+    public EventDescription Description { get; private set; } = null!;
 
     /// <summary>
     ///     Дата и время начала мероприятия.
@@ -84,17 +87,22 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Тип мероприятия.
     /// </summary>
-    public EventType Type { get; private set; }
+    public EventType Type { get; private set; } = null!;
 
     /// <summary>
     ///     Формат мероприятия.
     /// </summary>
-    public EventFormat Format { get; private set; }
+    public EventFormat Format { get; private set; } = null!;
 
     /// <summary>
     ///     Флаг необходимости регистрации на мероприятие.
     /// </summary>
     public bool NeedsRegistration { get; private set; }
+
+    /// <summary>
+    ///     ID пользователя, создавшего мероприятие.
+    /// </summary>
+    public Guid UserId { get; }
 
     /// <inheritdoc />
     public DateTime CreatedAt { get; }

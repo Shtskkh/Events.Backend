@@ -20,12 +20,13 @@ public static class EventFactory
     /// <param name="eventType">Тип мероприятия.</param>
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needRegistration">Необходимость регистрации.</param>
+    /// <param name="userId">ID пользователя.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <param name="placeholderFilename">Название плейсхолдера превью.</param>
     /// <returns>Объект сущности пользователя.</returns>
     public static Event Create(string title, string announcement, string description, DateTimeOffset startDateTime,
         DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat, bool needRegistration,
-        string? previewFilename = null, string? placeholderFilename = null)
+        Guid userId, string? previewFilename = null, string? placeholderFilename = null)
     {
         var id = Guid.NewGuid();
         var titleVo = new EventTitle(title);
@@ -47,6 +48,7 @@ public static class EventFactory
             endDateTime,
             eventType,
             eventFormat,
+            userId,
             needRegistration,
             previewFilename,
             placeholderFilename

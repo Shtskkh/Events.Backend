@@ -10,6 +10,11 @@ namespace Events.Contracts.Features.Events.DTOs;
 public class CreateEventDto
 {
     /// <summary>
+    ///     ID пользователя, создающего мероприятие.
+    /// </summary>
+    public required Guid UserId { get; set; }
+
+    /// <summary>
     ///     Название мероприятия.
     /// </summary>
     [MinLength(DomainConstraints.Event.Title.MinLength)]

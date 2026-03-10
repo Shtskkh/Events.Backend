@@ -50,6 +50,7 @@ public class CreateEventHandler(
                 eventType,
                 eventFormat,
                 dto.NeedsRegistration,
+                dto.UserId,
                 previewFilename.ToString(),
                 dto.Placeholder
             );

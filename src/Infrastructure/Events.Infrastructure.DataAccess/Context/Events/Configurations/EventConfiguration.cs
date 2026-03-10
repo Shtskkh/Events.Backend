@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -11,6 +12,7 @@ namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
 /// </summary>
 public class EventConfiguration : IEntityTypeConfiguration<Event>
 {
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<Event> builder)
     {
         builder.ToTable("Events");
@@ -63,6 +65,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Navigation(e => e.Format).AutoInclude();
+
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(e => e.CreatedAt)
             .IsRequired()
