@@ -51,6 +51,11 @@ public static class ApplicationErrorMessages
             ///     Файл превью превышает допустимый размер.
             /// </summary>
             public const string PreviewFileSizeExceedsLimit = "Размер файла превью не должен превышать 5 МБ.";
+
+            /// <summary>
+            ///     Тип файла превью не разрешён.
+            /// </summary>
+            public const string PreviewFileContentTypeNotAllowed = "Тип файла превью не разрешён.";
         }
     }
 }

@@ -22,8 +22,10 @@ public class CreateEventValidator : AbstractValidator<CreateEventDto>
             });
 
         RuleFor(x => x.Preview)
-            .Must(x => x.Length <= 5 * 1024 * 1024)
-            .When(x => x.Preview != null)
-            .WithMessage(ApplicationErrorMessages.Event.Creation.PreviewFileSizeExceedsLimit);
+            .Must(x => x.Length <= ApplicationConstraints.Event.Creation.MaxSize)
+            .WithMessage(ApplicationErrorMessages.Event.Creation.PreviewFileSizeExceedsLimit)
+            .Must(x => ApplicationConstraints.Event.Creation.AllowedMimeTypes.Contains(x.ContentType))
+            .WithMessage(ApplicationErrorMessages.Event.Creation.PreviewFileContentTypeNotAllowed)
+            .When(x => x.Preview != null);
     }
 }
