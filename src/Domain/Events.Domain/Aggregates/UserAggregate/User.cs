@@ -36,6 +36,7 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
         Email = email;
         Role = userRole;
         Password = password;
+        AvatarFilename = avatarFilename;
 
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -64,7 +65,7 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     /// <summary>
     ///     Название файла аватара пользователя.
     /// </summary>
-    public string? AvatarFilename { get; private set; } = null;
+    public string? AvatarFilename { get; private set; }
 
     /// <inheritdoc />
     public DateTime CreatedAt { get; }
