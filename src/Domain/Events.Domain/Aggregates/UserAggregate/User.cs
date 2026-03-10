@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.UserAggregate.ValueObjects;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
 using Events.Domain.Shared.ValueObjects;
@@ -18,11 +19,20 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     ///     Конструктор.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="personName">ФИО пользователя.</param>
     /// <param name="email">Почтовый адрес.</param>
     /// <param name="password">Пароль.</param>
     /// <param name="userRole">Роль.</param>
-    public User(Guid id, Email email, Password password, UserRole userRole) : base(id)
+    /// <param name="avatarFilename">Название файла аватара.</param>
+    public User(
+        Guid id,
+        PersonName personName,
+        Email email,
+        Password password,
+        UserRole userRole,
+        string? avatarFilename = null) : base(id)
     {
+        PersonName = personName;
         Email = email;
         Role = userRole;
         Password = password;
@@ -30,6 +40,11 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    /// <summary>
+    ///     ФИО пользователя.
+    /// </summary>
+    public PersonName PersonName { get; private set; } = null!;
 
     /// <summary>
     ///     Почтовый адрес пользователя.
@@ -46,11 +61,27 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     /// </summary>
     public UserRole Role { get; private set; } = null!;
 
+    /// <summary>
+    ///     Название файла аватара пользователя.
+    /// </summary>
+    public string? AvatarFilename { get; private set; } = null;
+
     /// <inheritdoc />
     public DateTime CreatedAt { get; }
 
     /// <inheritdoc />
     public DateTime UpdatedAt { get; }
+
+    /// <summary>
+    ///     Изменить ФИО пользователя.
+    /// </summary>
+    /// <param name="firstName">Имя.</param>
+    /// <param name="lastName">Фамилия.</param>
+    /// <param name="patronymic">Отчество.</param>
+    public void ChangePersonName(string firstName, string lastName, string? patronymic = null)
+    {
+        PersonName = new PersonName(firstName, lastName, patronymic);
+    }
 
     /// <summary>
     ///     Изменить почтовый адрес.

@@ -193,6 +193,17 @@ public static class DomainConstraints
             /// </summary>
             public const int MaxLength = 16;
         }
+
+        /// <summary>
+        ///     Константы ФИО пользователя.
+        /// </summary>
+        public static class PersonName
+        {
+            /// <summary>
+            ///     Максимальная длина поля.
+            /// </summary>
+            public const int MaxLength = 64;
+        }
     }
 
     /// <summary>

@@ -242,6 +242,30 @@ public static class DomainErrorMessages
             public static readonly string GreaterThanMaxLength =
                 $"Название роли пользователя больше максимальной длины в {DomainConstraints.User.Role.MaxLength} символ(-ов).";
         }
+
+        /// <summary>
+        ///     Ошибки ФИО пользователя.
+        /// </summary>
+        public static class PersonName
+        {
+            /// <summary>
+            ///     Имя больше максимальной длины.
+            /// </summary>
+            public static readonly string FirstNameGreaterThanMaxLength =
+                $"Имя больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+
+            /// <summary>
+            ///     Фамилия больше максимальной длины.
+            /// </summary>
+            public static readonly string LastNameGreaterThanMaxLength =
+                $"Фамилия больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+
+            /// <summary>
+            ///     Отчество большей максимальной длины.
+            /// </summary>
+            public static readonly string PatronymicGreaterThanMaxLength =
+                $"Отчество больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+        }
     }
 
     /// <summary>
