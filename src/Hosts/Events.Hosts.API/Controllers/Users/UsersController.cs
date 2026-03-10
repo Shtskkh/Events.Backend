@@ -1,4 +1,6 @@
-﻿using Events.Contracts.Errors;
+﻿using Events.Application.Services.Features.Users.Queries.GetByFilter;
+using Events.Contracts.Errors;
+using Events.Contracts.Features.Users.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +16,23 @@ namespace Events.Hosts.API.Controllers.Users;
     Description = "Неожиданная ошибка сервера.")]
 public class UsersController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    ///     Получить всех пользователей, удовлетворяющих фильтру.
+    /// </summary>
+    /// <param name="filter">Фильтр.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция пользователей.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetByFilterAsync()
+    [ProducesResponseType(typeof(IReadOnlyCollection<ShortUserDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Пользователи по фильтру не найдены.")]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] UserFilterDto filter, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var result = await mediator.Send(new GetUsersByFilter(filter), ct);
+        return Ok(result);
     }
 
     [HttpGet("{id:guid}")]

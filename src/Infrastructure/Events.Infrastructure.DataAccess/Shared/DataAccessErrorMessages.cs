@@ -77,4 +77,15 @@ public static class DataAccessErrorMessages
         /// </summary>
         public const string NotFoundAny = "Файлы не найдены.";
     }
+
+    /// <summary>
+    ///     Ошибки пользователей.
+    /// </summary>
+    public static class Users
+    {
+        /// <summary>
+        ///     Пользователи не найдены.
+        /// </summary>
+        public const string NotFoundAny = "Пользователи не найдены.";
+    }
 }
