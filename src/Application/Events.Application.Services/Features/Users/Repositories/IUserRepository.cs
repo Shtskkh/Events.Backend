@@ -15,4 +15,12 @@ public interface IUserRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекцию пользователей.</returns>
     Task<IReadOnlyCollection<User>> GetByFilterAsync(Specification<User> spec, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Добавить пользователя.
+    /// </summary>
+    /// <param name="user">Сущность пользователя.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>ID созданного пользователя.</returns>
+    Task AddAsync(User user, CancellationToken cancellationToken);
 }

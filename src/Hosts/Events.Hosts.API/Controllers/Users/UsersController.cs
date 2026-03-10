@@ -1,4 +1,5 @@
-﻿using Events.Application.Services.Features.Users.Queries.GetByFilter;
+﻿using Events.Application.Services.Features.Users.Commands.CreateUser;
+using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Users.DTOs;
 using MediatR;
@@ -41,10 +42,23 @@ public class UsersController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Создать пользователя.
+    /// </summary>
+    /// <param name="dto">Форма создания пользователя.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>ID созданного пользователя.</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateAsync()
+    [Consumes("multipart/form-data")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain",
+        Description = "Пользователь создан.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateUserDto dto, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var id = await mediator.Send(new CreateUserCommand(dto), ct);
+
+        return StatusCode(StatusCodes.Status201Created, id);
     }
 
     [HttpPatch("{id:guid}")]

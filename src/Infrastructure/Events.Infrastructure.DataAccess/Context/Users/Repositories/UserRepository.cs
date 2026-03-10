@@ -27,4 +27,10 @@ public class UserRepository(IRepository<User, Guid, EventsDbContext> repository)
 
         return users.AsReadOnly();
     }
+
+    /// <inheritdoc />
+    public async Task AddAsync(User user, CancellationToken cancellationToken)
+    {
+        await repository.AddAsync(user);
+    }
 }
