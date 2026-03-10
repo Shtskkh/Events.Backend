@@ -16,6 +16,11 @@ public static class S3Buckets
     public const string EventsPlaceholders = "events-placeholders";
 
     /// <summary>
+    ///     Аватары пользователей.
+    /// </summary>
+    public const string UsersAvatars = "users-avatars";
+
+    /// <summary>
     ///     Получить все buckets.
     /// </summary>
     /// <returns>
@@ -25,5 +30,6 @@ public static class S3Buckets
     {
         yield return EventsPreviews;
         yield return EventsPlaceholders;
+        yield return UsersAvatars;
     }
 }
