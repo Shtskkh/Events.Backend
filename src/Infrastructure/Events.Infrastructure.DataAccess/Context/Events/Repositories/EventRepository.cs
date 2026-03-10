@@ -59,6 +59,9 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
 
         var events = await query.ToListAsync(ct);
 
+        if (events.Count == 0)
+            throw new NotFoundException(DataAccessErrorMessages.Event.NotFoundAny);
+
         return events.AsReadOnly();
     }
 

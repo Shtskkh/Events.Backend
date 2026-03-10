@@ -35,13 +35,13 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Мероприятия по заданному фильтру не найдены.")]
     public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter, CancellationToken ct)
     {
         var events = await mediator.Send(new GetEventsByFilterQuery(filter), ct);
-
-        if (events.Count == 0) return NotFound();
 
         return Ok(events);
     }
