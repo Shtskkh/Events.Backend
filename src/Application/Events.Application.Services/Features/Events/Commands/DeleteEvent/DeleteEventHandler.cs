@@ -15,7 +15,7 @@ public class DeleteEventHandler(IEventRepository eventRepository, IFileStorageSe
         var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
         var previewFilename = @event.PreviewFilename;
 
-        await eventRepository.DeleteAsync(@event);
+        await eventRepository.DeleteAsync(@event, cancellationToken);
 
         if (previewFilename != null)
         {

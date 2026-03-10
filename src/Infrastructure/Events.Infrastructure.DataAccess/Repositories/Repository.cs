@@ -35,9 +35,9 @@ public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TC
     }
 
     /// <inheritdoc />
-    public async Task<bool> IsExistsAsync(TKey id)
+    public async Task<bool> IsExistsAsync(TKey id, CancellationToken cancellationToken)
     {
-        return await _dbSet.AnyAsync(e => e.Id.Equals(id));
+        return await _dbSet.AnyAsync(e => e.Id.Equals(id), cancellationToken);
     }
 
     /// <inheritdoc />
@@ -48,16 +48,16 @@ public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TC
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(TEntity entity)
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(TEntity entity)
+    public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
     {
         _dbSet.Remove(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

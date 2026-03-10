@@ -30,9 +30,9 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(Event @event)
+    public async Task DeleteAsync(Event @event, CancellationToken cancellationToken)
     {
-        await repository.DeleteAsync(@event);
+        await repository.DeleteAsync(@event, cancellationToken);
     }
 
     /// <inheritdoc />

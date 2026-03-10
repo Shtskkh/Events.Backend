@@ -42,5 +42,6 @@ public interface IEventRepository
     ///     Удалить мероприятие.
     /// </summary>
     /// <param name="event">Сущность мероприятия для удаления.</param>
-    Task DeleteAsync(Event @event);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task DeleteAsync(Event @event, CancellationToken cancellationToken);
 }

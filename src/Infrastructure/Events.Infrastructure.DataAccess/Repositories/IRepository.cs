@@ -36,10 +36,11 @@ public interface IRepository<TEntity, in TKey, TContext>
     ///     Метод асинхронной проверки существования сущности.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>
     ///     True, если сущность существует, false иначе.
     /// </returns>
-    Task<bool> IsExistsAsync(TKey id);
+    Task<bool> IsExistsAsync(TKey id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Метод асинхронного добавления сущности.
@@ -52,12 +53,14 @@ public interface IRepository<TEntity, in TKey, TContext>
     ///     Метод асинхронного обновления сущности.
     /// </summary>
     /// <param name="entity">Объект сущности для обновления.</param>
-    Task UpdateAsync(TEntity entity);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 
 
     /// <summary>
     ///     Метод асинхронного удаления сущности.
     /// </summary>
     /// <param name="entity">Объект сущности для удаления.</param>
-    Task DeleteAsync(TEntity entity);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
 }
