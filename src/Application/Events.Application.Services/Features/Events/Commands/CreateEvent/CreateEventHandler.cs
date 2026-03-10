@@ -7,11 +7,7 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
 
-/// <summary>
-///     Handler для команды создания мероприятия.
-/// </summary>
-/// <param name="eventRepository">Репозиторий мероприятия.</param>
-/// <param name="fileStorageService">Сервис хранения файлов.</param>
+/// <inheritdoc />
 public class CreateEventHandler(
     IEventRepository eventRepository,
     IEventTypeRepository eventTypeRepository,
@@ -19,6 +15,7 @@ public class CreateEventHandler(
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
+    /// <inheritdoc />
     public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
         Guid? previewFilename = null;
@@ -44,8 +41,7 @@ public class CreateEventHandler(
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId);
 
-            var eventFactory = new EventFactory();
-            var @event = eventFactory.Create(
+            var @event = EventFactory.Create(
                 dto.Title,
                 dto.Announcement,
                 dto.Description,
@@ -54,7 +50,7 @@ public class CreateEventHandler(
                 eventType,
                 eventFormat,
                 dto.NeedsRegistration,
-                previewFilename,
+                previewFilename.ToString(),
                 dto.Placeholder
             );
 

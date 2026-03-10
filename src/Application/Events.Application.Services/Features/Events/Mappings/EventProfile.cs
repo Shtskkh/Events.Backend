@@ -26,7 +26,7 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(e => e.Format.Title))
             .ForMember(dest => dest.PreviewInfo,
                 opt =>
-                    opt.MapFrom(src => src.PreviewFilename == null || src.PreviewFilename == Guid.Empty
+                    opt.MapFrom(src => src.PreviewFilename == null
                         ? new S3FileDto
                         {
                             Bucket = S3Buckets.EventsPlaceholders,
@@ -35,7 +35,7 @@ public class EventProfile : Profile
                         : new S3FileDto
                         {
                             Bucket = S3Buckets.EventsPreviews,
-                            Key = src.PreviewFilename.ToString()
+                            Key = src.PreviewFilename
                         }));
 
 
@@ -50,7 +50,7 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(e => e.Format.Title))
             .ForMember(dest => dest.PreviewInfo,
                 opt =>
-                    opt.MapFrom(src => src.PreviewFilename == null || src.PreviewFilename == Guid.Empty
+                    opt.MapFrom(src => src.PreviewFilename == null
                         ? new S3FileDto
                         {
                             Bucket = S3Buckets.EventsPlaceholders,
@@ -59,7 +59,7 @@ public class EventProfile : Profile
                         : new S3FileDto
                         {
                             Bucket = S3Buckets.EventsPreviews,
-                            Key = src.PreviewFilename.ToString()
+                            Key = src.PreviewFilename
                         }));
     }
 }

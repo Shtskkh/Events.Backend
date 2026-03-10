@@ -101,6 +101,24 @@ public static class DomainErrorMessages
             /// </summary>
             public const string GreaterThanMaxLenght = "Название типа мероприятия больше максимальной длины.";
         }
+
+        /// <summary>
+        ///     Ошибки превью мероприятия.
+        /// </summary>
+        public static class Preview
+        {
+            /// <summary>
+            ///     Указаны одновременно превью и плейсхолдер.
+            /// </summary>
+            public const string PlaceholderAndPreviewCannotBothBeSet =
+                "Нельзя указать одновременно превью и плейсхолдер.";
+
+            /// <summary>
+            ///     Не указаны ни превью, ни плейсхолдер.
+            /// </summary>
+            public const string PlaceholderAndPreviewCannotBothBeEmpty =
+                "Необходимо указать либо превью, либо плейсхолдер.";
+        }
     }
 
     /// <summary>

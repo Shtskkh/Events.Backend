@@ -30,10 +30,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
         DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
-        bool needsRegistration,
-        Guid? previewFilename = null,
-        string? placeholderFilename = null) :
-        base(id)
+        bool needsRegistration, string? previewFilename = null, string? placeholderFilename = null) : base(id)
     {
         Title = title;
         Announcement = announcement;
@@ -41,16 +38,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         Type = eventType;
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
-
-        if (previewFilename != null && previewFilename != Guid.Empty) PreviewFilename = previewFilename;
-        
-        if (!string.IsNullOrWhiteSpace(placeholderFilename))
-            PlaceholderFilename = placeholderFilename;
-
-        SetDateTimeRange(startDateTime, endDateTime);
-
+        PreviewFilename = previewFilename;
+        PlaceholderFilename = placeholderFilename;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
+
+        SetDateTimeRange(startDateTime, endDateTime);
     }
 
     /// <summary>
@@ -81,12 +74,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Название файла превью.
     /// </summary>
-    public Guid? PreviewFilename { get; private set; }
+    public string? PreviewFilename { get; private set; }
 
     /// <summary>
     ///     Название файла плейсхолдера превью.
     /// </summary>
-    public string? PlaceholderFilename { get; private set; }
+    public string? PlaceholderFilename { get; }
 
     /// <summary>
     ///     Тип мероприятия.
@@ -152,7 +145,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     ///     Изменить название файла превью.
     /// </summary>
     /// <param name="previewFileName">Название нового файла.</param>
-    public void ChangePreviewFilename(Guid previewFileName)
+    public void ChangePreviewFilename(string previewFileName)
     {
         PreviewFilename = previewFileName;
     }
