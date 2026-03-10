@@ -15,11 +15,12 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     /// <inheritdoc />
     public async Task<Event> GetByIdAsync(Guid id)
     {
-        var isExists = await repository.IsExistsAsync(id);
+        var @event = await repository.GetByIdAsync(id);
 
-        if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);
+        if (@event == null)
+            throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);
 
-        return (await repository.GetByIdAsync(id))!;
+        return @event;
     }
 
     /// <inheritdoc />
