@@ -33,11 +33,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Patronymic")
             .HasMaxLength(DomainConstraints.User.PersonName.MaxLength);
 
-        builder.OwnsOne(e => e.Email)
-            .Property(x => x.Value)
-            .HasColumnName("Email")
-            .HasMaxLength(DomainConstraints.Email.MaxLength)
-            .IsRequired();
+        builder.OwnsOne(e => e.Email, emailBuilder =>
+        {
+            emailBuilder.Property(x => x.Value)
+                .HasColumnName("Email")
+                .HasMaxLength(DomainConstraints.Email.MaxLength)
+                .IsRequired();
+
+            emailBuilder.HasIndex(x => x.Value)
+                .IsUnique();
+        });
 
         builder.OwnsOne(e => e.Password)
             .Property(x => x.Value)
