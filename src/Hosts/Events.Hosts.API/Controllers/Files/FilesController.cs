@@ -28,7 +28,7 @@ public class FilesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
         Description = "Неправильный запрос.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятия по заданному фильтру не найдены.")]
+        Description = "Файл не найден.")]
     public async Task<IActionResult> GetFileAsync(string bucket, string key, CancellationToken cancellationToken)
     {
         var file = await mediator.Send(new GetFileQuery(bucket, key), cancellationToken);

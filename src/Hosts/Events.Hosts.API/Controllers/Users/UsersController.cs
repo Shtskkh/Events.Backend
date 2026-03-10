@@ -21,7 +21,7 @@ public class UsersController(IMediator mediator) : ControllerBase
     ///     Получить всех пользователей, удовлетворяющих фильтру.
     /// </summary>
     /// <param name="filter">Фильтр.</param>
-    /// <param name="ct">Токен отмены.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекция пользователей.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<ShortUserDto>), StatusCodes.Status200OK, "application/json",
@@ -30,9 +30,10 @@ public class UsersController(IMediator mediator) : ControllerBase
         Description = "Неправильный запрос.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Пользователи по фильтру не найдены.")]
-    public async Task<IActionResult> GetByFilterAsync([FromQuery] UserFilterDto filter, CancellationToken ct)
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] UserFilterDto filter,
+        CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new GetUsersByFilter(filter), ct);
+        var result = await mediator.Send(new GetUsersByFilter(filter), cancellationToken);
         return Ok(result);
     }
 
@@ -46,7 +47,7 @@ public class UsersController(IMediator mediator) : ControllerBase
     ///     Создать пользователя.
     /// </summary>
     /// <param name="dto">Форма создания пользователя.</param>
-    /// <param name="ct">Токен отмены.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданного пользователя.</returns>
     [HttpPost]
     [Consumes("multipart/form-data")]
@@ -54,9 +55,9 @@ public class UsersController(IMediator mediator) : ControllerBase
         Description = "Пользователь создан.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
         Description = "Неправильный запрос.")]
-    public async Task<IActionResult> CreateAsync([FromForm] CreateUserDto dto, CancellationToken ct)
+    public async Task<IActionResult> CreateAsync([FromForm] CreateUserDto dto, CancellationToken cancellationToken)
     {
-        var id = await mediator.Send(new CreateUserCommand(dto), ct);
+        var id = await mediator.Send(new CreateUserCommand(dto), cancellationToken);
 
         return StatusCode(StatusCodes.Status201Created, id);
     }

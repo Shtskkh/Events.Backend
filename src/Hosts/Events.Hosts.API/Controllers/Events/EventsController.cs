@@ -25,13 +25,11 @@ namespace Events.Hosts.API.Controllers.Events;
 public class EventsController(IMediator mediator, ILogger<EventsController> logger) : ControllerBase
 {
     /// <summary>
-    ///     Получить информацию о мероприятиях, удовлетворяющих фильтру.
+    ///     Получить мероприятия, удовлетворяющие фильтру.
     /// </summary>
     /// <param name="filter">Фильтр.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>
-    ///     Массив кратких описаний мероприятий, удовлетворяющих фильтру.
-    /// </returns>
+    /// <returns> Коллекция мероприятий.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
@@ -48,13 +46,11 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     }
 
     /// <summary>
-    ///     Получить информацию о мероприятии по ID.
+    ///     Получить мероприятие по ID.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>
-    ///     Полная информация о мероприятии.
-    /// </returns>
+    /// <returns>Полная информация о мероприятии. </returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK, "application/json", Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
@@ -112,17 +108,16 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <summary>
     ///     Получить все типы мероприятий.
     /// </summary>
-    /// <returns>
-    ///     Массив типов мероприятий.
-    /// </returns>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция типов мероприятий.</returns>
     [HttpGet("Types")]
     [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Типы мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllTypesAsync()
+    public async Task<IActionResult> GetAllTypesAsync(CancellationToken cancellationToken)
     {
-        var types = await mediator.Send(new GetAllEventsTypesQuery());
+        var types = await mediator.Send(new GetAllEventsTypesQuery(), cancellationToken);
 
         if (types.Count == 0) return NotFound();
 
@@ -132,15 +127,16 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <summary>
     ///     Получить все форматы мероприятий.
     /// </summary>
-    /// <returns>Массив форматов мероприятий.</returns>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция форматов мероприятий.</returns>
     [HttpGet("Formats")]
     [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Форматы мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllFormatsAsync()
+    public async Task<IActionResult> GetAllFormatsAsync(CancellationToken cancellationToken)
     {
-        var formats = await mediator.Send(new GetAllEventsFormatsQuery());
+        var formats = await mediator.Send(new GetAllEventsFormatsQuery(), cancellationToken);
 
         if (formats.Count == 0) return NotFound();
 
@@ -150,15 +146,16 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <summary>
     ///     Получить ключи файлов плейсхолдеров для мероприятий.
     /// </summary>
-    /// <returns>Массив плейсхолдеров.</returns>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция плейсхолдеров.</returns>
     [HttpGet("Placeholders")]
     [ProducesResponseType(typeof(IReadOnlyCollection<string>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Плейсхолдеры мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllEventsPlaceholders()
+    public async Task<IActionResult> GetAllEventsPlaceholders(CancellationToken cancellationToken)
     {
-        var dtoList = await mediator.Send(new GetAllEventsPlaceholdersQuery());
+        var dtoList = await mediator.Send(new GetAllEventsPlaceholdersQuery(), cancellationToken);
 
         return Ok(dtoList);
     }

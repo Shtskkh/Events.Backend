@@ -24,15 +24,16 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить все локации.
     /// </summary>
+    /// <param name="cancellationToken">Токен отмен.</param>
     /// <returns>Коллекция локаций.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyCollection<ShortLocationDto>), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Локации не найдены.")]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
-        var locations = await mediator.Send(new GetAllLocationsQuery());
+        var locations = await mediator.Send(new GetAllLocationsQuery(), cancellationToken);
 
         return Ok(locations);
     }
@@ -47,15 +48,16 @@ public class LocationsController(IMediator mediator) : ControllerBase
     ///     Создать локацию.
     /// </summary>
     /// <param name="dto">Форма создания локации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданной локации.</returns>
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
         Description = "Локация создана.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
         Description = "Неправильный запрос.")]
-    public async Task<IActionResult> CreateAsync([FromForm] CreateLocationDto dto)
+    public async Task<IActionResult> CreateAsync([FromForm] CreateLocationDto dto, CancellationToken cancellationToken)
     {
-        var id = await mediator.Send(new CreateLocationCommand(dto));
+        var id = await mediator.Send(new CreateLocationCommand(dto), cancellationToken);
 
         return StatusCode(StatusCodes.Status201Created, id);
     }
@@ -89,6 +91,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="locationId">ID локации.</param>
     /// <param name="dto">Модель создания помещения.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданного помещения.</returns>
     [HttpPost("{locationId:int}/places")]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
@@ -97,9 +100,10 @@ public class LocationsController(IMediator mediator) : ControllerBase
         Description = "Представленные в запросе данные не найдены.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
         Description = "Неправильный запрос.")]
-    public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto)
+    public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto,
+        CancellationToken cancellationToken)
     {
-        var id = await mediator.Send(new CreatePlaceCommand(locationId, dto));
+        var id = await mediator.Send(new CreatePlaceCommand(locationId, dto), cancellationToken);
 
         return StatusCode(StatusCodes.Status201Created, id);
     }
@@ -127,11 +131,11 @@ public class LocationsController(IMediator mediator) : ControllerBase
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Типы помещений не найдены.")]
-    public async Task<IActionResult> GetAllPlacesTypes()
+    public async Task<IActionResult> GetAllPlacesTypes(CancellationToken cancellationToken)
     {
-        var dtos = await mediator.Send(new GetAllPlacesTypesQuery());
+        var types = await mediator.Send(new GetAllPlacesTypesQuery(), cancellationToken);
 
-        return Ok(dtos);
+        return Ok(types);
     }
 
     [HttpGet("{locationId:int}/places/{placeId:int}/equipment")]
