@@ -31,8 +31,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.Patronymic)
             .HasColumnName("Patronymic")
-            .HasMaxLength(DomainConstraints.User.PersonName.MaxLength)
-            .IsRequired();
+            .HasMaxLength(DomainConstraints.User.PersonName.MaxLength);
 
         builder.OwnsOne(e => e.Email)
             .Property(x => x.Value)
