@@ -87,5 +87,16 @@ public static class DataAccessErrorMessages
         ///     Пользователи не найдены.
         /// </summary>
         public const string NotFoundAny = "Пользователи не найдены.";
+
+        /// <summary>
+        ///     Ошибки роли пользователя.
+        /// </summary>
+        public static class Roles
+        {
+            /// <summary>
+            ///     Пользователи не найдены.
+            /// </summary>
+            public const string NotFound = "Роль не найдена.";
+        }
     }
 }
