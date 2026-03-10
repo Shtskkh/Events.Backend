@@ -27,6 +27,9 @@ public class EventFilterSpecification : Specification<Event>
         if (filter.FormatId != null)
             Query.Where(e => e.Format.Id == filter.FormatId);
 
+        if (filter.UserId != null)
+            Query.Where(e => e.UserId == filter.UserId);
+
         Query.OrderByDescending(e => e.CreatedAt);
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));

@@ -34,6 +34,11 @@ public class EventFilterDto : IPagination
     public int? FormatId { get; set; }
 
     /// <summary>
+    ///     ID создателя мероприятия.
+    /// </summary>
+    public Guid? UserId { get; set; }
+
+    /// <summary>
     ///     Размер выборки.
     /// </summary>
     [Range(1, 30)]
