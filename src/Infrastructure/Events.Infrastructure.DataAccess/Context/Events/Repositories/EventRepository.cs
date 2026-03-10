@@ -13,9 +13,9 @@ namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
 {
     /// <inheritdoc />
-    public async Task<Event> GetByIdAsync(Guid id)
+    public async Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var @event = await repository.GetByIdAsync(id);
+        var @event = await repository.GetByIdAsync(id, cancellationToken);
 
         if (@event == null)
             throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);
@@ -38,8 +38,8 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     /// <inheritdoc />
     public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
         Specification<Event> spec,
-        string? textQuery = null,
-        CancellationToken ct = default
+        CancellationToken cancellationToken,
+        string? textQuery = null
     )
     {
         var query = repository
@@ -58,7 +58,7 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
                     .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
         }
 
-        var events = await query.ToListAsync(ct);
+        var events = await query.ToListAsync(cancellationToken);
 
         if (events.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Event.NotFoundAny);

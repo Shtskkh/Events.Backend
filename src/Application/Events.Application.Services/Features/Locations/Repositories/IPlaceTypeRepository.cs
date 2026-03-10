@@ -17,6 +17,7 @@ public interface IPlaceTypeRepository
     ///     Получить тип помещения по ID.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект типа помещения.</returns>
-    Task<PlaceType> GetByIdAsync(int id);
+    Task<PlaceType> GetByIdAsync(int id, CancellationToken cancellationToken);
 }

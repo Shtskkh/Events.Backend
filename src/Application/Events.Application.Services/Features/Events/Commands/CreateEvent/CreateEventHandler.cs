@@ -38,8 +38,8 @@ public class CreateEventHandler(
                 await fileStorageService.PutObjectAsync(putRequest);
             }
 
-            var eventType = await eventTypeRepository.GetById(dto.EventTypeId);
-            var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId);
+            var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
+            var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
             var @event = EventFactory.Create(
                 dto.Title,

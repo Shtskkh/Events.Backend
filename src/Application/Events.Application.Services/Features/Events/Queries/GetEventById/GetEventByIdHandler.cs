@@ -14,7 +14,7 @@ public class GetEventByIdHandler(
     /// <inheritdoc />
     public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
-        var @event = await eventRepository.GetByIdAsync(request.Id);
+        var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
 
         var dto = mapper.Map<EventDto>(@event);
 

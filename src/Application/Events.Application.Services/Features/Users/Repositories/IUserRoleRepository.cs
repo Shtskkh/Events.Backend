@@ -11,6 +11,7 @@ public interface IUserRoleRepository
     ///     Получить роль по идентификатору.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект роли пользователя.</returns>
-    Task<UserRole> GetById(int id);
+    Task<UserRole> GetById(int id, CancellationToken cancellationToken);
 }

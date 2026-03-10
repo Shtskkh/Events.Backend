@@ -10,9 +10,9 @@ namespace Events.Infrastructure.DataAccess.Context.Users.Repositories;
 public class UserRoleRepository(IRepository<UserRole, int, EventsDbContext> repository) : IUserRoleRepository
 {
     /// <inheritdoc />
-    public async Task<UserRole> GetById(int id)
+    public async Task<UserRole> GetById(int id, CancellationToken cancellationToken)
     {
-        var role = await repository.GetByIdAsync(id);
+        var role = await repository.GetByIdAsync(id, cancellationToken);
 
         if (role == null)
             throw new NotFoundException(DataAccessErrorMessages.Users.Roles.NotFound);

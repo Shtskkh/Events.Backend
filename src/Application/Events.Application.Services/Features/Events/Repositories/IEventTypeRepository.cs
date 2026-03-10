@@ -11,10 +11,11 @@ public interface IEventTypeRepository
     ///     Получить тип мероприятия по ID.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>
     ///     Сущность типа мероприятия.
     /// </returns>
-    Task<EventType> GetById(int id);
+    Task<EventType> GetById(int id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить все типы мероприятий.

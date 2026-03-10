@@ -11,13 +11,13 @@ namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 public class EventTypeRepository(IRepository<EventType, int, EventsDbContext> repository) : IEventTypeRepository
 {
     /// <inheritdoc />
-    public async Task<EventType> GetById(int id)
+    public async Task<EventType> GetById(int id, CancellationToken cancellationToken)
     {
         var isExists = await repository.IsExistsAsync(id);
 
         if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.Type.NotFound);
 
-        return (await repository.GetByIdAsync(id))!;
+        return (await repository.GetByIdAsync(id, cancellationToken))!;
     }
 
     /// <inheritdoc />

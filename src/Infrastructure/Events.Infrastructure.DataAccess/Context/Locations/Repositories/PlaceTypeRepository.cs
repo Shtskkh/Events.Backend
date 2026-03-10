@@ -24,9 +24,9 @@ public class PlaceTypeRepository(IRepository<PlaceType, int, EventsDbContext> re
     }
 
     /// <inheritdoc />
-    public async Task<PlaceType> GetByIdAsync(int id)
+    public async Task<PlaceType> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var type = await repository.GetByIdAsync(id);
+        var type = await repository.GetByIdAsync(id, cancellationToken);
 
         if (type == null)
             throw new NotFoundException(DataAccessErrorMessages.Places.Types.NotFound);

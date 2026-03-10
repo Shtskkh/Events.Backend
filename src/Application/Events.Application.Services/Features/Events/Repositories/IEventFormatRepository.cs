@@ -11,8 +11,9 @@ public interface IEventFormatRepository
     ///     Получить формат мероприятия по ID.
     /// </summary>
     /// <param name="id">Идентификатор формата мероприятия.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Сущность формата мероприятия.</returns>
-    Task<EventFormat> GetByIdAsync(int id);
+    Task<EventFormat> GetByIdAsync(int id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить все форматы мероприятий.

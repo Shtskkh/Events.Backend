@@ -38,7 +38,7 @@ public class CreateUserHandler(
                 await fileStorageService.PutObjectAsync(putRequest);
             }
 
-            var userRole = await userRoleRepository.GetById(UserRole.User.Id);
+            var userRole = await userRoleRepository.GetById(UserRole.User.Id, cancellationToken);
 
             var user = UserFactory.Create(
                 dto.LastName,

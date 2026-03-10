@@ -26,10 +26,11 @@ public interface IRepository<TEntity, in TKey, TContext>
     ///     Метод асинхронного получения сущности по ID.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>
     ///     Объект сущностью
     /// </returns>
-    Task<TEntity?> GetByIdAsync(TKey id);
+    Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Метод асинхронной проверки существования сущности.

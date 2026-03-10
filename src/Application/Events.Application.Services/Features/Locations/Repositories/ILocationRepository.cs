@@ -17,8 +17,9 @@ public interface ILocationRepository
     ///     Получить локацию по ID.
     /// </summary>
     /// <param name="id">Идентификатор локации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект локации.</returns>
-    Task<Location> GetByIdAsync(int id);
+    Task<Location> GetByIdAsync(int id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Обновить локацию.

@@ -29,9 +29,9 @@ public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TC
     }
 
     /// <inheritdoc />
-    public async Task<TEntity?> GetByIdAsync(TKey id)
+    public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken)
     {
-        return await _dbSet.FindAsync(id);
+        return await _dbSet.FindAsync([id], cancellationToken);
     }
 
     /// <inheritdoc />

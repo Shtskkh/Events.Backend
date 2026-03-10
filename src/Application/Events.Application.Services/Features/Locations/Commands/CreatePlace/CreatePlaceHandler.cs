@@ -20,8 +20,8 @@ public class CreatePlaceHandler(
     public async Task<int> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
-        var location = await locationRepository.GetByIdAsync(request.LocationId);
-        var placeType = await placeTypeRepository.GetByIdAsync(dto.Type);
+        var location = await locationRepository.GetByIdAsync(request.LocationId, cancellationToken);
+        var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
 
         var place = new PlaceFactory().Create(dto.Number, placeType, dto.Title);
         location.AddPlace(place);

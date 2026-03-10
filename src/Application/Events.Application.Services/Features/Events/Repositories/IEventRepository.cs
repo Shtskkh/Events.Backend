@@ -12,22 +12,23 @@ public interface IEventRepository
     ///     Получить мероприятие по ID.
     /// </summary>
     /// <param name="id">ID мероприятия.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>
     ///     Сущность мероприятия.
     /// </returns>
-    Task<Event> GetByIdAsync(Guid id);
+    Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить мероприятия, удовлетворяющие фильтру.
     /// </summary>
     /// <param name="spec">Спецификация фильтра.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <param name="textQuery">Запрос текстового поиска.</param>
-    /// <param name="ct">Токен отмены.</param>
-    /// <returns>Иммутабельная коллекция мероприятий.</returns>
+    /// <returns>Коллекция мероприятий.</returns>
     Task<IReadOnlyCollection<Event>> GetByFilterAsync(
         Specification<Event> spec,
-        string? textQuery = null,
-        CancellationToken ct = default
+        CancellationToken cancellationToken,
+        string? textQuery = null
     );
 
     /// <summary>
