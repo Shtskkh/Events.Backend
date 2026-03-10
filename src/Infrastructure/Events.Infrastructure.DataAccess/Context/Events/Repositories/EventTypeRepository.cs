@@ -13,11 +13,12 @@ public class EventTypeRepository(IRepository<EventType, int, EventsDbContext> re
     /// <inheritdoc />
     public async Task<EventType> GetById(int id, CancellationToken cancellationToken)
     {
-        var isExists = await repository.IsExistsAsync(id, cancellationToken);
+        var type = await repository.GetByIdAsync(id, cancellationToken);
 
-        if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.Type.NotFound);
+        if (type == null)
+            throw new NotFoundException(DataAccessErrorMessages.Event.Type.NotFound);
 
-        return (await repository.GetByIdAsync(id, cancellationToken))!;
+        return type;
     }
 
     /// <inheritdoc />
