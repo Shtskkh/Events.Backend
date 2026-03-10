@@ -55,7 +55,7 @@ public class CreateEventHandler(
                 dto.Placeholder
             );
 
-            await eventRepository.AddAsync(@event);
+            await eventRepository.AddAsync(@event, cancellationToken);
 
             return @event.Id;
         }

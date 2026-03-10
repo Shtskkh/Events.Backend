@@ -17,7 +17,7 @@ public class GetAllLocationsHandler(ILocationRepository locationRepository, IMap
     public async Task<IReadOnlyCollection<ShortLocationDto>> Handle(GetAllLocationsQuery request,
         CancellationToken cancellationToken)
     {
-        var locations = await locationRepository.GetAllAsync();
+        var locations = await locationRepository.GetAllAsync(cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<ShortLocationDto>>(locations);
     }

@@ -21,9 +21,9 @@ public class EventTypeRepository(IRepository<EventType, int, EventsDbContext> re
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<EventType>> GetAllAsync()
+    public async Task<IReadOnlyCollection<EventType>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var eventsTypes = await repository.GetAllAsync().AsNoTracking().ToListAsync();
+        var eventsTypes = await repository.GetAllAsync().AsNoTracking().ToListAsync(cancellationToken);
 
         return eventsTypes.AsReadOnly();
     }

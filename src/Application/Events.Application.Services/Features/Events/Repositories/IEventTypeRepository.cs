@@ -20,8 +20,7 @@ public interface IEventTypeRepository
     /// <summary>
     ///     Получить все типы мероприятий.
     /// </summary>
-    /// <returns>
-    ///     Коллекцию типов мероприятий.
-    /// </returns>
-    Task<IReadOnlyCollection<EventType>> GetAllAsync();
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция типов мероприятий. </returns>
+    Task<IReadOnlyCollection<EventType>> GetAllAsync(CancellationToken cancellationToken);
 }

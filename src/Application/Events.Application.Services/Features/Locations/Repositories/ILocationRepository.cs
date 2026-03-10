@@ -10,8 +10,9 @@ public interface ILocationRepository
     /// <summary>
     ///     Получить все локации.
     /// </summary>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекция локаций.</returns>
-    Task<IReadOnlyCollection<Location>> GetAllAsync();
+    Task<IReadOnlyCollection<Location>> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить локацию по ID.
@@ -25,12 +26,14 @@ public interface ILocationRepository
     ///     Обновить локацию.
     /// </summary>
     /// <param name="location">Обновлённый объект локации.</param>
-    Task UpdateAsync(Location location);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task UpdateAsync(Location location, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Добавить локацию.
     /// </summary>
     /// <param name="location">Локация.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID добавленной локации.</returns>
-    Task<int> AddAsync(Location location);
+    Task<int> AddAsync(Location location, CancellationToken cancellationToken);
 }

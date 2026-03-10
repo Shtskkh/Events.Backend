@@ -11,11 +11,11 @@ namespace Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 public class LocationRepository(IRepository<Location, int, EventsDbContext> repository) : ILocationRepository
 {
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<Location>> GetAllAsync()
+    public async Task<IReadOnlyCollection<Location>> GetAllAsync(CancellationToken cancellationToken)
     {
         var locations = await repository.GetAllAsync()
             .AsNoTracking()
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         if (locations.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Location.NotFoundAny);
@@ -35,15 +35,15 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(Location location)
+    public async Task<int> AddAsync(Location location, CancellationToken cancellationToken)
     {
-        await repository.UpdateAsync(location);
+        await repository.AddAsync(location, cancellationToken);
+        return location.Id;
     }
 
     /// <inheritdoc />
-    public async Task<int> AddAsync(Location location)
+    public async Task UpdateAsync(Location location, CancellationToken cancellationToken)
     {
-        await repository.AddAsync(location);
-        return location.Id;
+        await repository.UpdateAsync(location);
     }
 }

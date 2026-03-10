@@ -35,7 +35,8 @@ public interface IEventRepository
     ///     Добавить мероприятие.
     /// </summary>
     /// <param name="event">Объект мероприятия.</param>
-    Task AddAsync(Event @event);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task AddAsync(Event @event, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Удалить мероприятие.

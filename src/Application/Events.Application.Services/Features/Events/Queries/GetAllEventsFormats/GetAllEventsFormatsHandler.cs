@@ -16,7 +16,7 @@ public class GetAllEventsFormatsHandler(IEventFormatRepository eventFormatReposi
     public async Task<IReadOnlyCollection<EventFormatDto>> Handle(GetAllEventsFormatsQuery request,
         CancellationToken cancellationToken)
     {
-        var types = await eventFormatRepository.GetAllAsync();
+        var types = await eventFormatRepository.GetAllAsync(cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<EventFormatDto>>(types);
     }

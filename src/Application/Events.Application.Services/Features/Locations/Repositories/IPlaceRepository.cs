@@ -11,6 +11,7 @@ public interface IPlaceRepository
     ///     Добавить помещение.
     /// </summary>
     /// <param name="place">Объект помещения.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID добавленного помещения.</returns>
-    Task<int> AddPlaceAsync(Place place);
+    Task<int> AddPlaceAsync(Place place, CancellationToken cancellationToken);
 }

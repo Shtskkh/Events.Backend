@@ -11,7 +11,7 @@ public interface IPlaceTypeRepository
     ///     Получить все типы помещений.
     /// </summary>
     /// <returns>Коллекция типов помещений.</returns>
-    Task<IReadOnlyCollection<PlaceType>> GetAllAsync();
+    Task<IReadOnlyCollection<PlaceType>> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
     ///     Получить тип помещения по ID.

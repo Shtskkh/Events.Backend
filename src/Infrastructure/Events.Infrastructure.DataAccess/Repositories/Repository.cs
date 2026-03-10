@@ -41,10 +41,10 @@ public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TC
     }
 
     /// <inheritdoc />
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
     {
-        await _dbSet.AddAsync(entity);
-        await _context.SaveChangesAsync();
+        await _dbSet.AddAsync(entity, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />

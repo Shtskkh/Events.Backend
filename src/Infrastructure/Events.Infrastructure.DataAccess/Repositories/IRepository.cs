@@ -45,7 +45,8 @@ public interface IRepository<TEntity, in TKey, TContext>
     ///     Метод асинхронного добавления сущности.
     /// </summary>
     /// <param name="entity">Объект сущности для добавления.</param>
-    Task AddAsync(TEntity entity);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task AddAsync(TEntity entity, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Метод асинхронного обновления сущности.

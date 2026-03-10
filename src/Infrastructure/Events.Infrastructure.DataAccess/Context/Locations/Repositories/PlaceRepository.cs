@@ -8,9 +8,9 @@ namespace Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository) : IPlaceRepository
 {
     /// <inheritdoc />
-    public async Task<int> AddPlaceAsync(Place place)
+    public async Task<int> AddPlaceAsync(Place place, CancellationToken cancellationToken)
     {
-        await repository.AddAsync(place);
+        await repository.AddAsync(place, cancellationToken);
         return place.Id;
     }
 }

@@ -19,5 +19,5 @@ public interface IEventFormatRepository
     ///     Получить все форматы мероприятий.
     /// </summary>
     /// <returns>Коллекция форматов мероприятий.</returns>
-    Task<IReadOnlyCollection<EventFormat>> GetAllAsync();
+    Task<IReadOnlyCollection<EventFormat>> GetAllAsync(CancellationToken cancellationToken);
 }

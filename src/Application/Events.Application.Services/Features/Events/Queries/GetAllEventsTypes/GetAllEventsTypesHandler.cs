@@ -15,7 +15,7 @@ public class GetAllEventsTypesHandler(IEventTypeRepository eventTypeRepository, 
     public async Task<IReadOnlyCollection<EventTypeDto>> Handle(GetAllEventsTypesQuery request,
         CancellationToken cancellationToken)
     {
-        var eventsTypes = await eventTypeRepository.GetAllAsync();
+        var eventsTypes = await eventTypeRepository.GetAllAsync(cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<EventTypeDto>>(eventsTypes);
     }

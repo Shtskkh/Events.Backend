@@ -31,6 +31,6 @@ public class UserRepository(IRepository<User, Guid, EventsDbContext> repository)
     /// <inheritdoc />
     public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        await repository.AddAsync(user);
+        await repository.AddAsync(user, cancellationToken);
     }
 }

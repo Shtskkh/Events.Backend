@@ -26,7 +26,7 @@ public class CreatePlaceHandler(
         var place = new PlaceFactory().Create(dto.Number, placeType, dto.Title);
         location.AddPlace(place);
 
-        await locationRepository.UpdateAsync(location);
+        await locationRepository.UpdateAsync(location, cancellationToken);
 
         return place.Id;
     }

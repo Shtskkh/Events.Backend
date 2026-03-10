@@ -24,9 +24,9 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
-    public async Task AddAsync(Event @event)
+    public async Task AddAsync(Event @event, CancellationToken cancellationToken)
     {
-        await repository.AddAsync(@event);
+        await repository.AddAsync(@event, cancellationToken);
     }
 
     /// <inheritdoc />

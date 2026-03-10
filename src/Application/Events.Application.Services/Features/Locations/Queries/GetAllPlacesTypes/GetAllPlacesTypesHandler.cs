@@ -17,7 +17,7 @@ public class GetAllPlacesTypesHandler(IPlaceTypeRepository repository, IMapper m
     public async Task<IReadOnlyCollection<PlaceTypeDto>> Handle(GetAllPlacesTypesQuery request,
         CancellationToken cancellationToken)
     {
-        var types = await repository.GetAllAsync();
+        var types = await repository.GetAllAsync(cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<PlaceTypeDto>>(types);
     }

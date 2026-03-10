@@ -11,11 +11,11 @@ namespace Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 public class PlaceTypeRepository(IRepository<PlaceType, int, EventsDbContext> repository) : IPlaceTypeRepository
 {
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<PlaceType>> GetAllAsync()
+    public async Task<IReadOnlyCollection<PlaceType>> GetAllAsync(CancellationToken cancellationToken)
     {
         var types = await repository.GetAllAsync()
             .AsNoTracking()
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         if (types.Count == 0)
             throw new NotFoundException(DataAccessErrorMessages.Places.Types.NotFoundAny);
