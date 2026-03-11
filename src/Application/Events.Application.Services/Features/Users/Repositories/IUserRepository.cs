@@ -17,6 +17,14 @@ public interface IUserRepository
     Task<IReadOnlyCollection<User>> GetByFilterAsync(Specification<User> spec, CancellationToken cancellationToken);
 
     /// <summary>
+    ///     Получить пользователя по ID.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Сущность пользователя.</returns>
+    Task<User> GetById(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
     ///     Добавить пользователя.
     /// </summary>
     /// <param name="user">Сущность пользователя.</param>

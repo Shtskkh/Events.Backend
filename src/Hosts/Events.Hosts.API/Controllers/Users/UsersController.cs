@@ -1,5 +1,6 @@
 ﻿using Events.Application.Services.Features.Users.Commands.CreateUser;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
+using Events.Application.Services.Features.Users.Queries.GetById;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Users.DTOs;
 using MediatR;
@@ -37,10 +38,22 @@ public class UsersController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    ///     Получить пользователя по ID.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Информация о пользователе.</returns>
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdAsync(Guid id)
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Пользователь не найден.")]
+    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var user = await mediator.Send(new GetUserByIdQuery(id), cancellationToken);
+
+        return Ok(user);
     }
 
     /// <summary>

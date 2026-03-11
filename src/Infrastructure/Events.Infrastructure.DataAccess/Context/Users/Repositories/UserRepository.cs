@@ -29,6 +29,17 @@ public class UserRepository(IRepository<User, Guid, EventsDbContext> repository)
     }
 
     /// <inheritdoc />
+    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await repository.GetByIdAsync(id, cancellationToken);
+
+        if (user == null)
+            throw new NotFoundException(DataAccessErrorMessages.Users.NotFound);
+
+        return user;
+    }
+
+    /// <inheritdoc />
     public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
         await repository.AddAsync(user, cancellationToken);

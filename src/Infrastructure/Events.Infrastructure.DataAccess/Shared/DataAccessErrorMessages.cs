@@ -94,6 +94,11 @@ public static class DataAccessErrorMessages
         public const string NotFoundAny = "Пользователи не найдены.";
 
         /// <summary>
+        ///     Пользователь не найден.
+        /// </summary>
+        public const string NotFound = "Пользователь не найден.";
+
+        /// <summary>
         ///     Ошибки роли пользователя.
         /// </summary>
         public static class Roles
