@@ -118,7 +118,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(PlaceDto), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Помещение не найдено.")]
+        Description = "Локация или помещение не найдено.")]
     public async Task<IActionResult> GetPlaceById(int locationId, int placeId, CancellationToken cancellationToken)
     {
         var place = await mediator.Send(new GetPlaceByIdQuery(locationId, placeId), cancellationToken);
