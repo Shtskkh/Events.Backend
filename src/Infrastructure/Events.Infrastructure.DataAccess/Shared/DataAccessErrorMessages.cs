@@ -63,6 +63,11 @@ public static class DataAccessErrorMessages
         public const string NotFoundAny = "Помещения не найдены.";
 
         /// <summary>
+        ///     Помещение не найдено.
+        /// </summary>
+        public const string NotFound = "Помещение не найдено.";
+
+        /// <summary>
         ///     Ошибки типов помещений.
         /// </summary>
         public static class Types

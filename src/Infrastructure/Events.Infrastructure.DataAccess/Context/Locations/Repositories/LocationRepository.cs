@@ -1,5 +1,6 @@
 ﻿using Events.Application.Services.Features.Locations.Repositories;
 using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
@@ -62,6 +63,19 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
             throw new NotFoundException(DataAccessErrorMessages.Places.NotFoundAny);
 
         return location.Places;
+    }
+
+    /// <inheritdoc />
+    public async Task<Place> GetPlaceByIdAsync(int locationId, int placeId, CancellationToken cancellationToken)
+    {
+        const bool includePlaces = true;
+        var location = await GetByIdAsync(locationId, includePlaces, cancellationToken);
+        var place = location.Places.FirstOrDefault(p => p.Id == placeId);
+
+        if (place == null)
+            throw new DomainException(DataAccessErrorMessages.Places.NotFound);
+
+        return place;
     }
 
     /// <inheritdoc />

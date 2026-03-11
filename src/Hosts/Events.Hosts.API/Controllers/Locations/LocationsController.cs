@@ -4,6 +4,7 @@ using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuer
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
 using Events.Application.Services.Features.Locations.Queries.GetLocationPlaces;
+using Events.Application.Services.Features.Locations.Queries.GetPlaceById;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Locations.DTOs;
 using Events.Contracts.Features.Locations.Places;
@@ -106,10 +107,23 @@ public class LocationsController(IMediator mediator) : ControllerBase
         return Ok(places);
     }
 
+    /// <summary>
+    ///     Получить помещение по ID.
+    /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Помещение.</returns>
     [HttpGet("{locationId:int}/places/{placeId:int}")]
-    public async Task<IActionResult> GetPlaceById(int locationId, int placeId)
+    [ProducesResponseType(typeof(PlaceDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Помещение не найдено.")]
+    public async Task<IActionResult> GetPlaceById(int locationId, int placeId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var place = await mediator.Send(new GetPlaceByIdQuery(locationId, placeId), cancellationToken);
+
+        return Ok(place);
     }
 
     /// <summary>
@@ -122,10 +136,10 @@ public class LocationsController(IMediator mediator) : ControllerBase
     [HttpPost("{locationId:int}/places")]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
         Description = "Помещение создано.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Представленные в запросе данные не найдены.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
         Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Представленные в запросе данные не найдены.")]
     public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto,
         CancellationToken cancellationToken)
     {
