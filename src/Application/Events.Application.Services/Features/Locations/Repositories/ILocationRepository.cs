@@ -18,7 +18,7 @@ public interface ILocationRepository
     ///     Получить локацию по ID.
     /// </summary>
     /// <param name="id">Идентификатор локации.</param>
-    /// <param name="includePlaces">Добавлять ли </param>
+    /// <param name="includePlaces">Добавлять помещения.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект локации.</returns>
     Task<Location> GetByIdAsync(int id, bool includePlaces, CancellationToken cancellationToken);
@@ -54,4 +54,11 @@ public interface ILocationRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID добавленной локации.</returns>
     Task<int> AddAsync(Location location, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Удалить локацию.
+    /// </summary>
+    /// <param name="location">Локация.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task DeleteAsync(Location location, CancellationToken cancellationToken);
 }

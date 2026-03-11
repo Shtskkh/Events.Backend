@@ -90,4 +90,10 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     {
         await repository.UpdateAsync(location, cancellationToken);
     }
+
+    /// <inheritdoc />
+    public async Task DeleteAsync(Location location, CancellationToken cancellationToken)
+    {
+        await repository.DeleteAsync(location, cancellationToken);
+    }
 }
