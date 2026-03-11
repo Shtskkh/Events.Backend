@@ -10,6 +10,12 @@ namespace Events.Domain.Aggregates.LocationAggregate;
 /// </summary>
 public class Location : Entity<int>, IAuditable, IAggregateRoot
 {
+    /// <summary>
+    ///     Помещения в локации.
+    /// </summary>
+    private readonly List<Place> _places = [];
+
+    // Для EF
     private Location()
     {
     }
@@ -42,7 +48,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Помещения в локации.
     /// </summary>
-    public List<Place> Places { get; } = [];
+    public IReadOnlyList<Place> Places => _places.AsReadOnly();
 
     /// <summary>
     ///     Дата создания.
@@ -63,9 +69,9 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     /// </exception>
     public void AddPlace(Place place)
     {
-        if (Places.Any(p => p.Number == place.Number))
+        if (_places.Any(p => p.Number == place.Number))
             throw new DomainException(DomainErrorMessages.Place.Number.AlreadyExists);
 
-        Places.Add(place);
+        _places.Add(place);
     }
 }
