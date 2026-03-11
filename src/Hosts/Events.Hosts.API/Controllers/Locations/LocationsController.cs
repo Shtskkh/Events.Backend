@@ -46,6 +46,10 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Локация.</returns>
     [HttpGet("{id:int}")]
+    [ProducesResponseType(typeof(LocationDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локация не найдена.")]
     public async Task<IActionResult> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var location = await mediator.Send(new GetLocationByIdQuery(id), cancellationToken);
