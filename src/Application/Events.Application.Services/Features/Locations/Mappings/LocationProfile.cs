@@ -16,5 +16,10 @@ public class LocationProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address.Value));
+
+        CreateMap<Location, LocationDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address.Value));
     }
 }

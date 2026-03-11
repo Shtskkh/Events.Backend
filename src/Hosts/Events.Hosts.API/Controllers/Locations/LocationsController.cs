@@ -2,6 +2,7 @@
 using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
+using Events.Application.Services.Features.Locations.Queries.GetLocationById;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Locations.DTOs;
 using Events.Contracts.Features.Locations.Places;
@@ -38,10 +39,18 @@ public class LocationsController(IMediator mediator) : ControllerBase
         return Ok(locations);
     }
 
+    /// <summary>
+    ///     Получить локацию по ID.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Локация.</returns>
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var location = await mediator.Send(new GetLocationByIdQuery(id), cancellationToken);
+
+        return Ok(location);
     }
 
     /// <summary>
