@@ -27,26 +27,15 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     /// <inheritdoc />
     public async Task<Location> GetByIdAsync(int id, bool includePlaces, CancellationToken cancellationToken)
     {
+        var query = repository.GetAllAsync();
         if (includePlaces)
-        {
-            var location = await repository.GetAllAsync()
-                .Include(l => l.Places)
-                .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+            query = query.Include(l => l.Places);
 
-            if (location == null)
-                throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
+        var location = await query.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+        if (location == null)
+            throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
 
-            return location;
-        }
-        else
-        {
-            var location = await repository.GetByIdAsync(id, cancellationToken);
-
-            if (location == null)
-                throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
-
-            return location;
-        }
+        return location;
     }
 
     /// <inheritdoc />
