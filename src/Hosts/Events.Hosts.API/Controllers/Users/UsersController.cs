@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Users.Commands.CreateUser;
+using Events.Application.Services.Features.Users.Commands.DeleteUser;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
 using Events.Contracts.Errors;
@@ -81,9 +82,19 @@ public class UsersController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Удалить пользователя.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteAsync(Guid id)
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие не найдено.")]
+    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new DeleteUserCommand(id), cancellationToken);
+
+        return Ok();
     }
 }
