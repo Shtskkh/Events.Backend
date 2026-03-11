@@ -49,6 +49,22 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
+    public async Task<IReadOnlyCollection<Place>> GetAllPlacesAsync(int id, CancellationToken cancellationToken)
+    {
+        var location = await repository.GetAllAsync()
+            .Include(l => l.Places)
+            .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+
+        if (location == null)
+            throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
+
+        if (location.Places.Count == 0)
+            throw new NotFoundException(DataAccessErrorMessages.Places.NotFoundAny);
+
+        return location.Places;
+    }
+
+    /// <inheritdoc />
     public async Task<int> AddAsync(Location location, CancellationToken cancellationToken)
     {
         await repository.AddAsync(location, cancellationToken);

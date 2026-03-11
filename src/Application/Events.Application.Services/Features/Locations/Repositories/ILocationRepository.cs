@@ -24,6 +24,14 @@ public interface ILocationRepository
     Task<Location> GetByIdAsync(int id, bool includePlaces, CancellationToken cancellationToken);
 
     /// <summary>
+    ///     Получить все помещения локации.
+    /// </summary>
+    /// <param name="id">Идентификатор локации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция помещений.</returns>
+    Task<IReadOnlyCollection<Place>> GetAllPlacesAsync(int id, CancellationToken cancellationToken);
+
+    /// <summary>
     ///     Обновить локацию.
     /// </summary>
     /// <param name="location">Обновлённый объект локации.</param>

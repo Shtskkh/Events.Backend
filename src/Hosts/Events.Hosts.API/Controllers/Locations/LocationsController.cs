@@ -3,6 +3,7 @@ using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
+using Events.Application.Services.Features.Locations.Queries.GetLocationPlaces;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Locations.DTOs;
 using Events.Contracts.Features.Locations.Places;
@@ -87,10 +88,22 @@ public class LocationsController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Получить все помещения в локации.
+    /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция помещений.</returns>
     [HttpGet("{locationId:int}/places")]
-    public async Task<IActionResult> GetAllPlaces(int locationId)
+    [ProducesResponseType(typeof(IReadOnlyList<ShortPlaceDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Помещения не найдены.")]
+    public async Task<IActionResult> GetAllPlaces(int locationId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var places = await mediator.Send(new GetLocationPlacesQuery(locationId), cancellationToken);
+
+        return Ok(places);
     }
 
     [HttpGet("{locationId:int}/places/{placeId:int}")]
