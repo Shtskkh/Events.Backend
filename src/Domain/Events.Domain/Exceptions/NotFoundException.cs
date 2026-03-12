@@ -1,4 +1,4 @@
-﻿namespace Events.Infrastructure.DataAccess.Exceptions;
+﻿namespace Events.Domain.Exceptions;
 
 /// <summary>
 ///     Ошибка не найденной сущности репозитория.

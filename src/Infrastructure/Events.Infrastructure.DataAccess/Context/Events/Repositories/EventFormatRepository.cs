@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
-using Events.Infrastructure.DataAccess.Exceptions;
+using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;

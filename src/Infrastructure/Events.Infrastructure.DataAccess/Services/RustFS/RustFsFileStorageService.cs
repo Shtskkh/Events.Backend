@@ -2,7 +2,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
-using Events.Infrastructure.DataAccess.Exceptions;
+using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Shared;
 
 namespace Events.Infrastructure.DataAccess.Services.RustFS;

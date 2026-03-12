@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using Events.Contracts.Errors;
 using Events.Domain.Exceptions;
-using Events.Infrastructure.DataAccess.Exceptions;
 
 namespace Events.Hosts.API.Middlewares.Exceptions;
 

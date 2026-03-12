@@ -2,7 +2,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Events.Application.Services.Features.Users.Repositories;
 using Events.Domain.Aggregates.UserAggregate;
-using Events.Infrastructure.DataAccess.Exceptions;
+using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;
