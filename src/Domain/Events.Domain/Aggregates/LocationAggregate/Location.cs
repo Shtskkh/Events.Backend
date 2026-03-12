@@ -61,6 +61,21 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public DateTime UpdatedAt { get; }
 
     /// <summary>
+    ///     Найти помещение в локации.
+    /// </summary>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <returns>Помещение.</returns>
+    /// <exception cref="NotFoundException">Помещение не найдено.</exception>
+    public Place FindPlace(int placeId)
+    {
+        var place = _places.FirstOrDefault(p => p.Id == placeId);
+        if (place == null)
+            throw new NotFoundException(DomainErrorMessages.Place.NotFound);
+
+        return place;
+    }
+
+    /// <summary>
     ///     Добавить помещение в локацию.
     /// </summary>
     /// <param name="place">Новое помещение.</param>
