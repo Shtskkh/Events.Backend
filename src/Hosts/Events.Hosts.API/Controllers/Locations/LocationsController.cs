@@ -1,6 +1,7 @@
 ﻿using Events.Application.Services.Features.Locations.Commands.CreateLocation;
 using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Commands.DeleteLocation;
+using Events.Application.Services.Features.Locations.Commands.DeletePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
@@ -165,10 +166,22 @@ public class LocationsController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Удалить помещение.
+    /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     [HttpDelete("{locationId:int}/places/{placeId:int}")]
-    public async Task<IActionResult> DeletePlaceAsync(int locationId, int placeId)
+    [ProducesResponseType(typeof(PlaceDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локация или помещение не найдено.")]
+    public async Task<IActionResult> DeletePlaceAsync(int locationId, int placeId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new DeletePlaceCommand(locationId, placeId), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
