@@ -13,7 +13,9 @@ public class GetLocationPlacesHandler(ILocationRepository locationRepository, IM
     public async Task<IReadOnlyCollection<ShortPlaceDto>> Handle(GetLocationPlacesQuery request,
         CancellationToken cancellationToken)
     {
-        var places = await locationRepository.GetAllPlacesAsync(request.Id, cancellationToken);
+        const bool includePlaces = true;
+        var location = await locationRepository.GetByIdAsync(request.Id, includePlaces, cancellationToken);
+        var places = location.Places;
 
         return mapper.Map<IReadOnlyCollection<ShortPlaceDto>>(places);
     }

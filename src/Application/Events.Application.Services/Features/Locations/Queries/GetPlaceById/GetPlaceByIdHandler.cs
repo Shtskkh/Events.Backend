@@ -13,9 +13,9 @@ public class GetPlaceByIdHandler(ILocationRepository locationRepository, IMapper
     public async Task<PlaceDto> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken)
     {
         const bool includeLocations = true;
-        var location =
-            await locationRepository.GetPlaceByIdAsync(request.LocationId, request.PlaceId, cancellationToken);
+        var location = await locationRepository.GetByIdAsync(request.LocationId, includeLocations, cancellationToken);
+        var places = location.FindPlace(request.PlaceId);
 
-        return mapper.Map<PlaceDto>(location);
+        return mapper.Map<PlaceDto>(places);
     }
 }
