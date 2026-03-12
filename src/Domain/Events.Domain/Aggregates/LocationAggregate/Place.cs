@@ -18,11 +18,14 @@ public class Place : Entity<int>, IAuditable
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <param name="number">Номер помещения.</param>
+    /// <param name="capacity">Вместимость помещения.</param>
     /// <param name="type">Тип помещения.</param>
     /// <param name="title">Название помещения.</param>
-    public Place(int id, PlaceNumber number, PlaceType type, PlaceTitle? title = null) : base(id)
+    public Place(int id, PlaceNumber number, PlaceCapacity capacity, PlaceType type, PlaceTitle? title = null) :
+        base(id)
     {
         Number = number;
+        Capacity = capacity;
         Type = type;
         Title = title;
 
@@ -34,6 +37,11 @@ public class Place : Entity<int>, IAuditable
     ///     Номер помещения.
     /// </summary>
     public PlaceNumber Number { get; private set; } = null!;
+
+    /// <summary>
+    ///     Вместимость помещения.
+    /// </summary>
+    public PlaceCapacity Capacity { get; private set; } = null!;
 
     /// <summary>
     ///     Тип помещения.
@@ -58,6 +66,15 @@ public class Place : Entity<int>, IAuditable
     public void ChangeTitle(string? newTitle = null)
     {
         Title = newTitle == null ? null : new PlaceTitle(newTitle);
+    }
+
+    /// <summary>
+    ///     Изменить вместимость помещения.
+    /// </summary>
+    /// <param name="newCapacity">Новая вместимость.</param>
+    public void ChangeCapacity(int newCapacity)
+    {
+        Capacity = new PlaceCapacity(newCapacity);
     }
 
     /// <summary>

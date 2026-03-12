@@ -1,4 +1,7 @@
-﻿namespace Events.Contracts.Features.Locations.Places;
+﻿using System.ComponentModel.DataAnnotations;
+using Events.Domain.Shared;
+
+namespace Events.Contracts.Features.Locations.Places;
 
 /// <summary>
 ///     Модель обновления помещения.
@@ -6,12 +9,21 @@
 public class UpdatePlaceDto
 {
     /// <summary>
-    ///     Название помещения.
+    ///     Название.
     /// </summary>
-    public string? Title { get; set; }
+    [MinLength(DomainConstraints.Place.Title.MinLength)]
+    [MaxLength(DomainConstraints.Place.Title.MaxLength)]
+    public string? Title { get; init; }
 
     /// <summary>
-    ///     Тип помещения.
+    ///     Тип.
     /// </summary>
-    public int? Type { get; set; }
+    [Range(1, int.MaxValue)]
+    public int? Type { get; init; }
+
+    /// <summary>
+    ///     Вместимость.
+    /// </summary>
+    [Range(1, int.MaxValue)]
+    public int? Capacity { get; init; }
 }

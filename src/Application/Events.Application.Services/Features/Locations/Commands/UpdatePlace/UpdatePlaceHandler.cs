@@ -15,6 +15,9 @@ public class UpdatePlaceHandler(ILocationRepository locationRepository, IPlaceTy
         var location = await locationRepository.GetByIdAsync(request.LocationId, includePlaces, cancellationToken);
         var place = location.FindPlace(request.PlaceId);
 
+        if (dto.Capacity.HasValue)
+            place.ChangeCapacity(dto.Capacity.Value);
+
         if (dto.Type != null)
         {
             var type = await placeTypeRepository.GetByIdAsync(dto.Type.Value, cancellationToken);

@@ -8,20 +8,25 @@ public class PlaceDto
     /// <summary>
     ///     Идентификатор.
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; init; }
 
     /// <summary>
-    ///     Номер помещения.
+    ///     Номер.
     /// </summary>
-    public string Number { get; set; } = null!;
+    public string Number { get; init; } = null!;
 
     /// <summary>
-    ///     Тип помещения.
+    ///     Вместимость.
     /// </summary>
-    public string Type { get; set; } = null!;
+    public int Capacity { get; init; }
 
     /// <summary>
-    ///     Название помещения.
+    ///     Тип.
     /// </summary>
-    public string? Title { get; set; }
+    public string Type { get; init; } = null!;
+
+    /// <summary>
+    ///     Название.
+    /// </summary>
+    public string? Title { get; init; }
 }

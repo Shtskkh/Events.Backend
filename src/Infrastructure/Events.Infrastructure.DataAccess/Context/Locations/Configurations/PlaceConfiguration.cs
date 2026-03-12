@@ -28,6 +28,11 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             .HasMaxLength(DomainConstraints.Place.Number.MaxLength)
             .IsRequired();
 
+        builder.OwnsOne(p => p.Capacity)
+            .Property(n => n.Value)
+            .HasColumnName("Capacity")
+            .IsRequired();
+
         builder.OwnsOne(p => p.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")

@@ -221,6 +221,17 @@ public static class DomainErrorMessages
         }
 
         /// <summary>
+        ///     Ошибки вместимости.
+        /// </summary>
+        public static class Capacity
+        {
+            /// <summary>
+            ///     Вместимость меньше или равна нулю.
+            /// </summary>
+            public const string CapacityLessOrEqualZero = "Вместимость помещения не может быть меньше или равна 0";
+        }
+
+        /// <summary>
         ///     Ошибки типа помещения.
         /// </summary>
         public static class Type
