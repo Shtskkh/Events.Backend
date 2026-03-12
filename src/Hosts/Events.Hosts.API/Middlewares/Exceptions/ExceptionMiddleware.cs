@@ -51,6 +51,14 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
                 Message = exception.Message,
                 TraceID = context.TraceIdentifier
             },
+
+            HttpRequestException => new ErrorDto
+            {
+                StatusCode = StatusCodes.Status503ServiceUnavailable,
+                Message = "Запрашиваемый сервис недоступен. Попробуйте позже.",
+                TraceID = context.TraceIdentifier
+            },
+
             _ => new ErrorDto
             {
                 StatusCode = StatusCodes.Status500InternalServerError,
