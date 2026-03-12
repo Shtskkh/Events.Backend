@@ -30,6 +30,12 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
+    public async Task UpdateAsync(Event @event, CancellationToken cancellationToken)
+    {
+        await repository.UpdateAsync(@event, cancellationToken);
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(Event @event, CancellationToken cancellationToken)
     {
         await repository.DeleteAsync(@event, cancellationToken);
