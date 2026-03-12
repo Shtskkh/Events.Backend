@@ -169,6 +169,11 @@ public static class DomainErrorMessages
     public static class Place
     {
         /// <summary>
+        ///     Помещение не найдено.
+        /// </summary>
+        public const string NotFound = "Помещение не найдено.";
+
+        /// <summary>
         ///     Ошибки названия помещения.
         /// </summary>
         public static class Title

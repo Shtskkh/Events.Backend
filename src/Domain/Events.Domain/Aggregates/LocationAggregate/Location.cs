@@ -74,4 +74,18 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
 
         _places.Add(place);
     }
+
+    /// <summary>
+    ///     Удалить помещение.
+    /// </summary>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <exception cref="NotFoundException">Помещение не найдено.</exception>
+    public void RemovePlace(int placeId)
+    {
+        var place = _places.FirstOrDefault(p => p.Id == placeId);
+        if (place == null)
+            throw new NotFoundException(DomainErrorMessages.Place.NotFound);
+
+        _places.Remove(place);
+    }
 }
