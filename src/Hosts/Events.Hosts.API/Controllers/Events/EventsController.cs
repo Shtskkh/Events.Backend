@@ -7,10 +7,12 @@ using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholde
 using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
 using Events.Application.Services.Features.Events.Queries.GetEventById;
 using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
+using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Events.DTOs;
 using Events.Contracts.Features.Events.EventsFormats;
 using Events.Contracts.Features.Events.EventsTypes;
+using Events.Contracts.Features.Events.Participants;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -106,6 +108,25 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
 
         return Ok();
     }
+
+    /// <summary>
+    ///     Получить участников мероприятия.
+    /// </summary>
+    /// <param name="id">Идентификатор мероприятия.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция участников мероприятия.</returns>
+    [HttpGet("{id:guid}/participants")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<ParticipantDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие или участники не найдены.")]
+    public async Task<IActionResult> GetParticipants(Guid id, CancellationToken cancellationToken)
+    {
+        var participants = await mediator.Send(new GetParticipantsQuery(id), cancellationToken);
+
+        return Ok(participants);
+    }
+
 
     /// <summary>
     ///     Зарегистрироваться на мероприятие.
