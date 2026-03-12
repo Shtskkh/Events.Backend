@@ -1,4 +1,5 @@
-﻿using Events.Application.Services.Features.Events.Commands.CreateEvent;
+﻿using Events.Application.Services.Features.Events.Commands.AddParticipant;
+using Events.Application.Services.Features.Events.Commands.CreateEvent;
 using Events.Application.Services.Features.Events.Commands.DeleteEvent;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholders;
@@ -103,6 +104,27 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         await mediator.Send(new DeleteEventQuery(id), cancellationToken);
 
         return Ok();
+    }
+
+    /// <summary>
+    ///     Зарегистрироваться на  мероприятие.
+    /// </summary>
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="participantId">Идентификатор участника.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    [HttpPost("{eventId:guid}/participants/{participantId:guid}")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain",
+        Description = "Мероприятие создано.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие или пользователь не найден.")]
+    public async Task<IActionResult> AddParticipantAsync(Guid eventId, Guid participantId,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(new AddParticipantCommand(eventId, participantId), cancellationToken);
+
+        return Created();
     }
 
     /// <summary>
