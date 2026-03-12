@@ -10,6 +10,8 @@ namespace Events.Domain.Aggregates.EventAggregate;
 /// </summary>
 public class Event : Entity<Guid>, IAuditable, IAggregateRoot
 {
+    private readonly List<EventParticipant> _participants = [];
+
     private Event()
     {
     }
@@ -104,6 +106,11 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// </summary>
     public Guid UserId { get; }
 
+    /// <summary>
+    ///     Участники мероприятия.
+    /// </summary>
+    public IReadOnlyCollection<EventParticipant> Participants => _participants.AsReadOnly();
+
     /// <inheritdoc />
     public DateTime CreatedAt { get; }
 
@@ -174,5 +181,36 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void ChangeNeedsRegistration(bool needsRegistration)
     {
         NeedsRegistration = needsRegistration;
+    }
+
+    /// <summary>
+    ///     Добавить участника.
+    /// </summary>
+    /// <param name="userId">Идентификатор участника.</param>
+    /// <exception cref="DomainException">Ошибка правил домена.</exception>
+    public void AddParticipant(Guid userId)
+    {
+        if (_participants.Any(p => p.UserId == UserId))
+            throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
+
+        if (!NeedsRegistration)
+            throw new DomainException(DomainErrorMessages.Event.Participant.RegistrationNotRequired);
+
+        _participants.Add(new EventParticipant(Id, userId));
+    }
+
+    /// <summary>
+    ///     Удалить участника.
+    /// </summary>
+    /// <param name="userId">Идентификатор участника.</param>
+    /// <exception cref="NotFoundException">Участник не найден.</exception>
+    public void RemoveParticipant(Guid userId)
+    {
+        var participant = _participants.FirstOrDefault(p => p.UserId == userId);
+
+        if (participant == null)
+            throw new NotFoundException(DomainErrorMessages.Event.Participant.NotFound);
+
+        _participants.Remove(participant);
     }
 }

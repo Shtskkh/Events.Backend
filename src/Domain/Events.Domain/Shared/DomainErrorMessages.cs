@@ -119,6 +119,18 @@ public static class DomainErrorMessages
             public const string PlaceholderAndPreviewCannotBothBeEmpty =
                 "Необходимо указать либо превью, либо плейсхолдер.";
         }
+
+        /// <summary>
+        ///     Ошибки участников.
+        /// </summary>
+        public static class Participant
+        {
+            public const string AlreadyRegistered = "Пользователь уже зарегистрирован на мероприятие.";
+
+            public const string RegistrationNotRequired = "Мероприятие не требует регистрации.";
+
+            public const string NotFound = "Пользователь не является участником мероприятия.";
+        }
     }
 
     /// <summary>

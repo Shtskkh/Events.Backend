@@ -71,6 +71,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasMany(e => e.Participants)
+            .WithOne()
+            .HasForeignKey(e => e.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.Property(e => e.CreatedAt)
             .IsRequired()
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
