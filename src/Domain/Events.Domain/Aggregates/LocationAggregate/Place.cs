@@ -50,4 +50,22 @@ public class Place : Entity<int>, IAuditable
 
     /// <inheritdoc />
     public DateTime UpdatedAt { get; }
+
+    /// <summary>
+    ///     Изменить название локации.
+    /// </summary>
+    /// <param name="newTitle">Новое название.</param>
+    public void ChangeTitle(string? newTitle = null)
+    {
+        Title = newTitle == null ? null : new PlaceTitle(newTitle);
+    }
+
+    /// <summary>
+    ///     Изменить тип помещения.
+    /// </summary>
+    /// <param name="newType">Новый тип.</param>
+    public void ChangeType(PlaceType newType)
+    {
+        Type = newType;
+    }
 }

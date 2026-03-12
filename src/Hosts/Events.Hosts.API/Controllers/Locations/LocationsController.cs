@@ -3,6 +3,7 @@ using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Commands.DeleteLocation;
 using Events.Application.Services.Features.Locations.Commands.DeletePlace;
 using Events.Application.Services.Features.Locations.Commands.UpdateLocation;
+using Events.Application.Services.Features.Locations.Commands.UpdatePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
@@ -81,7 +82,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
-    /// Обновить локацию.
+    ///     Обновить локацию.
     /// </summary>
     /// <param name="id">Идентификатор.</param>
     /// <param name="updateDto">Модель обновления.</param>
@@ -175,10 +176,26 @@ public class LocationsController(IMediator mediator) : ControllerBase
         return StatusCode(StatusCodes.Status201Created, id);
     }
 
+    /// <summary>
+    ///     Обновить помещение.
+    /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="updateDto">Модель обновления помещения.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     [HttpPatch("{locationId:int}/places/{placeId:int}")]
-    public async Task<IActionResult> UpdatePlaceAsync(int locationId, int placeId)
+    [ProducesResponseType(typeof(PlaceDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локация, помещение или тип помещения не найдены.")]
+    public async Task<IActionResult> UpdatePlaceAsync(int locationId, int placeId, [FromForm] UpdatePlaceDto updateDto,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new UpdatePlaceCommand(locationId, placeId, updateDto), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
