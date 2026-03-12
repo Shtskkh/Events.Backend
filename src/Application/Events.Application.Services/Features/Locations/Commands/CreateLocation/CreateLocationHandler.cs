@@ -16,7 +16,9 @@ public class CreateLocationHandler(ILocationRepository locationRepository) : IRe
         var dto = request.NewLocation;
 
         var location = LocationFactory.Create(dto.Title, dto.Address);
+        
+        await locationRepository.AddAsync(location, cancellationToken);
 
-        return await locationRepository.AddAsync(location, cancellationToken);
+        return location.Id;
     }
 }

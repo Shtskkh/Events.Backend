@@ -67,10 +67,9 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
-    public async Task<int> AddAsync(Location location, CancellationToken cancellationToken)
+    public async Task AddAsync(Location location, CancellationToken cancellationToken)
     {
         await repository.AddAsync(location, cancellationToken);
-        return location.Id;
     }
 
     /// <inheritdoc />

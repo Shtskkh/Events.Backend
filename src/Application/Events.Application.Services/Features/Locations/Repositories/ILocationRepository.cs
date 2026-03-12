@@ -41,19 +41,19 @@ public interface ILocationRepository
     Task<Place> GetPlaceByIdAsync(int locationId, int placeId, CancellationToken cancellationToken);
 
     /// <summary>
-    ///     Обновить локацию.
-    /// </summary>
-    /// <param name="location">Обновлённый объект локации.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    Task UpdateAsync(Location location, CancellationToken cancellationToken);
-
-    /// <summary>
     ///     Добавить локацию.
     /// </summary>
     /// <param name="location">Локация.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID добавленной локации.</returns>
-    Task<int> AddAsync(Location location, CancellationToken cancellationToken);
+    Task AddAsync(Location location, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Обновить локацию.
+    /// </summary>
+    /// <param name="location">Обновлённый объект локации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task UpdateAsync(Location location, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Удалить локацию.
