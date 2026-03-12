@@ -61,6 +61,24 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public DateTime UpdatedAt { get; }
 
     /// <summary>
+    ///     Изменить название локации.
+    /// </summary>
+    /// <param name="newTitle">Новое название.</param>
+    public void ChangeTitle(string newTitle)
+    {
+        Title = new LocationTitle(newTitle);
+    }
+
+    /// <summary>
+    ///     Изменить адрес локации.
+    /// </summary>
+    /// <param name="newAddress">Новый адрес.</param>
+    public void ChangeAddress(string newAddress)
+    {
+        Address = new LocationAddress(newAddress);
+    }
+
+    /// <summary>
     ///     Найти помещение в локации.
     /// </summary>
     /// <param name="placeId">Идентификатор помещения.</param>

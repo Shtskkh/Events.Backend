@@ -2,6 +2,7 @@
 using Events.Application.Services.Features.Locations.Commands.CreatePlace;
 using Events.Application.Services.Features.Locations.Commands.DeleteLocation;
 using Events.Application.Services.Features.Locations.Commands.DeletePlace;
+using Events.Application.Services.Features.Locations.Commands.UpdateLocation;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
@@ -79,10 +80,24 @@ public class LocationsController(IMediator mediator) : ControllerBase
         return StatusCode(StatusCodes.Status201Created, id);
     }
 
+    /// <summary>
+    /// Обновить локацию.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="updateDto">Модель обновления.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     [HttpPatch("{id:int}")]
-    public async Task<IActionResult> UpdateAsync(int id)
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локация не найдена.")]
+    public async Task<IActionResult> UpdateAsync(int id, [FromForm] UpdateLocationDto updateDto,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new UpdateLocationCommand(id, updateDto), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
