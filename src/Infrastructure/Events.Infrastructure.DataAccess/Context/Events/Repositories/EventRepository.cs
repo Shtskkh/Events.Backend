@@ -13,9 +13,15 @@ namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
 {
     /// <inheritdoc />
-    public async Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken,
+        bool includeParticipants = false)
     {
-        var @event = await repository.GetByIdAsync(id, cancellationToken);
+        var query = repository.GetAllAsync();
+
+        if (includeParticipants)
+            query = query.Include(e => e.Participants);
+
+        var @event = await query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         if (@event == null)
             throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);

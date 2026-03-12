@@ -13,10 +13,9 @@ public interface IEventRepository
     /// </summary>
     /// <param name="id">ID мероприятия.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>
-    ///     Сущность мероприятия.
-    /// </returns>
-    Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    /// <param name="includeParticipants">Включить участников.</param>
+    /// <returns>Сущность мероприятия.</returns>
+    Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken, bool includeParticipants = false);
 
     /// <summary>
     ///     Получить мероприятия, удовлетворяющие фильтру.
