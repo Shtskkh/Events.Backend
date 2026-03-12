@@ -2,11 +2,18 @@
 
 namespace Events.Domain.Aggregates.LocationAggregate.Factories.Locations;
 
-/// <inheritdoc />
-public class LocationFactory : ILocationFactory
+/// <summary>
+///     Фабрика локации.
+/// </summary>
+public static class LocationFactory
 {
-    /// <inheritdoc />
-    public Location Create(string title, string address)
+    /// <summary>
+    ///     Создать локацию.
+    /// </summary>
+    /// <param name="title">Название локации.</param>
+    /// <param name="address">Адрес локации.</param>
+    /// <returns>Объект локации.</returns>
+    public static Location Create(string title, string address)
     {
         var titleVo = new LocationTitle(title);
         var addressVo = new LocationAddress(address);
