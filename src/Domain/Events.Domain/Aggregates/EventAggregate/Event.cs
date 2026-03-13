@@ -190,12 +190,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <exception cref="DomainException">Ошибка правил домена.</exception>
     public void AddParticipant(Guid userId)
     {
-        if (_participants.Any(p => p.UserId == UserId))
-            throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
-
         if (!NeedsRegistration)
             throw new DomainException(DomainErrorMessages.Event.Participant.RegistrationNotRequired);
-
+        
+        if (_participants.Any(p => p.UserId == UserId))
+            throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
+        
         _participants.Add(new EventParticipant(Id, userId));
     }
 
