@@ -40,6 +40,9 @@ services:
       retries: 5
     volumes:
       - pg_data:/var/lib/postgresql/18/docker
+    depends_on:
+      otel_collector:
+        condition: service_started
 
   db_migrator:
     build:
