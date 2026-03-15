@@ -65,6 +65,7 @@ services:
       - RUSTFS_VOLUMES:/data
       - RUSTFS_ACCESS_KEY=rustfsadmin
       - RUSTFS_SECRET_KEY=rustfsadmin
+      - RUSTFS_OBS_ENDPOINT=http://otel_collector:4318
     healthcheck:
       test:
         [
@@ -77,6 +78,9 @@ services:
       retries: 3
     volumes:
       - rustfs:/data
+    depends_on:
+      otel_collector:
+        condition: service_started
   
   s3_migrator:
     build:

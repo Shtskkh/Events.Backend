@@ -19,15 +19,63 @@ exporters:
       initial_interval: 5s
       max_interval: 30s
       max_elapsed_time: 300s
-    
+
+  clickhouse/rustfs:
+    endpoint: tcp://clickhouse:9002
+    username: default
+    password: "1"
+    database: RustFS
+    logs_table_name: otel_logs
+    traces_table_name: otel_traces
+    metrics_table_name: otel_metrics
+    timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+connectors:
+  routing/logs:
+    table:
+      - context: resource
+        condition: attributes["service.name"] == "RustFS"
+        pipelines: [ logs/rustfs ]
+
+  routing/traces:
+    table:
+      - context: resource
+        condition: attributes["service.name"] == "RustFS"
+        pipelines: [ traces/rustfs ]
+
+  routing/metrics:
+    table:
+      - context: resource
+        condition: resource.attributes["service.name"] == "RustFS"
+        pipelines: [ metrics/rustfs ]
+  
 service:
   pipelines:
-    traces:
-      receivers: [ otlp ]
-      exporters: [ clickhouse ]
-    metrics:
-      receivers: [ otlp ]
-      exporters: [ clickhouse ]
     logs:
       receivers: [ otlp ]
-      exporters: [ clickhouse ]
+      exporters: [ routing/logs ]
+
+    traces:
+      receivers: [ otlp ]
+      exporters: [ routing/traces ]
+
+    metrics:
+      receivers: [ otlp ]
+      exporters: [ routing/metrics ]
+
+    logs/rustfs:
+      receivers: [ routing/logs ]
+      exporters: [ clickhouse/rustfs ]
+
+    traces/rustfs:
+      receivers: [ routing/traces ]
+      exporters: [ clickhouse/rustfs ]
+
+    metrics/rustfs:
+      receivers: [ routing/metrics ]
+      exporters: [ clickhouse/rustfs ]
