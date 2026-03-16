@@ -52,7 +52,7 @@ public class CreateEventHandler(
                 dto.UserId,
                 dto.NeedsRegistration,
                 dto.MaxParticipants,
-                previewFilename.ToString(),
+                previewFilename?.ToString(),
                 dto.Placeholder
             );
 
