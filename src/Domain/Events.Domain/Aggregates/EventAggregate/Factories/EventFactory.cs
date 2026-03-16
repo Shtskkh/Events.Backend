@@ -34,10 +34,10 @@ public static class EventFactory
         var descriptionVo = new EventDescription(description);
 
         if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeSet);
+            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
 
         if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeSet);
 
         return new Event(
             id,
