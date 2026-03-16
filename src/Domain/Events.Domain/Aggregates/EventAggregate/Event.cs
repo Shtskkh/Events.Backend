@@ -193,7 +193,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         if (!NeedsRegistration)
             throw new DomainException(DomainErrorMessages.Event.Participant.RegistrationNotRequired);
         
-        if (_participants.Any(p => p.UserId == UserId))
+        if (_participants.Any(p => p.UserId == userId))
             throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
         
         _participants.Add(new EventParticipant(Id, userId));
