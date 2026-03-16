@@ -46,14 +46,14 @@ public class CreateEventDto
     public required DateTimeOffset EndDateTime { get; set; }
 
     /// <summary>
-    ///     Превью изображения для мероприятия.
+    ///     Флаг необходимости регистрации.
     /// </summary>
-    public IFormFile? Preview { get; set; }
+    public required bool NeedsRegistration { get; set; }
 
     /// <summary>
-    ///     Имя плейсхолдера файла для превью мероприятия.
+    ///     Максимальное число участников.
     /// </summary>
-    public string? Placeholder { get; set; }
+    public int? MaxParticipants { get; set; }
 
     /// <summary>
     ///     ID типа мероприятия.
@@ -66,7 +66,12 @@ public class CreateEventDto
     public required int EventFormatId { get; set; }
 
     /// <summary>
-    ///     Флаг необходимости регистрации.
+    ///     Превью изображения для мероприятия.
     /// </summary>
-    public required bool NeedsRegistration { get; set; }
+    public IFormFile? Preview { get; set; }
+
+    /// <summary>
+    ///     Имя плейсхолдера файла для превью мероприятия.
+    /// </summary>
+    public string? Placeholder { get; set; }
 }

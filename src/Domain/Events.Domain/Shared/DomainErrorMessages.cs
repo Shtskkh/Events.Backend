@@ -130,6 +130,11 @@ public static class DomainErrorMessages
             public const string RegistrationNotRequired = "Мероприятие не требует регистрации.";
 
             public const string NotFound = "Пользователь не является участником мероприятия.";
+
+            public const string MaxCountMustBeSet =
+                "Для мероприятия с регистрацией необходимо указать максимальное количество участников.";
+
+            public const string MaxCountReached = "Достигнуто максимальное количество участников мероприятия.";
         }
     }
 

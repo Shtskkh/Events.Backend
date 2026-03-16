@@ -49,8 +49,9 @@ public class CreateEventHandler(
                 dto.EndDateTime,
                 eventType,
                 eventFormat,
-                dto.NeedsRegistration,
                 dto.UserId,
+                dto.NeedsRegistration,
+                dto.MaxParticipants,
                 previewFilename.ToString(),
                 dto.Placeholder
             );

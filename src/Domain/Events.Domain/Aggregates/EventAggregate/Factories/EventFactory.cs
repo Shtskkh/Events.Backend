@@ -21,12 +21,13 @@ public static class EventFactory
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needRegistration">Необходимость регистрации.</param>
     /// <param name="userId">ID пользователя.</param>
+    /// <param name="maxParticipants">Максимальное количество участников.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <param name="placeholderFilename">Название плейсхолдера превью.</param>
     /// <returns>Объект сущности пользователя.</returns>
     public static Event Create(string title, string announcement, string description, DateTimeOffset startDateTime,
-        DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat, bool needRegistration,
-        Guid userId, string? previewFilename = null, string? placeholderFilename = null)
+        DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat, Guid userId, bool needRegistration,
+        int? maxParticipants = null, string? previewFilename = null, string? placeholderFilename = null)
     {
         var id = Guid.NewGuid();
         var titleVo = new EventTitle(title);
@@ -39,6 +40,9 @@ public static class EventFactory
         if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
             throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeSet);
 
+        if (needRegistration && !maxParticipants.HasValue)
+            throw new DomainException(DomainErrorMessages.Event.Participant.MaxCountMustBeSet);
+
         return new Event(
             id,
             titleVo,
@@ -50,6 +54,7 @@ public static class EventFactory
             eventFormat,
             userId,
             needRegistration,
+            maxParticipants,
             previewFilename,
             placeholderFilename
         );

@@ -29,11 +29,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="userId">ID пользователя.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
+    /// <param name="maxParticipants">Максимальное количество участников.</param>
     /// <param name="previewFilename">Название превью файла.</param>
     /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
         DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
-        Guid userId, bool needsRegistration, string? previewFilename = null,
+        Guid userId, bool needsRegistration, int? maxParticipants = null, string? previewFilename = null,
         string? placeholderFilename = null) : base(id)
     {
         Title = title;
@@ -42,6 +43,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         Type = eventType;
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
+        MaxParticipants = maxParticipants;
         PreviewFilename = previewFilename;
         PlaceholderFilename = placeholderFilename;
         UserId = userId;
@@ -100,6 +102,11 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     ///     Флаг необходимости регистрации на мероприятие.
     /// </summary>
     public bool NeedsRegistration { get; private set; }
+
+    /// <summary>
+    ///     Максимальное число участников.
+    /// </summary>
+    public int? MaxParticipants { get; }
 
     /// <summary>
     ///     ID пользователя, создавшего мероприятие.
@@ -192,10 +199,13 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     {
         if (!NeedsRegistration)
             throw new DomainException(DomainErrorMessages.Event.Participant.RegistrationNotRequired);
-        
+
         if (_participants.Any(p => p.UserId == userId))
             throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
-        
+
+        if (MaxParticipants.HasValue && _participants.Count >= MaxParticipants.Value)
+            throw new DomainException(DomainErrorMessages.Event.Participant.MaxCountReached);
+
         _participants.Add(new EventParticipant(Id, userId));
     }
 
