@@ -33,6 +33,11 @@ public class EventDto
     public string Format { get; init; } = null!;
 
     /// <summary>
+    ///     Флаг необходимости регистрации.
+    /// </summary>
+    public bool NeedsRegistration { get; init; }
+
+    /// <summary>
     ///     Дата и время начала мероприятия.
     /// </summary>
     public DateTimeOffset StartDateTime { get; init; }
