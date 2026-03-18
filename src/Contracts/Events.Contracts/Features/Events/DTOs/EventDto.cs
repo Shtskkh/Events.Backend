@@ -1,4 +1,5 @@
 ﻿using Events.Contracts.Features.Files;
+using Events.Contracts.Features.Locations.Places;
 
 namespace Events.Contracts.Features.Events.DTOs;
 
@@ -51,4 +52,9 @@ public class EventDto
     ///     Информация о превью мероприятия.
     /// </summary>
     public S3FileDto PreviewInfo { get; init; } = null!;
+
+    /// <summary>
+    ///     Информация о помещении.
+    /// </summary>
+    public BookedPlaceDto? PlaceInfo { get; set; }
 }
