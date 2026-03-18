@@ -58,4 +58,15 @@ public static class ApplicationErrorMessages
             public const string PreviewFileContentTypeNotAllowed = "Тип файла превью не разрешён.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки пользователей.
+    /// </summary>
+    public static class User
+    {
+        /// <summary>
+        ///     Не авторизирован.
+        /// </summary>
+        public const string Unauthorized = "Неверный почтовый адрес или пароль";
+    }
 }

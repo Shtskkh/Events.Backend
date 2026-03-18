@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Events.Application.Services.Exceptions;
 using Events.Contracts.Errors;
 using Events.Domain.Exceptions;
 
@@ -56,6 +57,13 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
             {
                 StatusCode = StatusCodes.Status503ServiceUnavailable,
                 Message = "Запрашиваемый сервис недоступен. Попробуйте позже.",
+                TraceID = context.TraceIdentifier
+            },
+
+            UnauthorizedException => new ErrorDto
+            {
+                StatusCode = StatusCodes.Status401Unauthorized,
+                Message = exception.Message,
                 TraceID = context.TraceIdentifier
             },
 

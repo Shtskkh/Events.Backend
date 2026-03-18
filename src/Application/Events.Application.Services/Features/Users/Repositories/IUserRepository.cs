@@ -25,6 +25,14 @@ public interface IUserRepository
     Task<User> GetById(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
+    ///     Получить пользователя по почтовому адресу.
+    /// </summary>
+    /// <param name="email">Почтовый адрес.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Сущность пользователя.</returns>
+    Task<User> GetByEmail(string email, CancellationToken cancellationToken);
+
+    /// <summary>
     ///     Добавить пользователя.
     /// </summary>
     /// <param name="user">Сущность пользователя.</param>

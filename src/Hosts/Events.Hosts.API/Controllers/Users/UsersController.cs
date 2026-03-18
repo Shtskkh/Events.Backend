@@ -1,4 +1,5 @@
-﻿using Events.Application.Services.Features.Users.Commands.CreateUser;
+﻿using Events.Application.Services.Features.Users.Commands.AuthUser;
+using Events.Application.Services.Features.Users.Commands.CreateUser;
 using Events.Application.Services.Features.Users.Commands.DeleteUser;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
@@ -90,11 +91,29 @@ public class UsersController(IMediator mediator) : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие не найдено.")]
+        Description = "Пользователь не найден.")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new DeleteUserCommand(id), cancellationToken);
 
         return Ok();
+    }
+
+    /// <summary>
+    ///     Аутентифицировать пользователя.
+    /// </summary>
+    /// <param name="dto">Модель аутентификации.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Модель Jwt токена.</returns>
+    [HttpPost("login")]
+    [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden, "application/problem+json",
+        Description = "Пользователь не авторизован.")]
+    public async Task<IActionResult> AuthAsync([FromForm] AuthDto dto, CancellationToken cancellationToken)
+    {
+        var tokenDto = await mediator.Send(new AuthUserCommand(dto), cancellationToken);
+
+        return Ok(tokenDto);
     }
 }
