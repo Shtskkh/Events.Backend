@@ -14,6 +14,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApiWithMetadata();
 
+builder.Services.AddJwt(builder.Configuration);
+
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
@@ -34,5 +36,8 @@ if (app.Environment.IsDevelopment())
 app.AddMiddlewares();
 
 app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
