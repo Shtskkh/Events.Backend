@@ -50,4 +50,15 @@ public interface IEventRepository
     /// <param name="event">Сущность мероприятия для удаления.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     Task DeleteAsync(Event @event, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Проверка на конфликты при бронировании.
+    /// </summary>
+    /// <param name="placeId">ID помещения.</param>
+    /// <param name="startDateTime">Дата и время начала.</param>
+    /// <param name="endDateTime">Дата и время окончания.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>True, если есть конфликт, false иначе.</returns>
+    Task<bool> HasBookingConflictAsync(int placeId, DateTime startDateTime, DateTime endDateTime,
+        CancellationToken cancellationToken);
 }

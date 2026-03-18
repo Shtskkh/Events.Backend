@@ -136,6 +136,20 @@ public static class DomainErrorMessages
 
             public const string MaxCountReached = "Достигнуто максимальное количество участников мероприятия.";
         }
+
+        /// <summary>
+        ///     Ошибки бронирования аудиторий.
+        /// </summary>
+        public static class Booking
+        {
+            public const string NotAllowedForOnline = "Нельзя бронировать аудитории для онлайн мероприятий.";
+
+            public const string RequiredForOffline =
+                "Бронирование помещения обязательно для офлайн или гибридных мероприятий.";
+
+            public const string TimeConflict =
+                "На выбранный временной промежуток уже существует бронирование, выбирите другое время.";
+        }
     }
 
     /// <summary>

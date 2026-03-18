@@ -48,6 +48,15 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
+    public Task<bool> HasBookingConflictAsync(int placeId, DateTime startDateTime, DateTime endDateTime,
+        CancellationToken cancellationToken)
+    {
+        return repository.GetAllAsync()
+            .AnyAsync(e => e.PlaceId == placeId && e.StartDateTime < endDateTime && e.EndDateTime > startDateTime,
+                cancellationToken);
+    }
+
+    /// <inheritdoc />
     public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
         Specification<Event> spec,
         CancellationToken cancellationToken,

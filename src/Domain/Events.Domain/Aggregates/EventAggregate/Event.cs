@@ -29,13 +29,9 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="userId">ID пользователя.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
-    /// <param name="maxParticipants">Максимальное количество участников.</param>
-    /// <param name="previewFilename">Название превью файла.</param>
-    /// <param name="placeholderFilename">Название файла плейсхолдера превью.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
         DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
-        Guid userId, bool needsRegistration, int? maxParticipants = null, string? previewFilename = null,
-        string? placeholderFilename = null) : base(id)
+        Guid userId, bool needsRegistration) : base(id)
     {
         Title = title;
         Announcement = announcement;
@@ -43,9 +39,6 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         Type = eventType;
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
-        MaxParticipants = maxParticipants;
-        PreviewFilename = previewFilename;
-        PlaceholderFilename = placeholderFilename;
         UserId = userId;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -79,16 +72,6 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public DateTimeOffset EndDateTime { get; private set; }
 
     /// <summary>
-    ///     Название файла превью.
-    /// </summary>
-    public string? PreviewFilename { get; private set; }
-
-    /// <summary>
-    ///     Название файла плейсхолдера превью.
-    /// </summary>
-    public string? PlaceholderFilename { get; }
-
-    /// <summary>
     ///     Тип мероприятия.
     /// </summary>
     public EventType Type { get; private set; } = null!;
@@ -96,7 +79,12 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Формат мероприятия.
     /// </summary>
-    public EventFormat Format { get; private set; } = null!;
+    public EventFormat Format { get; } = null!;
+
+    /// <summary>
+    ///     ID пользователя, создавшего мероприятие.
+    /// </summary>
+    public Guid UserId { get; }
 
     /// <summary>
     ///     Флаг необходимости регистрации на мероприятие.
@@ -106,12 +94,22 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Максимальное число участников.
     /// </summary>
-    public int? MaxParticipants { get; }
+    public int? MaxParticipants { get; private set; }
 
     /// <summary>
-    ///     ID пользователя, создавшего мероприятие.
+    ///     ID локации.
     /// </summary>
-    public Guid UserId { get; }
+    public int? PlaceId { get; private set; }
+
+    /// <summary>
+    ///     Название файла превью.
+    /// </summary>
+    public string? PreviewFilename { get; private set; }
+
+    /// <summary>
+    ///     Название файла плейсхолдера превью.
+    /// </summary>
+    public string? PlaceholderFilename { get; private set; }
 
     /// <summary>
     ///     Участники мероприятия.
@@ -164,15 +162,6 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     }
 
     /// <summary>
-    ///     Изменить название файла превью.
-    /// </summary>
-    /// <param name="previewFileName">Название нового файла.</param>
-    public void ChangePreviewFilename(string previewFileName)
-    {
-        PreviewFilename = previewFileName;
-    }
-
-    /// <summary>
     ///     Изменить тип мероприятия.
     /// </summary>
     /// <param name="eventType">Новый тип мероприятия.</param>
@@ -188,6 +177,33 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void ChangeNeedsRegistration(bool needsRegistration)
     {
         NeedsRegistration = needsRegistration;
+    }
+
+    /// <summary>
+    ///     Изменить название файла превью.
+    /// </summary>
+    /// <param name="previewFileName">Название нового файла.</param>
+    public void ChangePreview(string previewFileName)
+    {
+        PreviewFilename = previewFileName;
+    }
+
+    /// <summary>
+    ///     Изменить плейсхолдер.
+    /// </summary>
+    /// <param name="placeholderFilename">Название файла плейсхолдера.</param>
+    public void ChangePlaceHolder(string placeholderFilename)
+    {
+        PlaceholderFilename = placeholderFilename;
+    }
+
+    /// <summary>
+    ///     Изменить максимальное количество участников.
+    /// </summary>
+    /// <param name="maxParticipants">Новое максимальное количество участников.</param>
+    public void ChangeMaxParticipants(int maxParticipants)
+    {
+        MaxParticipants = maxParticipants;
     }
 
     /// <summary>
@@ -222,5 +238,18 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
             throw new NotFoundException(DomainErrorMessages.Event.Participant.NotFound);
 
         _participants.Remove(participant);
+    }
+
+    /// <summary>
+    ///     Забронировать помещение.
+    /// </summary>
+    /// <param name="placeId">ID помещения.</param>
+    /// <exception cref="DomainException">Ошибка правил домена.</exception>
+    public void Book(int placeId)
+    {
+        if (Format.Id == EventFormat.Online.Id)
+            throw new DomainException(DomainErrorMessages.Event.Booking.NotAllowedForOnline);
+
+        PlaceId = placeId;
     }
 }

@@ -27,7 +27,8 @@ public static class EventFactory
     /// <returns>Объект сущности пользователя.</returns>
     public static Event Create(string title, string announcement, string description, DateTimeOffset startDateTime,
         DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat, Guid userId, bool needRegistration,
-        int? maxParticipants = null, string? previewFilename = null, string? placeholderFilename = null)
+        int? placeId = null, int? maxParticipants = null, string? previewFilename = null,
+        string? placeholderFilename = null)
     {
         var id = Guid.NewGuid();
         var titleVo = new EventTitle(title);
@@ -43,20 +44,23 @@ public static class EventFactory
         if (needRegistration && !maxParticipants.HasValue)
             throw new DomainException(DomainErrorMessages.Event.Participant.MaxCountMustBeSet);
 
-        return new Event(
-            id,
-            titleVo,
-            announcementVo,
-            descriptionVo,
-            startDateTime,
-            endDateTime,
-            eventType,
-            eventFormat,
-            userId,
-            needRegistration,
-            maxParticipants,
-            previewFilename,
-            placeholderFilename
-        );
+        if (eventFormat.Id != EventFormat.Online.Id && !placeId.HasValue)
+            throw new DomainException(DomainErrorMessages.Event.Booking.RequiredForOffline);
+
+        var @event = new Event(id, titleVo, announcementVo, descriptionVo,
+            startDateTime, endDateTime, eventType, eventFormat, userId, needRegistration);
+
+        if (!string.IsNullOrWhiteSpace(previewFilename))
+            @event.ChangePreview(previewFilename);
+        else
+            @event.ChangePlaceHolder(placeholderFilename!);
+
+        if (maxParticipants.HasValue)
+            @event.ChangeMaxParticipants(maxParticipants.Value);
+
+        if (placeId.HasValue)
+            @event.Book(placeId.Value);
+
+        return @event;
     }
 }

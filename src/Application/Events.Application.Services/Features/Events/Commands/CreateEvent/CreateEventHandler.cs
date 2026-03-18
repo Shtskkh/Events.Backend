@@ -2,7 +2,10 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
+using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Aggregates.EventAggregate.Factories;
+using Events.Domain.Exceptions;
+using Events.Domain.Shared;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.CreateEvent;
@@ -41,6 +44,15 @@ public class CreateEventHandler(
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
+            if (eventFormat.Id != EventFormat.Online.Id && dto.PlaceId.HasValue)
+            {
+                var hasConflict = await eventRepository.HasBookingConflictAsync(
+                    dto.PlaceId.Value, dto.StartDateTime, dto.EndDateTime, cancellationToken);
+
+                if (hasConflict)
+                    throw new DomainException(DomainErrorMessages.Event.Booking.TimeConflict);
+            }
+
             var @event = EventFactory.Create(
                 dto.Title,
                 dto.Announcement,
@@ -51,6 +63,7 @@ public class CreateEventHandler(
                 eventFormat,
                 dto.UserId,
                 dto.NeedsRegistration,
+                dto.PlaceId,
                 dto.MaxParticipants,
                 previewFilename?.ToString(),
                 dto.Placeholder

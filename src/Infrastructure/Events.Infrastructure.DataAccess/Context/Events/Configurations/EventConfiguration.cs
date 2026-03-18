@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +72,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne<Place>()
+            .WithMany()
+            .HasForeignKey(e => e.PlaceId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(e => e.Participants)
