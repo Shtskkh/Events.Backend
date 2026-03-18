@@ -39,6 +39,11 @@ public class EventFilterDto : IPagination
     public Guid? UserId { get; set; }
 
     /// <summary>
+    ///     ID помещения.
+    /// </summary>
+    public int? PlaceId { get; set; }
+
+    /// <summary>
     ///     Размер выборки.
     /// </summary>
     [Range(1, 30)]

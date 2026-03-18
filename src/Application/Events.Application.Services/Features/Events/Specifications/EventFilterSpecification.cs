@@ -30,6 +30,9 @@ public class EventFilterSpecification : Specification<Event>
         if (filter.UserId != null)
             Query.Where(e => e.UserId == filter.UserId);
 
+        if (filter.PlaceId != null)
+            Query.Where(e => e.PlaceId == filter.PlaceId);
+
         Query.OrderByDescending(e => e.CreatedAt);
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
