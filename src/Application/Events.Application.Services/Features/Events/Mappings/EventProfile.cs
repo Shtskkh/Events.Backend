@@ -20,6 +20,10 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
                 opt => opt.MapFrom(src => src.Description.Value))
+            .ForMember(dest => dest.StartDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.StartDateTime))
+            .ForMember(dest => dest.EndDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.EndDateTime))
             .ForMember(dest => dest.Type,
                 opt => opt.MapFrom(e => e.Type.Title))
             .ForMember(dest => dest.Format,
@@ -44,6 +48,10 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Announcement,
                 opt => opt.MapFrom(src => src.Announcement.Value))
+            .ForMember(dest => dest.StartDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.StartDateTime))
+            .ForMember(dest => dest.EndDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.EndDateTime))
             .ForMember(dest => dest.Type,
                 opt => opt.MapFrom(e => e.Type.Title))
             .ForMember(dest => dest.Format,
