@@ -48,12 +48,14 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     }
 
     /// <inheritdoc />
-    public Task<bool> HasBookingConflictAsync(int placeId, DateTime startDateTime, DateTime endDateTime,
+    public Task<bool> HasBookingConflictAsync(int placeId, DateTimeOffset start, DateTimeOffset end,
         CancellationToken cancellationToken)
     {
         return repository.GetAllAsync()
-            .AnyAsync(e => e.PlaceId == placeId && e.StartDateTime < endDateTime && e.EndDateTime > startDateTime,
-                cancellationToken);
+            .AnyAsync(e => e.PlaceId == placeId
+                           && e.DateTimeRange.StartDateTime < end
+                           && e.DateTimeRange.EndDateTime > start, cancellationToken
+            );
     }
 
     /// <inheritdoc />

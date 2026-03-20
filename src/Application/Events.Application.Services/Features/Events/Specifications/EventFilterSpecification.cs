@@ -16,10 +16,10 @@ public class EventFilterSpecification : Specification<Event>
     public EventFilterSpecification(EventFilterDto filter)
     {
         if (filter.StartDateTime != null)
-            Query.Where(e => e.StartDateTime >= filter.StartDateTime);
+            Query.Where(e => e.DateTimeRange.StartDateTime >= filter.StartDateTime);
 
         if (filter.EndDateTime != null)
-            Query.Where(e => e.EndDateTime <= filter.EndDateTime);
+            Query.Where(e => e.DateTimeRange.EndDateTime <= filter.EndDateTime);
 
         if (filter.TypeId != null)
             Query.Where(e => e.Type.Id == filter.TypeId);

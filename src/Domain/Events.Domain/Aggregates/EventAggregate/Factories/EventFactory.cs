@@ -21,6 +21,7 @@ public static class EventFactory
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needRegistration">Необходимость регистрации.</param>
     /// <param name="userId">ID пользователя.</param>
+    /// <param name="placeId">ID помещения.</param>
     /// <param name="maxParticipants">Максимальное количество участников.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <param name="placeholderFilename">Название плейсхолдера превью.</param>
@@ -34,6 +35,7 @@ public static class EventFactory
         var titleVo = new EventTitle(title);
         var announcementVo = new EventAnnouncement(announcement);
         var descriptionVo = new EventDescription(description);
+        var dateTimeRange = new EventDateTimeRange(startDateTime, endDateTime);
 
         if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
             throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
@@ -47,8 +49,16 @@ public static class EventFactory
         if (eventFormat.Id != EventFormat.Online.Id && !placeId.HasValue)
             throw new DomainException(DomainErrorMessages.Event.Booking.RequiredForOffline);
 
-        var @event = new Event(id, titleVo, announcementVo, descriptionVo,
-            startDateTime, endDateTime, eventType, eventFormat, userId, needRegistration);
+        var @event = new Event(
+            id,
+            titleVo,
+            announcementVo,
+            descriptionVo,
+            dateTimeRange,
+            eventType,
+            eventFormat,
+            userId,
+            needRegistration);
 
         if (!string.IsNullOrWhiteSpace(previewFilename))
             @event.ChangePreview(previewFilename);

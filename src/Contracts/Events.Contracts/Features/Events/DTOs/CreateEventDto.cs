@@ -38,12 +38,12 @@ public class CreateEventDto
     /// <summary>
     ///     Дата и время начала мероприятия.
     /// </summary>
-    public required DateTime StartDateTime { get; init; }
+    public required DateTimeOffset StartDateTime { get; init; }
 
     /// <summary>
     ///     Дата и время окончания мероприятия.
     /// </summary>
-    public required DateTime EndDateTime { get; init; }
+    public required DateTimeOffset EndDateTime { get; init; }
 
     /// <summary>
     ///     Флаг необходимости регистрации.

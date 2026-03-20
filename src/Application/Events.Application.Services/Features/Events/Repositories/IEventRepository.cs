@@ -55,10 +55,10 @@ public interface IEventRepository
     ///     Проверка на конфликты при бронировании.
     /// </summary>
     /// <param name="placeId">ID помещения.</param>
-    /// <param name="startDateTime">Дата и время начала.</param>
-    /// <param name="endDateTime">Дата и время окончания.</param>
+    /// <param name="start">Дата и время начала.</param>
+    /// <param name="end">Дата и время окончания.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>True, если есть конфликт, false иначе.</returns>
-    Task<bool> HasBookingConflictAsync(int placeId, DateTime startDateTime, DateTime endDateTime,
+    Task<bool> HasBookingConflictAsync(int placeId, DateTimeOffset start, DateTimeOffset end,
         CancellationToken cancellationToken);
 }

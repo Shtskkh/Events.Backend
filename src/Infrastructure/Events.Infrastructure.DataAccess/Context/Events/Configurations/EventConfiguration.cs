@@ -40,11 +40,16 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
             .IsRequired();
 
-        builder.Property(e => e.StartDateTime)
-            .IsRequired();
+        builder.OwnsOne(e => e.DateTimeRange, rangeBuilder =>
+        {
+            rangeBuilder.Property(e => e.StartDateTime)
+                .HasColumnName("StartDateTime")
+                .IsRequired();
 
-        builder.Property(e => e.EndDateTime)
-            .IsRequired();
+            rangeBuilder.Property(e => e.EndDateTime)
+                .HasColumnName("EndDateTime")
+                .IsRequired();
+        });
 
         builder.Property(e => e.PreviewFilename);
 

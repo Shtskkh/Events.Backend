@@ -23,27 +23,25 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="title">Название мероприятия.</param>
     /// <param name="announcement">Анонс (краткое описание) мероприятия.</param>
     /// <param name="description">Описание мероприятия.</param>
-    /// <param name="startDateTime">Дата и время начала мероприятия.</param>
-    /// <param name="endDateTime">Дата и время окончания мероприятия.</param>
+    /// <param name="dateTimeRange">Диапазон дат проведения мероприятия.</param>
     /// <param name="eventType">Тип мероприятия.</param>
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="userId">ID пользователя.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
     public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        DateTimeOffset startDateTime, DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat,
+        EventDateTimeRange dateTimeRange, EventType eventType, EventFormat eventFormat,
         Guid userId, bool needsRegistration) : base(id)
     {
         Title = title;
         Announcement = announcement;
         Description = description;
+        DateTimeRange = dateTimeRange;
         Type = eventType;
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
         UserId = userId;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
-
-        SetDateTimeRange(startDateTime, endDateTime);
     }
 
     /// <summary>
@@ -62,14 +60,9 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public EventDescription Description { get; private set; } = null!;
 
     /// <summary>
-    ///     Дата и время начала мероприятия.
+    ///     Диапазон дат проведения мероприятия.
     /// </summary>
-    public DateTimeOffset StartDateTime { get; private set; }
-
-    /// <summary>
-    ///     Дата и время окончания мероприятия.
-    /// </summary>
-    public DateTimeOffset EndDateTime { get; private set; }
+    public EventDateTimeRange DateTimeRange { get; private set; } = null!;
 
     /// <summary>
     ///     Тип мероприятия.
@@ -122,18 +115,6 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <inheritdoc />
     public DateTime UpdatedAt { get; }
 
-    private void SetDateTimeRange(DateTimeOffset start, DateTimeOffset end)
-    {
-        if (start >= end)
-            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.StartLaterThanEnd);
-
-        if (end - start > TimeSpan.FromDays(DomainConstraints.Event.DateTimeRange.MaxDurationInDays))
-            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.DurationGreaterThanMax);
-
-        StartDateTime = start;
-        EndDateTime = end;
-    }
-
     /// <summary>
     ///     Метод изменения названия мероприятия.
     /// </summary>
@@ -159,6 +140,34 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void ChangeDescription(string description)
     {
         Description = new EventDescription(description);
+    }
+
+    /// <summary>
+    ///     Изменить диапазон дат мероприятия.
+    /// </summary>
+    /// <param name="newStart">Новая дата и время начала.</param>
+    /// <param name="newEnd">Новая дата и время окончания.</param>
+    public void ChangeDateTimeRange(DateTimeOffset newStart, DateTimeOffset newEnd)
+    {
+        DateTimeRange = new EventDateTimeRange(newStart, newEnd);
+    }
+
+    /// <summary>
+    ///     Изменить дату начала мероприятия.
+    /// </summary>
+    /// <param name="newStart">Новая дата и время начала.</param>
+    public void ChangeStartDateTime(DateTimeOffset newStart)
+    {
+        DateTimeRange = DateTimeRange.WithStart(newStart);
+    }
+
+    /// <summary>
+    ///     Изменить дату окончания мероприятия.
+    /// </summary>
+    /// <param name="newEnd">Новая дата и время окончания.</param>
+    public void ChangeEndDateTime(DateTimeOffset newEnd)
+    {
+        DateTimeRange = DateTimeRange.WithEnd(newEnd);
     }
 
     /// <summary>
