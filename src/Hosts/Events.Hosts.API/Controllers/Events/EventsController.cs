@@ -2,6 +2,7 @@
 using Events.Application.Services.Features.Events.Commands.CreateEvent;
 using Events.Application.Services.Features.Events.Commands.DeleteEvent;
 using Events.Application.Services.Features.Events.Commands.RemoveParticipant;
+using Events.Application.Services.Features.Events.Commands.Update;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholders;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
@@ -85,10 +86,27 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         return StatusCode(StatusCodes.Status201Created, id);
     }
 
+
+    /// <summary>
+    ///     Обновить мероприятие.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="dto">Модель обновления.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPatch("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(Guid id)
+    [Consumes("multipart/form-data")]
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие не найдено.")]
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromForm] UpdateEventDto dto,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new UpdateEventCommand(id, dto), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
@@ -126,7 +144,6 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
 
         return Ok(participants);
     }
-
 
     /// <summary>
     ///     Зарегистрироваться на мероприятие.
