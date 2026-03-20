@@ -19,4 +19,14 @@ public record UpdateEventDto
     ///     Описание.
     /// </summary>
     public string? Description { get; init; }
+
+    /// <summary>
+    ///     Дата и время начала.
+    /// </summary>
+    public DateTimeOffset? StartDateTime { get; init; }
+
+    /// <summary>
+    ///     Дата и время окончания.
+    /// </summary>
+    public DateTimeOffset? EndDateTime { get; init; }
 }

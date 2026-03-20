@@ -21,6 +21,20 @@ public class UpdateEventHandler(IEventRepository eventRepository) : IRequestHand
         if (!string.IsNullOrEmpty(dto.Description))
             @event.ChangeDescription(dto.Description);
 
+        if (dto.StartDateTime.HasValue && dto.EndDateTime.HasValue)
+        {
+            @event.ChangeDateTimeRange(dto.StartDateTime.Value, dto.EndDateTime.Value);
+        }
+        else
+        {
+            if (dto.StartDateTime.HasValue)
+                @event.ChangeStartDateTime(dto.StartDateTime.Value);
+
+            if (dto.EndDateTime.HasValue)
+                @event.ChangeEndDateTime(dto.EndDateTime.Value);
+        }
+
+
         await eventRepository.UpdateAsync(@event, cancellationToken);
     }
 }
