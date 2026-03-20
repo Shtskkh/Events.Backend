@@ -2,6 +2,7 @@
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.LocationAggregate;
 
@@ -10,6 +11,11 @@ namespace Events.Domain.Aggregates.LocationAggregate;
 /// </summary>
 public class Location : Entity<int>, IAuditable, IAggregateRoot
 {
+    /// <summary>
+    ///     Фотографии.
+    /// </summary>
+    private readonly List<OrderedPhoto> _photos = [];
+
     /// <summary>
     ///     Помещения в локации.
     /// </summary>
@@ -49,6 +55,11 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     ///     Помещения в локации.
     /// </summary>
     public IReadOnlyList<Place> Places => _places.AsReadOnly();
+
+    /// <summary>
+    ///     Фотографии.
+    /// </summary>
+    public IReadOnlyList<OrderedPhoto> Photos => _photos.AsReadOnly();
 
     /// <summary>
     ///     Дата создания.
@@ -120,5 +131,32 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
             throw new NotFoundException(DomainErrorMessages.Place.NotFound);
 
         _places.Remove(place);
+    }
+
+    /// <summary>
+    ///     Добавить новое фото в конец.
+    /// </summary>
+    /// <param name="filename">Название файла.</param>
+    /// <exception cref="DomainException">Ошибка правил домена.</exception>
+    public void AddPhoto(string filename)
+    {
+        if (_photos.Any(p => p.Filename == filename))
+            throw new DomainException(DomainErrorMessages.Photo.AlreadyExists);
+
+        _photos.Add(new OrderedPhoto(filename, _photos.Count));
+    }
+
+    /// <summary>
+    ///     Удалить фото.
+    /// </summary>
+    /// <param name="filename">Название файла.</param>
+    /// <exception cref="NotFoundException">Ошибка правил домена.</exception>
+    public void RemovePhoto(string filename)
+    {
+        var photo = _photos.FirstOrDefault(p => p.Filename == filename);
+        if (photo == null)
+            throw new NotFoundException(DomainErrorMessages.Photo.NotFound);
+
+        _photos.Remove(photo);
     }
 }

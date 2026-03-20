@@ -385,4 +385,17 @@ public static class DomainErrorMessages
             };
         }
     }
+
+    /// <summary>
+    ///     Ошибки фото.
+    /// </summary>
+    public static class Photo
+    {
+        public const string NotFound = "Фотография не найдена.";
+        public const string AlreadyExists = "Фотография уже существует.";
+        public const string InvalidIndex = "Индекс фотографии выходит за пределы допустимого диапазона.";
+        public const string InvalidOrder = "Порядок фотографии не может быть отрицательным.";
+        public const string InvalidReorder = "Переданный список фотографий не совпадает с существующим.";
+        public const string FileNameNullOrWhiteSpace = "Название файла фотографии не может быть пустым.";
+    }
 }
