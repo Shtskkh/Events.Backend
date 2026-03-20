@@ -42,6 +42,24 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             .WithMany()
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.OwnsMany(l => l.Photos, photoBuilder =>
+        {
+            photoBuilder.ToTable("PlacesPhotos");
+            
+            photoBuilder.Property<int>("Id");
+            photoBuilder.HasKey("Id");
+            
+            photoBuilder.Property(p => p.Filename)
+                .HasColumnName("Filename")
+                .IsRequired();
+
+            photoBuilder.Property(p => p.Order)
+                .HasColumnName("Order")
+                .IsRequired();
+
+            photoBuilder.WithOwner().HasForeignKey("PlaceId");
+        });
 
         builder.Property(p => p.CreatedAt)
             .IsRequired()

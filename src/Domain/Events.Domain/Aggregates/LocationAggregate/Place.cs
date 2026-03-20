@@ -1,6 +1,8 @@
 ﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Places;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.LocationAggregate;
 
@@ -9,6 +11,11 @@ namespace Events.Domain.Aggregates.LocationAggregate;
 /// </summary>
 public class Place : Entity<int>, IAuditable
 {
+    /// <summary>
+    ///     Фотографии.
+    /// </summary>
+    private readonly List<OrderedPhoto> _photos = [];
+
     private Place()
     {
     }
@@ -53,6 +60,11 @@ public class Place : Entity<int>, IAuditable
     /// </summary>
     public PlaceTitle? Title { get; private set; }
 
+    /// <summary>
+    ///     Фотографии.
+    /// </summary>
+    public IReadOnlyList<OrderedPhoto> Photos => _photos.AsReadOnly();
+
     /// <inheritdoc />
     public DateTime CreatedAt { get; }
 
@@ -84,5 +96,32 @@ public class Place : Entity<int>, IAuditable
     public void ChangeType(PlaceType newType)
     {
         Type = newType;
+    }
+    
+    /// <summary>
+    ///     Добавить новое фото в конец.
+    /// </summary>
+    /// <param name="filename">Название файла.</param>
+    /// <exception cref="DomainException">Ошибка правил домена.</exception>
+    public void AddPhoto(string filename)
+    {
+        if (_photos.Any(p => p.Filename == filename))
+            throw new DomainException(DomainErrorMessages.Photo.AlreadyExists);
+
+        _photos.Add(new OrderedPhoto(filename, _photos.Count));
+    }
+
+    /// <summary>
+    ///     Удалить фото.
+    /// </summary>
+    /// <param name="filename">Название файла.</param>
+    /// <exception cref="NotFoundException">Ошибка правил домена.</exception>
+    public void RemovePhoto(string filename)
+    {
+        var photo = _photos.FirstOrDefault(p => p.Filename == filename);
+        if (photo == null)
+            throw new NotFoundException(DomainErrorMessages.Photo.NotFound);
+
+        _photos.Remove(photo);
     }
 }
