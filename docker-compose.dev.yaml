@@ -3,8 +3,8 @@ name: events
 services:
   backend:
     build:
-      context: ./src/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: /src/Hosts/Events.Hosts.API/Dockerfile
     container_name: backend-dev
     ports:
       - 8080:8080
@@ -47,8 +47,8 @@ services:
 
   db_migrator:
     build:
-      context: ./src/
-      dockerfile: Migrator.Dockerfile
+      context: .
+      dockerfile: /src/Hosts/Events.Hosts.DbMigrator/Dockerfile
     container_name: db_migrator
     restart: no
     environment:
@@ -88,8 +88,8 @@ services:
   
   s3_migrator:
     build:
-      context: ./src/
-      dockerfile: S3Migrator.Dockerfile
+      context: .
+      dockerfile: /src/Hosts/Events.Hosts.S3Migrator/Dockerfile
     container_name: s3_migrator
     restart: no
     environment:
@@ -120,8 +120,8 @@ services:
   
   clickhouse_migrator:
     build:
-      context: ./src/
-      dockerfile: ClickHouseMigrator.Dockerfile
+      context: .
+      dockerfile: /src/Hosts/Events.Hosts.ClickHouseMigrator/Dockerfile
     container_name: clickhouse_migrator
     restart: no
     environment:

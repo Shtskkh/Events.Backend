@@ -6,11 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-Events.Hosts.S3Migrator-1b06939c-0fe1-4f6f-8987-301a12193242</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AWSSDK.S3" Version="4.0.19" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
+        <PackageReference Include="AWSSDK.S3" Version="4.0.19"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -21,5 +23,11 @@
         <EmbeddedResource Include="..\..\Application\Events.Application.Services\Features\Files\Placeholders\EventsPreviews\*.*">
             <Link>Placeholders\EventsPreviews\%(Filename)%(Extension)</Link>
         </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 </Project>
