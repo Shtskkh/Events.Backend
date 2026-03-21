@@ -11,6 +11,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DbConnection=Host=db_postgres;Database=Events;Username=postgres;Password=1
+      - ConnectionStrings__AnalyticsDb=Host=clickhouse;Port=8123;Database=EventsAnalytics;Username=default;Password=1
       - S3__Endpoint=http://localhost:9000
       - S3__ProxyHost=rustfs
       - S3__ProxyPort=9000
@@ -116,6 +117,18 @@ services:
     volumes:
       - clickhouse_data:/var/lib/clickhouse/
       - ./configs/clickhouse/ports.yaml:/etc/clickhouse-server/config.d/ports.yaml
+  
+  clickhouse_migrator:
+    build:
+      context: ./src/
+      dockerfile: ClickHouseMigrator.Dockerfile
+    container_name: clickhouse_migrator
+    restart: no
+    environment:
+      - ConnectionStrings__DbConnection=Host=clickhouse;Port=8123;Database=EventsAnalytics;Username=default;Password=1
+    depends_on:
+      clickhouse:
+        condition: service_healthy
   
   otel_collector:
     image: otel/opentelemetry-collector-contrib:latest
