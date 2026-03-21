@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
+        <ProjectReference Include="..\..\Infrastructure\Events.Infrastructure.Analytics\Events.Infrastructure.Analytics.csproj"/>
         <ProjectReference Include="..\..\Infrastructure\Events.Infrastructure.DataAccess\Events.Infrastructure.DataAccess.csproj"/>
     </ItemGroup>
 
