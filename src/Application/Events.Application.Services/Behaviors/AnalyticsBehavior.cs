@@ -1,0 +1,39 @@
+﻿using Events.Application.Services.Features.Analytics.Repositories;
+using Events.Application.Services.Interfaces;
+using Events.Domain.Shared.Entities.Analytics.PagesViews;
+using MediatR;
+
+namespace Events.Application.Services.Behaviors;
+
+/// <summary>
+///     Behavior для аналитики.
+/// </summary>
+/// <typeparam name="TRequest">Тип запроса.</typeparam>
+/// <typeparam name="TResponse">Тип ответа.</typeparam>
+public class AnalyticsBehavior<TRequest, TResponse>(IPageViewRepository pageViewRepository)
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
+{
+    /// <inheritdoc />
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        if (request is not ITrackPageView trackable)
+            return await next(cancellationToken);
+
+        var response = await next(cancellationToken);
+
+        try
+        {
+            var pageView = new PageView(trackable.EntityType, trackable.EntityId);
+
+            await pageViewRepository.AddAsync(pageView, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return response;
+    }
+}

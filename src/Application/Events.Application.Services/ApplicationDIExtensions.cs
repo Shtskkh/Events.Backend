@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Events.Application.Services.Behaviors;
 using Events.Application.Services.Features.Tokens.Jwt;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,11 @@ public static class ApplicationDiExtensions
         /// </summary>
         public void AddApplication()
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                cfg.AddOpenBehavior(typeof(AnalyticsBehavior<,>));
+            });
 
             services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()));
 

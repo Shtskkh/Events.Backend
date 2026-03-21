@@ -13,7 +13,7 @@ public class PageViewConfiguration : IEntityTypeConfiguration<PageView>
     {
         builder.ToTable("PageViews");
 
-        builder.HasKey(e => e.Id);
+        builder.HasNoKey();
 
         builder.Property(e => e.EntityType)
             .IsRequired();

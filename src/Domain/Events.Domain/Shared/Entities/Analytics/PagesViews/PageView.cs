@@ -3,7 +3,7 @@
 /// <summary>
 ///     Просмотр страницы.
 /// </summary>
-public class PageView : Entity<long>
+public class PageView
 {
     private PageView()
     {
@@ -12,11 +12,10 @@ public class PageView : Entity<long>
     /// <summary>
     ///     Конструктор.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
     /// <param name="entityType">Тип запрашиваемой сущности.</param>
     /// <param name="entityId">ID запрашиваемой сущности.</param>
     /// <param name="userId">ID пользователя.</param>
-    public PageView(long id, string entityType, Guid entityId, Guid? userId = null) : base(id)
+    public PageView(string entityType, Guid entityId, Guid? userId = null)
     {
         UserId = userId;
         EntityId = entityId;

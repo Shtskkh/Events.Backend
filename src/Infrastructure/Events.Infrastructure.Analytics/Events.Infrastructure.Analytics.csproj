@@ -9,11 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="ClickHouse.Driver" Version="1.0.2"/>
         <PackageReference Include="ClickHouse.EntityFrameworkCore" Version="0.1.0-preview"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
         <ProjectReference Include="..\..\Domain\Events.Domain\Events.Domain.csproj"/>
     </ItemGroup>
 
