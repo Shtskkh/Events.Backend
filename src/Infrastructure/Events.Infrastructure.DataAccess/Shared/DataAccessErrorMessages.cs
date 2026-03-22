@@ -10,14 +10,8 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Event
     {
-        /// <summary>
-        ///     Мероприятие не найдено.
-        /// </summary>
         public const string NotFound = "Мероприятие не найдено.";
 
-        /// <summary>
-        ///     Мероприятия не найдены.
-        /// </summary>
         public const string NotFoundAny = "Мероприятия не найдены.";
 
         /// <summary>
@@ -25,9 +19,6 @@ public static class DataAccessErrorMessages
         /// </summary>
         public static class Type
         {
-            /// <summary>
-            ///     Тип мероприятия не найден.
-            /// </summary>
             public const string NotFound = "Тип мероприятия не найден.";
         }
 
@@ -36,9 +27,6 @@ public static class DataAccessErrorMessages
         /// </summary>
         public static class Format
         {
-            /// <summary>
-            ///     Формат мероприятия не найден.
-            /// </summary>
             public const string NotFound = "Формат мероприятия не найден.";
         }
     }
@@ -57,9 +45,6 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Places
     {
-        /// <summary>
-        ///     Помещения не найдены.
-        /// </summary>
         public const string NotFoundAny = "Помещения не найдены.";
 
         /// <summary>
@@ -82,14 +67,8 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Files
     {
-        /// <summary>
-        ///     Файл не найден.
-        /// </summary>
         public const string NotFound = "Файл не найден.";
 
-        /// <summary>
-        ///     Файлы не найдены.
-        /// </summary>
         public const string NotFoundAny = "Файлы не найдены.";
     }
 
@@ -98,14 +77,8 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Users
     {
-        /// <summary>
-        ///     Пользователи не найдены.
-        /// </summary>
         public const string NotFoundAny = "Пользователи не найдены.";
 
-        /// <summary>
-        ///     Пользователь не найден.
-        /// </summary>
         public const string NotFound = "Пользователь не найден.";
 
         /// <summary>
@@ -113,9 +86,6 @@ public static class DataAccessErrorMessages
         /// </summary>
         public static class Roles
         {
-            /// <summary>
-            ///     Пользователи не найдены.
-            /// </summary>
             public const string NotFound = "Роль не найдена.";
         }
     }
