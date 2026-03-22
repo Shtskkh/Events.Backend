@@ -398,4 +398,15 @@ public static class DomainErrorMessages
         public const string InvalidReorder = "Переданный список фотографий не совпадает с существующим.";
         public const string FileNameNullOrWhiteSpace = "Название файла фотографии не может быть пустым.";
     }
+
+    /// <summary>
+    ///     Ошибки аналитики.
+    /// </summary>
+    public static class Analytics
+    {
+        public static class PageViews
+        {
+            public const string NotFoundAny = "Аналитика просмотров по заданному фильтру.";
+        }
+    }
 }

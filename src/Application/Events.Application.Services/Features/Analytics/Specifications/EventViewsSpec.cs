@@ -1,0 +1,13 @@
+﻿using Ardalis.Specification;
+using Events.Domain.Shared.Entities.Analytics.PagesViews;
+
+namespace Events.Application.Services.Features.Analytics.Specifications;
+
+public class EventViewsSpec : Specification<PageView>
+{
+    public EventViewsSpec(Guid eventId)
+    {
+        Query.Where(e => e.EntityId == eventId);
+        Query.OrderBy(e => e.ViewedAt);
+    }
+}

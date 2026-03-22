@@ -6,6 +6,7 @@ using Events.Application.Services.Features.Events.Commands.Update;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholders;
 using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
+using Events.Application.Services.Features.Events.Queries.GetAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetEventById;
 using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
@@ -65,6 +66,24 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         var @event = await mediator.Send(new GetEventByIdQuery(id), cancellationToken);
 
         return Ok(@event);
+    }
+
+    /// <summary>
+    ///     Получить аналитику.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Модель аналитики.</returns>
+    [HttpGet("{id:guid}/analytics")]
+    [ProducesResponseType(typeof(EventAnalyticDto), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Мероприятие не найдено.")]
+    public async Task<IActionResult> GetAnalyticsAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var analytics = await mediator.Send(new GetEventAnalyticsQuery(id), cancellationToken);
+
+        return Ok(analytics);
     }
 
     /// <summary>

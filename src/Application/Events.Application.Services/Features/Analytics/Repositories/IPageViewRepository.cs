@@ -1,4 +1,5 @@
-﻿using Events.Domain.Shared.Entities.Analytics.PagesViews;
+﻿using Ardalis.Specification;
+using Events.Domain.Shared.Entities.Analytics.PagesViews;
 
 namespace Events.Application.Services.Features.Analytics.Repositories;
 
@@ -13,4 +14,12 @@ public interface IPageViewRepository
     /// <param name="view">Просмотр.</param>
     /// <param name="ct">Токен отмены.</param>
     Task AddAsync(PageView view, CancellationToken ct);
+
+    /// <summary>
+    ///     Получить просмотры по фильтру.
+    /// </summary>
+    /// <param name="spec">Спецификация.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция моделей просмотров.</returns>
+    Task<IReadOnlyCollection<PageView>> GetViewsByFilter(Specification<PageView> spec, CancellationToken ct);
 }
