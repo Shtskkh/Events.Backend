@@ -297,7 +297,7 @@ public static class DomainErrorMessages
     {
         public static class PageViews
         {
-            public const string NotFoundAny = "Аналитика просмотров по заданному фильтру.";
+            public const string NotFoundAny = "Просмотры по заданному фильтру не найдены.";
         }
     }
 }

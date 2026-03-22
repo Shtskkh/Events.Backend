@@ -3,7 +3,9 @@ using Events.Application.Services.Features.Users.Commands.CreateUser;
 using Events.Application.Services.Features.Users.Commands.DeleteUser;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
+using Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
 using Events.Contracts.Errors;
+using Events.Contracts.Features.Events.DTOs;
 using Events.Contracts.Features.Users.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -115,5 +117,23 @@ public class UsersController(IMediator mediator) : ControllerBase
         var tokenDto = await mediator.Send(new AuthUserCommand(dto), cancellationToken);
 
         return Ok(tokenDto);
+    }
+
+    /// <summary>
+    ///     Получить последние 10 просмотренных пользователем мероприятий.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция краткой информации о мероприятиях.</returns>
+    [HttpGet("{id:guid}/events/recent")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Просмотренные пользователем мероприятия найдены.")]
+    public async Task<IActionResult> GetRecentViewedEventsAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var events = await mediator.Send(new GetRecentViewedEventsQuery(id), cancellationToken);
+
+        return Ok(events);
     }
 }
