@@ -18,6 +18,10 @@ builder.Services.AddOpenApiWithMetadata();
 
 builder.Services.AddJwt(builder.Configuration);
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddApiServices();
+
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
@@ -35,11 +39,11 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference(options => { options.WithOpenApiRoutePattern("/swagger/v1/swagger.json"); });
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.AddMiddlewares();
 
 app.MapControllers();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();
