@@ -29,7 +29,7 @@ public static class ApplicationDiExtensions
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationAutoValidation(options => { options.DisableBuiltInModelValidation = true; });
 
             services.RegisterServices();
         }
