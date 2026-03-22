@@ -2,6 +2,7 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
+using Events.Application.Services.Features.Locations.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using Events.Domain.Exceptions;
@@ -15,6 +16,7 @@ public class CreateEventHandler(
     IEventRepository eventRepository,
     IEventTypeRepository eventTypeRepository,
     IEventFormatRepository eventFormatRepository,
+    IPlaceRepository placeRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
@@ -44,6 +46,9 @@ public class CreateEventHandler(
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
+            if (dto.PlaceId.HasValue)
+                await placeRepository.GetById(dto.PlaceId.Value, cancellationToken);
+            
             if (eventFormat.Id != EventFormat.Online.Id && dto.PlaceId.HasValue)
             {
                 var hasConflict = await eventRepository.HasBookingConflictAsync(
