@@ -29,6 +29,8 @@ public static class JwtExtensions
                         ValidateAudience = configuration.GetValue<bool>("Jwt:ValidateAudience"),
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
                     };
+
+                    options.MapInboundClaims = false;
                 });
         }
     }
