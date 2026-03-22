@@ -10,7 +10,10 @@ namespace Events.Application.Services.Behaviors;
 /// </summary>
 /// <typeparam name="TRequest">Тип запроса.</typeparam>
 /// <typeparam name="TResponse">Тип ответа.</typeparam>
-public class AnalyticsBehavior<TRequest, TResponse>(IPageViewRepository pageViewRepository)
+public class AnalyticsBehavior<TRequest, TResponse>(
+    IPageViewRepository pageViewRepository,
+    ICurrentUserProvider currentUserProvider
+)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
@@ -25,7 +28,8 @@ public class AnalyticsBehavior<TRequest, TResponse>(IPageViewRepository pageView
 
         try
         {
-            var pageView = new PageView(trackable.EntityType, trackable.EntityId);
+            var userId = currentUserProvider.UserId;
+            var pageView = new PageView(trackable.EntityType, trackable.EntityId, userId);
 
             await pageViewRepository.AddAsync(pageView, cancellationToken);
         }
