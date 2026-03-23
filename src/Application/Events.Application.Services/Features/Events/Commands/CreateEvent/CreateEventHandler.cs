@@ -46,11 +46,11 @@ public class CreateEventHandler(
             var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
-            if (dto.PlaceId.HasValue)
-                await placeRepository.GetById(dto.PlaceId.Value, cancellationToken);
-            
             if (eventFormat.Id != EventFormat.Online.Id && dto.PlaceId.HasValue)
             {
+                if (dto.PlaceId.HasValue)
+                    await placeRepository.GetById(dto.PlaceId.Value, cancellationToken);
+
                 var hasConflict = await eventRepository.HasBookingConflictAsync(
                     dto.PlaceId.Value, dto.StartDateTime, dto.EndDateTime, cancellationToken);
 
