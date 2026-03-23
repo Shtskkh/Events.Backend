@@ -19,7 +19,7 @@ public class GetEventAnalyticHandler(IEventRepository eventRepository, IPageView
 
         var spec = new EventViewsSpec(request.Id);
 
-        var views = await pageViewRepository.GetViewsByFilter(spec, cancellationToken);
+        var views = await pageViewRepository.GetByFilterAsync(spec, cancellationToken);
 
         var viewsByDay = views
             .GroupBy(v => DateOnly.FromDateTime(v.ViewedAt.Date))

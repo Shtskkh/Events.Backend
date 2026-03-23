@@ -20,7 +20,7 @@ public class GetRecentViewedEventsHandler(
         CancellationToken cancellationToken)
     {
         var userViewsSpec = new RecentViewedEventsSpec(request.UserId);
-        var userViews = await pageViewRepository.GetViewsByFilter(userViewsSpec, cancellationToken);
+        var userViews = await pageViewRepository.GetByFilterAsync(userViewsSpec, cancellationToken);
 
         var eventsIds = userViews
             .DistinctBy(v => v.EntityId)

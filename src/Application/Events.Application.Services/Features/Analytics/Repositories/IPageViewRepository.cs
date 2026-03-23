@@ -21,5 +21,5 @@ public interface IPageViewRepository
     /// <param name="spec">Спецификация.</param>
     /// <param name="ct">Токен отмены.</param>
     /// <returns>Коллекция моделей просмотров.</returns>
-    Task<IReadOnlyCollection<PageView>> GetViewsByFilter(Specification<PageView> spec, CancellationToken ct);
+    Task<IReadOnlyCollection<PageView>> GetByFilterAsync(Specification<PageView> spec, CancellationToken ct);
 }

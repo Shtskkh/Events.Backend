@@ -13,7 +13,7 @@ namespace Events.Infrastructure.Analytics.Context.PageViews.Repositories;
 public class PageViewRepository(IRepository<PageView, AnalyticsDbContext> repository) : IPageViewRepository
 {
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<PageView>> GetViewsByFilter(Specification<PageView> spec,
+    public async Task<IReadOnlyCollection<PageView>> GetByFilterAsync(Specification<PageView> spec,
         CancellationToken ct)
     {
         var views = await repository.GetAllAsync()
