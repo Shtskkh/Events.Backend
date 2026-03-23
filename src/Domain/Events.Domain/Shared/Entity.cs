@@ -45,7 +45,7 @@ public abstract class Entity<TKey> : IEquatable<Entity<TKey>>
     /// <inheritdoc />
     public override bool Equals(object? obj)
     {
-        return Equals(obj as Entity<TKey>);
+        return obj is Entity<TKey> entity && Equals(entity);
     }
 
     /// <inheritdoc />

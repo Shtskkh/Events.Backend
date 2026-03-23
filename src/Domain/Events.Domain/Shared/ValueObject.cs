@@ -31,7 +31,7 @@ public abstract class ValueObject : IEquatable<ValueObject>
     /// <inheritdoc />
     public override bool Equals(object? obj)
     {
-        return Equals(obj as ValueObject);
+        return obj is ValueObject valueObject && Equals(valueObject);
     }
 
     /// <inheritdoc />
