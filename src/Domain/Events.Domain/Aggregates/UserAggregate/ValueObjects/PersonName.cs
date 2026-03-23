@@ -60,7 +60,7 @@ public class PersonName : ValueObject
     public string? Patronymic { get; }
 
     /// <inheritdoc />
-    protected override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<object?> GetEqualityComponents()
     {
         yield return LastName;
         yield return FirstName;
