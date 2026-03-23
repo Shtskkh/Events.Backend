@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Analytics.Repositories;
-using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Contracts.Features.Events.DTOs;
 using Events.Contracts.Shared;
 using MediatR;
