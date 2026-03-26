@@ -36,4 +36,12 @@ public interface IFileStorageService
     /// <param name="request">Запрос на удаление.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     Task DeleteObjectAsync(DeleteObjectRequest request, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Удалить несколько файлов из хранилища.
+    /// </summary>
+    /// <param name="request">Запрос на удаление.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Объект с данными об удалённых и не удалённых файлах.</returns>
+    Task<DeleteObjectsResponse> DeleteObjectsAsync(DeleteObjectsRequest request, CancellationToken cancellationToken);
 }
