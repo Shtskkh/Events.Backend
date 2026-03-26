@@ -6,7 +6,7 @@ namespace Events.Contracts.Features.Events.DTOs;
 /// <summary>
 ///     Полная информация о мероприятии.
 /// </summary>
-public class EventDto
+public record EventDto
 {
     /// <summary>
     ///     Идентификатор мероприятия.
@@ -57,4 +57,9 @@ public class EventDto
     ///     Информация о помещении.
     /// </summary>
     public BookedPlaceDto? PlaceInfo { get; set; }
+
+    /// <summary>
+    ///     Создатель.
+    /// </summary>
+    public Guid UserId { get; init; }
 }
