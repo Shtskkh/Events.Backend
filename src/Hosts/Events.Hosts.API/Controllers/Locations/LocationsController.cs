@@ -6,6 +6,7 @@ using Events.Application.Services.Features.Locations.Commands.UpdateLocation;
 using Events.Application.Services.Features.Locations.Commands.UpdatePlace;
 using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
 using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
+using Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;
 using Events.Application.Services.Features.Locations.Queries.GetLocationById;
 using Events.Application.Services.Features.Locations.Queries.GetLocationPlaces;
 using Events.Application.Services.Features.Locations.Queries.GetPlaceById;
@@ -131,6 +132,32 @@ public class LocationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetAllPlaces(int locationId, CancellationToken cancellationToken)
     {
         var places = await mediator.Send(new GetLocationPlacesQuery(locationId), cancellationToken);
+
+        return Ok(places);
+    }
+
+    /// <summary>
+    ///     Получить доступные для бронирования помещения.
+    /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="start">Желаемая дата начала бронирования.</param>
+    /// <param name="end">Желаемая дата окончания бронирования.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция помещений с флагом доступности.</returns>
+    [HttpGet("{locationId:int}/places/availability")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<PlaceAvailabilityDto>), StatusCodes.Status200OK,
+        "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Локация не найдена.")]
+    public async Task<IActionResult> GetPlacesAvailability(
+        [FromRoute] int locationId,
+        [FromQuery] DateTimeOffset start,
+        [FromQuery] DateTimeOffset end,
+        CancellationToken cancellationToken
+    )
+    {
+        var places = await mediator.Send(new GetAvailablePlacesQuery(locationId, start, end), cancellationToken);
 
         return Ok(places);
     }
