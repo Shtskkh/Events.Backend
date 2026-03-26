@@ -20,6 +20,8 @@ public static class S3Buckets
     /// </summary>
     public const string UsersAvatars = "users-avatars";
 
+    public const string LocationsPhotos = "locations-photos";
+
     /// <summary>
     ///     Получить все buckets.
     /// </summary>
@@ -31,5 +33,6 @@ public static class S3Buckets
         yield return EventsPreviews;
         yield return EventsPlaceholders;
         yield return UsersAvatars;
+        yield return LocationsPhotos;
     }
 }
