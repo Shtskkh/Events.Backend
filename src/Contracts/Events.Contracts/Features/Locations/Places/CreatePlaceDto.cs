@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Events.Domain.Shared;
+using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Features.Locations.Places;
 
@@ -33,4 +34,9 @@ public class CreatePlaceDto
     [MinLength(DomainConstraints.Place.Title.MinLength)]
     [MaxLength(DomainConstraints.Place.Title.MaxLength)]
     public string? Title { get; init; }
+
+    /// <summary>
+    ///     Фото.
+    /// </summary>
+    public IFormFileCollection? Photos { get; init; }
 }
