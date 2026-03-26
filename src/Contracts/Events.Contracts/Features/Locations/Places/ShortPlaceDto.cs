@@ -1,4 +1,6 @@
-﻿namespace Events.Contracts.Features.Locations.Places;
+﻿using Events.Contracts.Features.Files;
+
+namespace Events.Contracts.Features.Locations.Places;
 
 /// <summary>
 ///     Краткая информация о помещении.
@@ -29,4 +31,9 @@ public class ShortPlaceDto
     ///     Название.
     /// </summary>
     public string? Title { get; init; }
+
+    /// <summary>
+    ///     Превью.
+    /// </summary>
+    public S3FileDto? Preview { get; init; }
 }
