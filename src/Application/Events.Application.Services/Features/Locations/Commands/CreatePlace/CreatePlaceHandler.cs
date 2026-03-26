@@ -47,7 +47,7 @@ public class CreatePlaceHandler(
                     await fileStorageService.PutObjectAsync(putObjectRequest, cancellationToken);
 
                     uploadedFilenames.Add(filename);
-                    location.AddPhoto(filename);
+                    place.AddPhoto(filename);
                 }
 
             location.AddPlace(place);
