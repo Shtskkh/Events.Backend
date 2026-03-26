@@ -1,4 +1,6 @@
-﻿using Events.Application.Services.Features.Locations.Repositories;
+﻿using Ardalis.Specification.EntityFrameworkCore;
+using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Locations.Specifications;
 using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
@@ -32,6 +34,22 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
 
         var location = await query.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
         if (location == null)
+            throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
+
+        return location;
+    }
+
+    /// <inheritdoc />
+    public async Task<Location> GetAsync(
+        BaseLocationSpec spec,
+        CancellationToken cancellationToken)
+    {
+        var location = await repository
+            .GetAllAsync()
+            .WithSpecification(spec)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (location is null)
             throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
 
         return location;

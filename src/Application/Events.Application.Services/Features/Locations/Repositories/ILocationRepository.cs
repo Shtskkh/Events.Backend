@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate;
+﻿using Events.Application.Services.Features.Locations.Specifications;
+using Events.Domain.Aggregates.LocationAggregate;
 
 namespace Events.Application.Services.Features.Locations.Repositories;
 
@@ -22,6 +23,14 @@ public interface ILocationRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект локации.</returns>
     Task<Location> GetByIdAsync(int id, bool includePlaces, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Получить локацию по спецификации.
+    /// </summary>
+    /// <param name="spec">Спецификация запроса.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Объект локации.</returns>
+    Task<Location> GetAsync(BaseLocationSpec spec, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Добавить локацию.
