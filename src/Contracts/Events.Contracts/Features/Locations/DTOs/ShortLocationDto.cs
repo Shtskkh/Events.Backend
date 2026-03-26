@@ -1,4 +1,6 @@
-﻿namespace Events.Contracts.Features.Locations.DTOs;
+﻿using Events.Contracts.Features.Files;
+
+namespace Events.Contracts.Features.Locations.DTOs;
 
 /// <summary>
 ///     Краткая информация о локации.
@@ -11,12 +13,17 @@ public class ShortLocationDto
     public int Id { get; init; }
 
     /// <summary>
-    ///     Название локации.
+    ///     Название.
     /// </summary>
     public string Title { get; init; } = null!;
 
     /// <summary>
-    ///     Адрес локации.
+    ///     Адрес.
     /// </summary>
     public string Address { get; init; } = null!;
+
+    /// <summary>
+    ///     Превью.
+    /// </summary>
+    public S3FileDto? Preview { get; init; }
 }
