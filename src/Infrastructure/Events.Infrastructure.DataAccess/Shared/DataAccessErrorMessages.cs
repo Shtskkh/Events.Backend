@@ -89,4 +89,19 @@ public static class DataAccessErrorMessages
             public const string NotFound = "Роль не найдена.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки оборудования.
+    /// </summary>
+    public static class Equipment
+    {
+        /// <summary>
+        ///     Ошибки типов оборудования.
+        /// </summary>
+        public static class Types
+        {
+            public const string NotFoundAny = "Типы оборудования не найдены.";
+            public const string NotFound = "Тип оборудования не найден.";
+        }
+    }
 }
