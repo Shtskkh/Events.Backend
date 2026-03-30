@@ -300,4 +300,19 @@ public static class DomainErrorMessages
             public const string NotFoundAny = "Просмотры по заданному фильтру не найдены.";
         }
     }
+
+    /// <summary>
+    ///     Ошибки оборудования.
+    /// </summary>
+    public static class Equipment
+    {
+        /// <summary>
+        ///     Ошибки типа оборудования.
+        /// </summary>
+        public static class Type
+        {
+            public static readonly string GreaterThanMaxLength =
+                $"Длина названия типа оборудования больше максимальной длины в {DomainConstraints.Equipment.Type.MaxLength} символ(-ов).";
+        }
+    }
 }

@@ -237,4 +237,18 @@ public static class DomainConstraints
         /// </summary>
         public static readonly char[] InvalidCharacters = [' ', '\t', '\n'];
     }
+
+    /// <summary>
+    ///     Константы оборудования.
+    /// </summary>
+    public static class Equipment
+    {
+        /// <summary>
+        ///     Константы типов оборудования.
+        /// </summary>
+        public static class Type
+        {
+            public const int MaxLength = 32;
+        }
+    }
 }
