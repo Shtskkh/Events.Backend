@@ -8,10 +8,10 @@ namespace Events.Infrastructure.DataAccess.Context.Equipment.Configurations;
 /// <summary>
 ///     Конфигурация оборудования.
 /// </summary>
-public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates.Equipment.Equipment>
+public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates.EquipmentAggregate.Equipment>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Domain.Aggregates.Equipment.Equipment> builder)
+    public void Configure(EntityTypeBuilder<Domain.Aggregates.EquipmentAggregate.Equipment> builder)
     {
         builder.ToTable("Equipment");
 

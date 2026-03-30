@@ -2,7 +2,7 @@
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
-namespace Events.Domain.Aggregates.Equipment.ValueObjects;
+namespace Events.Domain.Aggregates.EquipmentAggregate.ValueObjects;
 
 /// <summary>
 ///     Название оборудования.

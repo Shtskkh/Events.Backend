@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.Equipment;
+﻿using Events.Domain.Aggregates.EquipmentAggregate;
 using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

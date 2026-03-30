@@ -1,8 +1,8 @@
-﻿using Events.Domain.Aggregates.Equipment.ValueObjects;
+﻿using Events.Domain.Aggregates.EquipmentAggregate.ValueObjects;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
 
-namespace Events.Domain.Aggregates.Equipment;
+namespace Events.Domain.Aggregates.EquipmentAggregate;
 
 /// <summary>
 ///     Оборудование.
