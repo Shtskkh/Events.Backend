@@ -306,6 +306,9 @@ public static class DomainErrorMessages
     /// </summary>
     public static class Equipment
     {
+        public static readonly string GreaterThanMaxLength =
+            $"Длина названия оборудования больше максимальной длины в {DomainConstraints.Equipment.MaxLength} символ(-ов).";
+
         /// <summary>
         ///     Ошибки типа оборудования.
         /// </summary>

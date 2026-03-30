@@ -1,0 +1,43 @@
+﻿using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Shared;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Events.Infrastructure.DataAccess.Context.Equipment.Configurations;
+
+/// <summary>
+///     Конфигурация оборудования.
+/// </summary>
+public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates.Equipment.Equipment>
+{
+    /// <inheritdoc />
+    public void Configure(EntityTypeBuilder<Domain.Aggregates.Equipment.Equipment> builder)
+    {
+        builder.ToTable("Equipment");
+
+        builder.HasKey(e => e.Id);
+
+        builder.Property(e => e.Id)
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
+
+        builder.OwnsOne(e => e.Title)
+            .Property(t => t.Value)
+            .HasColumnName("Title")
+            .HasMaxLength(DomainConstraints.Equipment.MaxLength)
+            .IsRequired();
+
+        builder.HasOne(e => e.Type)
+            .WithMany()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Type)
+            .AutoInclude();
+
+        builder.HasOne<Place>()
+            .WithMany()
+            .HasForeignKey(e => e.PlaceId)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
+}

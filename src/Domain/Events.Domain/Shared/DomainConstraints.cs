@@ -244,10 +244,18 @@ public static class DomainConstraints
     public static class Equipment
     {
         /// <summary>
+        ///     Максимальная длина названия.
+        /// </summary>
+        public const int MaxLength = 64;
+
+        /// <summary>
         ///     Константы типов оборудования.
         /// </summary>
         public static class Type
         {
+            /// <summary>
+            ///     Максимальная длина названия.
+            /// </summary>
             public const int MaxLength = 32;
         }
     }
