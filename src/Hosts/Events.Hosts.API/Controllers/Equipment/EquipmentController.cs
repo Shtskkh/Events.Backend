@@ -1,5 +1,7 @@
-﻿using Events.Application.Services.Features.Equipment.Queries.GetTypes;
+﻿using Events.Application.Services.Features.Equipment.Commands.Create;
+using Events.Application.Services.Features.Equipment.Queries.GetTypes;
 using Events.Contracts.Errors;
+using Events.Contracts.Features.Equipment;
 using Events.Contracts.Features.EquipmentTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +26,24 @@ public class EquipmentController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Создать оборудование.
+    /// </summary>
+    /// <param name="dto">Модель создания оборудования.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>ID созданного оборудования.</returns>
     [HttpPost]
-    public async Task<IActionResult> CreateAsync()
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
+        Description = "Оборудование создано.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Представленные данные в запросе не найдены.")]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateEquipmentDto dto, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var id = await mediator.Send(new CreateEquipmentCommand(dto), cancellationToken);
+
+        return StatusCode(StatusCodes.Status201Created, id);
     }
 
     [HttpPatch("{id:int}")]
