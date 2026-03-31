@@ -66,6 +66,7 @@ public static class DataAccessExtensions
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)

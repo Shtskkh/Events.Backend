@@ -95,6 +95,9 @@ public static class DataAccessErrorMessages
     /// </summary>
     public static class Equipment
     {
+        public const string NotFoundAny = "Оборудование по заданному фильтру не найдено.";
+        public const string NotFound = "Оборудование не найдено.";
+
         /// <summary>
         ///     Ошибки типов оборудования.
         /// </summary>
