@@ -249,6 +249,17 @@ public static class DomainConstraints
         public const int MaxLength = 64;
 
         /// <summary>
+        ///     Инвентарный номер.
+        /// </summary>
+        public static class InventoryNumber
+        {
+            /// <summary>
+            ///     Максимальная инвентарного номера.
+            /// </summary>
+            public const int MaxLength = 16;
+        }
+
+        /// <summary>
         ///     Константы типов оборудования.
         /// </summary>
         public static class Type

@@ -13,9 +13,11 @@ public class Equipment : Entity<int>, IAggregateRoot
     {
     }
 
-    public Equipment(int id, EquipmentTitle title, EquipmentType type, int? placeId = null) : base(id)
+    public Equipment(int id, EquipmentTitle title, InventoryNumber inventoryNumber, EquipmentType type,
+        int? placeId = null) : base(id)
     {
         Title = title;
+        InventoryNumber = inventoryNumber;
         Type = type;
         PlaceId = placeId;
     }
@@ -24,6 +26,11 @@ public class Equipment : Entity<int>, IAggregateRoot
     ///     Название.
     /// </summary>
     public EquipmentTitle Title { get; private set; } = null!;
+
+    /// <summary>
+    ///     Инвентарный номер.
+    /// </summary>
+    public InventoryNumber InventoryNumber { get; private set; } = null!;
 
     /// <summary>
     ///     Тип.
@@ -42,6 +49,15 @@ public class Equipment : Entity<int>, IAggregateRoot
     public void ChangeTitle(string title)
     {
         Title = new EquipmentTitle(title);
+    }
+
+    /// <summary>
+    ///     Изменить инвентарный номер.
+    /// </summary>
+    /// <param name="inventoryNumber">Новый номер.</param>
+    public void ChangeInventoryNumber(string inventoryNumber)
+    {
+        InventoryNumber = new InventoryNumber(inventoryNumber);
     }
 
     /// <summary>

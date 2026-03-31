@@ -22,7 +22,7 @@ public class CreateEquipmentHandler(
         if (dto.PlaceId.HasValue)
             await placeRepository.GetById(dto.PlaceId.Value, cancellationToken);
 
-        var equipment = EquipmentFactory.Create(dto.Title, type, dto.PlaceId);
+        var equipment = EquipmentFactory.Create(dto.Title, dto.InventoryNumber, type, dto.PlaceId);
         await equipmentRepository.AddAsync(equipment, cancellationToken);
 
         return equipment.Id;

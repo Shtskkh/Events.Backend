@@ -310,6 +310,15 @@ public static class DomainErrorMessages
             $"Длина названия оборудования больше максимальной длины в {DomainConstraints.Equipment.MaxLength} символ(-ов).";
 
         /// <summary>
+        ///     Ошибки инвентарного номера.
+        /// </summary>
+        public static class InventoryNumber
+        {
+            public static readonly string GreaterThanMaxLength =
+                $"Длина инвентарного номера больше максимальной длины в {DomainConstraints.Equipment.InventoryNumber.MaxLength} символ(-ов).";
+        }
+
+        /// <summary>
         ///     Ошибки типа оборудования.
         /// </summary>
         public static class Type

@@ -15,6 +15,11 @@ public record CreateEquipmentDto
     public string Title { get; init; } = null!;
 
     /// <summary>
+    ///     Инвентарный номер.
+    /// </summary>
+    public string InventoryNumber { get; init; } = null!;
+
+    /// <summary>
     ///     ID типа оборудования.
     /// </summary>
     public int EquipmentTypeId { get; init; }

@@ -27,6 +27,16 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates
             .HasMaxLength(DomainConstraints.Equipment.MaxLength)
             .IsRequired();
 
+        builder.OwnsOne(e => e.InventoryNumber, ownerBuilder =>
+        {
+            ownerBuilder.Property(e => e.Value)
+                .HasColumnName("InventoryNumber")
+                .HasMaxLength(DomainConstraints.Equipment.InventoryNumber.MaxLength)
+                .IsRequired();
+            
+            ownerBuilder.HasIndex(e => e.Value).IsUnique();
+        });
+
         builder.HasOne(e => e.Type)
             .WithMany()
             .IsRequired()
