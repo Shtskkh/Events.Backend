@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Equipment.Commands.Create;
+using Events.Application.Services.Features.Equipment.Queries.GetByFilter;
 using Events.Application.Services.Features.Equipment.Queries.GetTypes;
 using Events.Contracts.Errors;
 using Events.Contracts.Features.Equipment;
@@ -14,10 +15,25 @@ namespace Events.Hosts.API.Controllers.Equipment;
     Description = "Неожиданная ошибка сервера.")]
 public class EquipmentController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    ///     Получить оборудование по фильтру.
+    /// </summary>
+    /// <param name="filter">Фильтр.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция оборудования.</returns>
     [HttpGet]
-    public async Task<IActionResult> GetByFilterAsync()
+    [ProducesResponseType(typeof(IReadOnlyCollection<EquipmentDto>), StatusCodes.Status201Created, "text/plain",
+        Description = "Оборудование создано.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Оборудование по фильтру не найдено.")]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] EquipmentFilterDto filter,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var equipment = await mediator.Send(new GetEquipmentByFilterQuery(filter), cancellationToken);
+
+        return Ok(equipment);
     }
 
     [HttpGet("{id:int}")]
