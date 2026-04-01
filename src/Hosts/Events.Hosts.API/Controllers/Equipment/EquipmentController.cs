@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Equipment.Commands.Create;
+using Events.Application.Services.Features.Equipment.Commands.Delete;
 using Events.Application.Services.Features.Equipment.Queries.GetByFilter;
 using Events.Application.Services.Features.Equipment.Queries.GetTypes;
 using Events.Contracts.Errors;
@@ -68,10 +69,20 @@ public class EquipmentController(IMediator mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///     Удалить оборудование.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteAsync(int id)
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Оборудование удалено.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Оборудование не найдено.")]
+    public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new DeleteEquipmentCommand(id), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
