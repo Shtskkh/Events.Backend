@@ -260,22 +260,4 @@ public class LocationsController(IMediator mediator) : ControllerBase
 
         return Ok(types);
     }
-
-    [HttpGet("{locationId:int}/places/{placeId:int}/equipment")]
-    public async Task<IActionResult> GetPlaceEquipment(int locationId, int placeId)
-    {
-        throw new NotImplementedException();
-    }
-
-    [HttpPost("{locationId:int}/places/{placeId:int}/equipment")]
-    public async Task<IActionResult> CreatePlaceEquipment(int locationId, int placeId)
-    {
-        throw new NotImplementedException();
-    }
-
-    [HttpDelete("{locationId:int}/places/{placeId:int}/equipment/{equipmentId:int}")]
-    public async Task<IActionResult> DeletePlaceEquipment(int locationId, int placeId, int equipmentId)
-    {
-        throw new NotImplementedException();
-    }
 }
