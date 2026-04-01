@@ -12,17 +12,17 @@ public record CreateEquipmentDto
     ///     Название.
     /// </summary>
     [MaxLength(DomainConstraints.Equipment.MaxLength)]
-    public string Title { get; init; } = null!;
+    public required string Title { get; init; } = null!;
 
     /// <summary>
     ///     Инвентарный номер.
     /// </summary>
-    public string InventoryNumber { get; init; } = null!;
+    public required string InventoryNumber { get; init; } = null!;
 
     /// <summary>
     ///     ID типа оборудования.
     /// </summary>
-    public int EquipmentTypeId { get; init; }
+    public required int EquipmentTypeId { get; init; }
 
     /// <summary>
     ///     ID помещения для привязки.
