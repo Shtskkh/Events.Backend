@@ -1,4 +1,4 @@
-﻿namespace Events.Contracts.Features.Users.DTOs;
+﻿namespace Events.Contracts.Features.Users;
 
 /// <summary>
 ///     Модель аутентификации пользователя.

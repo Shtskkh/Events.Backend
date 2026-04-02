@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Users.Repositories;
-using Events.Contracts.Features.Users.DTOs;
+using Events.Contracts.Features.Users;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Queries.GetById;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Files;
 using Events.Contracts.Features.Files;
-using Events.Contracts.Features.Users.DTOs;
+using Events.Contracts.Features.Users;
 using Events.Domain.Aggregates.UserAggregate;
 
 namespace Events.Application.Services.Features.Users.Mappings;

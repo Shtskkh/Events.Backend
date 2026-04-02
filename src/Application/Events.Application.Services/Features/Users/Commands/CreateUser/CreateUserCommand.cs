@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Users.DTOs;
+﻿using Events.Contracts.Features.Users;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Commands.CreateUser;

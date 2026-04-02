@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Events.Contracts.Shared;
 
-namespace Events.Contracts.Features.Users.DTOs;
+namespace Events.Contracts.Features.Users;
 
 /// <summary>
 ///     Фильтр пользователей.

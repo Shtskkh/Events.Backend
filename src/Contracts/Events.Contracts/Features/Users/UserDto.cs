@@ -1,6 +1,6 @@
 ﻿using Events.Contracts.Features.Files;
 
-namespace Events.Contracts.Features.Users.DTOs;
+namespace Events.Contracts.Features.Users;
 
 /// <summary>
 ///     Информация о пользователе.

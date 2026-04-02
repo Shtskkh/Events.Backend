@@ -2,7 +2,7 @@
 using Events.Domain.Shared;
 using Microsoft.AspNetCore.Http;
 
-namespace Events.Contracts.Features.Users.DTOs;
+namespace Events.Contracts.Features.Users;
 
 /// <summary>
 ///     Форма создания пользователя.
