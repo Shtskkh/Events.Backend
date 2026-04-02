@@ -250,6 +250,8 @@ public static class DomainErrorMessages
     /// </summary>
     public static class Password
     {
+        public const string OldPasswordDoesNotMatch = "Прежний пароль не совпадает.";
+
         public static readonly string Invalid =
             $"Пароль не может содержать следующие символы: " +
             $"{string.Join(", ", DomainConstraints.Password.InvalidCharacters.Select(FormatChar))}.";

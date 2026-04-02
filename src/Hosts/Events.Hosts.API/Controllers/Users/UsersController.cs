@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Users.Commands.AuthUser;
+using Events.Application.Services.Features.Users.Commands.ChangePassword;
 using Events.Application.Services.Features.Users.Commands.CreateUser;
 using Events.Application.Services.Features.Users.Commands.DeleteUser;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
@@ -83,6 +84,26 @@ public class UsersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> UpdateAsync(Guid id)
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    ///     Изменить пароль.
+    /// </summary>
+    /// <param name="id">Идентификатор.</param>
+    /// <param name="dto">Модель изменения пароля.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    [HttpPatch("{id:guid}/password")]
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
+        Description = "Неправильный запрос.")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+        Description = "Пользователь не найден.")]
+    public async Task<IActionResult> ChangePassword(Guid id, [FromForm] ChangePasswordDto dto,
+        CancellationToken cancellationToken)
+    {
+        await mediator.Send(new ChangePasswordCommand(id, dto), cancellationToken);
+
+        return Ok();
     }
 
     /// <summary>
