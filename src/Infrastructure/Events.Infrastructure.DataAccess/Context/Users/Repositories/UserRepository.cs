@@ -60,6 +60,12 @@ public class UserRepository(IRepository<User, Guid, EventsDbContext> repository)
     }
 
     /// <inheritdoc />
+    public async Task UpdateAsync(User user, CancellationToken cancellationToken)
+    {
+        await repository.UpdateAsync(user, cancellationToken);
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(User user, CancellationToken cancellationToken)
     {
         await repository.DeleteAsync(user, cancellationToken);

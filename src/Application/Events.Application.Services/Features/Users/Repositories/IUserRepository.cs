@@ -35,10 +35,17 @@ public interface IUserRepository
     /// <summary>
     ///     Добавить пользователя.
     /// </summary>
-    /// <param name="user">Сущность пользователя.</param>
+    /// <param name="user">Пользователь.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданного пользователя.</returns>
     Task AddAsync(User user, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Обновить пользователя.
+    /// </summary>
+    /// <param name="user">Пользователь.</param>
+    /// <param name="cancellationToken"></param>
+    Task UpdateAsync(User user, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Удалить пользователя.
