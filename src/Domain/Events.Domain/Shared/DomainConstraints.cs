@@ -77,11 +77,6 @@ public static class DomainConstraints
         public static class Title
         {
             /// <summary>
-            ///     Минимальная длина.
-            /// </summary>
-            public const int MinLength = 1;
-
-            /// <summary>
             ///     Максимальная длина.
             /// </summary>
             public const int MaxLength = 256;
@@ -92,11 +87,6 @@ public static class DomainConstraints
         /// </summary>
         public static class Address
         {
-            /// <summary>
-            ///     Минимальная длина.
-            /// </summary>
-            public const int MinLength = 1;
-
             /// <summary>
             ///     Максимальная длина.
             /// </summary>
@@ -115,11 +105,6 @@ public static class DomainConstraints
         public static class Title
         {
             /// <summary>
-            ///     Минимальная длина.
-            /// </summary>
-            public const int MinLength = 1;
-
-            /// <summary>
             ///     Максимальная длина.
             /// </summary>
             public const int MaxLength = 64;
@@ -131,11 +116,6 @@ public static class DomainConstraints
         public static class Number
         {
             /// <summary>
-            ///     Минимальная длина.
-            /// </summary>
-            public const int MinLength = 1;
-
-            /// <summary>
             ///     Максимальная длина.
             /// </summary>
             public const int MaxLength = 4;
@@ -146,11 +126,6 @@ public static class DomainConstraints
         /// </summary>
         public static class Type
         {
-            /// <summary>
-            ///     Минимальная длина названия типа помещения.
-            /// </summary>
-            public const int MinLength = 1;
-
             /// <summary>
             ///     Максимальная длина названия типа помещения.
             /// </summary>

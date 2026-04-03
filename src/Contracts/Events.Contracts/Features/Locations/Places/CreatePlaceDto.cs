@@ -12,7 +12,7 @@ public class CreatePlaceDto
     /// <summary>
     ///     Номер.
     /// </summary>
-    [MinLength(DomainConstraints.Place.Number.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Place.Number.MaxLength)]
     public required string Number { get; init; }
 
@@ -31,7 +31,7 @@ public class CreatePlaceDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MinLength(DomainConstraints.Place.Title.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Place.Title.MaxLength)]
     public string? Title { get; init; }
 

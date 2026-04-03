@@ -24,14 +24,8 @@ public class PlaceNumber : ValueObject
     {
         Value = new Text(number).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Place.Number.MinLength:
-                throw new DomainException(DomainErrorMessages.Place.Number.LessThanMinLength);
-
-            case > DomainConstraints.Place.Number.MaxLength:
-                throw new DomainException(DomainErrorMessages.Place.Number.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Place.Number.MaxLength)
+            throw new DomainException(DomainErrorMessages.Place.Number.GreaterThanMaxLength);
 
         if (Value.Contains('-'))
             throw new DomainException(DomainErrorMessages.Place.Number.ContainsMinus);

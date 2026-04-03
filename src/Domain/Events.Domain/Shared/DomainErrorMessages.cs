@@ -123,9 +123,6 @@ public static class DomainErrorMessages
         /// </summary>
         public static class Title
         {
-            public static readonly string LessThanMinLength =
-                $"Название локации меньше минимальной длины в {DomainConstraints.Location.Title.MinLength} символ(-ов).";
-
             public static readonly string GreaterThanMaxLength =
                 $"Название локации больше максимальной длины в {DomainConstraints.Location.Title.MaxLength} символ(-ов).";
         }
@@ -135,9 +132,6 @@ public static class DomainErrorMessages
         /// </summary>
         public static class Address
         {
-            public static readonly string LessThanMinLength =
-                $"Адрес локации меньше минимальной длины в {DomainConstraints.Location.Address.MinLength} символ(-ов).";
-
             public static readonly string GreaterThanMaxLength =
                 $"Адрес локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
         }
@@ -155,9 +149,6 @@ public static class DomainErrorMessages
         /// </summary>
         public static class Title
         {
-            public static readonly string LessThanMinLength =
-                $"Название локации меньше минимальной длины в {DomainConstraints.Place.Title.MinLength} символ(-ов).";
-
             public static readonly string GreaterThanMaxLength =
                 $"Название помещения больше максимальной длины в {DomainConstraints.Place.Title.MaxLength} символ(-ов).";
         }
@@ -171,9 +162,6 @@ public static class DomainErrorMessages
                 "Номер помещения не может быть отрицательным.";
 
             public const string AlreadyExists = "Помещение с таким номером в данной локации уже существует.";
-
-            public static readonly string LessThanMinLength =
-                $"Номер помещения меньше минимальной длины в {DomainConstraints.Place.Number.MinLength} символ(-ов).";
 
             public static readonly string GreaterThanMaxLength =
                 $"Номер помещения больше максимальной длины в {DomainConstraints.Place.Number.MaxLength} символ(-ов).";
@@ -192,9 +180,6 @@ public static class DomainErrorMessages
         /// </summary>
         public static class Type
         {
-            public static readonly string LessThanMinLength =
-                $"Название типа помещения меньше минимальной длины в {DomainConstraints.Place.Type.MinLength} символ(-ов).";
-
             public static readonly string GreaterThanMaxLength =
                 $"Название типа помещения больше максимальной длины в {DomainConstraints.Place.Type.MaxLength} символ(-ов).";
         }

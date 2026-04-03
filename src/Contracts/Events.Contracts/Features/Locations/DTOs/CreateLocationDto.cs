@@ -12,14 +12,14 @@ public class CreateLocationDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MinLength(DomainConstraints.Location.Title.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Location.Title.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>
     ///     Адрес.
     /// </summary>
-    [MinLength(DomainConstraints.Location.Address.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Location.Address.MaxLength)]
     public required string Address { get; init; }
 

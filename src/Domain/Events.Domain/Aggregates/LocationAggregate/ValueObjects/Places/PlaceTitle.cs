@@ -24,14 +24,8 @@ public class PlaceTitle : ValueObject
     {
         Value = new Text(title).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Place.Title.MinLength:
-                throw new DomainException(DomainErrorMessages.Place.Title.LessThanMinLength);
-
-            case > DomainConstraints.Place.Title.MaxLength:
-                throw new DomainException(DomainErrorMessages.Place.Title.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Place.Title.MaxLength)
+            throw new DomainException(DomainErrorMessages.Place.Title.GreaterThanMaxLength);
     }
 
     /// <summary>

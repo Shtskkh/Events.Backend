@@ -11,7 +11,7 @@ public class UpdatePlaceDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MinLength(DomainConstraints.Place.Title.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Place.Title.MaxLength)]
     public string? Title { get; init; }
 

@@ -24,14 +24,8 @@ public class LocationAddress : ValueObject
     {
         Value = new Text(address).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Location.Address.MinLength:
-                throw new DomainException(DomainErrorMessages.Location.Address.LessThanMinLength);
-
-            case > DomainConstraints.Location.Address.MaxLength:
-                throw new DomainException(DomainErrorMessages.Location.Address.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Location.Address.MaxLength)
+            throw new DomainException(DomainErrorMessages.Location.Address.GreaterThanMaxLength);
     }
 
     /// <summary>

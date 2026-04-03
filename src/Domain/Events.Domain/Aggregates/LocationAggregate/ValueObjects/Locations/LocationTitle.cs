@@ -24,14 +24,8 @@ public class LocationTitle : ValueObject
     {
         Value = new Text(title).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Location.Title.MinLength:
-                throw new DomainException(DomainErrorMessages.Location.Title.LessThanMinLength);
-
-            case > DomainConstraints.Location.Title.MaxLength:
-                throw new DomainException(DomainErrorMessages.Location.Title.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Location.Title.MaxLength)
+            throw new DomainException(DomainErrorMessages.Location.Title.GreaterThanMaxLength);
     }
 
     /// <summary>
