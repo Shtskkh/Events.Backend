@@ -1,9 +1,11 @@
-﻿using Events.Application.Services.Features.Locations.Repositories;
+﻿using Ardalis.Specification;
+using Ardalis.Specification.EntityFrameworkCore;
+using Events.Application.Services.Features.Locations.Repositories;
 using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 using Events.Infrastructure.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 
@@ -14,6 +16,18 @@ public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository
     public async Task<Place> GetById(int id, CancellationToken cancellationToken)
     {
         var place = await repository.GetByIdAsync(id, cancellationToken);
+
+        if (place == null)
+            throw new NotFoundException(PlaceErrorMessages.NotFound);
+
+        return place;
+    }
+
+    public async Task<Place> GetAsync(Specification<Place> spec, CancellationToken cancellationToken)
+    {
+        var place = await repository.GetAllAsync()
+            .WithSpecification(spec)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (place == null)
             throw new NotFoundException(PlaceErrorMessages.NotFound);

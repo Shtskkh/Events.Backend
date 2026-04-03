@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate;
+﻿using Ardalis.Specification;
+using Events.Domain.Aggregates.LocationAggregate;
 
 namespace Events.Application.Services.Features.Locations.Repositories;
 
@@ -14,4 +15,12 @@ public interface IPlaceRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Сущность помещения.</returns>
     Task<Place> GetById(int id, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Получить помещение по спефикации.
+    /// </summary>
+    /// <param name="spec">Спефикация.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Помещение.</returns>
+    Task<Place> GetAsync(Specification<Place> spec, CancellationToken cancellationToken);
 }
