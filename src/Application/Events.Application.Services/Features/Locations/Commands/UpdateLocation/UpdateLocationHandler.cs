@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Locations.Specifications;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.UpdateLocation;
@@ -9,9 +10,10 @@ public class UpdateLocationHandler(ILocationRepository locationRepository) : IRe
     /// <inheritdoc />
     public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
     {
+        var spec = new LocationByIdSpec(request.LocationId);
+        var location = await locationRepository.GetAsync(spec, cancellationToken);
+
         var dto = request.UpdateDto;
-        const bool includePlaces = false;
-        var location = await locationRepository.GetByIdAsync(request.LocationId, includePlaces, cancellationToken);
 
         if (dto.Title != null)
             location.ChangeTitle(dto.Title);

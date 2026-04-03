@@ -26,20 +26,6 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
     }
 
     /// <inheritdoc />
-    public async Task<Location> GetByIdAsync(int id, bool includePlaces, CancellationToken cancellationToken)
-    {
-        var query = repository.GetAllAsync();
-        if (includePlaces)
-            query = query.Include(l => l.Places);
-
-        var location = await query.FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
-        if (location == null)
-            throw new NotFoundException(DataAccessErrorMessages.Location.NotFound);
-
-        return location;
-    }
-
-    /// <inheritdoc />
     public async Task<Location> GetAsync(
         BaseLocationSpec spec,
         CancellationToken cancellationToken)

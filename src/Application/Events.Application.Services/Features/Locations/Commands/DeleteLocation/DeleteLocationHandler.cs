@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Locations.Specifications;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.DeleteLocation;
@@ -9,9 +10,8 @@ public class DeleteLocationHandler(ILocationRepository locationRepository) : IRe
     /// <inheritdoc />
     public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
     {
-        const bool includePlaces = false;
-
-        var location = await locationRepository.GetByIdAsync(request.LocationId, includePlaces, cancellationToken);
+        var spec = new LocationByIdSpec(request.LocationId);
+        var location = await locationRepository.GetAsync(spec, cancellationToken);
 
         await locationRepository.DeleteAsync(location, cancellationToken);
     }
