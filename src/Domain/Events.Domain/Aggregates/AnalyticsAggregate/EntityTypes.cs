@@ -1,4 +1,4 @@
-﻿namespace Events.Domain.Shared.Entities.Analytics;
+﻿namespace Events.Domain.Aggregates.AnalyticsAggregate;
 
 /// <summary>
 ///     Типы сущностей для аналитики.

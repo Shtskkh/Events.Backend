@@ -1,4 +1,4 @@
-﻿using Events.Domain.Shared.Entities.Analytics.PagesViews;
+﻿using Events.Domain.Aggregates.AnalyticsAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

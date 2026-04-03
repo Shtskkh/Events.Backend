@@ -1,4 +1,4 @@
-﻿namespace Events.Domain.Shared.Entities.Analytics.Errors;
+﻿namespace Events.Domain.Aggregates.AnalyticsAggregate.Errors;
 
 public static class AnalyticsErrorMessages
 {

@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Interfaces;
 using Events.Contracts.Events;
-using Events.Domain.Shared.Entities.Analytics;
+using Events.Domain.Aggregates.AnalyticsAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetEventById;

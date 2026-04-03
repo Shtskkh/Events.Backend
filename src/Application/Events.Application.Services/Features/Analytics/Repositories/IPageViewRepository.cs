@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Domain.Shared.Entities.Analytics.PagesViews;
+using Events.Domain.Aggregates.AnalyticsAggregate;
 
 namespace Events.Application.Services.Features.Analytics.Repositories;
 

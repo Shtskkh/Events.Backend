@@ -1,4 +1,4 @@
-﻿namespace Events.Domain.Shared.Entities.Analytics.PagesViews;
+﻿namespace Events.Domain.Aggregates.AnalyticsAggregate;
 
 /// <summary>
 ///     Просмотр страницы.

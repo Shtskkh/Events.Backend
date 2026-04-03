@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Analytics.Repositories;
 using Events.Application.Services.Interfaces;
-using Events.Domain.Shared.Entities.Analytics.PagesViews;
+using Events.Domain.Aggregates.AnalyticsAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Behaviors;

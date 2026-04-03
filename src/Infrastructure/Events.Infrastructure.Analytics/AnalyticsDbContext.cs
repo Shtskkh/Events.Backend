@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Events.Domain.Shared.Entities.Analytics.PagesViews;
 using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.Analytics;
