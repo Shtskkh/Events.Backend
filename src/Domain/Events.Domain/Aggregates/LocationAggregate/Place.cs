@@ -1,6 +1,7 @@
 ﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Places;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
+using Events.Domain.Shared.Errors;
 using Events.Domain.Shared.Interfaces;
 using Events.Domain.Shared.ValueObjects;
 
@@ -97,7 +98,7 @@ public class Place : Entity<int>, IAuditable
     {
         Type = newType;
     }
-    
+
     /// <summary>
     ///     Добавить новое фото в конец.
     /// </summary>
@@ -106,7 +107,7 @@ public class Place : Entity<int>, IAuditable
     public void AddPhoto(string filename)
     {
         if (_photos.Any(p => p.Filename == filename))
-            throw new DomainException(DomainErrorMessages.Photo.AlreadyExists);
+            throw new DomainException(PhotoErrorMessages.AlreadyExists);
 
         _photos.Add(new OrderedPhoto(filename, _photos.Count));
     }
@@ -120,7 +121,7 @@ public class Place : Entity<int>, IAuditable
     {
         var photo = _photos.FirstOrDefault(p => p.Filename == filename);
         if (photo == null)
-            throw new NotFoundException(DomainErrorMessages.Photo.NotFound);
+            throw new NotFoundException(PhotoErrorMessages.NotFound);
 
         _photos.Remove(photo);
     }

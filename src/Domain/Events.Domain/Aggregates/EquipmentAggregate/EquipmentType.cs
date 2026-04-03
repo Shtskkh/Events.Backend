@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.EquipmentAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
@@ -23,7 +24,7 @@ public class EquipmentType : Entity<int>
         Title = new Text(title).Value;
 
         if (Title.Length > DomainConstraints.Equipment.Type.MaxLength)
-            throw new DomainException(DomainErrorMessages.Equipment.Type.GreaterThanMaxLength);
+            throw new DomainException(EquipmentErrorMessages.Type.GreaterThanMaxLength);
     }
 
     public string Title { get; } = null!;

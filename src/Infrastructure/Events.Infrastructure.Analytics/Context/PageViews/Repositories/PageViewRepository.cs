@@ -3,6 +3,7 @@ using Ardalis.Specification.EntityFrameworkCore;
 using Events.Application.Services.Features.Analytics.Repositories;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
+using Events.Domain.Shared.Entities.Analytics.Errors;
 using Events.Domain.Shared.Entities.Analytics.PagesViews;
 using Events.Infrastructure.Analytics.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public class PageViewRepository(IRepository<PageView, AnalyticsDbContext> reposi
             .ToListAsync(ct);
 
         if (views.Count == 0)
-            throw new NotFoundException(DomainErrorMessages.Analytics.PageViews.NotFoundAny);
+            throw new NotFoundException(AnalyticsErrorMessages.PageViews.NotFoundAny);
 
         return views;
     }

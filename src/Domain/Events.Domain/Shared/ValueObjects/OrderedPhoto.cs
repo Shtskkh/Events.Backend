@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Exceptions;
+using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
 
@@ -20,10 +21,10 @@ public class OrderedPhoto : ValueObject
     public OrderedPhoto(string filename, int order)
     {
         if (string.IsNullOrWhiteSpace(filename))
-            throw new DomainException(DomainErrorMessages.Photo.FileNameNullOrWhiteSpace);
+            throw new DomainException(PhotoErrorMessages.FileNameNullOrWhiteSpace);
 
         if (order < 0)
-            throw new DomainException(DomainErrorMessages.Photo.InvalidOrder);
+            throw new DomainException(PhotoErrorMessages.InvalidOrder);
 
         Filename = filename;
         Order = order;
