@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Exceptions;
+using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
 
@@ -17,7 +18,7 @@ public class Text : ValueObject
     public Text(string text)
     {
         if (string.IsNullOrWhiteSpace(text))
-            throw new DomainException(DomainErrorMessages.Text.NullOrWhiteSpace);
+            throw new DomainException(TextErrorMessages.NullOrWhiteSpace);
 
         Value = text.Trim();
     }

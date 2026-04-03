@@ -6,14 +6,6 @@
 public static class DomainErrorMessages
 {
     /// <summary>
-    ///     Ошибки текста.
-    /// </summary>
-    public static class Text
-    {
-        public const string NullOrWhiteSpace = "Текстовое поле не может быть null или пустым.";
-    }
-
-    /// <summary>
     ///     Ошибки мероприятия.
     /// </summary>
     public static class Event
