@@ -22,9 +22,9 @@ public class PlaceNumber : ValueObject
     /// </exception>
     public PlaceNumber(string number)
     {
-        var value = new Text(number).Value;
+        Value = new Text(number).Value;
 
-        switch (value.Length)
+        switch (Value.Length)
         {
             case < DomainConstraints.Place.Number.MinLength:
                 throw new DomainException(DomainErrorMessages.Place.Number.LessThanMinLength);
@@ -33,10 +33,8 @@ public class PlaceNumber : ValueObject
                 throw new DomainException(DomainErrorMessages.Place.Number.GreaterThanMaxLength);
         }
 
-        if (value.Contains('-'))
+        if (Value.Contains('-'))
             throw new DomainException(DomainErrorMessages.Place.Number.ContainsMinus);
-
-        Value = value;
     }
 
     /// <summary>

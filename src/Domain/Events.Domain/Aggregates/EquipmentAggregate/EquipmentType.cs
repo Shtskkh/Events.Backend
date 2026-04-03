@@ -20,13 +20,11 @@ public class EquipmentType : Entity<int>
 
     public EquipmentType(int id, string title) : base(id)
     {
-        var value = new Text(title).Value;
+        Title = new Text(title).Value;
 
-        if (value.Length > DomainConstraints.Equipment.Type.MaxLength)
+        if (Title.Length > DomainConstraints.Equipment.Type.MaxLength)
             throw new DomainException(DomainErrorMessages.Equipment.Type.GreaterThanMaxLength);
-
-        Title = value;
     }
 
-    public string Title { get; private set; } = null!;
+    public string Title { get; } = null!;
 }

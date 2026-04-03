@@ -22,26 +22,21 @@ public class PersonName : ValueObject
     /// <exception cref="DomainException"></exception>
     public PersonName(string lastName, string firstName, string? patronymic = null)
     {
-        var lastNameValue = new Text(lastName).Value;
-        var firstNameValue = new Text(firstName).Value;
-        if (firstNameValue.Length > DomainConstraints.User.PersonName.MaxLength)
-            throw new DomainException(DomainErrorMessages.User.PersonName.FirstNameGreaterThanMaxLength);
-
-        if (lastNameValue.Length > DomainConstraints.User.PersonName.MaxLength)
+        LastName = new Text(lastName).Value;
+        if (LastName.Length > DomainConstraints.User.PersonName.MaxLength)
             throw new DomainException(DomainErrorMessages.User.PersonName.LastNameGreaterThanMaxLength);
+
+        FirstName = new Text(firstName).Value;
+        if (FirstName.Length > DomainConstraints.User.PersonName.MaxLength)
+            throw new DomainException(DomainErrorMessages.User.PersonName.FirstNameGreaterThanMaxLength);
 
         if (patronymic != null)
         {
-            var patronymicValue = new Text(patronymic).Value;
+            Patronymic = new Text(patronymic).Value;
 
-            if (patronymicValue.Length > DomainConstraints.User.PersonName.MaxLength)
+            if (Patronymic.Length > DomainConstraints.User.PersonName.MaxLength)
                 throw new DomainException(DomainErrorMessages.User.PersonName.PatronymicGreaterThanMaxLength);
-
-            Patronymic = patronymicValue;
         }
-
-        FirstName = firstNameValue;
-        LastName = lastNameValue;
     }
 
     /// <summary>

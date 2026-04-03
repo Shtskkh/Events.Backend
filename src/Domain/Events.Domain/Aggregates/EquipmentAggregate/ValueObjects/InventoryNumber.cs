@@ -15,13 +15,11 @@ public class InventoryNumber
 
     public InventoryNumber(string number)
     {
-        var value = new Text(number).Value;
+        Value = new Text(number).Value;
 
-        if (value.Length > DomainConstraints.Equipment.InventoryNumber.MaxLength)
+        if (Value.Length > DomainConstraints.Equipment.InventoryNumber.MaxLength)
             throw new DomainException(DomainErrorMessages.Equipment.InventoryNumber.GreaterThanMaxLength);
-
-        Value = value;
     }
 
-    public string Value { get; private set; } = null!;
+    public string Value { get; } = null!;
 }

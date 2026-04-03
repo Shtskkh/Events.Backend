@@ -22,9 +22,9 @@ public class PlaceTitle : ValueObject
     /// </exception>
     public PlaceTitle(string title)
     {
-        var value = new Text(title).Value;
+        Value = new Text(title).Value;
 
-        switch (value.Length)
+        switch (Value.Length)
         {
             case < DomainConstraints.Place.Title.MinLength:
                 throw new DomainException(DomainErrorMessages.Place.Title.LessThanMinLength);
@@ -32,8 +32,6 @@ public class PlaceTitle : ValueObject
             case > DomainConstraints.Place.Title.MaxLength:
                 throw new DomainException(DomainErrorMessages.Place.Title.GreaterThanMaxLength);
         }
-
-        Value = value;
     }
 
     /// <summary>

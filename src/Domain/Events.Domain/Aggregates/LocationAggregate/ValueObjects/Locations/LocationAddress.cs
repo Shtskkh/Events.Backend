@@ -22,9 +22,9 @@ public class LocationAddress : ValueObject
     /// </exception>
     public LocationAddress(string address)
     {
-        var value = new Text(address).Value;
+        Value = new Text(address).Value;
 
-        switch (value.Length)
+        switch (Value.Length)
         {
             case < DomainConstraints.Location.Address.MinLength:
                 throw new DomainException(DomainErrorMessages.Location.Address.LessThanMinLength);
@@ -32,8 +32,6 @@ public class LocationAddress : ValueObject
             case > DomainConstraints.Location.Address.MaxLength:
                 throw new DomainException(DomainErrorMessages.Location.Address.GreaterThanMaxLength);
         }
-
-        Value = value;
     }
 
     /// <summary>

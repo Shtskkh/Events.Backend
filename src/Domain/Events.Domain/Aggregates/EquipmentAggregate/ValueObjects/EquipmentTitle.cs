@@ -15,12 +15,10 @@ public class EquipmentTitle : ValueObject
 
     public EquipmentTitle(string title)
     {
-        var value = new Text(title).Value;
+        Value = new Text(title).Value;
 
-        if (value.Length > DomainConstraints.Equipment.MaxLength)
+        if (Value.Length > DomainConstraints.Equipment.MaxLength)
             throw new DomainException(DomainErrorMessages.Equipment.GreaterThanMaxLength);
-
-        Value = value;
     }
 
     public string Value { get; } = null!;

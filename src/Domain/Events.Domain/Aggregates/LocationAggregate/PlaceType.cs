@@ -38,9 +38,9 @@ public class PlaceType : Entity<int>
     /// </exception>
     public PlaceType(int id, string title) : base(id)
     {
-        var value = new Text(title).Value;
+        Title = new Text(title).Value;
 
-        switch (value.Length)
+        switch (Title.Length)
         {
             case < DomainConstraints.Place.Type.MinLength:
                 throw new DomainException(DomainErrorMessages.Place.Type.LessThanMinLength);
@@ -48,8 +48,6 @@ public class PlaceType : Entity<int>
             case > DomainConstraints.Place.Type.MaxLength:
                 throw new DomainException(DomainErrorMessages.Place.Type.GreaterThanMaxLength);
         }
-
-        Title = title;
     }
 
     /// <summary>
