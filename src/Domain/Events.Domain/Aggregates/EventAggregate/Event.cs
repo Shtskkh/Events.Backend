@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+﻿using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
@@ -223,13 +224,13 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void AddParticipant(Guid userId)
     {
         if (!NeedsRegistration)
-            throw new DomainException(DomainErrorMessages.Event.Participant.RegistrationNotRequired);
+            throw new DomainException(EventErrorMessages.Participant.RegistrationNotRequired);
 
         if (_participants.Any(p => p.UserId == userId))
-            throw new DomainException(DomainErrorMessages.Event.Participant.AlreadyRegistered);
+            throw new DomainException(EventErrorMessages.Participant.AlreadyRegistered);
 
         if (MaxParticipants.HasValue && _participants.Count >= MaxParticipants.Value)
-            throw new DomainException(DomainErrorMessages.Event.Participant.MaxCountReached);
+            throw new DomainException(EventErrorMessages.Participant.MaxCountReached);
 
         _participants.Add(new EventParticipant(Id, userId));
     }
@@ -244,7 +245,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         var participant = _participants.FirstOrDefault(p => p.UserId == userId);
 
         if (participant == null)
-            throw new NotFoundException(DomainErrorMessages.Event.Participant.NotFound);
+            throw new NotFoundException(EventErrorMessages.Participant.NotFound);
 
         _participants.Remove(participant);
     }
@@ -257,7 +258,7 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void Book(int placeId)
     {
         if (Format.Id == EventFormat.Online.Id)
-            throw new DomainException(DomainErrorMessages.Event.Booking.NotAllowedForOnline);
+            throw new DomainException(EventErrorMessages.Booking.NotAllowedForOnline);
 
         PlaceId = placeId;
     }

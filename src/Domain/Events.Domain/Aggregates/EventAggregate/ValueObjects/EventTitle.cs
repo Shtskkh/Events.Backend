@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
@@ -25,7 +26,7 @@ public class EventTitle : ValueObject
         Value = new Text(title).Value;
 
         if (Value.Length > DomainConstraints.Event.Title.MaxLength)
-            throw new DomainException(DomainErrorMessages.Event.Title.GreaterThanMaxLength);
+            throw new DomainException(EventErrorMessages.Title.GreaterThanMaxLength);
     }
 
     /// <summary>

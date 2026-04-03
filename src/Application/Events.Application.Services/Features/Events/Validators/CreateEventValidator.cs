@@ -1,5 +1,6 @@
 ﻿using Events.Application.Services.Shared;
 using Events.Contracts.Features.Events.DTOs;
+using Events.Domain.Aggregates.EventAggregate.Errors;
 using Events.Domain.Shared;
 using FluentValidation;
 
@@ -13,12 +14,12 @@ public class CreateEventValidator : AbstractValidator<CreateEventDto>
     {
         RuleFor(x => x)
             .Must(x => x.Preview == null || string.IsNullOrWhiteSpace(x.Placeholder))
-            .WithMessage(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeSet)
+            .WithMessage(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet)
             .DependentRules(() =>
             {
                 RuleFor(x => x)
                     .Must(x => x.Preview != null || !string.IsNullOrWhiteSpace(x.Placeholder))
-                    .WithMessage(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+                    .WithMessage(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
             });
 
         RuleFor(x => x.Preview)

@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.EventAggregate.ValueObjects;
+﻿using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 
@@ -38,16 +39,16 @@ public static class EventFactory
         var dateTimeRange = new EventDateTimeRange(startDateTime, endDateTime);
 
         if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
 
         if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(DomainErrorMessages.Event.Preview.PlaceholderAndPreviewCannotBothBeSet);
+            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet);
 
         if (needRegistration && !maxParticipants.HasValue)
-            throw new DomainException(DomainErrorMessages.Event.Participant.MaxCountMustBeSet);
+            throw new DomainException(EventErrorMessages.Participant.MaxCountMustBeSet);
 
         if (eventFormat.Id != EventFormat.Online.Id && !placeId.HasValue)
-            throw new DomainException(DomainErrorMessages.Event.Booking.RequiredForOffline);
+            throw new DomainException(EventErrorMessages.Booking.RequiredForOffline);
 
         var @event = new Event(
             id,

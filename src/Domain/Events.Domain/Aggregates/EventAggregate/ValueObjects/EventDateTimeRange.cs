@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 
 namespace Events.Domain.Aggregates.EventAggregate.ValueObjects;
@@ -21,10 +22,10 @@ public class EventDateTimeRange : ValueObject
     public EventDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
         if (start >= end)
-            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.StartLaterThanEnd);
+            throw new DomainException(EventErrorMessages.DateTimeRange.StartLaterThanEnd);
 
         if (end - start > TimeSpan.FromDays(DomainConstraints.Event.DateTimeRange.MaxDurationInDays))
-            throw new DomainException(DomainErrorMessages.Event.DateTimeRange.DurationGreaterThanMax);
+            throw new DomainException(EventErrorMessages.DateTimeRange.DurationGreaterThanMax);
 
         StartDateTime = start.ToUniversalTime();
         EndDateTime = end.ToUniversalTime();

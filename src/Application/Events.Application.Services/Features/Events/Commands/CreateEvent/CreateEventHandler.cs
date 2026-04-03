@@ -4,6 +4,7 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.EventAggregate.Errors;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
@@ -55,7 +56,7 @@ public class CreateEventHandler(
                     dto.PlaceId.Value, dto.StartDateTime, dto.EndDateTime, cancellationToken);
 
                 if (hasConflict)
-                    throw new DomainException(DomainErrorMessages.Event.Booking.TimeConflict);
+                    throw new DomainException(EventErrorMessages.Booking.TimeConflict);
             }
 
             var @event = EventFactory.Create(

@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
@@ -41,7 +42,7 @@ public class EventType : Entity<int>
         Title = new Text(title).Value;
 
         if (Title.Length > DomainConstraints.Event.Type.MaxLength)
-            throw new DomainException(DomainErrorMessages.Event.Type.GreaterThanMaxLenght);
+            throw new DomainException(EventErrorMessages.Type.GreaterThanMaxLenght);
     }
 
     /// <summary>
