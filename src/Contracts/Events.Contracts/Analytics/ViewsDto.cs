@@ -1,4 +1,4 @@
-﻿namespace Events.Contracts.Shared;
+﻿namespace Events.Contracts.Analytics;
 
 /// <summary>
 ///     Модель посещаемости по дням.

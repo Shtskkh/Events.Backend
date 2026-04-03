@@ -1,4 +1,5 @@
-﻿using Events.Contracts.Shared;
+﻿using Events.Contracts.Analytics;
+using Events.Contracts.Shared;
 
 namespace Events.Contracts.Events;
 
