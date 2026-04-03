@@ -16,11 +16,6 @@ public static class DomainConstraints
         public static class Title
         {
             /// <summary>
-            ///     Минимальная длина названия мероприятия.
-            /// </summary>
-            public const int MinLength = 2;
-
-            /// <summary>
             ///     Максимальная длина названия мероприятия.
             /// </summary>
             public const int MaxLength = 128;
@@ -32,11 +27,6 @@ public static class DomainConstraints
         public static class Announcement
         {
             /// <summary>
-            ///     Минимальная длина анонса мероприятия.
-            /// </summary>
-            public const int MinLength = 2;
-
-            /// <summary>
             ///     Максимальная длина анонса мероприятия.
             /// </summary>
             public const int MaxLength = 64;
@@ -47,11 +37,6 @@ public static class DomainConstraints
         /// </summary>
         public static class Description
         {
-            /// <summary>
-            ///     Минимальная длина описания мероприятия.
-            /// </summary>
-            public const int MinLength = 2;
-
             /// <summary>
             ///     Максимальная длина описания мероприятия.
             /// </summary>
@@ -74,11 +59,6 @@ public static class DomainConstraints
         /// </summary>
         public static class Type
         {
-            /// <summary>
-            ///     Минимальная длина названия типа мероприятия.
-            /// </summary>
-            public const int MinLength = 2;
-
             /// <summary>
             ///     Максимальная длина названия типа мероприятия.
             /// </summary>

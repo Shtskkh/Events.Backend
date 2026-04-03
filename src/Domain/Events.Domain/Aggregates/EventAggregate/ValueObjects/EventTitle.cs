@@ -24,14 +24,8 @@ public class EventTitle : ValueObject
     {
         Value = new Text(title).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Event.Title.MinLength:
-                throw new DomainException(DomainErrorMessages.Event.Title.LessThanMinLenght);
-
-            case > DomainConstraints.Event.Title.MaxLength:
-                throw new DomainException(DomainErrorMessages.Event.Title.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Event.Title.MaxLength)
+            throw new DomainException(DomainErrorMessages.Event.Title.GreaterThanMaxLength);
     }
 
     /// <summary>

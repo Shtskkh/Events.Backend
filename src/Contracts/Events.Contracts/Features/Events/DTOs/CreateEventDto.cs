@@ -17,21 +17,21 @@ public class CreateEventDto
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    [MinLength(DomainConstraints.Event.Title.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Event.Title.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>
     ///     Анонс мероприятия.
     /// </summary>
-    [MinLength(DomainConstraints.Event.Announcement.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Event.Announcement.MaxLength)]
     public required string Announcement { get; init; }
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
-    [MinLength(DomainConstraints.Event.Description.MinLength)]
+    [MinLength(1)]
     [MaxLength(DomainConstraints.Event.Description.MaxLength)]
     public required string Description { get; init; }
 

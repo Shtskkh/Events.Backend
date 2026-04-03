@@ -24,14 +24,8 @@ public class EventDescription : ValueObject
     {
         Value = new Text(description).Value;
 
-        switch (Value.Length)
-        {
-            case < DomainConstraints.Event.Description.MinLength:
-                throw new DomainException(DomainErrorMessages.Event.Description.LessThanMinLenght);
-
-            case > DomainConstraints.Event.Description.MaxLength:
-                throw new DomainException(DomainErrorMessages.Event.Description.GreaterThanMaxLength);
-        }
+        if (Value.Length > DomainConstraints.Event.Description.MaxLength)
+            throw new DomainException(DomainErrorMessages.Event.Description.GreaterThanMaxLength);
     }
 
     /// <summary>

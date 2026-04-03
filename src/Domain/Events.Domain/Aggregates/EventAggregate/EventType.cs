@@ -38,18 +38,10 @@ public class EventType : Entity<int>
     /// </exception>
     public EventType(int id, string title) : base(id)
     {
-        var value = new Text(title).Value;
+        Title = new Text(title).Value;
 
-        switch (value.Length)
-        {
-            case < DomainConstraints.Event.Type.MinLength:
-                throw new DomainException(DomainErrorMessages.Event.Type.LessThanMinLenght);
-
-            case > DomainConstraints.Event.Type.MaxLength:
-                throw new DomainException(DomainErrorMessages.Event.Type.GreaterThanMaxLenght);
-        }
-
-        Title = value;
+        if (Title.Length > DomainConstraints.Event.Type.MaxLength)
+            throw new DomainException(DomainErrorMessages.Event.Type.GreaterThanMaxLenght);
     }
 
     /// <summary>
