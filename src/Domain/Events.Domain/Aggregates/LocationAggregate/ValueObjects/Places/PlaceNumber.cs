@@ -29,7 +29,7 @@ public class PlaceNumber : ValueObject
         if (Value.Length > PlaceConstraints.Number.MaxLength)
             throw new DomainException(PlaceErrorMessages.Number.GreaterThanMaxLength);
 
-        if (Value.Contains('-'))
+        if (Value[0] == '-')
             throw new DomainException(PlaceErrorMessages.Number.ContainsMinus);
     }
 
