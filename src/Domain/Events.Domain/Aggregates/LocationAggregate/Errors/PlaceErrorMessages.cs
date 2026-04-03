@@ -2,6 +2,9 @@
 
 namespace Events.Domain.Aggregates.LocationAggregate.Errors;
 
+/// <summary>
+///     Ошибки помещений.
+/// </summary>
 public static class PlaceErrorMessages
 {
     public const string NotFound = "Помещение не найдено.";

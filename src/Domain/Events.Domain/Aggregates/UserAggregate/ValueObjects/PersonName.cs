@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.UserAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
@@ -24,18 +25,18 @@ public class PersonName : ValueObject
     {
         LastName = new Text(lastName).Value;
         if (LastName.Length > DomainConstraints.User.PersonName.MaxLength)
-            throw new DomainException(DomainErrorMessages.User.PersonName.LastNameGreaterThanMaxLength);
+            throw new DomainException(UserErrorMessages.PersonName.LastNameGreaterThanMaxLength);
 
         FirstName = new Text(firstName).Value;
         if (FirstName.Length > DomainConstraints.User.PersonName.MaxLength)
-            throw new DomainException(DomainErrorMessages.User.PersonName.FirstNameGreaterThanMaxLength);
+            throw new DomainException(UserErrorMessages.PersonName.FirstNameGreaterThanMaxLength);
 
         if (patronymic != null)
         {
             Patronymic = new Text(patronymic).Value;
 
             if (Patronymic.Length > DomainConstraints.User.PersonName.MaxLength)
-                throw new DomainException(DomainErrorMessages.User.PersonName.PatronymicGreaterThanMaxLength);
+                throw new DomainException(UserErrorMessages.PersonName.PatronymicGreaterThanMaxLength);
         }
     }
 
