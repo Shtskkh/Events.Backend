@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Contracts.Features.Equipment;
+using Events.Contracts.Equipment;
 
 namespace Events.Application.Services.Features.Equipment.Specifications;
 

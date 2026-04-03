@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Files;
-using Events.Contracts.Features.Files;
-using Events.Contracts.Features.Locations.DTOs;
+using Events.Contracts.Files;
+using Events.Contracts.Locations;
 using Events.Domain.Aggregates.LocationAggregate;
 
 namespace Events.Application.Services.Features.Locations.Mappings;

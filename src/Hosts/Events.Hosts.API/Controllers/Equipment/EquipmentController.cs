@@ -2,9 +2,9 @@
 using Events.Application.Services.Features.Equipment.Commands.Delete;
 using Events.Application.Services.Features.Equipment.Queries.GetByFilter;
 using Events.Application.Services.Features.Equipment.Queries.GetTypes;
+using Events.Contracts.Equipment;
+using Events.Contracts.Equipment.EquipmentTypes;
 using Events.Contracts.Errors;
-using Events.Contracts.Features.Equipment;
-using Events.Contracts.Features.EquipmentTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

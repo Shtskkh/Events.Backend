@@ -11,10 +11,10 @@ using Events.Application.Services.Features.Events.Queries.GetEventById;
 using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Contracts.Errors;
-using Events.Contracts.Features.Events.DTOs;
-using Events.Contracts.Features.Events.EventsFormats;
-using Events.Contracts.Features.Events.EventsTypes;
-using Events.Contracts.Features.Events.Participants;
+using Events.Contracts.Events;
+using Events.Contracts.Events.EventsFormats;
+using Events.Contracts.Events.EventsTypes;
+using Events.Contracts.Events.Participants;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

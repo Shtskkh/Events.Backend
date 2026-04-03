@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Files;
+﻿using Events.Contracts.Files;
 using MediatR;
 
 namespace Events.Application.Services.Features.Files.Queries.GetFile;

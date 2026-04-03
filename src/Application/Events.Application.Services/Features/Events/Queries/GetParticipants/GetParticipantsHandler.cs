@@ -1,7 +1,7 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Repositories;
-using Events.Contracts.Features.Events.Participants;
+using Events.Contracts.Events.Participants;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;

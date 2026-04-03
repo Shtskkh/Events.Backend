@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Events.Contracts.Features.Events.EventsTypes;
+using Events.Contracts.Events.EventsTypes;
 using Events.Domain.Aggregates.EventAggregate;
 
 namespace Events.Application.Services.Features.Events.Mappings;

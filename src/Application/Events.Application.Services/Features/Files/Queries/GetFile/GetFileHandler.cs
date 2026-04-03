@@ -1,5 +1,5 @@
 ﻿using Amazon.S3.Model;
-using Events.Contracts.Features.Files;
+using Events.Contracts.Files;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Users;
+﻿using Events.Contracts.Users;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Commands.ChangePassword;

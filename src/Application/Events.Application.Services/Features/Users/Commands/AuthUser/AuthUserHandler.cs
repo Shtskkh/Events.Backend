@@ -2,7 +2,7 @@
 using Events.Application.Services.Features.Tokens.Jwt;
 using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Shared;
-using Events.Contracts.Features.Users;
+using Events.Contracts.Users;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Exceptions;
 using MediatR;

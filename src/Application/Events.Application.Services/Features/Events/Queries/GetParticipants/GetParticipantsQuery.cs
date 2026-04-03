@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Events.Participants;
+﻿using Events.Contracts.Events.Participants;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;

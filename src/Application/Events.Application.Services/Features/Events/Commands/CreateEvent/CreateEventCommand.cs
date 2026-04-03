@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Events.DTOs;
+﻿using Events.Contracts.Events;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.CreateEvent;

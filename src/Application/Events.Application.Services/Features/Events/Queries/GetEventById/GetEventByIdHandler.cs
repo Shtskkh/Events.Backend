@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Locations.Repositories;
-using Events.Contracts.Features.Events.DTOs;
-using Events.Contracts.Features.Locations.Places;
+using Events.Contracts.Events;
+using Events.Contracts.Places;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetEventById;

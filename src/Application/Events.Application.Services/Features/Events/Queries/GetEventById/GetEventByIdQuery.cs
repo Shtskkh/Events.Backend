@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Interfaces;
-using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Events;
 using Events.Domain.Shared.Entities.Analytics;
 using MediatR;
 

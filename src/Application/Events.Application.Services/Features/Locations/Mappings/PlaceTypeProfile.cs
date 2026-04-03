@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Events.Contracts.Features.Locations.PlacesTypes;
+using Events.Contracts.Places.PlacesTypes;
 using Events.Domain.Aggregates.LocationAggregate;
 
 namespace Events.Application.Services.Features.Locations.Mappings;

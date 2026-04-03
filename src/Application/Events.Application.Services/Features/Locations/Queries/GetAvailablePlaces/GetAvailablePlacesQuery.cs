@@ -1,4 +1,4 @@
-﻿using Events.Contracts.Features.Locations.Places;
+﻿using Events.Contracts.Places;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;

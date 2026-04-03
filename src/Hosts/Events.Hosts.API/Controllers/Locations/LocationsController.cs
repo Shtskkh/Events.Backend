@@ -11,9 +11,9 @@ using Events.Application.Services.Features.Locations.Queries.GetLocationById;
 using Events.Application.Services.Features.Locations.Queries.GetLocationPlaces;
 using Events.Application.Services.Features.Locations.Queries.GetPlaceById;
 using Events.Contracts.Errors;
-using Events.Contracts.Features.Locations.DTOs;
-using Events.Contracts.Features.Locations.Places;
-using Events.Contracts.Features.Locations.PlacesTypes;
+using Events.Contracts.Locations;
+using Events.Contracts.Places;
+using Events.Contracts.Places.PlacesTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

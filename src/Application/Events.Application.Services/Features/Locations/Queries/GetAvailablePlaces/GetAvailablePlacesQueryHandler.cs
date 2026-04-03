@@ -1,7 +1,7 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
-using Events.Contracts.Features.Locations.Places;
+using Events.Contracts.Places;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Equipment.Repositories;
 using Events.Application.Services.Features.Equipment.Specifications;
-using Events.Contracts.Features.Equipment;
+using Events.Contracts.Equipment;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Queries.GetByFilter;

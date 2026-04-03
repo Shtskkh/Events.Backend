@@ -6,8 +6,8 @@ using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
 using Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
 using Events.Contracts.Errors;
-using Events.Contracts.Features.Events.DTOs;
-using Events.Contracts.Features.Users;
+using Events.Contracts.Events;
+using Events.Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Equipment.Repositories;
-using Events.Contracts.Features.EquipmentTypes;
+using Events.Contracts.Equipment.EquipmentTypes;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Queries.GetTypes;

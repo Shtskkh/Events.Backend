@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Contracts.Features.Events.EventsFormats;
+using Events.Contracts.Events.EventsFormats;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;

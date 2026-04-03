@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Events;
 using Events.Domain.Aggregates.EventAggregate;
 
 namespace Events.Application.Services.Features.Events.Specifications;

@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Contracts.Features.Users;
+using Events.Contracts.Users;
 using Events.Domain.Aggregates.UserAggregate;
 
 namespace Events.Application.Services.Features.Users.Specifications;

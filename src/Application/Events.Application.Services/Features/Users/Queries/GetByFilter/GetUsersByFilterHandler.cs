@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Features.Users.Specifications;
-using Events.Contracts.Features.Users;
+using Events.Contracts.Users;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Queries.GetByFilter;

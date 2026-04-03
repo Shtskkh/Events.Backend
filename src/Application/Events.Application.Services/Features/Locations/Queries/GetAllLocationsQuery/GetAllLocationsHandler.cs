@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Locations.Repositories;
-using Events.Contracts.Features.Locations.DTOs;
+using Events.Contracts.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;

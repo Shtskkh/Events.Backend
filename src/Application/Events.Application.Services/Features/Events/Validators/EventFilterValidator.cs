@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Shared;
-using Events.Contracts.Features.Events.DTOs;
+using Events.Contracts.Events;
 using FluentValidation;
 
 namespace Events.Application.Services.Features.Events.Validators;
