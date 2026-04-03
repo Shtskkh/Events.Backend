@@ -1,5 +1,6 @@
 ﻿using Events.Domain.Aggregates.UserAggregate;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.UserAggregate.Constraints;
+using Events.Domain.Shared.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,25 +20,25 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.FirstName)
             .HasColumnName("FirstName")
-            .HasMaxLength(DomainConstraints.User.PersonName.MaxLength)
+            .HasMaxLength(UserConstrains.PersonName.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.LastName)
             .HasColumnName("LastName")
-            .HasMaxLength(DomainConstraints.User.PersonName.MaxLength)
+            .HasMaxLength(UserConstrains.PersonName.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.Patronymic)
             .HasColumnName("Patronymic")
-            .HasMaxLength(DomainConstraints.User.PersonName.MaxLength);
+            .HasMaxLength(UserConstrains.PersonName.MaxLength);
 
         builder.OwnsOne(e => e.Email, emailBuilder =>
         {
             emailBuilder.Property(x => x.Value)
                 .HasColumnName("Email")
-                .HasMaxLength(DomainConstraints.Email.MaxLength)
+                .HasMaxLength(EmailConstraints.MaxLength)
                 .IsRequired();
 
             emailBuilder.HasIndex(x => x.Value)
@@ -47,7 +48,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(e => e.Password)
             .Property(x => x.Value)
             .HasColumnName("Password")
-            .HasMaxLength(DomainConstraints.Password.MaxLength)
+            .HasMaxLength(PasswordConstraints.MaxLength)
             .IsRequired();
 
         builder.HasOne(e => e.Role)

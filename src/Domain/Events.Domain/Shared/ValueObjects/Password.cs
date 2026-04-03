@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Exceptions;
+using Events.Domain.Shared.Constraints;
 using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
@@ -21,15 +22,15 @@ public class Password : ValueObject
     {
         var value = new Text(password).Value;
 
-        if (value.ContainsAny(DomainConstraints.Password.InvalidCharacters))
+        if (value.ContainsAny(PasswordConstraints.InvalidCharacters))
             throw new DomainException(PasswordErrorMessages.Invalid);
 
         switch (value.Length)
         {
-            case < DomainConstraints.Password.MinLength:
+            case < PasswordConstraints.MinLength:
                 throw new DomainException(PasswordErrorMessages.LessThanMinLength);
 
-            case > DomainConstraints.Password.MaxLength:
+            case > PasswordConstraints.MaxLength:
                 throw new DomainException(PasswordErrorMessages.GreaterThanMaxLength);
         }
 

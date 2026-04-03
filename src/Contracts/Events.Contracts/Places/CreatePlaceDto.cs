@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.LocationAggregate.Constraints;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Places;
@@ -13,7 +13,7 @@ public class CreatePlaceDto
     ///     Номер.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Place.Number.MaxLength)]
+    [MaxLength(PlaceConstraints.Number.MaxLength)]
     public required string Number { get; init; }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class CreatePlaceDto
     ///     Название.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Place.Title.MaxLength)]
+    [MaxLength(PlaceConstraints.Title.MaxLength)]
     public string? Title { get; init; }
 
     /// <summary>

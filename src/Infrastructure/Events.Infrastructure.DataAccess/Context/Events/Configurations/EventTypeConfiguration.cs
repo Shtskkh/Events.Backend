@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.EventAggregate.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +17,7 @@ public class EventTypeConfiguration : IEntityTypeConfiguration<EventType>
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Title)
-            .HasMaxLength(DomainConstraints.Event.Type.MaxLength)
+            .HasMaxLength(EventConstraints.Type.MaxLength)
             .IsRequired();
 
         builder.HasData(EventType.Concert);

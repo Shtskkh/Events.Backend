@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.UserAggregate.Constraints;
+using Events.Domain.Shared.Constraints;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Users;
@@ -13,35 +14,35 @@ public class CreateUserDto
     ///     Имя.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.User.PersonName.MaxLength)]
+    [MaxLength(UserConstrains.PersonName.MaxLength)]
     public required string FirstName { get; set; }
 
     /// <summary>
     ///     Фамилия.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.User.PersonName.MaxLength)]
+    [MaxLength(UserConstrains.PersonName.MaxLength)]
     public required string LastName { get; set; }
 
     /// <summary>
     ///     Отчество.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.User.PersonName.MaxLength)]
+    [MaxLength(UserConstrains.PersonName.MaxLength)]
     public string? Patronymic { get; set; }
 
     /// <summary>
     ///     Почтовый адрес.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Email.MaxLength)]
+    [MaxLength(EmailConstraints.MaxLength)]
     public required string Email { get; set; }
 
     /// <summary>
     ///     Пароль.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Password.MaxLength)]
+    [MaxLength(PasswordConstraints.MaxLength)]
     public required string Password { get; set; }
 
     /// <summary>

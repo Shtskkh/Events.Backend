@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.LocationAggregate;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.LocationAggregate.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -25,13 +25,13 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.OwnsOne(l => l.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(DomainConstraints.Location.Title.MaxLength)
+            .HasMaxLength(LocationConstraints.Title.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(l => l.Address)
             .Property(a => a.Value)
             .HasColumnName("Address")
-            .HasMaxLength(DomainConstraints.Location.Address.MaxLength)
+            .HasMaxLength(LocationConstraints.Address.MaxLength)
             .IsRequired();
 
         builder.HasMany(l => l.Places)
@@ -41,10 +41,10 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.OwnsMany(l => l.Photos, photoBuilder =>
         {
             photoBuilder.ToTable("LocationsPhotos");
-            
+
             photoBuilder.Property<int>("Id");
             photoBuilder.HasKey("Id");
-            
+
             photoBuilder.Property(p => p.Filename)
                 .HasColumnName("Filename")
                 .IsRequired();

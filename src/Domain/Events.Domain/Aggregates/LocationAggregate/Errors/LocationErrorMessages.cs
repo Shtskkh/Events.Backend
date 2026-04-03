@@ -1,4 +1,4 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Domain.Aggregates.LocationAggregate.Constraints;
 
 namespace Events.Domain.Aggregates.LocationAggregate.Errors;
 
@@ -13,7 +13,7 @@ public static class LocationErrorMessages
     public static class Title
     {
         public static readonly string GreaterThanMaxLength =
-            $"Название локации больше максимальной длины в {DomainConstraints.Location.Title.MaxLength} символ(-ов).";
+            $"Название локации больше максимальной длины в {LocationConstraints.Title.MaxLength} символ(-ов).";
     }
 
     /// <summary>
@@ -22,6 +22,6 @@ public static class LocationErrorMessages
     public static class Address
     {
         public static readonly string GreaterThanMaxLength =
-            $"Адрес локации больше максимальной длины в {DomainConstraints.Location.Address.MaxLength} символ(-ов).";
+            $"Адрес локации больше максимальной длины в {LocationConstraints.Address.MaxLength} символ(-ов).";
     }
 }

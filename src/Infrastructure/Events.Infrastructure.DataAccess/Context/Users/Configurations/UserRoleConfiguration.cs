@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.UserAggregate;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.UserAggregate.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +16,7 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Title)
-            .HasMaxLength(DomainConstraints.User.Role.MaxLength)
+            .HasMaxLength(UserConstrains.Role.MaxLength)
             .IsRequired();
 
         builder.HasData(UserRole.Admin);

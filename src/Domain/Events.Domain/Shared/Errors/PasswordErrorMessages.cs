@@ -1,4 +1,6 @@
-﻿namespace Events.Domain.Shared.Errors;
+﻿using Events.Domain.Shared.Constraints;
+
+namespace Events.Domain.Shared.Errors;
 
 /// <summary>
 ///     Ошибки паролей.
@@ -9,13 +11,13 @@ public static class PasswordErrorMessages
 
     public static readonly string Invalid =
         $"Пароль не может содержать следующие символы: " +
-        $"{string.Join(", ", DomainConstraints.Password.InvalidCharacters.Select(FormatChar))}.";
+        $"{string.Join(", ", PasswordConstraints.InvalidCharacters.Select(FormatChar))}.";
 
     public static readonly string LessThanMinLength =
-        $"Длина пароля меньше минимальной длины в {DomainConstraints.Password.MinLength} символ(-ов).";
+        $"Длина пароля меньше минимальной длины в {PasswordConstraints.MinLength} символ(-ов).";
 
     public static readonly string GreaterThanMaxLength =
-        $"Длина пароля больше максимальной длины в {DomainConstraints.Password.MaxLength} символ(-ов).";
+        $"Длина пароля больше максимальной длины в {PasswordConstraints.MaxLength} символ(-ов).";
 
     /// <summary>
     ///     Вспомогательный метод для ошибки неправильного пароля.

@@ -1,4 +1,6 @@
-﻿namespace Events.Domain.Shared.Errors;
+﻿using Events.Domain.Shared.Constraints;
+
+namespace Events.Domain.Shared.Errors;
 
 /// <summary>
 ///     Ошибки почтового адреса.
@@ -8,5 +10,5 @@ public static class EmailErrorMessages
     public const string Invalid = "Неверный формат почтового адреса.";
 
     public static readonly string GreaterThanMaxLength =
-        $"Длина почтового адреса больше максимальной длины в {DomainConstraints.Email.MaxLength} символ(-ов).";
+        $"Длина почтового адреса больше максимальной длины в {EmailConstraints.MaxLength} символ(-ов).";
 }

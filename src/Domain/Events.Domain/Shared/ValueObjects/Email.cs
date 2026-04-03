@@ -1,4 +1,5 @@
 ﻿using Events.Domain.Exceptions;
+using Events.Domain.Shared.Constraints;
 using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
@@ -24,7 +25,7 @@ public class Email : ValueObject
         if (!RegularExpressions.Email.IsMatch(value))
             throw new DomainException(EmailErrorMessages.Invalid);
 
-        if (value.Length > DomainConstraints.Email.MaxLength)
+        if (value.Length > EmailConstraints.MaxLength)
             throw new DomainException(EmailErrorMessages.GreaterThanMaxLength);
 
         Value = value;

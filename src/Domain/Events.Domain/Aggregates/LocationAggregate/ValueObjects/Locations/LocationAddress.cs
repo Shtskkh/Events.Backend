@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+﻿using Events.Domain.Aggregates.LocationAggregate.Constraints;
+using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -25,7 +26,7 @@ public class LocationAddress : ValueObject
     {
         Value = new Text(address).Value;
 
-        if (Value.Length > DomainConstraints.Location.Address.MaxLength)
+        if (Value.Length > LocationConstraints.Address.MaxLength)
             throw new DomainException(LocationErrorMessages.Address.GreaterThanMaxLength);
     }
 

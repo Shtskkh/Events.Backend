@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+﻿using Events.Domain.Aggregates.LocationAggregate.Constraints;
+using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -41,7 +42,7 @@ public class PlaceType : Entity<int>
     {
         Title = new Text(title).Value;
 
-        if (Title.Length > DomainConstraints.Place.Type.MaxLength)
+        if (Title.Length > PlaceConstraints.Type.MaxLength)
             throw new DomainException(PlaceErrorMessages.Type.GreaterThanMaxLength);
     }
 

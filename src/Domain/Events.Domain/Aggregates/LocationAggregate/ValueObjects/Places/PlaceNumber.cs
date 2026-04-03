@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+﻿using Events.Domain.Aggregates.LocationAggregate.Constraints;
+using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -25,7 +26,7 @@ public class PlaceNumber : ValueObject
     {
         Value = new Text(number).Value;
 
-        if (Value.Length > DomainConstraints.Place.Number.MaxLength)
+        if (Value.Length > PlaceConstraints.Number.MaxLength)
             throw new DomainException(PlaceErrorMessages.Number.GreaterThanMaxLength);
 
         if (Value.Contains('-'))

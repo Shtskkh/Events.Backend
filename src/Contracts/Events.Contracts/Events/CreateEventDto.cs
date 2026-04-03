@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.EventAggregate.Constraints;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Events;
@@ -18,21 +18,21 @@ public class CreateEventDto
     ///     Название мероприятия.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Event.Title.MaxLength)]
+    [MaxLength(EventConstraints.Title.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>
     ///     Анонс мероприятия.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Event.Announcement.MaxLength)]
+    [MaxLength(EventConstraints.Announcement.MaxLength)]
     public required string Announcement { get; init; }
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
     [MinLength(1)]
-    [MaxLength(DomainConstraints.Event.Description.MaxLength)]
+    [MaxLength(EventConstraints.Description.MaxLength)]
     public required string Description { get; init; }
 
     /// <summary>

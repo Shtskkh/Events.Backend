@@ -1,7 +1,7 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.EventAggregate.Constraints;
 using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.UserAggregate;
-using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -23,21 +23,21 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.OwnsOne(e => e.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(DomainConstraints.Event.Title.MaxLength)
+            .HasMaxLength(EventConstraints.Title.MaxLength)
             .IsRequired();
 
         builder
             .OwnsOne(e => e.Announcement)
             .Property(a => a.Value)
             .HasColumnName("Announcement")
-            .HasMaxLength(DomainConstraints.Event.Announcement.MaxLength)
+            .HasMaxLength(EventConstraints.Announcement.MaxLength)
             .IsRequired();
 
         builder
             .OwnsOne(e => e.Description)
             .Property(e => e.Value)
             .HasColumnName("Description")
-            .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
+            .HasMaxLength(EventConstraints.Description.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.DateTimeRange, rangeBuilder =>

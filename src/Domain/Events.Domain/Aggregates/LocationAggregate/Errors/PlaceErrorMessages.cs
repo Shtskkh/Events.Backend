@@ -1,4 +1,4 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Domain.Aggregates.LocationAggregate.Constraints;
 
 namespace Events.Domain.Aggregates.LocationAggregate.Errors;
 
@@ -15,7 +15,7 @@ public static class PlaceErrorMessages
     public static class Title
     {
         public static readonly string GreaterThanMaxLength =
-            $"Название помещения больше максимальной длины в {DomainConstraints.Place.Title.MaxLength} символ(-ов).";
+            $"Название помещения больше максимальной длины в {PlaceConstraints.Title.MaxLength} символ(-ов).";
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public static class PlaceErrorMessages
         public const string AlreadyExists = "Помещение с таким номером в данной локации уже существует.";
 
         public static readonly string GreaterThanMaxLength =
-            $"Номер помещения больше максимальной длины в {DomainConstraints.Place.Number.MaxLength} символ(-ов).";
+            $"Номер помещения больше максимальной длины в {PlaceConstraints.Number.MaxLength} символ(-ов).";
     }
 
     /// <summary>
@@ -46,6 +46,6 @@ public static class PlaceErrorMessages
     public static class Type
     {
         public static readonly string GreaterThanMaxLength =
-            $"Название типа помещения больше максимальной длины в {DomainConstraints.Place.Type.MaxLength} символ(-ов).";
+            $"Название типа помещения больше максимальной длины в {PlaceConstraints.Type.MaxLength} символ(-ов).";
     }
 }

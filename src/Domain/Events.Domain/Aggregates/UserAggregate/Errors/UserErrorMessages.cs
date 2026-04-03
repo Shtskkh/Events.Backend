@@ -1,4 +1,4 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Domain.Aggregates.UserAggregate.Constraints;
 
 namespace Events.Domain.Aggregates.UserAggregate.Errors;
 
@@ -16,7 +16,7 @@ public static class UserErrorMessages
     public static class Role
     {
         public static readonly string GreaterThanMaxLength =
-            $"Название роли пользователя больше максимальной длины в {DomainConstraints.User.Role.MaxLength} символ(-ов).";
+            $"Название роли пользователя больше максимальной длины в {UserConstrains.Role.MaxLength} символ(-ов).";
     }
 
     /// <summary>
@@ -25,12 +25,12 @@ public static class UserErrorMessages
     public static class PersonName
     {
         public static readonly string FirstNameGreaterThanMaxLength =
-            $"Имя больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+            $"Имя больше максимальной длины в {UserConstrains.PersonName.MaxLength} символ(-ов).";
 
         public static readonly string LastNameGreaterThanMaxLength =
-            $"Фамилия больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+            $"Фамилия больше максимальной длины в {UserConstrains.PersonName.MaxLength} символ(-ов).";
 
         public static readonly string PatronymicGreaterThanMaxLength =
-            $"Отчество больше максимальной длины в {DomainConstraints.User.PersonName.MaxLength} символ(-ов).";
+            $"Отчество больше максимальной длины в {UserConstrains.PersonName.MaxLength} символ(-ов).";
     }
 }

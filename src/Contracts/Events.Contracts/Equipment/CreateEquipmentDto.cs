@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Shared;
+using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
 
 namespace Events.Contracts.Equipment;
 
@@ -11,7 +11,7 @@ public record CreateEquipmentDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MaxLength(DomainConstraints.Equipment.MaxLength)]
+    [MaxLength(EquipmentConstraints.MaxLength)]
     public required string Title { get; init; } = null!;
 
     /// <summary>

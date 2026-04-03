@@ -1,6 +1,6 @@
-﻿using Events.Domain.Aggregates.EquipmentAggregate.Errors;
+﻿using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
+using Events.Domain.Aggregates.EquipmentAggregate.Errors;
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.EquipmentAggregate.ValueObjects;
@@ -18,7 +18,7 @@ public class InventoryNumber
     {
         Value = new Text(number).Value;
 
-        if (Value.Length > DomainConstraints.Equipment.InventoryNumber.MaxLength)
+        if (Value.Length > EquipmentConstraints.InventoryNumber.MaxLength)
             throw new DomainException(EquipmentErrorMessages.InventoryNumber.GreaterThanMaxLength);
     }
 
