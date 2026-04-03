@@ -1,4 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Locations;
+﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+using Events.Domain.Aggregates.LocationAggregate.ValueObjects.Locations;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
@@ -99,7 +100,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     {
         var place = _places.FirstOrDefault(p => p.Id == placeId);
         if (place == null)
-            throw new NotFoundException(DomainErrorMessages.Place.NotFound);
+            throw new NotFoundException(PlaceErrorMessages.NotFound);
 
         return place;
     }
@@ -114,7 +115,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public void AddPlace(Place place)
     {
         if (_places.Any(p => p.Number == place.Number))
-            throw new DomainException(DomainErrorMessages.Place.Number.AlreadyExists);
+            throw new DomainException(PlaceErrorMessages.Number.AlreadyExists);
 
         _places.Add(place);
     }
@@ -128,7 +129,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     {
         var place = _places.FirstOrDefault(p => p.Id == placeId);
         if (place == null)
-            throw new NotFoundException(DomainErrorMessages.Place.NotFound);
+            throw new NotFoundException(PlaceErrorMessages.NotFound);
 
         _places.Remove(place);
     }

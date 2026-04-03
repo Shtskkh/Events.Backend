@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
 
@@ -25,7 +26,7 @@ public class LocationTitle : ValueObject
         Value = new Text(title).Value;
 
         if (Value.Length > DomainConstraints.Location.Title.MaxLength)
-            throw new DomainException(DomainErrorMessages.Location.Title.GreaterThanMaxLength);
+            throw new DomainException(LocationErrorMessages.Title.GreaterThanMaxLength);
     }
 
     /// <summary>

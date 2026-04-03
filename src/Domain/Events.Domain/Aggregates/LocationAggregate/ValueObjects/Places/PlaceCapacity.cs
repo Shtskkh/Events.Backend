@@ -1,4 +1,5 @@
-﻿using Events.Domain.Exceptions;
+﻿using Events.Domain.Aggregates.LocationAggregate.Errors;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 
 namespace Events.Domain.Aggregates.LocationAggregate.ValueObjects.Places;
@@ -20,7 +21,7 @@ public class PlaceCapacity : ValueObject
     public PlaceCapacity(int capacity)
     {
         if (capacity <= 0)
-            throw new DomainException(DomainErrorMessages.Place.Capacity.CapacityLessOrEqualZero);
+            throw new DomainException(PlaceErrorMessages.Capacity.CapacityLessOrEqualZero);
 
         Value = capacity;
     }

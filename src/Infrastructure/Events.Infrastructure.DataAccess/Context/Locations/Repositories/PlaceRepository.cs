@@ -1,5 +1,6 @@
 ﻿using Events.Application.Services.Features.Locations.Repositories;
 using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Infrastructure.DataAccess.Repositories;
@@ -15,7 +16,7 @@ public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository
         var place = await repository.GetByIdAsync(id, cancellationToken);
 
         if (place == null)
-            throw new NotFoundException(DomainErrorMessages.Place.NotFound);
+            throw new NotFoundException(PlaceErrorMessages.NotFound);
 
         return place;
     }
