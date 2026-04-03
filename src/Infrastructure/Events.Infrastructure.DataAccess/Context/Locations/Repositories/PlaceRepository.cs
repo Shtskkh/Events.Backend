@@ -23,6 +23,7 @@ public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository
         return place;
     }
 
+    /// <inheritdoc />
     public async Task<Place> GetAsync(Specification<Place> spec, CancellationToken cancellationToken)
     {
         var place = await repository.GetAllAsync()
@@ -33,5 +34,11 @@ public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository
             throw new NotFoundException(PlaceErrorMessages.NotFound);
 
         return place;
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateAsync(Place place, CancellationToken cancellationToken)
+    {
+        await repository.UpdateAsync(place, cancellationToken);
     }
 }

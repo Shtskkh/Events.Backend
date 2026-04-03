@@ -23,4 +23,11 @@ public interface IPlaceRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Помещение.</returns>
     Task<Place> GetAsync(Specification<Place> spec, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Обновить помещение.
+    /// </summary>
+    /// <param name="place">Помещение.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task UpdateAsync(Place place, CancellationToken cancellationToken);
 }
