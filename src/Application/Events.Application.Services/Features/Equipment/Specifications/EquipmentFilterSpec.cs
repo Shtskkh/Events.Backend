@@ -19,7 +19,7 @@ public class EquipmentFilterSpec : BaseEquipmentSpec
         if (filter.PlaceId.HasValue)
             Query.Where(e => e.PlaceId == filter.PlaceId);
 
-        Query.OrderBy(e => e.UpdatedAt);
+        Query.OrderByDescending(e => e.CreatedAt);
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);
     }
