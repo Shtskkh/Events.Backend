@@ -7,7 +7,7 @@ namespace Events.Domain.Aggregates.EquipmentAggregate;
 /// <summary>
 ///     Оборудование.
 /// </summary>
-public class Equipment : Entity<int>, IAggregateRoot
+public class Equipment : Entity<int>, IAggregateRoot, IAuditable
 {
     private Equipment()
     {
@@ -20,6 +20,8 @@ public class Equipment : Entity<int>, IAggregateRoot
         InventoryNumber = inventoryNumber;
         Type = type;
         PlaceId = placeId;
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -41,6 +43,12 @@ public class Equipment : Entity<int>, IAggregateRoot
     ///     ID помещения.
     /// </summary>
     public int? PlaceId { get; private set; }
+
+    /// <inheritdoc />
+    public DateTime CreatedAt { get; }
+
+    /// <inheritdoc />
+    public DateTime UpdatedAt { get; }
 
     /// <summary>
     ///     Изменить название.

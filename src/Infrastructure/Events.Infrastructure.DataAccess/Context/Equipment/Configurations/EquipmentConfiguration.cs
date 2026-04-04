@@ -1,6 +1,7 @@
 ﻿using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
 using Events.Domain.Aggregates.LocationAggregate;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Events.Infrastructure.DataAccess.Context.Equipment.Configurations;
@@ -49,5 +50,12 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates
             .WithMany()
             .HasForeignKey(e => e.PlaceId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(e => e.CreatedAt)
+            .IsRequired()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
+
+        builder.Property(e => e.UpdatedAt)
+            .IsRequired();
     }
 }
