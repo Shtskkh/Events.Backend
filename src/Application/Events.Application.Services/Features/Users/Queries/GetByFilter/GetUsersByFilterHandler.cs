@@ -7,7 +7,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Queries.GetByFilter;
 
 /// <inheritdoc />
-public class GetUsersByFilterHandler(IUserRepository userRepository, IMapper mapper)
+public sealed class GetUsersByFilterHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUsersByFilter, IReadOnlyCollection<ShortUserDto>>
 {
     /// <inheritdoc />

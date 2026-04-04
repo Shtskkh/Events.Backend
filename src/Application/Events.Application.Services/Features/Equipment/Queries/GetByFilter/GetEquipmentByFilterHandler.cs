@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Queries.GetByFilter;
 
-public class GetEquipmentByFilterHandler(IEquipmentRepository equipmentRepository, IMapper mapper)
+public sealed class GetEquipmentByFilterHandler(IEquipmentRepository equipmentRepository, IMapper mapper)
     : IRequestHandler<GetEquipmentByFilterQuery,
         IReadOnlyCollection<EquipmentDto>>
 {

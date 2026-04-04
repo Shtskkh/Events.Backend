@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace Events.Application.Services.Features.Files.Queries.GetFile;
 
 /// <inheritdoc />
-public class GetFileHandler(IFileStorageService storageService, ILogger<GetFileHandler> logger)
+public sealed class GetFileHandler(IFileStorageService storageService, ILogger<GetFileHandler> logger)
     : IRequestHandler<GetFileQuery, FileDto>
 {
     /// <inheritdoc />

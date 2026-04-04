@@ -6,7 +6,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Equipment.Queries.GetTypes;
 
 /// <inheritdoc />
-public class GetEquipmentTypesHandler(IEquipmentTypeRepository repository, IMapper mapper)
+public sealed class GetEquipmentTypesHandler(IEquipmentTypeRepository repository, IMapper mapper)
     : IRequestHandler<GetEquipmentTypesQuery, IReadOnlyCollection<EquipmentTypeDto>>
 {
     /// <inheritdoc />

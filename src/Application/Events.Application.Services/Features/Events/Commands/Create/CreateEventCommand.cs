@@ -7,4 +7,4 @@ namespace Events.Application.Services.Features.Events.Commands.Create;
 ///     Команда на создание мероприятия.
 /// </summary>
 /// <param name="Dto">Модель создания мероприятия.</param>
-public record CreateEventCommand(CreateEventDto Dto) : IRequest<Guid>;
+public sealed record CreateEventCommand(CreateEventDto Dto) : IRequest<Guid>;

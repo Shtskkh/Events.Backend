@@ -7,7 +7,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Locations.Queries.GetById;
 
 /// <inheritdoc />
-public class GetLocationByIdHandler(ILocationRepository locationRepository, IMapper mapper)
+public sealed class GetLocationByIdHandler(ILocationRepository locationRepository, IMapper mapper)
     : IRequestHandler<GetLocationByIdQuery, LocationDto>
 {
     /// <inheritdoc />

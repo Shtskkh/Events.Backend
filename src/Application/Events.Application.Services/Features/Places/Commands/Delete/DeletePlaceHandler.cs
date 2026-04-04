@@ -5,7 +5,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Places.Commands.Delete;
 
 /// <inheritdoc />
-public class DeletePlaceHandler(ILocationRepository locationRepository) : IRequestHandler<DeletePlaceCommand>
+public sealed class DeletePlaceHandler(ILocationRepository locationRepository) : IRequestHandler<DeletePlaceCommand>
 {
     /// <inheritdoc />
     public async Task Handle(DeletePlaceCommand request, CancellationToken cancellationToken)

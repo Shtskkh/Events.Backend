@@ -1,12 +1,11 @@
-﻿using Events.Application.Services.Features.Locations.Specifications;
-using Events.Application.Services.Features.Places.Repositories;
+﻿using Events.Application.Services.Features.Places.Repositories;
 using Events.Application.Services.Features.Places.Specifications;
 using MediatR;
 
 namespace Events.Application.Services.Features.Places.Commands.Update;
 
 /// <inheritdoc />
-public class UpdatePlaceHandler(IPlaceRepository placeRepository, IPlaceTypeRepository placeTypeRepository)
+public sealed class UpdatePlaceHandler(IPlaceRepository placeRepository, IPlaceTypeRepository placeTypeRepository)
     : IRequestHandler<UpdatePlaceCommand>
 {
     /// <inheritdoc />

@@ -8,7 +8,9 @@ using MediatR;
 namespace Events.Application.Services.Features.Locations.Commands.Create;
 
 /// <inheritdoc />
-public class CreateLocationHandler(ILocationRepository locationRepository, IFileStorageService fileStorageService)
+public sealed class CreateLocationHandler(
+    ILocationRepository locationRepository,
+    IFileStorageService fileStorageService)
     : IRequestHandler<CreateLocationCommand, int>
 {
     /// <inheritdoc />

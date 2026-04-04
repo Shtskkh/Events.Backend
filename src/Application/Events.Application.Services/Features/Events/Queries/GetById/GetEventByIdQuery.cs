@@ -9,7 +9,7 @@ namespace Events.Application.Services.Features.Events.Queries.GetById;
 ///     Запрос для получения мероприятия по ID.
 /// </summary>
 /// <param name="Id">Идентификатор мероприятия.</param>
-public record GetEventByIdQuery(Guid Id) : IRequest<EventDto>, ITrackPageView
+public sealed record GetEventByIdQuery(Guid Id) : IRequest<EventDto>, ITrackPageView
 {
     /// <inheritdoc />
     public string EntityType => EntityTypes.Event;

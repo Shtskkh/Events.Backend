@@ -5,7 +5,8 @@ using MediatR;
 namespace Events.Application.Services.Features.Locations.Commands.Update;
 
 /// <inheritdoc />
-public class UpdateLocationHandler(ILocationRepository locationRepository) : IRequestHandler<UpdateLocationCommand>
+public sealed class UpdateLocationHandler(ILocationRepository locationRepository)
+    : IRequestHandler<UpdateLocationCommand>
 {
     /// <inheritdoc />
     public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)

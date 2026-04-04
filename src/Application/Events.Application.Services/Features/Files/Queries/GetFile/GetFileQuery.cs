@@ -8,4 +8,4 @@ namespace Events.Application.Services.Features.Files.Queries.GetFile;
 /// </summary>
 /// <param name="Bucket">Название bucket.</param>
 /// <param name="Key">Название файла.</param>
-public record GetFileQuery(string Bucket, string Key) : IRequest<FileDto>;
+public sealed record GetFileQuery(string Bucket, string Key) : IRequest<FileDto>;

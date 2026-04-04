@@ -10,7 +10,7 @@ namespace Events.Application.Services.Features.Places.Queries.GetTypes;
 /// </summary>
 /// <param name="repository">Репозиторий типов помещений.</param>
 /// <param name="mapper">Маппер.</param>
-public class GetPlacesTypesHandler(IPlaceTypeRepository repository, IMapper mapper)
+public sealed class GetPlacesTypesHandler(IPlaceTypeRepository repository, IMapper mapper)
     : IRequestHandler<GetPlacesTypesQuery, IReadOnlyCollection<PlaceTypeDto>>
 {
     /// <inheritdoc />

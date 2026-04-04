@@ -5,7 +5,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetPlaceholders;
 
 /// <inheritdoc />
-public class GetEventsPlaceholdersHandler(IFileStorageService storageService)
+public sealed class GetEventsPlaceholdersHandler(IFileStorageService storageService)
     : IRequestHandler<GetEventsPlaceholdersQuery, IReadOnlyCollection<string>>
 {
     /// <inheritdoc />

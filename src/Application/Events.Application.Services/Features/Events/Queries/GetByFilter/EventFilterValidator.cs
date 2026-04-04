@@ -7,7 +7,7 @@ namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
 /// <summary>
 ///     Валидация для фильтра мероприятий.
 /// </summary>
-public class EventFilterValidator : AbstractValidator<EventFilterDto>
+public sealed class EventFilterValidator : AbstractValidator<EventFilterDto>
 {
     /// <summary>
     ///     Конструктор валидатора фильтра мероприятий.

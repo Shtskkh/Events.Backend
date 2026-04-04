@@ -10,7 +10,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Places.Commands.Create;
 
 /// <inheritdoc />
-public class CreatePlaceHandler(
+public sealed class CreatePlaceHandler(
     ILocationRepository locationRepository,
     IPlaceTypeRepository placeTypeRepository,
     IFileStorageService fileStorageService)

@@ -2,4 +2,4 @@
 
 namespace Events.Application.Services.Features.Equipment.Commands.Delete;
 
-public record DeleteEquipmentCommand(int Id) : IRequest;
+public sealed record DeleteEquipmentCommand(int Id) : IRequest;

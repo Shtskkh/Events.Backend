@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
 
-public record CreateEquipmentCommand(CreateEquipmentDto Dto) : IRequest<int>;
+public sealed record CreateEquipmentCommand(CreateEquipmentDto Dto) : IRequest<int>;

@@ -9,7 +9,7 @@ namespace Events.Application.Services.Features.Places.Queries.GetAvailable;
 /// <param name="LocationId">ID локации.</param>
 /// <param name="Start">Начало желаемого бронирования.</param>
 /// <param name="End">Конец желаемого бронирования.</param>
-public record GetAvailablePlacesQuery(
+public sealed record GetAvailablePlacesQuery(
     int LocationId,
     DateTimeOffset Start,
     DateTimeOffset End

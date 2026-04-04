@@ -4,4 +4,4 @@ using MediatR;
 namespace Events.Application.Services.Features.Places.Commands.Update;
 
 /// <inheritdoc />
-public record UpdatePlaceCommand(int LocationId, int PlaceId, UpdatePlaceDto UpdateDto) : IRequest;
+public sealed record UpdatePlaceCommand(int LocationId, int PlaceId, UpdatePlaceDto UpdateDto) : IRequest;

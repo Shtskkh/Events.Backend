@@ -6,7 +6,7 @@ using FluentValidation;
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
 /// <inheritdoc />
-public class CreateEventValidator : AbstractValidator<CreateEventDto>
+public sealed class CreateEventValidator : AbstractValidator<CreateEventDto>
 {
     /// <inheritdoc />
     public CreateEventValidator()

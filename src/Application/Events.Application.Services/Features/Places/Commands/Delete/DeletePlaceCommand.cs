@@ -3,4 +3,4 @@
 namespace Events.Application.Services.Features.Places.Commands.Delete;
 
 /// <inheritdoc />
-public record DeletePlaceCommand(int LocationId, int PlaceId) : IRequest;
+public sealed record DeletePlaceCommand(int LocationId, int PlaceId) : IRequest;

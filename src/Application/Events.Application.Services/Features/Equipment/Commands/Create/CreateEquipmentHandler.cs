@@ -6,7 +6,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
 
 /// <inheritdoc />
-public class CreateEquipmentHandler(
+public sealed class CreateEquipmentHandler(
     IEquipmentRepository equipmentRepository,
     IEquipmentTypeRepository equipmentTypeRepository,
     IPlaceRepository placeRepository)

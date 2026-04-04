@@ -4,4 +4,4 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
 
 /// <inheritdoc />
-public record GetRecentViewedEventsQuery(Guid UserId) : IRequest<IReadOnlyCollection<ShortEventDto>>;
+public sealed record GetRecentViewedEventsQuery(Guid UserId) : IRequest<IReadOnlyCollection<ShortEventDto>>;

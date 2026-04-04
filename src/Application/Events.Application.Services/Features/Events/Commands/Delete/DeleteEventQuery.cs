@@ -6,4 +6,4 @@ namespace Events.Application.Services.Features.Events.Commands.Delete;
 ///     Удалить мероприятие.
 /// </summary>
 /// <param name="EventId">Идентификатор мероприятия.</param>
-public record DeleteEventQuery(Guid EventId) : IRequest;
+public sealed record DeleteEventQuery(Guid EventId) : IRequest;

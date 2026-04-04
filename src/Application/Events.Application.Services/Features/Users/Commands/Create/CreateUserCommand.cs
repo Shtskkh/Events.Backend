@@ -7,4 +7,4 @@ namespace Events.Application.Services.Features.Users.Commands.Create;
 ///     Команда создания пользователя.
 /// </summary>
 /// <param name="Dto"></param>
-public record CreateUserCommand(CreateUserDto Dto) : IRequest<Guid>;
+public sealed record CreateUserCommand(CreateUserDto Dto) : IRequest<Guid>;

@@ -12,7 +12,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
 /// <inheritdoc />
-public class CreateEventHandler(
+public sealed class CreateEventHandler(
     IEventRepository eventRepository,
     IEventTypeRepository eventTypeRepository,
     IEventFormatRepository eventFormatRepository,

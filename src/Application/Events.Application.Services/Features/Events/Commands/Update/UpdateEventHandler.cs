@@ -4,7 +4,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Commands.Update;
 
 /// <inheritdoc />
-public class UpdateEventHandler(IEventRepository eventRepository) : IRequestHandler<UpdateEventCommand>
+public sealed class UpdateEventHandler(IEventRepository eventRepository) : IRequestHandler<UpdateEventCommand>
 {
     /// <inheritdoc />
     public async Task Handle(UpdateEventCommand request, CancellationToken cancellationToken)

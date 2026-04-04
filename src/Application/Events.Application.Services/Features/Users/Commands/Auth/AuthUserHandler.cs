@@ -10,7 +10,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Commands.Auth;
 
 /// <inheritdoc />
-public class AuthUserHandler(IUserRepository userRepository, IJwtTokenService tokenService)
+public sealed class AuthUserHandler(IUserRepository userRepository, IJwtTokenService tokenService)
     : IRequestHandler<AuthUserCommand, TokenDto>
 {
     /// <inheritdoc />

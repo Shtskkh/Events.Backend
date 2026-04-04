@@ -6,7 +6,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Queries.GetById;
 
 /// <inheritdoc />
-public class GetUserByIdHandler(IUserRepository userRepository, IMapper mapper)
+public sealed class GetUserByIdHandler(IUserRepository userRepository, IMapper mapper)
     : IRequestHandler<GetUserByIdQuery, UserDto>
 {
     /// <inheritdoc />

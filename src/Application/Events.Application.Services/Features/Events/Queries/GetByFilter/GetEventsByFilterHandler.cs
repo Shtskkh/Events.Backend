@@ -7,7 +7,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
 
 /// <inheritdoc />
-public class GetEventsByFilterHandler(IEventRepository repository, IMapper mapper)
+public sealed class GetEventsByFilterHandler(IEventRepository repository, IMapper mapper)
     : IRequestHandler<GetEventsByFilterQuery, IReadOnlyCollection<ShortEventDto>>
 {
     /// <inheritdoc />

@@ -8,7 +8,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetById;
 
 /// <inheritdoc />
-public class GetEventByIdHandler(
+public sealed class GetEventByIdHandler(
     IEventRepository eventRepository,
     IPlaceRepository placeRepository,
     IMapper mapper)

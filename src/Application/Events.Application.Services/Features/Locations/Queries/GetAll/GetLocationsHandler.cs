@@ -10,7 +10,7 @@ namespace Events.Application.Services.Features.Locations.Queries.GetAll;
 /// </summary>
 /// <param name="locationRepository">Репозиторий локаций.</param>
 /// <param name="mapper">Маппер.</param>
-public class GetLocationsHandler(ILocationRepository locationRepository, IMapper mapper)
+public sealed class GetLocationsHandler(ILocationRepository locationRepository, IMapper mapper)
     : IRequestHandler<GetLocationsQuery, IReadOnlyCollection<ShortLocationDto>>
 {
     /// <inheritdoc />

@@ -7,7 +7,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Places.Queries.GetAvailable;
 
 /// <inheritdoc />
-public class GetAvailablePlacesQueryHandler(
+public sealed class GetAvailablePlacesQueryHandler(
     ILocationRepository locationRepository,
     IEventRepository eventRepository)
     : IRequestHandler<GetAvailablePlacesQuery, IReadOnlyCollection<PlaceAvailabilityDto>>

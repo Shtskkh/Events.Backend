@@ -9,7 +9,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Commands.Create;
 
 /// <inheritdoc />
-public class CreateUserHandler(
+public sealed class CreateUserHandler(
     IUserRepository userRepository,
     IUserRoleRepository userRoleRepository,
     IFileStorageService fileStorageService)

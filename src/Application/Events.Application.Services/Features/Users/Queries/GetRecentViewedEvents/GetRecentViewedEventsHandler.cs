@@ -9,7 +9,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
 
 /// <inheritdoc />
-public class GetRecentViewedEventsHandler(
+public sealed class GetRecentViewedEventsHandler(
     IPageViewRepository pageViewRepository,
     IEventRepository eventRepository,
     IMapper mapper)

@@ -4,7 +4,8 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Delete;
 
-public class DeleteEquipmentHandler(IEquipmentRepository equipmentRepository) : IRequestHandler<DeleteEquipmentCommand>
+public sealed class DeleteEquipmentHandler(IEquipmentRepository equipmentRepository)
+    : IRequestHandler<DeleteEquipmentCommand>
 {
     public async Task Handle(DeleteEquipmentCommand request, CancellationToken cancellationToken)
     {

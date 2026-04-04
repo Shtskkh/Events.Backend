@@ -7,7 +7,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;
 
 /// <inheritdoc />
-public class GetParticipantsHandler(IEventRepository eventRepository, IUserRepository userRepository)
+public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUserRepository userRepository)
     : IRequestHandler<GetParticipantsQuery, IReadOnlyCollection<ParticipantDto>>
 {
     /// <inheritdoc />

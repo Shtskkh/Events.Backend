@@ -4,4 +4,4 @@ using MediatR;
 namespace Events.Application.Services.Features.Locations.Queries.GetPlaces;
 
 /// <inheritdoc />
-public record GetLocationPlacesQuery(int Id) : IRequest<IReadOnlyCollection<ShortPlaceDto>>;
+public sealed record GetLocationPlacesQuery(int Id) : IRequest<IReadOnlyCollection<ShortPlaceDto>>;

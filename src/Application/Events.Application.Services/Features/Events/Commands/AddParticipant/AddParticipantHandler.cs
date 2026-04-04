@@ -5,7 +5,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Commands.AddParticipant;
 
 /// <inheritdoc />
-public class AddParticipantHandler(IEventRepository eventRepository, IUserRepository userRepository)
+public sealed class AddParticipantHandler(IEventRepository eventRepository, IUserRepository userRepository)
     : IRequestHandler<AddParticipantCommand>
 {
     /// <inheritdoc />

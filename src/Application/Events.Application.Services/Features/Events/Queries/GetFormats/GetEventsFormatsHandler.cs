@@ -10,7 +10,7 @@ namespace Events.Application.Services.Features.Events.Queries.GetFormats;
 /// </summary>
 /// <param name="eventFormatRepository">Репозиторий форматов мероприятий.</param>
 /// <param name="mapper">Маппер.</param>
-public class GetEventsFormatsHandler(IEventFormatRepository eventFormatRepository, IMapper mapper)
+public sealed class GetEventsFormatsHandler(IEventFormatRepository eventFormatRepository, IMapper mapper)
     : IRequestHandler<GetEventsFormatsQuery, IReadOnlyCollection<EventFormatDto>>
 {
     public async Task<IReadOnlyCollection<EventFormatDto>> Handle(GetEventsFormatsQuery request,

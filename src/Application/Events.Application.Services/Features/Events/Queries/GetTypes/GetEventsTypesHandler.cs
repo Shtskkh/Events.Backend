@@ -8,7 +8,7 @@ namespace Events.Application.Services.Features.Events.Queries.GetTypes;
 /// <summary>
 ///     Handler для получения всех типов мероприятий.
 /// </summary>
-public class GetEventsTypesHandler(IEventTypeRepository eventTypeRepository, IMapper mapper)
+public sealed class GetEventsTypesHandler(IEventTypeRepository eventTypeRepository, IMapper mapper)
     : IRequestHandler<GetEventsTypesQuery, IReadOnlyCollection<EventTypeDto>>
 {
     /// <inheritdoc />

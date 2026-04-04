@@ -6,4 +6,4 @@ namespace Events.Application.Services.Features.Events.Queries.GetFormats;
 /// <summary>
 ///     Запрос на получение всех форматов мероприятий.
 /// </summary>
-public record GetEventsFormatsQuery : IRequest<IReadOnlyCollection<EventFormatDto>>;
+public sealed record GetEventsFormatsQuery : IRequest<IReadOnlyCollection<EventFormatDto>>;

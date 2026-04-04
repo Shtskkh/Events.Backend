@@ -6,7 +6,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Commands.Delete;
 
 /// <inheritdoc />
-public class DeleteEventHandler(IEventRepository eventRepository, IFileStorageService storageService)
+public sealed class DeleteEventHandler(IEventRepository eventRepository, IFileStorageService storageService)
     : IRequestHandler<DeleteEventQuery>
 {
     /// <inheritdoc />

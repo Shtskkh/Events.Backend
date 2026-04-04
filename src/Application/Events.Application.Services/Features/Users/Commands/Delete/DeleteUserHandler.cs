@@ -4,7 +4,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Commands.Delete;
 
 /// <inheritdoc />
-public class DeleteUserHandler(IUserRepository userRepository) : IRequestHandler<DeleteUserCommand>
+public sealed class DeleteUserHandler(IUserRepository userRepository) : IRequestHandler<DeleteUserCommand>
 {
     /// <inheritdoc />
     public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
