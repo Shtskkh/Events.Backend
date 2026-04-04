@@ -11,7 +11,7 @@ public abstract class BasePlaceSpec : Specification<Place>
     /// <summary>
     ///     Подключить фотографии локации.
     /// </summary>
-    public BasePlaceSpec WithPhotos()
+    public BasePlaceSpec IncludePhotos()
     {
         Query.Include(l => l.Photos);
         return this;

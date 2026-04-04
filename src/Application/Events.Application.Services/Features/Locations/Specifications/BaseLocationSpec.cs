@@ -12,7 +12,7 @@ public abstract class BaseLocationSpec : Specification<Location>
     /// <summary>
     ///     Подключить помещения локации.
     /// </summary>
-    public BaseLocationSpec WithPlaces()
+    public BaseLocationSpec IncludePlaces()
     {
         Query.Include(l => l.Places);
         return this;
@@ -21,7 +21,7 @@ public abstract class BaseLocationSpec : Specification<Location>
     /// <summary>
     ///     Подключить фотографии локации.
     /// </summary>
-    public BaseLocationSpec WithPhotos()
+    public BaseLocationSpec IncludePhotos()
     {
         Query.Include(l => l.Photos);
         return this;

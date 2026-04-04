@@ -12,7 +12,8 @@ public class LocationWithPlacesDetailsSpec : BaseLocationSpec
     {
         Query.Where(l => l.Id == id);
 
-        Query.Include(l => l.Places).ThenInclude(p => p.Photos);
+        Query.Include(l => l.Places)
+            .ThenInclude(p => p.Photos);
 
         Query.AsNoTracking();
     }

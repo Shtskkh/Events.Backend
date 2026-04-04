@@ -16,7 +16,7 @@ public sealed class GetAvailablePlacesQueryHandler(
     public async Task<IReadOnlyCollection<PlaceAvailabilityDto>> Handle(GetAvailablePlacesQuery request,
         CancellationToken cancellationToken)
     {
-        var spec = new LocationByIdSpec(request.LocationId).WithPlaces().AsNoTracking();
+        var spec = new LocationByIdSpec(request.LocationId).IncludePlaces().AsNoTracking();
         var locations = await locationRepository.GetAsync(spec, cancellationToken);
 
         var conflictChecks = locations.Places.Select(async place =>
