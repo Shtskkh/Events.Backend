@@ -14,7 +14,7 @@ public class GetUsersByFilterHandler(IUserRepository userRepository, IMapper map
     public async Task<IReadOnlyCollection<ShortUserDto>> Handle(GetUsersByFilter request,
         CancellationToken cancellationToken)
     {
-        var spec = new UserFilterSpecification(request.Filter);
+        var spec = new UserFilterSpec(request.Filter);
         var users = await userRepository.GetByFilterAsync(spec, cancellationToken);
         var dtoList = mapper.Map<List<ShortUserDto>>(users);
 

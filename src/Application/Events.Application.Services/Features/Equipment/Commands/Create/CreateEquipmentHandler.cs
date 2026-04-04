@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Features.Equipment.Repositories;
-using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Places.Repositories;
 using Events.Domain.Aggregates.EquipmentAggregate.Factories;
 using MediatR;
 

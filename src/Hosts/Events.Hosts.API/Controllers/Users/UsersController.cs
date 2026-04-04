@@ -1,7 +1,7 @@
-﻿using Events.Application.Services.Features.Users.Commands.AuthUser;
+﻿using Events.Application.Services.Features.Users.Commands.Auth;
 using Events.Application.Services.Features.Users.Commands.ChangePassword;
-using Events.Application.Services.Features.Users.Commands.CreateUser;
-using Events.Application.Services.Features.Users.Commands.DeleteUser;
+using Events.Application.Services.Features.Users.Commands.Create;
+using Events.Application.Services.Features.Users.Commands.Delete;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
 using Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;

@@ -1,15 +1,15 @@
-﻿using Events.Application.Services.Features.Locations.Commands.CreateLocation;
-using Events.Application.Services.Features.Locations.Commands.CreatePlace;
-using Events.Application.Services.Features.Locations.Commands.DeleteLocation;
-using Events.Application.Services.Features.Locations.Commands.DeletePlace;
-using Events.Application.Services.Features.Locations.Commands.UpdateLocation;
-using Events.Application.Services.Features.Locations.Commands.UpdatePlace;
-using Events.Application.Services.Features.Locations.Queries.GetAllLocationsQuery;
-using Events.Application.Services.Features.Locations.Queries.GetAllPlacesTypes;
-using Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;
-using Events.Application.Services.Features.Locations.Queries.GetLocationById;
-using Events.Application.Services.Features.Locations.Queries.GetLocationPlaces;
-using Events.Application.Services.Features.Locations.Queries.GetPlaceById;
+﻿using Events.Application.Services.Features.Locations.Commands.Create;
+using Events.Application.Services.Features.Locations.Commands.Delete;
+using Events.Application.Services.Features.Locations.Commands.Update;
+using Events.Application.Services.Features.Locations.Queries.GetAll;
+using Events.Application.Services.Features.Locations.Queries.GetById;
+using Events.Application.Services.Features.Locations.Queries.GetPlaces;
+using Events.Application.Services.Features.Places.Commands.Create;
+using Events.Application.Services.Features.Places.Commands.Delete;
+using Events.Application.Services.Features.Places.Commands.Update;
+using Events.Application.Services.Features.Places.Queries.GetAvailable;
+using Events.Application.Services.Features.Places.Queries.GetById;
+using Events.Application.Services.Features.Places.Queries.GetTypes;
 using Events.Contracts.Errors;
 using Events.Contracts.Locations;
 using Events.Contracts.Places;
@@ -41,7 +41,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
         Description = "Локации не найдены.")]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
-        var locations = await mediator.Send(new GetAllLocationsQuery(), cancellationToken);
+        var locations = await mediator.Send(new GetLocationsQuery(), cancellationToken);
 
         return Ok(locations);
     }
@@ -256,7 +256,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
         Description = "Типы помещений не найдены.")]
     public async Task<IActionResult> GetAllPlacesTypes(CancellationToken cancellationToken)
     {
-        var types = await mediator.Send(new GetAllPlacesTypesQuery(), cancellationToken);
+        var types = await mediator.Send(new GetPlacesTypesQuery(), cancellationToken);
 
         return Ok(types);
     }

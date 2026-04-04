@@ -19,7 +19,7 @@ public class GetParticipantsHandler(IEventRepository eventRepository, IUserRepos
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
         var participants =
-            await userRepository.GetByFilterAsync(new EventParticipantsSpecification(participantsIds),
+            await userRepository.GetByFilterAsync(new EventParticipantsSpec(participantsIds),
                 cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);

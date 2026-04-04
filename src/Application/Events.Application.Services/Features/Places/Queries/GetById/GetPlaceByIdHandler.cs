@@ -1,0 +1,21 @@
+﻿using AutoMapper;
+using Events.Application.Services.Features.Places.Repositories;
+using Events.Application.Services.Features.Places.Specifications;
+using Events.Contracts.Places;
+using MediatR;
+
+namespace Events.Application.Services.Features.Places.Queries.GetById;
+
+/// <inheritdoc />
+public class GetPlaceByIdHandler(IPlaceRepository placeRepository, IMapper mapper)
+    : IRequestHandler<GetPlaceByIdQuery, PlaceDto>
+{
+    /// <inheritdoc />
+    public async Task<PlaceDto> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken)
+    {
+        var spec = new PlaceByIdSpec(request.PlaceId).AsNoTracking();
+        var places = placeRepository.GetAsync(spec, cancellationToken);
+
+        return mapper.Map<PlaceDto>(places);
+    }
+}

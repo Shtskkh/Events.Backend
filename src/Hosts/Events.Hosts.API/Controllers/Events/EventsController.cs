@@ -1,15 +1,15 @@
 ﻿using Events.Application.Services.Features.Events.Commands.AddParticipant;
-using Events.Application.Services.Features.Events.Commands.CreateEvent;
-using Events.Application.Services.Features.Events.Commands.DeleteEvent;
+using Events.Application.Services.Features.Events.Commands.Create;
+using Events.Application.Services.Features.Events.Commands.Delete;
 using Events.Application.Services.Features.Events.Commands.RemoveParticipant;
 using Events.Application.Services.Features.Events.Commands.Update;
-using Events.Application.Services.Features.Events.Queries.GetAllEventsFormats;
-using Events.Application.Services.Features.Events.Queries.GetAllEventsPlaceholders;
-using Events.Application.Services.Features.Events.Queries.GetAllEventsTypes;
 using Events.Application.Services.Features.Events.Queries.GetAnalytics;
-using Events.Application.Services.Features.Events.Queries.GetEventById;
-using Events.Application.Services.Features.Events.Queries.GetEventsByFilter;
+using Events.Application.Services.Features.Events.Queries.GetByFilter;
+using Events.Application.Services.Features.Events.Queries.GetById;
+using Events.Application.Services.Features.Events.Queries.GetFormats;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
+using Events.Application.Services.Features.Events.Queries.GetPlaceholders;
+using Events.Application.Services.Features.Events.Queries.GetTypes;
 using Events.Contracts.Errors;
 using Events.Contracts.Events;
 using Events.Contracts.Events.EventsFormats;
@@ -214,7 +214,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         Description = "Типы мероприятий не найдены.")]
     public async Task<IActionResult> GetAllTypesAsync(CancellationToken cancellationToken)
     {
-        var types = await mediator.Send(new GetAllEventsTypesQuery(), cancellationToken);
+        var types = await mediator.Send(new GetEventsTypesQuery(), cancellationToken);
 
         if (types.Count == 0) return NotFound();
 
@@ -233,7 +233,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         Description = "Форматы мероприятий не найдены.")]
     public async Task<IActionResult> GetAllFormatsAsync(CancellationToken cancellationToken)
     {
-        var formats = await mediator.Send(new GetAllEventsFormatsQuery(), cancellationToken);
+        var formats = await mediator.Send(new GetEventsFormatsQuery(), cancellationToken);
 
         if (formats.Count == 0) return NotFound();
 
@@ -252,7 +252,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         Description = "Плейсхолдеры мероприятий не найдены.")]
     public async Task<IActionResult> GetAllEventsPlaceholders(CancellationToken cancellationToken)
     {
-        var dtoList = await mediator.Send(new GetAllEventsPlaceholdersQuery(), cancellationToken);
+        var dtoList = await mediator.Send(new GetEventsPlaceholdersQuery(), cancellationToken);
 
         return Ok(dtoList);
     }

@@ -4,6 +4,7 @@ using Events.Application.Services.Features.Equipment.Repositories;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Places.Repositories;
 using Events.Application.Services.Features.Users.Repositories;
 using Events.Infrastructure.DataAccess.Context.Equipment.Repositories;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;

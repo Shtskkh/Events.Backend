@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
-using Events.Application.Services.Features.Locations.Repositories;
+using Events.Application.Services.Features.Places.Repositories;
 using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.LocationAggregate.Errors;
 using Events.Domain.Exceptions;

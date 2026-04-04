@@ -1,4 +1,4 @@
-﻿using Events.Application.Services.Features.Locations.Repositories;
+﻿using Events.Application.Services.Features.Places.Repositories;
 using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Exceptions;
 using Events.Infrastructure.DataAccess.Repositories;
