@@ -91,11 +91,11 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
 
     private static string PrepareQuery(string text)
     {
-        var prepared = string.Join(" & ", text
+        var tokens = text
             .Split([' ', ',', '.', '\t', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Distinct()
-            .Select(w => w.Trim()));
+            .Select(w => w.Trim() + ":*");
 
-        return prepared;
+        return string.Join(" & ", tokens);
     }
 }
