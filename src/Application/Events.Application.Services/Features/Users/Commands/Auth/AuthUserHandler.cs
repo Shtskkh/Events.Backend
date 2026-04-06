@@ -2,6 +2,7 @@
 using Events.Application.Services.Features.Tokens.Jwt;
 using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Features.Users.Shared;
+using Events.Application.Services.Features.Users.Specifications;
 using Events.Contracts.Users;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Exceptions;
@@ -21,7 +22,8 @@ public sealed class AuthUserHandler(IUserRepository userRepository, IJwtTokenSer
         User user;
         try
         {
-            user = await userRepository.GetByEmail(authDto.Email, cancellationToken);
+            var spec = new UserSpec().WithEmail(authDto.Email).AsNoTracking();
+            user = await userRepository.GetAsync(spec, cancellationToken);
         }
         catch (NotFoundException)
         {

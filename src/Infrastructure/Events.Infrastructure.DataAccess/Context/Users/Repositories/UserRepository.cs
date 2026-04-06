@@ -29,22 +29,11 @@ public class UserRepository(IRepository<User, Guid, EventsDbContext> repository)
     }
 
     /// <inheritdoc />
-    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
-    {
-        var user = await repository.GetByIdAsync(id, cancellationToken);
-
-        if (user == null)
-            throw new NotFoundException(DataAccessErrorMessages.Users.NotFound);
-
-        return user;
-    }
-
-    /// <inheritdoc />
-    public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
+    public async Task<User> GetAsync(Specification<User> spec, CancellationToken cancellationToken)
     {
         var user = await repository
             .GetAllAsync()
-            .Where(e => e.Email.Value == email)
+            .WithSpecification(spec)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user == null)

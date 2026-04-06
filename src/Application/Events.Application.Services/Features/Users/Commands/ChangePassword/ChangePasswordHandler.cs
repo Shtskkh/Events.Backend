@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Users.Repositories;
+using Events.Application.Services.Features.Users.Specifications;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared.Errors;
 using MediatR;
@@ -9,7 +10,8 @@ public sealed class ChangePasswordHandler(IUserRepository userRepository) : IReq
 {
     public async Task Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetById(request.UserId, cancellationToken);
+        var spec = new UserSpec().WithId(request.UserId);
+        var user = await userRepository.GetAsync(spec, cancellationToken);
 
         if (user.Password.Value != request.Dto.OldPassword)
             throw new DomainException(PasswordErrorMessages.OldPasswordDoesNotMatch);
