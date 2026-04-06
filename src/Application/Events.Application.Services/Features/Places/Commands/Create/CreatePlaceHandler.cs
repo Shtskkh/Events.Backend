@@ -21,7 +21,7 @@ public sealed class CreatePlaceHandler(
     {
         var dto = request.Dto;
 
-        var spec = new LocationByIdSpec(request.LocationId).IncludePlaces();
+        var spec = new LocationSpec().WithId(request.LocationId).IncludePlaces();
         var location = await locationRepository.GetAsync(spec, cancellationToken);
         var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
 

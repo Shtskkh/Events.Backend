@@ -27,7 +27,7 @@ public class LocationRepository(IRepository<Location, int, EventsDbContext> repo
 
     /// <inheritdoc />
     public async Task<Location> GetAsync(
-        BaseLocationSpec spec,
+        LocationSpec spec,
         CancellationToken cancellationToken)
     {
         var location = await repository

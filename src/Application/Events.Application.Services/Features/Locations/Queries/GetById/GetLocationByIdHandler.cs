@@ -13,7 +13,7 @@ public sealed class GetLocationByIdHandler(ILocationRepository locationRepositor
     /// <inheritdoc />
     public async Task<LocationDto> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
     {
-        var spec = new LocationByIdSpec(request.Id).IncludePhotos().AsNoTracking();
+        var spec = new LocationSpec().WithId(request.Id).IncludePhotos().AsNoTracking();
         var location = await locationRepository.GetAsync(spec, cancellationToken);
 
         return mapper.Map<LocationDto>(location);

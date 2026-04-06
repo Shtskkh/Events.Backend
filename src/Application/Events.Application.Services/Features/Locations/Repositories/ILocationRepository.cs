@@ -21,7 +21,7 @@ public interface ILocationRepository
     /// <param name="spec">Спецификация запроса.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Объект локации.</returns>
-    Task<Location> GetAsync(BaseLocationSpec spec, CancellationToken cancellationToken);
+    Task<Location> GetAsync(LocationSpec spec, CancellationToken cancellationToken);
 
     /// <summary>
     ///     Добавить локацию.

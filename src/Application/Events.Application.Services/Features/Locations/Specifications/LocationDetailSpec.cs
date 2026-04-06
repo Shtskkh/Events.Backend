@@ -3,14 +3,13 @@
 namespace Events.Application.Services.Features.Locations.Specifications;
 
 /// <summary>
-///     Спецификация загрузки страницы 
+///     Спецификация загрузки страницы
 /// </summary>
-public class LocationWithPlacesDetailsSpec : BaseLocationSpec
+public class LocationWithPlacesDetailsSpec : LocationSpec
 {
     public LocationWithPlacesDetailsSpec(int id)
     {
-        Query.Where(l => l.Id == id);
-
+        WithId(id);
         Query.Include(l => l.Places)
             .ThenInclude(p => p.Photos);
     }

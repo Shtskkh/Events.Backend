@@ -11,7 +11,7 @@ public sealed class DeleteLocationHandler(ILocationRepository locationRepository
     /// <inheritdoc />
     public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
     {
-        var spec = new LocationByIdSpec(request.LocationId);
+        var spec = new LocationSpec().WithId(request.LocationId);
         var location = await locationRepository.GetAsync(spec, cancellationToken);
 
         await locationRepository.DeleteAsync(location, cancellationToken);
