@@ -14,7 +14,7 @@ public sealed class GetLocationPlacesHandler(ILocationRepository locationReposit
     public async Task<IReadOnlyCollection<ShortPlaceDto>> Handle(GetLocationPlacesQuery request,
         CancellationToken cancellationToken)
     {
-        var spec = new LocationWithPlacesDetailsSpec(request.Id);
+        var spec = new LocationWithPlacesDetailsSpec(request.Id).AsNoTracking();
         var location = await locationRepository.GetAsync(spec, cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<ShortPlaceDto>>(location.Places);

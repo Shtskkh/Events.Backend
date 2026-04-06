@@ -3,8 +3,7 @@
 namespace Events.Application.Services.Features.Locations.Specifications;
 
 /// <summary>
-///     Загружает локацию со всем графом для страницы детального просмотра:
-///     Places -> Photos
+///     Спецификация загрузки страницы 
 /// </summary>
 public class LocationWithPlacesDetailsSpec : BaseLocationSpec
 {
@@ -14,7 +13,5 @@ public class LocationWithPlacesDetailsSpec : BaseLocationSpec
 
         Query.Include(l => l.Places)
             .ThenInclude(p => p.Photos);
-
-        Query.AsNoTracking();
     }
 }
