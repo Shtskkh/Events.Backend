@@ -1,5 +1,4 @@
-﻿using Events.Application.Services.Shared;
-using Events.Contracts.Events;
+﻿using Events.Contracts.Events;
 using FluentValidation;
 
 namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
@@ -9,25 +8,22 @@ namespace Events.Application.Services.Features.Events.Queries.GetByFilter;
 /// </summary>
 public sealed class EventFilterValidator : AbstractValidator<EventFilterDto>
 {
-    /// <summary>
-    ///     Конструктор валидатора фильтра мероприятий.
-    /// </summary>
     public EventFilterValidator()
     {
         RuleFor(filter => filter.TypeId)
-            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.TypeIdLessOrEqualToZero)
+            .GreaterThan(0).WithMessage(EventFilterErrorMessages.TypeIdLessOrEqualToZero)
             .When(filter => filter.TypeId.HasValue);
 
         RuleFor(filter => filter.FormatId)
-            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.FormatIdLessOrEqualToZero)
+            .GreaterThan(0).WithMessage(EventFilterErrorMessages.FormatIdLessOrEqualToZero)
             .When(filter => filter.TypeId.HasValue);
 
         RuleFor(filter => filter.Page)
-            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.PageLessOrEqualToZero);
+            .GreaterThan(0).WithMessage(EventFilterErrorMessages.PageLessOrEqualToZero);
 
         RuleFor(filter => filter.Size)
-            .GreaterThan(0).WithMessage(ApplicationErrorMessages.Event.Filter.SizeLessOrEqualToZero)
-            .LessThanOrEqualTo(ApplicationConstraints.Event.Filter.MaxSize)
-            .WithMessage(ApplicationErrorMessages.Event.Filter.SizeGreaterThanMax);
+            .GreaterThan(0).WithMessage(EventFilterErrorMessages.SizeLessOrEqualToZero)
+            .LessThanOrEqualTo(EventFilterConstraints.MaxSize)
+            .WithMessage(EventFilterErrorMessages.SizeGreaterThanMax);
     }
 }

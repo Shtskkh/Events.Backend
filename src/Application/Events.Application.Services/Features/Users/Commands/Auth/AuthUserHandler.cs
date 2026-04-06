@@ -1,7 +1,7 @@
 ﻿using Events.Application.Services.Exceptions;
 using Events.Application.Services.Features.Tokens.Jwt;
 using Events.Application.Services.Features.Users.Repositories;
-using Events.Application.Services.Shared;
+using Events.Application.Services.Features.Users.Shared;
 using Events.Contracts.Users;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Exceptions;
@@ -25,11 +25,11 @@ public sealed class AuthUserHandler(IUserRepository userRepository, IJwtTokenSer
         }
         catch (NotFoundException)
         {
-            throw new UnauthorizedException(ApplicationErrorMessages.User.Unauthorized);
+            throw new UnauthorizedException(UserErrorMessages.Unauthorized);
         }
 
         if (user.Password.Value != authDto.Password)
-            throw new UnauthorizedException(ApplicationErrorMessages.User.Unauthorized);
+            throw new UnauthorizedException(UserErrorMessages.Unauthorized);
 
         var accessToken = tokenService.GenerateAccessToken(user);
         return new TokenDto(accessToken);

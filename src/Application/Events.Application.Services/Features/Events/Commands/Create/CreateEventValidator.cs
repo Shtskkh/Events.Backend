@@ -1,5 +1,4 @@
-﻿using Events.Application.Services.Shared;
-using Events.Contracts.Events;
+﻿using Events.Contracts.Events;
 using Events.Domain.Aggregates.EventAggregate.Errors;
 using FluentValidation;
 
@@ -22,10 +21,10 @@ public sealed class CreateEventValidator : AbstractValidator<CreateEventDto>
             });
 
         RuleFor(x => x.Preview)
-            .Must(x => x.Length <= ApplicationConstraints.Event.Creation.MaxSize)
-            .WithMessage(ApplicationErrorMessages.Event.Creation.PreviewFileSizeExceedsLimit)
-            .Must(x => ApplicationConstraints.Event.Creation.AllowedMimeTypes.Contains(x.ContentType))
-            .WithMessage(ApplicationErrorMessages.Event.Creation.PreviewFileContentTypeNotAllowed)
+            .Must(x => x.Length <= CreateEventConstraints.MaxSize)
+            .WithMessage(CreateEventErrorMessages.PreviewFileSizeExceedsLimit)
+            .Must(x => CreateEventConstraints.AllowedMimeTypes.Contains(x.ContentType))
+            .WithMessage(CreateEventErrorMessages.PreviewFileContentTypeNotAllowed)
             .When(x => x.Preview != null);
     }
 }
