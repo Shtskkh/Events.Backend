@@ -9,7 +9,7 @@ public sealed class DeleteEquipmentHandler(IEquipmentRepository equipmentReposit
 {
     public async Task Handle(DeleteEquipmentCommand request, CancellationToken cancellationToken)
     {
-        var spec = new EquipmentByIdSpec(request.Id);
+        var spec = new EquipmentSpec().WithId(request.Id);
         var equipment = await equipmentRepository.GetAsync(spec, cancellationToken);
 
         await equipmentRepository.DeleteAsync(equipment, cancellationToken);
