@@ -20,8 +20,8 @@ public class Equipment : Entity<int>, IAggregateRoot, IAuditable
         InventoryNumber = inventoryNumber;
         Type = type;
         PlaceId = placeId;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     /// <summary>

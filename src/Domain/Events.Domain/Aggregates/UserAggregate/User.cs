@@ -38,9 +38,8 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
         Role = userRole;
         Password = password;
         AvatarFilename = avatarFilename;
-
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     /// <summary>

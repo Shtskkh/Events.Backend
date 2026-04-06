@@ -41,8 +41,8 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
         Format = eventFormat;
         NeedsRegistration = needsRegistration;
         UserId = userId;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     /// <summary>

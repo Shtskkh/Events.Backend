@@ -36,9 +36,8 @@ public class Place : Entity<int>, IAuditable
         Capacity = capacity;
         Type = type;
         Title = title;
-
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     /// <summary>

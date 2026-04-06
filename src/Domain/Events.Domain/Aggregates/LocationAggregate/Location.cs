@@ -38,9 +38,8 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     {
         Title = title;
         Address = address;
-
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 
     /// <summary>
