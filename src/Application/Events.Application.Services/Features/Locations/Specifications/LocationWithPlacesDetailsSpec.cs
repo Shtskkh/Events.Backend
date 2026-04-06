@@ -3,7 +3,7 @@
 namespace Events.Application.Services.Features.Locations.Specifications;
 
 /// <summary>
-///     Спецификация загрузки страницы
+///     Спецификация загрузки локации с деталями помещений.
 /// </summary>
 public class LocationWithPlacesDetailsSpec : LocationSpec
 {
