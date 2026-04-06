@@ -12,11 +12,11 @@ public class UserFilterDto : IPagination
     ///     Размер выборки.
     /// </summary>
     [Range(1, 30)]
-    public required int Size { get; set; }
+    public required int Size { get; init; }
 
     /// <summary>
     ///     Страница выборки.
     /// </summary>
     [Range(1, int.MaxValue)]
-    public required int Page { get; set; }
+    public required int Page { get; init; }
 }

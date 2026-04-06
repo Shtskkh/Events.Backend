@@ -25,10 +25,10 @@ public record EquipmentFilterDto : IPagination
     /// <summary>
     ///     Размер выборки.
     /// </summary>
-    public required int Size { get; set; }
+    public required int Size { get; init; }
 
     /// <summary>
     ///     Страница выборки.
     /// </summary>
-    public required int Page { get; set; }
+    public required int Page { get; init; }
 }
