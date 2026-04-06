@@ -13,7 +13,7 @@ public sealed class GetPlaceByIdHandler(IPlaceRepository placeRepository, IMappe
     /// <inheritdoc />
     public async Task<PlaceDto> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken)
     {
-        var spec = new PlaceByIdSpec(request.PlaceId).AsNoTracking();
+        var spec = new PlaceSpec().WithId(request.PlaceId).AsNoTracking();
         var places = placeRepository.GetAsync(spec, cancellationToken);
 
         return mapper.Map<PlaceDto>(places);

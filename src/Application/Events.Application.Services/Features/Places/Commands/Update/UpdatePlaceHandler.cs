@@ -11,7 +11,7 @@ public sealed class UpdatePlaceHandler(IPlaceRepository placeRepository, IPlaceT
     /// <inheritdoc />
     public async Task Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
-        var spec = new PlaceByIdSpec(request.PlaceId);
+        var spec = new PlaceSpec().WithId(request.PlaceId);
         var place = await placeRepository.GetAsync(spec, cancellationToken);
 
         var dto = request.UpdateDto;

@@ -176,7 +176,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
         Description = "Локация или помещение не найдено.")]
     public async Task<IActionResult> GetPlaceById(int locationId, int placeId, CancellationToken cancellationToken)
     {
-        var place = await mediator.Send(new GetPlaceByIdQuery(locationId, placeId), cancellationToken);
+        var place = await mediator.Send(new GetPlaceByIdQuery(placeId), cancellationToken);
 
         return Ok(place);
     }
@@ -220,7 +220,7 @@ public class LocationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> UpdatePlaceAsync(int locationId, int placeId, [FromForm] UpdatePlaceDto updateDto,
         CancellationToken cancellationToken)
     {
-        await mediator.Send(new UpdatePlaceCommand(locationId, placeId, updateDto), cancellationToken);
+        await mediator.Send(new UpdatePlaceCommand(placeId, updateDto), cancellationToken);
 
         return Ok();
     }

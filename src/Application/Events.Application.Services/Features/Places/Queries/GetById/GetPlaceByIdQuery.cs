@@ -4,4 +4,4 @@ using MediatR;
 namespace Events.Application.Services.Features.Places.Queries.GetById;
 
 /// <inheritdoc />
-public sealed record GetPlaceByIdQuery(int LocationId, int PlaceId) : IRequest<PlaceDto>;
+public sealed record GetPlaceByIdQuery(int PlaceId) : IRequest<PlaceDto>;
