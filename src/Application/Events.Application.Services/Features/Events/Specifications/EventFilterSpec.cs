@@ -33,6 +33,12 @@ public class EventFilterSpec : Specification<Event>
         if (filter.PlaceId != null)
             Query.Where(e => e.PlaceId == filter.PlaceId);
 
+        if (filter.CreatedAfter != null)
+            Query.Where(e => e.CreatedAt >= filter.CreatedAfter);
+
+        if (filter.CreatedBefore != null)
+            Query.Where(e => e.CreatedAt <= filter.CreatedBefore);
+
         Query.OrderByDescending(e => e.CreatedAt);
         Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
