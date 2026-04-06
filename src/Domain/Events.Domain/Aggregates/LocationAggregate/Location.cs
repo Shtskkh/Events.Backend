@@ -66,12 +66,12 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Дата создания.
     /// </summary>
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
     /// <summary>
     ///     Дата обновления.
     /// </summary>
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 
     /// <summary>
     ///     Изменить название локации.

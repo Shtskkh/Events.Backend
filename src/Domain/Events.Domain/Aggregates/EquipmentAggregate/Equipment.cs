@@ -45,10 +45,10 @@ public class Equipment : Entity<int>, IAggregateRoot, IAuditable
     public int? PlaceId { get; private set; }
 
     /// <inheritdoc />
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
     /// <inheritdoc />
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 
     /// <summary>
     ///     Изменить название.

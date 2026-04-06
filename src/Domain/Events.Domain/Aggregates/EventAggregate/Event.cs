@@ -111,10 +111,10 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public IReadOnlyCollection<EventParticipant> Participants => _participants.AsReadOnly();
 
     /// <inheritdoc />
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
     /// <inheritdoc />
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 
     /// <summary>
     ///     Метод изменения названия мероприятия.

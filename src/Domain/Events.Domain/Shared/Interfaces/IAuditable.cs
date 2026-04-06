@@ -8,10 +8,10 @@ public interface IAuditable
     /// <summary>
     ///     Дата создания.
     /// </summary>
-    DateTime CreatedAt { get; }
+    DateTimeOffset CreatedAt { get; }
 
     /// <summary>
     ///     Дата обновления.
     /// </summary>
-    DateTime UpdatedAt { get; }
+    DateTimeOffset UpdatedAt { get; }
 }

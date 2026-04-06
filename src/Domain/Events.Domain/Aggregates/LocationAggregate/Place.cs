@@ -67,10 +67,10 @@ public class Place : Entity<int>, IAuditable
     public IReadOnlyList<OrderedPhoto> Photos => _photos.AsReadOnly();
 
     /// <inheritdoc />
-    public DateTime CreatedAt { get; }
+    public DateTimeOffset CreatedAt { get; }
 
     /// <inheritdoc />
-    public DateTime UpdatedAt { get; }
+    public DateTimeOffset UpdatedAt { get; }
 
     /// <summary>
     ///     Изменить название локации.
