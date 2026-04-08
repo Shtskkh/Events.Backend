@@ -25,7 +25,7 @@ public sealed class CreatePlaceHandler(
         var location = await locationRepository.GetAsync(spec, cancellationToken);
         var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
 
-        var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, dto.Title);
+        var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, request.LocationId, dto.Title);
 
         var uploadedFilenames = new List<string>();
         try

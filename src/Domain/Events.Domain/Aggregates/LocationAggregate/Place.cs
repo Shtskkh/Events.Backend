@@ -28,14 +28,17 @@ public class Place : Entity<int>, IAuditable
     /// <param name="number">Номер помещения.</param>
     /// <param name="capacity">Вместимость помещения.</param>
     /// <param name="type">Тип помещения.</param>
+    /// <param name="locationId">ID локации.</param>
     /// <param name="title">Название помещения.</param>
-    public Place(int id, PlaceNumber number, PlaceCapacity capacity, PlaceType type, PlaceTitle? title = null) :
+    public Place(int id, PlaceNumber number, PlaceCapacity capacity, PlaceType type, int locationId,
+        PlaceTitle? title = null) :
         base(id)
     {
         Number = number;
         Capacity = capacity;
         Type = type;
         Title = title;
+        LocationId = locationId;
         CreatedAt = DateTimeOffset.UtcNow;
         UpdatedAt = DateTimeOffset.UtcNow;
     }
@@ -64,6 +67,11 @@ public class Place : Entity<int>, IAuditable
     ///     Фотографии.
     /// </summary>
     public IReadOnlyList<OrderedPhoto> Photos => _photos.AsReadOnly();
+
+    /// <summary>
+    ///     Локация.
+    /// </summary>
+    public int LocationId { get; }
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; }

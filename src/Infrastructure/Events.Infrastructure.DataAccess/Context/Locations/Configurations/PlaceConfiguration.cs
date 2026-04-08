@@ -61,6 +61,11 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             photoBuilder.WithOwner().HasForeignKey("PlaceId");
         });
 
+        builder.HasOne<Location>()
+            .WithMany(l => l.Places)
+            .HasForeignKey(p => p.LocationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.Property(p => p.CreatedAt)
             .IsRequired()
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
