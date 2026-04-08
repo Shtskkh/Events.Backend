@@ -25,6 +25,14 @@ public interface IPlaceRepository
     Task<Place> GetAsync(Specification<Place> spec, CancellationToken cancellationToken);
 
     /// <summary>
+    ///     Получить помещения по фильтру.
+    /// </summary>
+    /// <param name="spec">Спецификация фильтра.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция помещений.</returns>
+    Task<IReadOnlyCollection<Place>> GetByFilterAsync(Specification<Place> spec, CancellationToken cancellationToken);
+
+    /// <summary>
     ///     Обновить помещение.
     /// </summary>
     /// <param name="place">Помещение.</param>

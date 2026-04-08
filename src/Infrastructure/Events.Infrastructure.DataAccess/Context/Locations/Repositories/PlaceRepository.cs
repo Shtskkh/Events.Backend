@@ -13,14 +13,17 @@ namespace Events.Infrastructure.DataAccess.Context.Locations.Repositories;
 public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository) : IPlaceRepository
 {
     /// <inheritdoc />
-    public async Task<Place> GetById(int id, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<Place>> GetByFilterAsync(Specification<Place> spec,
+        CancellationToken cancellationToken)
     {
-        var place = await repository.GetByIdAsync(id, cancellationToken);
+        var places = await repository.GetAllAsync()
+            .WithSpecification(spec)
+            .ToListAsync(cancellationToken);
 
-        if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFound);
+        if (places == null)
+            throw new NotFoundException(PlaceErrorMessages.NotFoundAny);
 
-        return place;
+        return places;
     }
 
     /// <inheritdoc />
@@ -29,6 +32,17 @@ public class PlaceRepository(IRepository<Place, int, EventsDbContext> repository
         var place = await repository.GetAllAsync()
             .WithSpecification(spec)
             .FirstOrDefaultAsync(cancellationToken);
+
+        if (place == null)
+            throw new NotFoundException(PlaceErrorMessages.NotFound);
+
+        return place;
+    }
+
+    /// <inheritdoc />
+    public async Task<Place> GetById(int id, CancellationToken cancellationToken)
+    {
+        var place = await repository.GetByIdAsync(id, cancellationToken);
 
         if (place == null)
             throw new NotFoundException(PlaceErrorMessages.NotFound);
