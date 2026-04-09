@@ -33,6 +33,15 @@ public class PlaceProfile : Profile
             .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number.Value))
             .ForMember(dest => dest.Capacity, opt => opt.MapFrom(src => src.Capacity.Value))
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.Title))
-            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value));
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))
+            .ForMember(dest => dest.PhotosBucket, opt => opt.MapFrom(src =>
+                src.Photos.Count > 0 ? S3Buckets.PlacesPhotos : null))
+            .ForMember(dest => dest.Photos, opt => opt.MapFrom(src =>
+                src.Photos.Count > 0
+                    ? src.Photos
+                        .OrderBy(p => p.Order)
+                        .Select(p => new PhotoDto { Filename = p.Filename, Order = p.Order })
+                        .ToList()
+                    : null));
     }
 }

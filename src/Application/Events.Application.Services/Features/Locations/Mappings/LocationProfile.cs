@@ -31,6 +31,15 @@ public class LocationProfile : Profile
         CreateMap<Location, LocationDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title.Value))
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address.Value));
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address.Value))
+            .ForMember(dest => dest.PhotosBucket, opt => opt.MapFrom(src =>
+                src.Photos.Count > 0 ? S3Buckets.LocationsPhotos : null))
+            .ForMember(dest => dest.Photos, opt => opt.MapFrom(src =>
+                src.Photos.Count > 0
+                    ? src.Photos
+                        .OrderBy(p => p.Order)
+                        .Select(p => new PhotoDto { Filename = p.Filename, Order = p.Order })
+                        .ToList()
+                    : null));
     }
 }

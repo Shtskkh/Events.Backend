@@ -1,4 +1,6 @@
-﻿namespace Events.Contracts.Places;
+﻿using Events.Contracts.Files;
+
+namespace Events.Contracts.Places;
 
 /// <summary>
 ///     Информация о помещении.
@@ -29,4 +31,14 @@ public class PlaceDto
     ///     Название.
     /// </summary>
     public string? Title { get; init; }
+    
+    /// <summary>
+    ///     Bucket фото.
+    /// </summary>
+    public string? PhotosBucket { get; init; }
+
+    /// <summary>
+    ///     Фото.
+    /// </summary>
+    public IReadOnlyCollection<PhotoDto>? Photos { get; init; }
 }
