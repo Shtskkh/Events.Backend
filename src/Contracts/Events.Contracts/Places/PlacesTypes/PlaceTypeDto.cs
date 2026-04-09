@@ -3,7 +3,7 @@
 /// <summary>
 ///     Тип помещения.
 /// </summary>
-public class PlaceTypeDto
+public sealed record PlaceTypeDto
 {
     /// <summary>
     ///     Идентификатор типа помещения.

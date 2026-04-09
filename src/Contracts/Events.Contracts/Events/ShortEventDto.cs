@@ -5,7 +5,7 @@ namespace Events.Contracts.Events;
 /// <summary>
 ///     Краткая информация о мероприятии.
 /// </summary>
-public class ShortEventDto
+public sealed record ShortEventDto
 {
     /// <summary>
     ///     ID.

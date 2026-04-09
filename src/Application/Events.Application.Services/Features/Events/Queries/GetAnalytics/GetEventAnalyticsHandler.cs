@@ -9,10 +9,10 @@ namespace Events.Application.Services.Features.Events.Queries.GetAnalytics;
 
 /// <inheritdoc />
 public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IPageViewRepository pageViewRepository)
-    : IRequestHandler<GetEventAnalyticsQuery, EventAnalyticDto>
+    : IRequestHandler<GetEventAnalyticsQuery, EventAnalyticsDto>
 {
     /// <inheritdoc />
-    public async Task<EventAnalyticDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
+    public async Task<EventAnalyticsDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
     {
         const bool includeParticipants = true;
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
@@ -31,7 +31,7 @@ public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, I
             .OrderBy(x => x.Date)
             .ToList();
 
-        return new EventAnalyticDto
+        return new EventAnalyticsDto
         {
             Id = @event.Id,
             MaxParticipantsCount = @event.MaxParticipants,

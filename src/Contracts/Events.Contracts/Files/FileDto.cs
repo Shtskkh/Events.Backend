@@ -1,7 +1,7 @@
 ﻿namespace Events.Contracts.Files;
 
 /// <inheritdoc />
-public class FileDto : IFile
+public sealed record FileDto : IFile
 {
     /// <inheritdoc />
     public Stream Content { get; set; } = null!;

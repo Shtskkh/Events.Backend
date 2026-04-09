@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель доступных помещений.
 /// </summary>
-public record PlaceAvailabilityDto
+public sealed record PlaceAvailabilityDto
 {
     /// <summary>
     ///     ID.

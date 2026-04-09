@@ -75,7 +75,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Модель аналитики.</returns>
     [HttpGet("{id:guid}/analytics")]
-    [ProducesResponseType(typeof(EventAnalyticDto), StatusCodes.Status200OK, "application/json",
+    [ProducesResponseType(typeof(EventAnalyticsDto), StatusCodes.Status200OK, "application/json",
         Description = "Успех.")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
         Description = "Мероприятие не найдено.")]

@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель обновления мероприятия.
 /// </summary>
-public record UpdateEventDto
+public sealed record UpdateEventDto
 {
     /// <summary>
     ///     Название.

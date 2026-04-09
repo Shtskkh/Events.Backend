@@ -3,7 +3,7 @@
 /// <summary>
 ///     Информация о типе мероприятия.
 /// </summary>
-public class EventTypeDto
+public sealed record EventTypeDto
 {
     /// <summary>
     ///     Идентификатор типа мероприятия.

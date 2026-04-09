@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель аутентификации пользователя.
 /// </summary>
-public record AuthDto
+public sealed record AuthDto
 {
     /// <summary>
     ///     Почтовый адрес.

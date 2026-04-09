@@ -5,7 +5,7 @@ namespace Events.Contracts.Equipment;
 /// <summary>
 ///     Модель фильтра оборудования.
 /// </summary>
-public record EquipmentFilterDto : IPagination
+public sealed record EquipmentFilterDto : IPagination
 {
     /// <summary>
     ///     Инвентарный номер.

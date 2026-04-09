@@ -6,7 +6,7 @@ namespace Events.Contracts.Users;
 /// <summary>
 ///     Фильтр пользователей.
 /// </summary>
-public class UserFilterDto : IPagination
+public sealed record UserFilterDto : IPagination
 {
     /// <summary>
     ///     Размер выборки.

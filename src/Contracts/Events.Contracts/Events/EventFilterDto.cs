@@ -6,7 +6,7 @@ namespace Events.Contracts.Events;
 /// <summary>
 ///     Фильтр мероприятий.
 /// </summary>
-public record EventFilterDto : IPagination
+public sealed record EventFilterDto : IPagination
 {
     /// <summary>
     ///     Текст.

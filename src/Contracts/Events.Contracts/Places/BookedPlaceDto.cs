@@ -3,7 +3,7 @@
 /// <summary>
 ///     Забронированное помещение.
 /// </summary>
-public record BookedPlaceDto
+public sealed record BookedPlaceDto
 {
     /// <summary>
     ///     ID помещения.
@@ -13,5 +13,5 @@ public record BookedPlaceDto
     /// <summary>
     ///     Номер помещения.
     /// </summary>
-    public string Number { get; init; }
+    public string Number { get; init; } = null!;
 }

@@ -5,7 +5,7 @@ namespace Events.Contracts.Places;
 /// <summary>
 ///     Краткая информация о помещении.
 /// </summary>
-public class ShortPlaceDto
+public sealed record ShortPlaceDto
 {
     /// <summary>
     ///     Идентификатор.

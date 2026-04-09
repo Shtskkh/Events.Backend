@@ -6,7 +6,7 @@ namespace Events.Contracts.Events;
 /// <summary>
 ///     Полная информация о мероприятии.
 /// </summary>
-public record EventDto
+public sealed record EventDto
 {
     /// <summary>
     ///     Идентификатор мероприятия.

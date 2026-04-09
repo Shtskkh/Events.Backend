@@ -3,7 +3,7 @@
 /// <summary>
 ///     Информация о формате мероприятия.
 /// </summary>
-public class EventFormatDto
+public sealed record EventFormatDto
 {
     /// <summary>
     ///     Идентификатор.

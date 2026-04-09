@@ -3,7 +3,7 @@
 /// <summary>
 ///     Информация о файле из S3.
 /// </summary>
-public class S3FileDto
+public sealed record S3FileDto
 {
     /// <summary>
     ///     Название bucket.

@@ -6,12 +6,11 @@ namespace Events.Contracts.Places;
 /// <summary>
 ///     Модель обновления помещения.
 /// </summary>
-public class UpdatePlaceDto
+public sealed record UpdatePlaceDto
 {
     /// <summary>
     ///     Название.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(PlaceConstraints.Title.MaxLength)]
     public string? Title { get; init; }
 

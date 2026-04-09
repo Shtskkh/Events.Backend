@@ -43,35 +43,35 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Message = exception.Message,
-                TraceID = context.TraceIdentifier
+                TraceId = context.TraceIdentifier
             },
 
             NotFoundException => new ErrorDto
             {
                 StatusCode = StatusCodes.Status404NotFound,
                 Message = exception.Message,
-                TraceID = context.TraceIdentifier
+                TraceId = context.TraceIdentifier
             },
 
             HttpRequestException => new ErrorDto
             {
                 StatusCode = StatusCodes.Status503ServiceUnavailable,
                 Message = "Запрашиваемый сервис недоступен. Попробуйте позже.",
-                TraceID = context.TraceIdentifier
+                TraceId = context.TraceIdentifier
             },
 
             UnauthorizedException => new ErrorDto
             {
                 StatusCode = StatusCodes.Status401Unauthorized,
                 Message = exception.Message,
-                TraceID = context.TraceIdentifier
+                TraceId = context.TraceIdentifier
             },
 
             _ => new ErrorDto
             {
                 StatusCode = StatusCodes.Status500InternalServerError,
                 Message = "Неожиданная ошибка сервера.",
-                TraceID = context.TraceIdentifier
+                TraceId = context.TraceIdentifier
             }
         };
     }

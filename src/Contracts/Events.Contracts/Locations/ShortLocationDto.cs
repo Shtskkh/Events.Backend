@@ -5,7 +5,7 @@ namespace Events.Contracts.Locations;
 /// <summary>
 ///     Краткая информация о локации.
 /// </summary>
-public class ShortLocationDto
+public sealed record ShortLocationDto
 {
     /// <summary>
     ///     Идентификатор.

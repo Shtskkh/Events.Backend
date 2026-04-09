@@ -17,21 +17,18 @@ public sealed record CreateEventDto
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(EventConstraints.Title.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>
     ///     Анонс мероприятия.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(EventConstraints.Announcement.MaxLength)]
     public required string Announcement { get; init; }
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(EventConstraints.Description.MaxLength)]
     public required string Description { get; init; }
 

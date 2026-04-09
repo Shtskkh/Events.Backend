@@ -7,12 +7,11 @@ namespace Events.Contracts.Places;
 /// <summary>
 ///     Модель создания помещения.
 /// </summary>
-public class CreatePlaceDto
+public sealed record CreatePlaceDto
 {
     /// <summary>
     ///     Номер.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(PlaceConstraints.Number.MaxLength)]
     public required string Number { get; init; }
 

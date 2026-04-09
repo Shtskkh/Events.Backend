@@ -3,7 +3,7 @@
 /// <summary>
 ///     Тип оборудования.
 /// </summary>
-public record EquipmentTypeDto
+public sealed record EquipmentTypeDto
 {
     /// <summary>
     ///     Идентификатор.

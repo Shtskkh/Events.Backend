@@ -3,7 +3,7 @@
 /// <summary>
 ///     Плейсхолдер мероприятия.
 /// </summary>
-public class EventPlaceholderDto
+public sealed record EventPlaceholderDto
 {
     /// <summary>
     ///     Название файла плейсхолдера.

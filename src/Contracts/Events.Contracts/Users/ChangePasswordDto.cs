@@ -1,9 +1,12 @@
-﻿namespace Events.Contracts.Users;
+﻿using System.ComponentModel.DataAnnotations;
+using Events.Domain.Shared.Constraints;
+
+namespace Events.Contracts.Users;
 
 /// <summary>
 ///     Модель изменения пароля.
 /// </summary>
-public record ChangePasswordDto
+public sealed record ChangePasswordDto
 {
     /// <summary>
     ///     Старый пароль.
@@ -13,5 +16,6 @@ public record ChangePasswordDto
     /// <summary>
     ///     Новый пароль.
     /// </summary>
+    [MaxLength(PasswordConstraints.MaxLength)]
     public required string NewPassword { get; init; } = null!;
 }

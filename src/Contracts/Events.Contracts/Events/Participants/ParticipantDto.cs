@@ -3,7 +3,7 @@
 /// <summary>
 ///     Участник мероприятия.
 /// </summary>
-public class ParticipantDto
+public sealed record ParticipantDto
 {
     /// <summary>
     ///     Идентификатор.

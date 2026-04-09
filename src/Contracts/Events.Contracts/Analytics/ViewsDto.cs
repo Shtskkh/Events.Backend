@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель посещаемости по дням.
 /// </summary>
-public record ViewsDto
+public sealed record ViewsDto
 {
     /// <summary>
     ///     Дата.

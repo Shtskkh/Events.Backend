@@ -5,7 +5,7 @@ namespace Events.Contracts.Places;
 /// <summary>
 ///     Информация о помещении.
 /// </summary>
-public class PlaceDto
+public sealed record PlaceDto
 {
     /// <summary>
     ///     Идентификатор.
@@ -31,7 +31,7 @@ public class PlaceDto
     ///     Название.
     /// </summary>
     public string? Title { get; init; }
-    
+
     /// <summary>
     ///     Bucket фото.
     /// </summary>

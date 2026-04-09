@@ -7,19 +7,17 @@ namespace Events.Contracts.Locations;
 /// <summary>
 ///     Модель создания локации.
 /// </summary>
-public class CreateLocationDto
+public sealed record CreateLocationDto
 {
     /// <summary>
     ///     Название.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(LocationConstraints.Title.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>
     ///     Адрес.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(LocationConstraints.Address.MaxLength)]
     public required string Address { get; init; }
 

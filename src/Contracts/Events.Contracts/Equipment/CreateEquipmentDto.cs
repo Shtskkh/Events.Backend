@@ -6,7 +6,7 @@ namespace Events.Contracts.Equipment;
 /// <summary>
 ///     Модель создания оборудования.
 /// </summary>
-public record CreateEquipmentDto
+public sealed record CreateEquipmentDto
 {
     /// <summary>
     ///     Название.

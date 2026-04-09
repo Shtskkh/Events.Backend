@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель оборудования.
 /// </summary>
-public record EquipmentDto
+public sealed record EquipmentDto
 {
     /// <summary>
     ///     ID.

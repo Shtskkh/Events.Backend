@@ -6,19 +6,17 @@ namespace Events.Contracts.Locations;
 /// <summary>
 ///     Модель обновления локации.
 /// </summary>
-public class UpdateLocationDto
+public sealed record UpdateLocationDto
 {
     /// <summary>
     ///     Название локации.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(LocationConstraints.Title.MaxLength)]
     public string? Title { get; set; }
 
     /// <summary>
     ///     Адрес локации.
     /// </summary>
-    [MinLength(1)]
     [MaxLength(LocationConstraints.Address.MaxLength)]
     public string? Address { get; set; }
 }

@@ -3,20 +3,20 @@
 /// <summary>
 ///     Модель ошибки.
 /// </summary>
-public class ErrorDto
+public sealed record ErrorDto
 {
     /// <summary>
     ///     Статус код ошибки.
     /// </summary>
-    public int StatusCode { get; set; }
+    public int StatusCode { get; init; }
 
     /// <summary>
     ///     Текст ошибки.
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; init; }
 
     /// <summary>
     ///     Trace ID запроса.
     /// </summary>
-    public string TraceID { get; set; }
+    public string? TraceId { get; init; }
 }

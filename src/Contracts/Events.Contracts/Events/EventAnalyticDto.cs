@@ -1,12 +1,11 @@
 ﻿using Events.Contracts.Analytics;
-using Events.Contracts.Shared;
 
 namespace Events.Contracts.Events;
 
 /// <summary>
 ///     Модель аналитики мероприятия.
 /// </summary>
-public record EventAnalyticDto
+public sealed record EventAnalyticsDto
 {
     /// <summary>
     ///     ID мероприятия.
