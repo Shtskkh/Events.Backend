@@ -2,6 +2,7 @@
 using Events.Application.Services.Interfaces;
 using Events.Domain.Aggregates.AnalyticsAggregate;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Events.Application.Services.Behaviors;
 
@@ -12,7 +13,8 @@ namespace Events.Application.Services.Behaviors;
 /// <typeparam name="TResponse">Тип ответа.</typeparam>
 public class AnalyticsBehavior<TRequest, TResponse>(
     IPageViewRepository pageViewRepository,
-    ICurrentUserProvider currentUserProvider
+    ICurrentUserProvider currentUserProvider,
+    ILogger<AnalyticsBehavior<TRequest, TResponse>> logger
 )
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -35,7 +37,7 @@ public class AnalyticsBehavior<TRequest, TResponse>(
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            logger.LogError(e, "Ошибка при попытке записать просмотр страницы.");
         }
 
         return response;
