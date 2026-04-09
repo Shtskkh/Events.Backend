@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Repositories;
+using Events.Application.Services.Features.Users.Specifications;
 using Events.Contracts.Events.Participants;
 using MediatR;
 
@@ -18,9 +18,8 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUs
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
-        var participants =
-            await userRepository.GetByFilterAsync(new EventParticipantsSpec(participantsIds),
-                cancellationToken);
+        var spec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
+        var participants = await userRepository.GetByFilterAsync(spec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);
 
@@ -37,6 +36,6 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUs
             };
         }).ToList();
 
-        return dtoList.AsReadOnly();
+        return dtoList;
     }
 }

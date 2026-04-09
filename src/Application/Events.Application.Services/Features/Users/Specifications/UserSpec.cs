@@ -14,6 +14,12 @@ public class UserSpec : Specification<User>
         return this;
     }
 
+    public UserSpec WithIdList(IEnumerable<Guid> ids)
+    {
+        Query.Where(x => ids.Contains(x.Id));
+        return this;
+    }
+
     public UserSpec WithEmail(string email)
     {
         Query.Where(e => e.Email.Value == email);
