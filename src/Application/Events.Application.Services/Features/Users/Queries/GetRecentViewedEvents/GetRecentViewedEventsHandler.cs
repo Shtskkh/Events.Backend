@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Analytics.Repositories;
+using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
-using Events.Application.Services.Features.Users.Specifications;
 using Events.Contracts.Events;
+using Events.Domain.Aggregates.AnalyticsAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
@@ -19,7 +20,11 @@ public sealed class GetRecentViewedEventsHandler(
     public async Task<IReadOnlyCollection<ShortEventDto>> Handle(GetRecentViewedEventsQuery request,
         CancellationToken cancellationToken)
     {
-        var userViewsSpec = new RecentViewedEventsSpec(request.UserId);
+        var userViewsSpec = new PageViewSpec()
+            .WithEntityType(EntityTypes.Event)
+            .WithUserId(request.UserId)
+            .AsNoTracking();
+
         var userViews = await pageViewRepository.GetByFilterAsync(userViewsSpec, cancellationToken);
 
         var eventsIds = userViews
@@ -33,7 +38,7 @@ public sealed class GetRecentViewedEventsHandler(
 
         var eventMap = events.ToDictionary(e => e.Id);
         var orderedEvents = eventsIds
-            .Where(id => eventMap.ContainsKey(id))
+            .Where(eventMap.ContainsKey)
             .Select(id => eventMap[id]);
 
         return mapper.Map<IReadOnlyCollection<ShortEventDto>>(orderedEvents);
