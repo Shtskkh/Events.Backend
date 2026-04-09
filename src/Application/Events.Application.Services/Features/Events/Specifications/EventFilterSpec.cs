@@ -30,6 +30,9 @@ public class EventFilterSpec : Specification<Event>
         if (filter.UserId != null)
             Query.Where(e => e.UserId == filter.UserId);
 
+        if (filter.LocationId != null)
+            Query.Where(e => e.Booking != null && e.Booking.LocationId == filter.LocationId);
+
         if (filter.PlaceId != null)
             Query.Where(e => e.Booking != null && e.Booking.PlaceId == filter.PlaceId);
 

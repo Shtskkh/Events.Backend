@@ -39,6 +39,11 @@ public record EventFilterDto : IPagination
     public Guid? UserId { get; init; }
 
     /// <summary>
+    ///     ID локации.
+    /// </summary>
+    public int? LocationId { get; init; }
+
+    /// <summary>
     ///     ID помещения.
     /// </summary>
     public int? PlaceId { get; init; }
