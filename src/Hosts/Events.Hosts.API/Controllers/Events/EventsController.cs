@@ -10,6 +10,7 @@ using Events.Application.Services.Features.Events.Queries.GetFormats;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Application.Services.Features.Events.Queries.GetPlaceholders;
 using Events.Application.Services.Features.Events.Queries.GetTypes;
+using Events.Application.Services.Features.Events.Queries.GetTypesAnalytics;
 using Events.Contracts.Errors;
 using Events.Contracts.Events;
 using Events.Contracts.Events.EventsFormats;
@@ -219,6 +220,32 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         if (types.Count == 0) return NotFound();
 
         return Ok(types);
+    }
+
+    /// <summary>
+    ///     Получить аналитику по типам мероприятий.
+    /// </summary>
+    /// <param name="start">Начало периода.</param>
+    /// <param name="end">Окончание периода.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция типов мероприятий с количеством за период.</returns>
+    [HttpGet("Types/Analytics")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeAnalytics>),
+        StatusCodes.Status200OK,
+        "application/json",
+        Description = "Успех.")]
+    [ProducesResponseType(typeof(ErrorDto),
+        StatusCodes.Status404NotFound,
+        "application/problem+json",
+        Description = "Мероприятия за данный период не были найдены.")]
+    public async Task<IActionResult> GetTypesAnalytics(
+        [FromQuery] DateTimeOffset start,
+        [FromQuery] DateTimeOffset end,
+        CancellationToken cancellationToken)
+    {
+        var analytics = await mediator.Send(new GetEventTypesAnalytics(start, end), cancellationToken);
+
+        return Ok(analytics);
     }
 
     /// <summary>
