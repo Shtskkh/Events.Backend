@@ -1,50 +1,46 @@
 ﻿using Ardalis.Specification;
 using Events.Contracts.Events;
-using Events.Domain.Aggregates.EventAggregate;
 
 namespace Events.Application.Services.Features.Events.Specifications;
 
 /// <summary>
 ///     Спецификация фильтра мероприятий.
 /// </summary>
-public class EventFilterSpec : Specification<Event>
+public class EventFilterSpec : EventSpec
 {
-    /// <summary>
-    ///     Конструктор спецификации фильтра мероприятий.
-    /// </summary>
-    /// <param name="filter">DTO фильтра.</param>
     public EventFilterSpec(EventFilterDto filter)
     {
         if (filter.StartDateTime != null)
-            Query.Where(e => e.DateTimeRange.StartDateTime >= filter.StartDateTime);
+            StartAfter(filter.StartDateTime.Value);
 
         if (filter.EndDateTime != null)
-            Query.Where(e => e.DateTimeRange.EndDateTime <= filter.EndDateTime);
+            EndBefore(filter.EndDateTime.Value);
 
         if (filter.TypeId != null)
-            Query.Where(e => e.Type.Id == filter.TypeId);
+            WithTypeId(filter.TypeId.Value);
 
         if (filter.FormatId != null)
-            Query.Where(e => e.Format.Id == filter.FormatId);
+            WithFormatId(filter.FormatId.Value);
 
         if (filter.UserId != null)
-            Query.Where(e => e.UserId == filter.UserId);
+            WithUserId(filter.UserId.Value);
 
         if (filter.LocationId != null)
-            Query.Where(e => e.Booking != null && e.Booking.LocationId == filter.LocationId);
+            WithLocationId(filter.LocationId.Value);
 
         if (filter.PlaceId != null)
-            Query.Where(e => e.Booking != null && e.Booking.PlaceId == filter.PlaceId);
+            WithPlaceId(filter.PlaceId.Value);
 
         if (filter.CreatedAfter != null)
-            Query.Where(e => e.CreatedAt >= filter.CreatedAfter);
+            CreatedAfter(filter.CreatedAfter.Value);
 
         if (filter.CreatedBefore != null)
-            Query.Where(e => e.CreatedAt <= filter.CreatedBefore);
+            CreatedBefore(filter.CreatedBefore.Value);
 
         Query.OrderByDescending(e => e.CreatedAt);
-        Query.AsNoTracking();
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);
+
+        AsNoTracking();
     }
 }

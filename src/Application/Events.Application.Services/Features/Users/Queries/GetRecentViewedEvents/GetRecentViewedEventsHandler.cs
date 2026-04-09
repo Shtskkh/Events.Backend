@@ -28,7 +28,7 @@ public sealed class GetRecentViewedEventsHandler(
             .Select(v => v.EntityId)
             .ToList();
 
-        var eventsSpec = new EventsByIdsSpec(eventsIds);
+        var eventsSpec = new EventSpec().WithIdList(eventsIds).AsNoTracking();
         var events = await eventRepository.GetByFilterAsync(eventsSpec, cancellationToken);
 
         var eventMap = events.ToDictionary(e => e.Id);
