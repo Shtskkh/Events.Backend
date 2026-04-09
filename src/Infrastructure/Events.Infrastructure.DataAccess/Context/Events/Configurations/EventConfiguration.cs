@@ -1,6 +1,5 @@
 ﻿using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Aggregates.EventAggregate.Constraints;
-using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -51,6 +50,15 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                 .IsRequired();
         });
 
+        builder.OwnsOne(e => e.Booking, bookingBuilder =>
+        {
+            bookingBuilder.Property(b => b.LocationId)
+                .HasColumnName("LocationId");
+
+            bookingBuilder.Property(b => b.PlaceId)
+                .HasColumnName("PlaceId");
+        });
+
         builder.Property(e => e.PreviewFilename);
 
         builder.Property(e => e.PlaceholderFilename);
@@ -77,11 +85,6 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(e => e.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne<Place>()
-            .WithMany()
-            .HasForeignKey(e => e.PlaceId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(e => e.Participants)

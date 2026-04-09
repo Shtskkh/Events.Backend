@@ -9,7 +9,7 @@ namespace Events.Domain.Aggregates.EventAggregate;
 /// <summary>
 ///     Сущность мероприятия.
 /// </summary>
-public class Event : Entity<Guid>, IAuditable, IAggregateRoot
+public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
 {
     private readonly List<EventParticipant> _participants = [];
 
@@ -91,9 +91,9 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public int? MaxParticipants { get; private set; }
 
     /// <summary>
-    ///     ID локации.
+    ///     Информация о бронировании.
     /// </summary>
-    public int? PlaceId { get; private set; }
+    public BookingInfo? Booking { get; private set; }
 
     /// <summary>
     ///     Название файла превью.
@@ -253,13 +253,22 @@ public class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Забронировать помещение.
     /// </summary>
-    /// <param name="placeId">ID помещения.</param>
+    /// <param name="locationId">ID локации.</param>
+    /// <param name="placeId">ID помещения в локации.</param>
     /// <exception cref="DomainException">Ошибка правил домена.</exception>
-    public void Book(int placeId)
+    public void Book(int locationId, int placeId)
     {
         if (Format.Id == EventFormat.Online.Id)
             throw new DomainException(EventErrorMessages.Booking.NotAllowedForOnline);
 
-        PlaceId = placeId;
+        Booking = new BookingInfo(locationId, placeId);
+    }
+
+    /// <summary>
+    ///     Убрать бронирование.
+    /// </summary>
+    public void Unbook()
+    {
+        Booking = null;
     }
 }

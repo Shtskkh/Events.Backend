@@ -1,4 +1,5 @@
-﻿using Ardalis.Specification;
+﻿using System.Linq.Expressions;
+using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
@@ -12,6 +13,37 @@ namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 /// <inheritdoc />
 public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
 {
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
+        Specification<Event> spec,
+        CancellationToken cancellationToken,
+        string? textQuery = null
+    )
+    {
+        var query = repository
+            .GetAllAsync()
+            .WithSpecification(spec);
+
+        if (textQuery != null)
+        {
+            var preparedText = PrepareQuery(textQuery);
+            query = query.Where(e =>
+                EF.Functions.ToTsVector(
+                        "russian",
+                        e.Title.Value + ' ' +
+                        e.Announcement.Value + ' ' +
+                        e.Description.Value)
+                    .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
+        }
+
+        var events = await query.ToListAsync(cancellationToken);
+
+        if (events.Count == 0)
+            throw new NotFoundException(DataAccessErrorMessages.Event.NotFoundAny);
+
+        return events.AsReadOnly();
+    }
+
     /// <inheritdoc />
     public async Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken,
         bool includeParticipants = false)
@@ -51,42 +83,14 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
     public Task<bool> HasBookingConflictAsync(int placeId, DateTimeOffset start, DateTimeOffset end,
         CancellationToken cancellationToken)
     {
+        Expression<Func<Event, bool>> hasConflict = e =>
+            e.Booking != null &&
+            e.Booking.PlaceId == placeId &&
+            e.DateTimeRange.StartDateTime < end &&
+            e.DateTimeRange.EndDateTime > start;
+
         return repository.GetAllAsync()
-            .AnyAsync(e => e.PlaceId == placeId
-                           && e.DateTimeRange.StartDateTime < end
-                           && e.DateTimeRange.EndDateTime > start, cancellationToken
-            );
-    }
-
-    /// <inheritdoc />
-    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
-        Specification<Event> spec,
-        CancellationToken cancellationToken,
-        string? textQuery = null
-    )
-    {
-        var query = repository
-            .GetAllAsync()
-            .WithSpecification(spec);
-
-        if (textQuery != null)
-        {
-            var preparedText = PrepareQuery(textQuery);
-            query = query.Where(e =>
-                EF.Functions.ToTsVector(
-                        "russian",
-                        e.Title.Value + ' ' +
-                        e.Announcement.Value + ' ' +
-                        e.Description.Value)
-                    .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
-        }
-
-        var events = await query.ToListAsync(cancellationToken);
-
-        if (events.Count == 0)
-            throw new NotFoundException(DataAccessErrorMessages.Event.NotFoundAny);
-
-        return events.AsReadOnly();
+            .AnyAsync(hasConflict, cancellationToken);
     }
 
     private static string PrepareQuery(string text)

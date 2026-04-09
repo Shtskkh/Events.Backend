@@ -1,7 +1,6 @@
 ﻿using Events.Domain.Aggregates.EventAggregate.Errors;
 using Events.Domain.Aggregates.EventAggregate.ValueObjects;
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 
 namespace Events.Domain.Aggregates.EventAggregate.Factories;
 
@@ -22,56 +21,80 @@ public static class EventFactory
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="needRegistration">Необходимость регистрации.</param>
     /// <param name="userId">ID пользователя.</param>
+    /// <param name="locationId">ID локации.</param>
     /// <param name="placeId">ID помещения.</param>
     /// <param name="maxParticipants">Максимальное количество участников.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <param name="placeholderFilename">Название плейсхолдера превью.</param>
-    /// <returns>Объект сущности пользователя.</returns>
-    public static Event Create(string title, string announcement, string description, DateTimeOffset startDateTime,
-        DateTimeOffset endDateTime, EventType eventType, EventFormat eventFormat, Guid userId, bool needRegistration,
-        int? placeId = null, int? maxParticipants = null, string? previewFilename = null,
+    /// <returns>Объект сущности мероприятия.</returns>
+    public static Event Create(
+        string title,
+        string announcement,
+        string description,
+        DateTimeOffset startDateTime,
+        DateTimeOffset endDateTime,
+        EventType eventType,
+        EventFormat eventFormat,
+        Guid userId,
+        bool needRegistration,
+        int? locationId = null,
+        int? placeId = null,
+        int? maxParticipants = null,
+        string? previewFilename = null,
         string? placeholderFilename = null)
     {
-        var id = Guid.NewGuid();
-        var titleVo = new EventTitle(title);
-        var announcementVo = new EventAnnouncement(announcement);
-        var descriptionVo = new EventDescription(description);
-        var dateTimeRange = new EventDateTimeRange(startDateTime, endDateTime);
-
-        if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
-
-        if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet);
-
-        if (needRegistration && !maxParticipants.HasValue)
-            throw new DomainException(EventErrorMessages.Participant.MaxCountMustBeSet);
-
-        if (eventFormat.Id != EventFormat.Online.Id && !placeId.HasValue)
-            throw new DomainException(EventErrorMessages.Booking.RequiredForOffline);
+        ValidatePreview(previewFilename, placeholderFilename);
+        ValidateRegistration(needRegistration, maxParticipants);
+        ValidateBooking(eventFormat, locationId, placeId);
 
         var @event = new Event(
-            id,
-            titleVo,
-            announcementVo,
-            descriptionVo,
-            dateTimeRange,
+            Guid.NewGuid(),
+            new EventTitle(title),
+            new EventAnnouncement(announcement),
+            new EventDescription(description),
+            new EventDateTimeRange(startDateTime, endDateTime),
             eventType,
             eventFormat,
             userId,
             needRegistration);
 
-        if (!string.IsNullOrWhiteSpace(previewFilename))
-            @event.ChangePreview(previewFilename);
-        else
-            @event.ChangePlaceHolder(placeholderFilename!);
+        ApplyPreview(@event, previewFilename, placeholderFilename);
 
         if (maxParticipants.HasValue)
             @event.ChangeMaxParticipants(maxParticipants.Value);
 
-        if (placeId.HasValue)
-            @event.Book(placeId.Value);
+        if (locationId.HasValue && placeId.HasValue)
+            @event.Book(locationId.Value, placeId.Value);
 
         return @event;
+    }
+
+    private static void ValidatePreview(string? previewFilename, string? placeholderFilename)
+    {
+        if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
+            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+
+        if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
+            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet);
+    }
+
+    private static void ValidateRegistration(bool needRegistration, int? maxParticipants)
+    {
+        if (needRegistration && !maxParticipants.HasValue)
+            throw new DomainException(EventErrorMessages.Participant.MaxCountMustBeSet);
+    }
+
+    private static void ValidateBooking(EventFormat eventFormat, int? locationId, int? placeId)
+    {
+        if (eventFormat.Id != EventFormat.Online.Id && (!locationId.HasValue || !placeId.HasValue))
+            throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
+    }
+
+    private static void ApplyPreview(Event @event, string? previewFilename, string? placeholderFilename)
+    {
+        if (!string.IsNullOrWhiteSpace(previewFilename))
+            @event.ChangePreview(previewFilename);
+        else
+            @event.ChangePlaceHolder(placeholderFilename!);
     }
 }

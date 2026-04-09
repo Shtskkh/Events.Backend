@@ -7,7 +7,7 @@ namespace Events.Contracts.Events;
 /// <summary>
 ///     Создание мероприятия.
 /// </summary>
-public class CreateEventDto
+public sealed record CreateEventDto
 {
     /// <summary>
     ///     ID пользователя, создающего мероприятие.
@@ -76,7 +76,12 @@ public class CreateEventDto
     public string? Placeholder { get; init; }
 
     /// <summary>
-    ///     ID помещения.
+    ///     ID локации.
+    /// </summary>
+    public int? LocationId { get; init; }
+
+    /// <summary>
+    ///     ID помещения в локации.
     /// </summary>
     public int? PlaceId { get; init; }
 }

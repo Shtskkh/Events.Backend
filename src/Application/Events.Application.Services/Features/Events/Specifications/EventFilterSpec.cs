@@ -31,7 +31,7 @@ public class EventFilterSpec : Specification<Event>
             Query.Where(e => e.UserId == filter.UserId);
 
         if (filter.PlaceId != null)
-            Query.Where(e => e.PlaceId == filter.PlaceId);
+            Query.Where(e => e.Booking != null && e.Booking.PlaceId == filter.PlaceId);
 
         if (filter.CreatedAfter != null)
             Query.Where(e => e.CreatedAt >= filter.CreatedAfter);

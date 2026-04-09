@@ -20,16 +20,15 @@ public sealed class GetEventByIdHandler(
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
         var dto = mapper.Map<EventDto>(@event);
 
-        if (@event.PlaceId.HasValue)
-        {
-            var place = await placeRepository.GetById(@event.PlaceId.Value, cancellationToken);
+        if (@event.Booking == null)
+            return dto;
 
-            dto.PlaceInfo = new BookedPlaceDto
-            {
-                PlaceId = place.Id,
-                Number = place.Number.Value
-            };
-        }
+        var place = await placeRepository.GetById(@event.Booking.PlaceId, cancellationToken);
+        dto.PlaceInfo = new BookedPlaceDto
+        {
+            PlaceId = place.Id,
+            Number = place.Number.Value
+        };
 
         return dto;
     }
