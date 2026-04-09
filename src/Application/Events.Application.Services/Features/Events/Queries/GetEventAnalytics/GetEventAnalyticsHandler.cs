@@ -1,11 +1,12 @@
 ﻿using Events.Application.Services.Features.Analytics.Repositories;
+using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.Events.Specifications;
 using Events.Contracts.Analytics;
 using Events.Contracts.Events;
+using Events.Domain.Aggregates.AnalyticsAggregate;
 using MediatR;
 
-namespace Events.Application.Services.Features.Events.Queries.GetAnalytics;
+namespace Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 
 /// <inheritdoc />
 public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IPageViewRepository pageViewRepository)
@@ -17,8 +18,7 @@ public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, I
         const bool includeParticipants = true;
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
 
-        var spec = new EventViewsSpec(request.Id);
-
+        var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.Id).AsNoTracking();
         var views = await pageViewRepository.GetByFilterAsync(spec, cancellationToken);
 
         var viewsByDay = views
