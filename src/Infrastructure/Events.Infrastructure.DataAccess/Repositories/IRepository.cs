@@ -1,4 +1,5 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Application.Services.Shared;
+using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Repositories;
@@ -21,6 +22,19 @@ public interface IRepository<TEntity, in TKey, TContext>
     ///     DbSet сущности.
     /// </returns>
     IQueryable<TEntity> GetAllAsync();
+
+    /// <summary>
+    ///     Метод асинхронного выполнения произвольного запроса к сущностям.
+    /// </summary>
+    /// <typeparam name="TResult">Тип результата запроса.</typeparam>
+    /// <param name="queryObject">
+    ///     Объект запроса, описывающий фильтрацию, группировку и проекцию.
+    /// </param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция результатов запроса.</returns>
+    Task<IReadOnlyCollection<TResult>> QueryAsync<TResult>(
+        QueryObject<TEntity, TResult> queryObject,
+        CancellationToken cancellationToken);
 
     /// <summary>
     ///     Метод асинхронного получения сущности по ID.

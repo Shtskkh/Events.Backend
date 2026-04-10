@@ -1,4 +1,5 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Application.Services.Shared;
+using Events.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Repositories;
@@ -26,6 +27,14 @@ public class Repository<TEntity, TKey, TContext> : IRepository<TEntity, TKey, TC
     public IQueryable<TEntity> GetAllAsync()
     {
         return _dbSet;
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<TResult>> QueryAsync<TResult>(QueryObject<TEntity, TResult> queryObject,
+        CancellationToken cancellationToken)
+    {
+        var baseQuery = _dbSet.AsNoTracking();
+        return await queryObject(baseQuery).ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc />
