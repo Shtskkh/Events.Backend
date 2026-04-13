@@ -4,10 +4,8 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Places.Repositories;
-using Events.Application.Services.Features.Users.Repositories;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
 using Events.Infrastructure.DataAccess.Context.Locations.Repositories;
-using Events.Infrastructure.DataAccess.Context.Users.Repositories;
 using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
 using Events.Infrastructure.DataAccess.Shared.Interceptors;
@@ -57,8 +55,6 @@ public static class DataAccessExtensions
 
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IPlaceRepository, PlaceRepository>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)

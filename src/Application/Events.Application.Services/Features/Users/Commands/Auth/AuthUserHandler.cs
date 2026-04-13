@@ -1,8 +1,8 @@
 ﻿using Events.Application.Services.Exceptions;
 using Events.Application.Services.Features.Tokens.Jwt;
-using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Features.Users.Shared;
 using Events.Application.Services.Features.Users.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Users;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Exceptions;
@@ -11,7 +11,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Users.Commands.Auth;
 
 /// <inheritdoc />
-public sealed class AuthUserHandler(IUserRepository userRepository, IJwtTokenService tokenService)
+public sealed class AuthUserHandler(IRepository<User> userRepository, IJwtTokenService tokenService)
     : IRequestHandler<AuthUserCommand, TokenDto>
 {
     /// <inheritdoc />
@@ -23,7 +23,7 @@ public sealed class AuthUserHandler(IUserRepository userRepository, IJwtTokenSer
         try
         {
             var spec = new UserSpec().WithEmail(authDto.Email).AsNoTracking();
-            user = await userRepository.GetAsync(spec, cancellationToken);
+            user = await userRepository.FirstOrDefaultAsync(spec, cancellationToken);
         }
         catch (NotFoundException)
         {

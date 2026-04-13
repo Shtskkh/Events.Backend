@@ -1,7 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
-using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Aggregates.UserAggregate.Factories;
@@ -9,14 +8,12 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Users.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreateUserHandler(
-    IUserRepository userRepository,
+    IRepository<User> userRepository,
     IRepository<UserRole> userRoleRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateUserCommand, Guid>
 {
-    /// <inheritdoc />
     public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         Guid? avatarFilename = null;

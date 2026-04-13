@@ -1,16 +1,15 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.Users.Repositories;
 using Events.Application.Services.Features.Users.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Events.Participants;
+using Events.Domain.Aggregates.UserAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;
 
-/// <inheritdoc />
-public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUserRepository userRepository)
+public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRepository<User> userRepository)
     : IRequestHandler<GetParticipantsQuery, IReadOnlyCollection<ParticipantDto>>
 {
-    /// <inheritdoc />
     public async Task<IReadOnlyCollection<ParticipantDto>> Handle(GetParticipantsQuery request,
         CancellationToken cancellationToken)
     {
@@ -19,7 +18,7 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUs
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
         var spec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
-        var participants = await userRepository.GetByFilterAsync(spec, cancellationToken);
+        var participants = await userRepository.ListAsync(spec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);
 
