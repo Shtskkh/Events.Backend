@@ -3,7 +3,8 @@ using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
-using Events.Application.Services.Features.Places.Repositories;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Aggregates.LocationAggregate.Factories.Places;
 using MediatR;
 
@@ -12,7 +13,7 @@ namespace Events.Application.Services.Features.Places.Commands.Create;
 /// <inheritdoc />
 public sealed class CreatePlaceHandler(
     ILocationRepository locationRepository,
-    IPlaceTypeRepository placeTypeRepository,
+    IRepository<PlaceType> placeTypeRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreatePlaceCommand, int>
 {
