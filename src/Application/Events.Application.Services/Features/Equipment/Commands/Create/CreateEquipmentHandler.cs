@@ -1,7 +1,7 @@
-﻿using Events.Application.Services.Features.Places.Repositories;
-using Events.Application.Services.Shared;
+﻿using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.EquipmentAggregate;
 using Events.Domain.Aggregates.EquipmentAggregate.Factories;
+using Events.Domain.Aggregates.LocationAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
@@ -9,7 +9,7 @@ namespace Events.Application.Services.Features.Equipment.Commands.Create;
 public sealed class CreateEquipmentHandler(
     IRepository<Domain.Aggregates.EquipmentAggregate.Equipment> equipmentRepository,
     IRepository<EquipmentType> equipmentTypeRepository,
-    IPlaceRepository placeRepository)
+    IRepository<Place> placeRepository)
     : IRequestHandler<CreateEquipmentCommand, int>
 {
     public async Task<int> Handle(CreateEquipmentCommand request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ public sealed class CreateEquipmentHandler(
         var type = await equipmentTypeRepository.GetByIdAsync(dto.EquipmentTypeId, cancellationToken);
 
         if (dto.PlaceId.HasValue)
-            await placeRepository.GetById(dto.PlaceId.Value, cancellationToken);
+            await placeRepository.GetByIdAsync(dto.PlaceId.Value, cancellationToken);
 
         var equipment = EquipmentFactory.Create(dto.Title, dto.InventoryNumber, type, dto.PlaceId);
 

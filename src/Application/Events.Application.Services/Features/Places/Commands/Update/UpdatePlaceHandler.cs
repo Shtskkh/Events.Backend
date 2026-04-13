@@ -1,20 +1,17 @@
-﻿using Events.Application.Services.Features.Places.Repositories;
-using Events.Application.Services.Features.Places.Specifications;
-using Events.Application.Services.Shared;
+﻿using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.LocationAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Places.Commands.Update;
 
 /// <inheritdoc />
-public sealed class UpdatePlaceHandler(IPlaceRepository placeRepository, IRepository<PlaceType> placeTypeRepository)
+public sealed class UpdatePlaceHandler(IRepository<Place> placeRepository, IRepository<PlaceType> placeTypeRepository)
     : IRequestHandler<UpdatePlaceCommand>
 {
     /// <inheritdoc />
     public async Task Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
-        var spec = new PlaceSpec().WithId(request.PlaceId);
-        var place = await placeRepository.GetAsync(spec, cancellationToken);
+        var place = await placeRepository.GetByIdAsync(request.PlaceId, cancellationToken);
 
         var dto = request.UpdateDto;
 
