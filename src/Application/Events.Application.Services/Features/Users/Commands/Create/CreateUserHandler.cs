@@ -2,6 +2,7 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Users.Repositories;
+using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.UserAggregate;
 using Events.Domain.Aggregates.UserAggregate.Factories;
 using MediatR;
@@ -11,7 +12,7 @@ namespace Events.Application.Services.Features.Users.Commands.Create;
 /// <inheritdoc />
 public sealed class CreateUserHandler(
     IUserRepository userRepository,
-    IUserRoleRepository userRoleRepository,
+    IRepository<UserRole> userRoleRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateUserCommand, Guid>
 {
@@ -38,7 +39,7 @@ public sealed class CreateUserHandler(
                 await fileStorageService.PutObjectAsync(putRequest, cancellationToken);
             }
 
-            var userRole = await userRoleRepository.GetById(UserRole.User.Id, cancellationToken);
+            var userRole = await userRoleRepository.GetByIdAsync(UserRole.User.Id, cancellationToken);
 
             var user = UserFactory.Create(
                 dto.LastName,
