@@ -2,12 +2,12 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
-using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Aggregates.EventAggregate.Errors;
 using Events.Domain.Aggregates.EventAggregate.Factories;
+using Events.Domain.Aggregates.LocationAggregate;
 using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +20,7 @@ public sealed class CreateEventHandler(
     IEventRepository eventRepository,
     IRepository<EventType> eventTypeRepository,
     IRepository<EventFormat> eventFormatRepository,
-    ILocationRepository locationRepository,
+    IRepository<Location> locationRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
@@ -115,7 +115,7 @@ public sealed class CreateEventHandler(
             throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
 
         var spec = new LocationSpec().WithId(locationId.Value).IncludePlaces().AsNoTracking();
-        var location = await locationRepository.GetAsync(spec, cancellationToken);
+        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         location.FindPlace(placeId.Value);
 

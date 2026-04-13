@@ -1,14 +1,15 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Places;
+using Events.Domain.Aggregates.LocationAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Places.Queries.GetAvailable;
 
 /// <inheritdoc />
 public sealed class GetAvailablePlacesQueryHandler(
-    ILocationRepository locationRepository,
+    IRepository<Location> locationRepository,
     IEventRepository eventRepository)
     : IRequestHandler<GetAvailablePlacesQuery, IReadOnlyCollection<PlaceAvailabilityDto>>
 {
@@ -17,7 +18,7 @@ public sealed class GetAvailablePlacesQueryHandler(
         CancellationToken cancellationToken)
     {
         var spec = new LocationSpec().WithId(request.LocationId).IncludePlaces().AsNoTracking();
-        var locations = await locationRepository.GetAsync(spec, cancellationToken);
+        var locations = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         var conflictChecks = locations.Places.Select(async place =>
         {

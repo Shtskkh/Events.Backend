@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Places;
+using Events.Domain.Aggregates.LocationAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Queries.GetPlaces;
 
 /// <inheritdoc />
-public sealed class GetLocationPlacesHandler(ILocationRepository locationRepository, IMapper mapper)
+public sealed class GetLocationPlacesHandler(IRepository<Location> locationRepository, IMapper mapper)
     : IRequestHandler<GetLocationPlacesQuery, IReadOnlyCollection<ShortPlaceDto>>
 {
     /// <inheritdoc />
@@ -15,7 +16,7 @@ public sealed class GetLocationPlacesHandler(ILocationRepository locationReposit
         CancellationToken cancellationToken)
     {
         var spec = new LocationWithPlacesDetailsSpec(request.Id).AsNoTracking();
-        var location = await locationRepository.GetAsync(spec, cancellationToken);
+        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<ShortPlaceDto>>(location.Places);
     }

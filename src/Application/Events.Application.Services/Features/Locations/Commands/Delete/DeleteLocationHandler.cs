@@ -1,18 +1,15 @@
-﻿using Events.Application.Services.Features.Locations.Repositories;
-using Events.Application.Services.Features.Locations.Specifications;
+﻿using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.LocationAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.Delete;
 
-/// <inheritdoc />
-public sealed class DeleteLocationHandler(ILocationRepository locationRepository)
+public sealed class DeleteLocationHandler(IRepository<Location> locationRepository)
     : IRequestHandler<DeleteLocationCommand>
 {
-    /// <inheritdoc />
     public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
     {
-        var spec = new LocationSpec().WithId(request.LocationId);
-        var location = await locationRepository.GetAsync(spec, cancellationToken);
+        var location = await locationRepository.GetByIdAsync(request.LocationId, cancellationToken);
 
         await locationRepository.DeleteAsync(location, cancellationToken);
     }

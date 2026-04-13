@@ -1,7 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
-using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.LocationAggregate;
@@ -12,7 +11,7 @@ namespace Events.Application.Services.Features.Places.Commands.Create;
 
 /// <inheritdoc />
 public sealed class CreatePlaceHandler(
-    ILocationRepository locationRepository,
+    IRepository<Location> locationRepository,
     IRepository<PlaceType> placeTypeRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreatePlaceCommand, int>
@@ -23,7 +22,7 @@ public sealed class CreatePlaceHandler(
         var dto = request.Dto;
 
         var spec = new LocationSpec().WithId(request.LocationId).IncludePlaces();
-        var location = await locationRepository.GetAsync(spec, cancellationToken);
+        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
         var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
 
         var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, request.LocationId, dto.Title);
