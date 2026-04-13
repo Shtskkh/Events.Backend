@@ -1,17 +1,15 @@
-﻿using Events.Application.Services.Features.Equipment.Repositories;
-using Events.Application.Services.Features.Equipment.Specifications;
+﻿using Events.Application.Services.Shared;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Delete;
 
-public sealed class DeleteEquipmentHandler(IEquipmentRepository equipmentRepository)
+public sealed class DeleteEquipmentHandler(
+    IRepository<Domain.Aggregates.EquipmentAggregate.Equipment> equipmentRepository)
     : IRequestHandler<DeleteEquipmentCommand>
 {
     public async Task Handle(DeleteEquipmentCommand request, CancellationToken cancellationToken)
     {
-        var spec = new EquipmentSpec().WithId(request.Id);
-        var equipment = await equipmentRepository.GetAsync(spec, cancellationToken);
-
+        var equipment = await equipmentRepository.GetByIdAsync(request.Id, cancellationToken);
         await equipmentRepository.DeleteAsync(equipment, cancellationToken);
     }
 }

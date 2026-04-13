@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Features\Equipment\Repositories\"/>
         <Folder Include="Features\Files\Placeholders\"/>
     </ItemGroup>
 
