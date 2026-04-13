@@ -10,8 +10,7 @@ public sealed class RemoveParticipantHandler(IEventRepository eventRepository)
     /// <inheritdoc />
     public async Task Handle(RemoveParticipantCommand request, CancellationToken cancellationToken)
     {
-        const bool includeParticipants = true;
-        var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken, includeParticipants);
+        var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
 
         @event.RemoveParticipant(request.ParticipantId);
 

@@ -1,28 +1,19 @@
-﻿using System.Linq.Expressions;
-using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
+﻿using Ardalis.Specification;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Exceptions;
-using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 
-/// <inheritdoc />
-public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
+public class EventRepository(EventsDbContext dbContext) : Repository<Event>(dbContext), IEventRepository
 {
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(
-        Specification<Event> spec,
-        CancellationToken cancellationToken,
-        string? textQuery = null
-    )
+    public async Task<List<Event>> ListAsync(ISpecification<Event> spec,
+        CancellationToken cancellationToken = default,
+        string? textQuery = null)
     {
-        var query = repository
-            .GetAllAsync()
-            .WithSpecification(spec);
+        var query = ApplySpecification(spec);
 
         if (textQuery != null)
         {
@@ -36,61 +27,7 @@ public class EventRepository(IRepository<Event, Guid, EventsDbContext> repositor
                     .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
         }
 
-        var events = await query.ToListAsync(cancellationToken);
-
-        if (events.Count == 0)
-            throw new NotFoundException(DataAccessErrorMessages.Event.NotFoundAny);
-
-        return events.AsReadOnly();
-    }
-
-    /// <inheritdoc />
-    public async Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken,
-        bool includeParticipants = false)
-    {
-        var query = repository.GetAllAsync();
-
-        if (includeParticipants)
-            query = query.Include(e => e.Participants);
-
-        var @event = await query.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-
-        if (@event == null)
-            throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);
-
-        return @event;
-    }
-
-    /// <inheritdoc />
-    public async Task AddAsync(Event @event, CancellationToken cancellationToken)
-    {
-        await repository.AddAsync(@event, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public async Task UpdateAsync(Event @event, CancellationToken cancellationToken)
-    {
-        await repository.UpdateAsync(@event, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public async Task DeleteAsync(Event @event, CancellationToken cancellationToken)
-    {
-        await repository.DeleteAsync(@event, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public Task<bool> HasBookingConflictAsync(int placeId, DateTimeOffset start, DateTimeOffset end,
-        CancellationToken cancellationToken)
-    {
-        Expression<Func<Event, bool>> hasConflict = e =>
-            e.Booking != null &&
-            e.Booking.PlaceId == placeId &&
-            e.DateTimeRange.StartDateTime < end &&
-            e.DateTimeRange.EndDateTime > start;
-
-        return repository.GetAllAsync()
-            .AnyAsync(hasConflict, cancellationToken);
+        return await query.ToListAsync(cancellationToken);
     }
 
     private static string PrepareQuery(string text)

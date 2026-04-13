@@ -14,12 +14,12 @@ public sealed class AddParticipantHandler(IEventRepository eventRepository, IRep
     public async Task Handle(AddParticipantCommand request, CancellationToken cancellationToken)
     {
         var spec = new UserSpec().WithId(request.UserId).AsNoTracking();
-        await userRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        await userRepository.AnyAsync(spec, cancellationToken);
 
-        const bool includeParticipants = true;
-        var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken, includeParticipants);
+        var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
 
         @event.AddParticipant(request.UserId);
+
         await eventRepository.UpdateAsync(@event, cancellationToken);
     }
 }

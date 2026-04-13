@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
@@ -49,8 +50,8 @@ public sealed class CreateEventHandler(
                 dto.Title,
                 dto.Announcement,
                 dto.Description,
-                ToUtc(dto.StartDateTime),
-                ToUtc(dto.EndDateTime),
+                dto.StartDateTime.ToUniversalTime(),
+                dto.EndDateTime.ToUniversalTime(),
                 eventType,
                 eventFormat,
                 dto.UserId,
@@ -119,15 +120,14 @@ public sealed class CreateEventHandler(
 
         location.FindPlace(placeId.Value);
 
-        var hasConflict = await eventRepository.HasBookingConflictAsync(
-            placeId.Value, ToUtc(start), ToUtc(end), cancellationToken);
+        var hasConflict = await eventRepository.AnyAsync(
+            new HasBookingConflictSpec(
+                placeId.Value,
+                start.ToUniversalTime(),
+                end.ToUniversalTime()),
+            cancellationToken);
 
         if (hasConflict)
             throw new DomainException(EventErrorMessages.Booking.TimeConflict);
-    }
-
-    private static DateTimeOffset ToUtc(DateTimeOffset dateTime)
-    {
-        return dateTime.Offset == TimeSpan.Zero ? dateTime : dateTime.ToUniversalTime();
     }
 }

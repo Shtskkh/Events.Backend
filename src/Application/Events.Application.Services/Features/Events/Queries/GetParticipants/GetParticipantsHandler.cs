@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events.Participants;
@@ -13,16 +14,20 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
     public async Task<IReadOnlyCollection<ParticipantDto>> Handle(GetParticipantsQuery request,
         CancellationToken cancellationToken)
     {
-        const bool includeParticipants = true;
-        var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
+        var eventSpec = new EventSpec()
+            .WithId(request.EventId)
+            .IncludeParticipants()
+            .AsNoTracking();
+
+        var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
-        var spec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
-        var participants = await userRepository.ListAsync(spec, cancellationToken);
+        var userSpec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
+        var participants = await userRepository.ListAsync(userSpec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);
 
-        var dtoList = @event.Participants.Select(p =>
+        return @event.Participants.Select(p =>
         {
             var user = participantsById[p.UserId];
             return new ParticipantDto
@@ -34,7 +39,5 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
                 RegistrationTime = p.RegistrationTime
             };
         }).ToList();
-
-        return dtoList;
     }
 }

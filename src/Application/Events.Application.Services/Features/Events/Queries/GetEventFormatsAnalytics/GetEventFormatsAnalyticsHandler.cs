@@ -17,7 +17,7 @@ public class GetEventFormatsAnalyticsHandler(
             .CreatedBefore(request.End.ToUniversalTime())
             .AsNoTracking();
 
-        var events = await eventRepository.GetByFilterAsync(spec, cancellationToken);
+        var events = await eventRepository.ListAsync(spec, cancellationToken);
 
         var analytics = events
             .GroupBy(e => e.Format)

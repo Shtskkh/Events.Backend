@@ -15,7 +15,7 @@ public sealed class GetEventsByFilterHandler(IEventRepository repository, IMappe
         CancellationToken cancellationToken)
     {
         var spec = new EventFilterSpec(request.Filter);
-        var events = await repository.GetByFilterAsync(spec, cancellationToken, request.Filter.Text);
+        var events = await repository.ListAsync(spec, cancellationToken, request.Filter.Text);
 
         var dtoList = mapper.Map<List<ShortEventDto>>(events);
 

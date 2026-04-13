@@ -1,6 +1,7 @@
 ﻿using Events.Application.Services.Features.Analytics.Repositories;
 using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Contracts.Analytics;
 using Events.Contracts.Events;
 using Events.Domain.Aggregates.AnalyticsAggregate;
@@ -15,10 +16,10 @@ public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, I
     /// <inheritdoc />
     public async Task<EventAnalyticsDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
     {
-        const bool includeParticipants = true;
-        var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
+        var eventSpec = new EventSpec().WithId(request.EventId).IncludeParticipants().AsNoTracking();
+        var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
 
-        var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.Id).AsNoTracking();
+        var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId).AsNoTracking();
         var views = await pageViewRepository.GetByFilterAsync(spec, cancellationToken);
 
         var viewsByDay = views

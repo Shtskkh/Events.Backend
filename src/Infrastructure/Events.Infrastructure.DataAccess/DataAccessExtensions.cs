@@ -2,9 +2,10 @@
 using Amazon.S3;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
+using Events.Application.Services.Shared;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
-using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
+using Events.Infrastructure.DataAccess.Shared;
 using Events.Infrastructure.DataAccess.Shared.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,7 +48,7 @@ public static class DataAccessExtensions
 
         private void RegisterRepositories()
         {
-            services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IEventRepository, EventRepository>();
         }
 
