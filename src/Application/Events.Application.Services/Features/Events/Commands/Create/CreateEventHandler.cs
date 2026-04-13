@@ -4,19 +4,21 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
+using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.EventAggregate;
 using Events.Domain.Aggregates.EventAggregate.Errors;
 using Events.Domain.Aggregates.EventAggregate.Factories;
 using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using EventType = Events.Domain.Aggregates.EventAggregate.EventType;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
 /// <inheritdoc />
 public sealed class CreateEventHandler(
     IEventRepository eventRepository,
-    IEventTypeRepository eventTypeRepository,
+    IRepository<EventType> eventTypeRepository,
     IEventFormatRepository eventFormatRepository,
     ILocationRepository locationRepository,
     IFileStorageService fileStorageService)
@@ -32,7 +34,7 @@ public sealed class CreateEventHandler(
         {
             previewFilename = await UploadPreviewAsync(dto.Preview, cancellationToken);
 
-            var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
+            var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
             if (eventFormat.Id != EventFormat.Online.Id)
