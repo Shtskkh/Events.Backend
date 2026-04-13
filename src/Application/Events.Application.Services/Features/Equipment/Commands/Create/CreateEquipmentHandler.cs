@@ -1,18 +1,18 @@
 ﻿using Events.Application.Services.Features.Equipment.Repositories;
 using Events.Application.Services.Features.Places.Repositories;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.EquipmentAggregate;
 using Events.Domain.Aggregates.EquipmentAggregate.Factories;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreateEquipmentHandler(
     IEquipmentRepository equipmentRepository,
-    IEquipmentTypeRepository equipmentTypeRepository,
+    IRepository<EquipmentType> equipmentTypeRepository,
     IPlaceRepository placeRepository)
     : IRequestHandler<CreateEquipmentCommand, int>
 {
-    /// <inheritdoc />
     public async Task<int> Handle(CreateEquipmentCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;

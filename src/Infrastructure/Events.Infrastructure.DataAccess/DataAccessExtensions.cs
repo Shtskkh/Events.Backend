@@ -61,8 +61,7 @@ public static class DataAccessExtensions
             services.AddScoped<IPlaceRepository, PlaceRepository>();
 
             services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
+            
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         }
 
