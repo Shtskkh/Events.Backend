@@ -5,14 +5,14 @@ using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.Errors;
-using Events.Domain.Aggregates.EventAggregate.Factories;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Events;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Aggregates.Events.Factories;
+using Events.Domain.Aggregates.Locations;
 using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using EventType = Events.Domain.Aggregates.EventAggregate.EventType;
+using EventType = Events.Domain.Aggregates.Events.EventType;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;
 

@@ -1,5 +1,5 @@
 ﻿using Events.Contracts.Events;
-using Events.Domain.Aggregates.EventAggregate.Errors;
+using Events.Domain.Aggregates.Events.Errors;
 using FluentValidation;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;

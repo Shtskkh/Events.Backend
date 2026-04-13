@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Events.Contracts.Equipment.EquipmentTypes;
-using Events.Domain.Aggregates.EquipmentAggregate;
+using Events.Domain.Aggregates.Equipment;
 
 namespace Events.Application.Services.Features.Equipment.Mappings;
 

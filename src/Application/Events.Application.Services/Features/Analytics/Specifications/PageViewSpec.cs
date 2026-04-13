@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Domain.Aggregates.AnalyticsAggregate;
+using Events.Domain.Aggregates.Analytics;
 
 namespace Events.Application.Services.Features.Analytics.Specifications;
 

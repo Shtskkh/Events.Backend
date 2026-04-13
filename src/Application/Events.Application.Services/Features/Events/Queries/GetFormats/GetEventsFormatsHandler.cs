@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events.EventsFormats;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.Events;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetFormats;

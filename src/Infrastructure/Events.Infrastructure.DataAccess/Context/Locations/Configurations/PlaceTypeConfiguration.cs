@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.LocationAggregate;
+﻿using Events.Domain.Aggregates.Locations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

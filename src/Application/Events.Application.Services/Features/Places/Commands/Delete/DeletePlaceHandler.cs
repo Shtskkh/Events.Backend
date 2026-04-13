@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Places.Commands.Delete;

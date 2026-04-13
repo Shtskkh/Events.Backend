@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.LocationAggregate.Constraints;
+using Events.Domain.Aggregates.Locations.Constraints;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Locations;

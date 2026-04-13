@@ -1,5 +1,5 @@
 ﻿using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.UserAggregate;
+using Events.Domain.Aggregates.Users;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared.Errors;
 using MediatR;

@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.Events;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;
 

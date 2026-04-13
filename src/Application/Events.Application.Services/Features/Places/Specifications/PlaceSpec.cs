@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Locations;
 
 namespace Events.Application.Services.Features.Places.Specifications;
 

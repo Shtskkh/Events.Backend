@@ -1,10 +1,11 @@
 ﻿using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.Equipment;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Delete;
 
 public sealed class DeleteEquipmentHandler(
-    IRepository<Domain.Aggregates.EquipmentAggregate.Equipment> equipmentRepository)
+    IRepository<EquipmentItem> equipmentRepository)
     : IRequestHandler<DeleteEquipmentCommand>
 {
     public async Task Handle(DeleteEquipmentCommand request, CancellationToken cancellationToken)

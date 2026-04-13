@@ -2,8 +2,8 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.LocationAggregate;
-using Events.Domain.Aggregates.LocationAggregate.Factories.Locations;
+using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Factories.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.Create;

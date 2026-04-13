@@ -2,12 +2,13 @@
 using Events.Application.Services.Features.Equipment.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Equipment;
+using Events.Domain.Aggregates.Equipment;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Queries.GetByFilter;
 
 public sealed class GetEquipmentByFilterHandler(
-    IRepository<Domain.Aggregates.EquipmentAggregate.Equipment> equipmentRepository,
+    IRepository<EquipmentItem> equipmentRepository,
     IMapper mapper)
     : IRequestHandler<GetEquipmentByFilterQuery,
         IReadOnlyCollection<EquipmentDto>>

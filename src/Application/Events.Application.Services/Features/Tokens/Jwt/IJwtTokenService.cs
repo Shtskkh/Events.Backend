@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.UserAggregate;
+﻿using Events.Domain.Aggregates.Users;
 
 namespace Events.Application.Services.Features.Tokens.Jwt;
 

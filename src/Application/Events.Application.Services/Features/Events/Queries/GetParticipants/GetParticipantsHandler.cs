@@ -3,7 +3,7 @@ using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events.Participants;
-using Events.Domain.Aggregates.UserAggregate;
+using Events.Domain.Aggregates.Users;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;

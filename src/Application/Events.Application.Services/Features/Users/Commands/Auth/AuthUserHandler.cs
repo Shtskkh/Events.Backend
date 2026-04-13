@@ -4,7 +4,7 @@ using Events.Application.Services.Features.Users.Shared;
 using Events.Application.Services.Features.Users.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Users;
-using Events.Domain.Aggregates.UserAggregate;
+using Events.Domain.Aggregates.Users;
 using Events.Domain.Exceptions;
 using MediatR;
 

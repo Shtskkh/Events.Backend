@@ -1,13 +1,13 @@
 ﻿using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.EquipmentAggregate;
-using Events.Domain.Aggregates.EquipmentAggregate.Factories;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Equipment;
+using Events.Domain.Aggregates.Equipment.Factories;
+using Events.Domain.Aggregates.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
 
 public sealed class CreateEquipmentHandler(
-    IRepository<Domain.Aggregates.EquipmentAggregate.Equipment> equipmentRepository,
+    IRepository<EquipmentItem> equipmentRepository,
     IRepository<EquipmentType> equipmentTypeRepository,
     IRepository<Place> placeRepository)
     : IRequestHandler<CreateEquipmentCommand, int>

@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Repositories;
 

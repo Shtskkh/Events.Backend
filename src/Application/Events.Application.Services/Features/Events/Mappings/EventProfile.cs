@@ -2,7 +2,7 @@
 using Events.Application.Services.Features.Files;
 using Events.Contracts.Events;
 using Events.Contracts.Files;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Mappings;
 

@@ -4,7 +4,7 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
 using Events.Contracts.Analytics;
 using Events.Contracts.Events;
-using Events.Domain.Aggregates.AnalyticsAggregate;
+using Events.Domain.Aggregates.Analytics;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetEventAnalytics;

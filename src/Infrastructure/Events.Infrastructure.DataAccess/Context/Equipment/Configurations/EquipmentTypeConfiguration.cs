@@ -1,5 +1,5 @@
-﻿using Events.Domain.Aggregates.EquipmentAggregate;
-using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
+﻿using Events.Domain.Aggregates.Equipment;
+using Events.Domain.Aggregates.Equipment.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

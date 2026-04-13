@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
+using Events.Domain.Aggregates.Equipment.Constraints;
 
 namespace Events.Contracts.Equipment;
 

@@ -1,6 +1,6 @@
 ﻿using Events.Application.Services.Features.Analytics.Repositories;
 using Events.Application.Services.Interfaces;
-using Events.Domain.Aggregates.AnalyticsAggregate;
+using Events.Domain.Aggregates.Analytics;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

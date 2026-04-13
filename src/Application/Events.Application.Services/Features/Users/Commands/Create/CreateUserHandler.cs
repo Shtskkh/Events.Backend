@@ -2,8 +2,8 @@
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
 using Events.Application.Services.Shared;
-using Events.Domain.Aggregates.UserAggregate;
-using Events.Domain.Aggregates.UserAggregate.Factories;
+using Events.Domain.Aggregates.Users;
+using Events.Domain.Aggregates.Users.Factories;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Commands.Create;

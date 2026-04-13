@@ -1,10 +1,9 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Events.Application.Services.Features.Analytics.Repositories;
-using Events.Domain.Aggregates.AnalyticsAggregate;
-using Events.Domain.Aggregates.AnalyticsAggregate.Errors;
+using Events.Domain.Aggregates.Analytics;
+using Events.Domain.Aggregates.Analytics.Errors;
 using Events.Domain.Exceptions;
-using Events.Domain.Shared;
 using Events.Infrastructure.Analytics.Repositories;
 using Microsoft.EntityFrameworkCore;
 

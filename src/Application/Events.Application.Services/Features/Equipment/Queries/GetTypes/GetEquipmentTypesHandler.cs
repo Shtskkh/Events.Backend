@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Shared;
 using Events.Contracts.Equipment.EquipmentTypes;
-using Events.Domain.Aggregates.EquipmentAggregate;
+using Events.Domain.Aggregates.Equipment;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Queries.GetTypes;

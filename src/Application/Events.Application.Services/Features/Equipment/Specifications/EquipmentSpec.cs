@@ -1,11 +1,12 @@
 ﻿using Ardalis.Specification;
+using Events.Domain.Aggregates.Equipment;
 
 namespace Events.Application.Services.Features.Equipment.Specifications;
 
 /// <summary>
 ///     Базовая спецификация для оборудования.
 /// </summary>
-public class EquipmentSpec : Specification<Domain.Aggregates.EquipmentAggregate.Equipment>
+public class EquipmentSpec : Specification<EquipmentItem>
 {
     public EquipmentSpec WithId(int id)
     {

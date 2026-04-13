@@ -3,7 +3,7 @@ using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events;
 using Events.Contracts.Places;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Locations;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetById;
