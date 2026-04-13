@@ -19,7 +19,7 @@ namespace Events.Application.Services.Features.Events.Commands.Create;
 public sealed class CreateEventHandler(
     IEventRepository eventRepository,
     IRepository<EventType> eventTypeRepository,
-    IEventFormatRepository eventFormatRepository,
+    IRepository<EventFormat> eventFormatRepository,
     ILocationRepository locationRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>

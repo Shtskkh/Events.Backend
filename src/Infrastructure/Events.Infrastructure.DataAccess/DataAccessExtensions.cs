@@ -56,7 +56,6 @@ public static class DataAccessExtensions
         {
             services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IEventFormatRepository, EventFormatRepository>();
 
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IPlaceRepository, PlaceRepository>();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Shared;
 using Events.Contracts.Events.EventsFormats;
+using Events.Domain.Aggregates.EventAggregate;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetFormats;
@@ -10,13 +11,13 @@ namespace Events.Application.Services.Features.Events.Queries.GetFormats;
 /// </summary>
 /// <param name="eventFormatRepository">Репозиторий форматов мероприятий.</param>
 /// <param name="mapper">Маппер.</param>
-public sealed class GetEventsFormatsHandler(IEventFormatRepository eventFormatRepository, IMapper mapper)
+public sealed class GetEventsFormatsHandler(IRepository<EventFormat> eventFormatRepository, IMapper mapper)
     : IRequestHandler<GetEventsFormatsQuery, IReadOnlyCollection<EventFormatDto>>
 {
     public async Task<IReadOnlyCollection<EventFormatDto>> Handle(GetEventsFormatsQuery request,
         CancellationToken cancellationToken)
     {
-        var types = await eventFormatRepository.GetAllAsync(cancellationToken);
+        var types = await eventFormatRepository.ListAsync(cancellationToken);
 
         return mapper.Map<IReadOnlyCollection<EventFormatDto>>(types);
     }
