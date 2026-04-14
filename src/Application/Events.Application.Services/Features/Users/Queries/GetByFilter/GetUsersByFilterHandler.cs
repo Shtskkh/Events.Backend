@@ -15,8 +15,8 @@ public sealed class GetUsersByFilterHandler(IRepository<User> userRepository, IM
     public async Task<IReadOnlyCollection<ShortUserDto>> Handle(GetUsersByFilter request,
         CancellationToken cancellationToken)
     {
-        var spec = new UserFilterSpec(request.Filter);
-        var users = await userRepository.ListAsync(spec, cancellationToken);
+        var userFilterSpec = new UserFilterSpec(request.Filter);
+        var users = await userRepository.ListAsync(userFilterSpec, cancellationToken);
 
         if (users.Count == 0)
             throw new NotFoundException(UserErrorMessages.UsersNotFoundByFilter);

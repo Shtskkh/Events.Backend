@@ -14,8 +14,8 @@ public sealed class GetUserByIdHandler(IRepository<User> userRepository, IMapper
 {
     public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var userSpec = new UserByIdSpec(request.Id).AsNoTracking();
-        var user = await userRepository.FirstOrDefaultAsync(userSpec, cancellationToken);
+        var userByIdSpec = new UserByIdSpec(request.Id).AsNoTracking();
+        var user = await userRepository.FirstOrDefaultAsync(userByIdSpec, cancellationToken);
 
         if (user == null)
             throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.Id));
