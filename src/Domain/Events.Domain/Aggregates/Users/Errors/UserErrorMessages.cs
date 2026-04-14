@@ -23,6 +23,11 @@ public static class UserErrorMessages
     {
         public static readonly string GreaterThanMaxLength =
             $"Название роли пользователя больше максимальной длины в {UserConstrains.Role.MaxLength} символ(-ов).";
+
+        public static string RoleNotFoundById(int roleId)
+        {
+            return $"Роль с ID: {roleId} не найдена.";
+        }
     }
 
     /// <summary>
