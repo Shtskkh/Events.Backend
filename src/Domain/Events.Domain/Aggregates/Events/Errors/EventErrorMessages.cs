@@ -5,7 +5,9 @@
 /// </summary>
 public static class EventErrorMessages
 {
-    public static string EventNotFoundById(Guid eventId)
+    public const string NotFoundByFilter = "Мероприятия по фильтру не найдены.";
+
+    public static string NotFoundById(Guid eventId)
     {
         return $"Мероприятие с ID: {eventId} не найдено.";
     }
@@ -50,7 +52,23 @@ public static class EventErrorMessages
     /// </summary>
     public static class Type
     {
+        public const string NotFoundAny = "Типы мероприятий не найдены.";
         public const string GreaterThanMaxLenght = "Название типа мероприятия больше максимальной длины.";
+
+        public static string NotFoundById(int typeId)
+        {
+            return $"Тип мероприятия с ID: {typeId} не найден.";
+        }
+    }
+
+    public static class Format
+    {
+        public const string NotFoundAny = "Форматы мероприятий не найдены.";
+
+        public static string NotFoundById(int formatId)
+        {
+            return $"Формат мероприятия с ID: {formatId} не найден.";
+        }
     }
 
     /// <summary>
@@ -70,6 +88,8 @@ public static class EventErrorMessages
     /// </summary>
     public static class Participant
     {
+        public const string NotFoundAny = "Участники мероприятия не найдены.";
+
         public const string AlreadyRegistered = "Пользователь уже зарегистрирован на мероприятие.";
 
         public const string RegistrationNotRequired = "Мероприятие не требует регистрации.";
@@ -98,5 +118,10 @@ public static class EventErrorMessages
 
         public const string TimeConflict =
             "На выбранный временной промежуток уже существует бронирование, выберите другое время.";
+    }
+
+    public static class Placeholders
+    {
+        public const string NotFoundAny = "Плейсхолдеры мероприятий не найдены.";
     }
 }

@@ -9,6 +9,7 @@ using Events.Domain.Aggregates.Events;
 using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Aggregates.Events.Factories;
 using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
 using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +17,6 @@ using EventType = Events.Domain.Aggregates.Events.EventType;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreateEventHandler(
     IEventRepository eventRepository,
     IRepository<EventType> eventTypeRepository,
@@ -25,7 +25,6 @@ public sealed class CreateEventHandler(
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
-    /// <inheritdoc />
     public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
         Guid? previewFilename = null;
@@ -36,7 +35,14 @@ public sealed class CreateEventHandler(
             previewFilename = await UploadPreviewAsync(dto.Preview, cancellationToken);
 
             var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
+
+            if (eventType == null)
+                throw new NotFoundException(EventErrorMessages.Type.NotFoundById(dto.EventTypeId));
+
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
+
+            if (eventFormat == null)
+                throw new NotFoundException(EventErrorMessages.Format.NotFoundById(dto.EventFormatId));
 
             if (eventFormat.Id != EventFormat.Online.Id)
                 await ValidateBookingAsync(
@@ -69,7 +75,11 @@ public sealed class CreateEventHandler(
         }
         catch
         {
-            await DeletePreviewIfUploadedAsync(previewFilename, cancellationToken);
+            if (previewFilename.HasValue)
+                await fileStorageService.SafeDeleteObjectsAsync(
+                    S3Buckets.EventsPreviews,
+                    [previewFilename.Value.ToString()],
+                    cancellationToken);
             throw;
         }
     }
@@ -94,17 +104,6 @@ public sealed class CreateEventHandler(
         return filename;
     }
 
-    private async Task DeletePreviewIfUploadedAsync(Guid? previewFilename, CancellationToken cancellationToken)
-    {
-        if (!previewFilename.HasValue)
-            return;
-
-        await fileStorageService.SafeDeleteObjectsAsync(
-            S3Buckets.EventsPreviews,
-            [previewFilename.Value.ToString()],
-            cancellationToken);
-    }
-
     private async Task ValidateBookingAsync(
         int? locationId,
         int? placeId,
@@ -115,10 +114,16 @@ public sealed class CreateEventHandler(
         if (!locationId.HasValue || !placeId.HasValue)
             throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
 
-        var spec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
-        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var locationByIdSpec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
+        var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
-        location.FindPlace(placeId.Value);
+        if (location == null)
+            throw new NotFoundException(LocationErrorMessages.NotFoundById(locationId.Value));
+
+        var placeExists = location.Places.Any(place => place.Id == placeId.Value);
+
+        if (!placeExists)
+            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId.Value));
 
         var hasConflict = await eventRepository.AnyAsync(
             new HasBookingConflictSpec(

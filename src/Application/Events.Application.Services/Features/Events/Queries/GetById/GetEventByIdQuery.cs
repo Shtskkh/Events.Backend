@@ -5,15 +5,11 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetById;
 
-/// <summary>
-///     Запрос для получения мероприятия по ID.
-/// </summary>
-/// <param name="Id">Идентификатор мероприятия.</param>
-public sealed record GetEventByIdQuery(Guid Id) : IRequest<EventDto>, ITrackPageView
+public sealed record GetEventByIdQuery(Guid EventId) : IRequest<EventDto>, ITrackPageView
 {
     /// <inheritdoc />
     public string EntityType => EntityTypes.Event;
 
     /// <inheritdoc />
-    public Guid EntityId => Id;
+    public Guid EntityId => EventId;
 }

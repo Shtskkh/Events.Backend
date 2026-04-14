@@ -3,5 +3,4 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;
 
-/// <inheritdoc />
 public sealed record GetParticipantsQuery(Guid EventId) : IRequest<IReadOnlyCollection<ParticipantDto>>;

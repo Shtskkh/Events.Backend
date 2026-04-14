@@ -1,16 +1,20 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.Update;
 
-/// <inheritdoc />
 public sealed class UpdateEventHandler(IEventRepository eventRepository) : IRequestHandler<UpdateEventCommand>
 {
-    /// <inheritdoc />
     public async Task Handle(UpdateEventCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
+
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (@event == null)
+            throw new NotFoundException(EventErrorMessages.NotFoundById(request.Id));
 
         if (!string.IsNullOrEmpty(dto.Title))
             @event.ChangeTitle(dto.Title);

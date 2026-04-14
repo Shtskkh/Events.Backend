@@ -3,7 +3,9 @@ using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events.Participants;
+using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Aggregates.Users;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;
@@ -18,10 +20,16 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
 
         var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
+        if (@event == null)
+            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+
+        if (@event.Participants.Count == 0)
+            throw new NotFoundException(EventErrorMessages.Participant.NotFoundAny);
+
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
-        var userSpec = new UsersByIdsSpec(participantsIds).AsNoTracking();
-        var participants = await userRepository.ListAsync(userSpec, cancellationToken);
+        var usersByIdsSpec = new UsersByIdsSpec(participantsIds).AsNoTracking();
+        var participants = await userRepository.ListAsync(usersByIdsSpec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);
 

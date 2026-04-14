@@ -5,22 +5,26 @@ using Events.Application.Services.Shared;
 using Events.Contracts.Analytics;
 using Events.Contracts.Events;
 using Events.Domain.Aggregates.Analytics;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 
-/// <inheritdoc />
 public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IRepository<PageView> pageViewRepository)
     : IRequestHandler<GetEventAnalyticsQuery, EventAnalyticsDto>
 {
-    /// <inheritdoc />
     public async Task<EventAnalyticsDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
     {
         var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeParticipants().AsNoTracking();
         var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
-        var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId).AsNoTracking();
-        var views = await pageViewRepository.ListAsync(spec, cancellationToken);
+        if (@event == null)
+            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+
+        var pageViewSpec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId)
+            .AsNoTracking();
+        var views = await pageViewRepository.ListAsync(pageViewSpec, cancellationToken);
 
         var viewsByDay = views
             .GroupBy(v => DateOnly.FromDateTime(v.ViewedAt.Date))

@@ -2,15 +2,12 @@
 using Events.Application.Services.Shared;
 using Events.Contracts.Events.EventsFormats;
 using Events.Domain.Aggregates.Events;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetFormats;
 
-/// <summary>
-///     Handler для получения всех форматов мероприятий.
-/// </summary>
-/// <param name="eventFormatRepository">Репозиторий форматов мероприятий.</param>
-/// <param name="mapper">Маппер.</param>
 public sealed class GetEventsFormatsHandler(IRepository<EventFormat> eventFormatRepository, IMapper mapper)
     : IRequestHandler<GetEventsFormatsQuery, IReadOnlyCollection<EventFormatDto>>
 {
@@ -18,6 +15,9 @@ public sealed class GetEventsFormatsHandler(IRepository<EventFormat> eventFormat
         CancellationToken cancellationToken)
     {
         var types = await eventFormatRepository.ListAsync(cancellationToken);
+
+        if (types.Count == 0)
+            throw new NotFoundException(EventErrorMessages.Format.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<EventFormatDto>>(types);
     }
