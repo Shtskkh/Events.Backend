@@ -226,12 +226,12 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <summary>
     ///     Получить аналитику по типам мероприятий.
     /// </summary>
-    /// <param name="start">Начало периода.</param>
-    /// <param name="end">Окончание периода.</param>
+    /// <param name="start">Начало периода. Необязательный.</param>
+    /// <param name="end">Окончание периода.Необязательный.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция типов мероприятий с количеством за период.</returns>
+    /// <returns>Коллекция типов мероприятий с количеством за период (если указан).</returns>
     [HttpGet("Types/Analytics")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeAnalytics>),
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeAnalyticsDto>),
         StatusCodes.Status200OK,
         "application/json",
         Description = "Успех.")]
@@ -240,8 +240,8 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         "application/problem+json",
         Description = "Мероприятия за данный период не были найдены.")]
     public async Task<IActionResult> GetTypesAnalytics(
-        [FromQuery] DateTimeOffset start,
-        [FromQuery] DateTimeOffset end,
+        [FromQuery] DateTimeOffset? start,
+        [FromQuery] DateTimeOffset? end,
         CancellationToken cancellationToken)
     {
         var analytics = await mediator.Send(new GetEventTypesAnalytics(start, end), cancellationToken);
@@ -271,12 +271,12 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <summary>
     ///     Получить аналитику по форматам мероприятий.
     /// </summary>
-    /// <param name="start">Начало периода.</param>
-    /// <param name="end">Окончание периода.</param>
+    /// <param name="start">Начало периода (не обязательно).</param>
+    /// <param name="end">Окончание периода (не обязательно).</param>
     /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция типов мероприятий с количеством за период.</returns>
+    /// <returns>Коллекция типов мероприятий с количеством за период (если указан).</returns>
     [HttpGet("Formats/Analytics")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatAnalytics>),
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatAnalyticsDto>),
         StatusCodes.Status200OK,
         "application/json",
         Description = "Успех.")]
@@ -285,8 +285,8 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         "application/problem+json",
         Description = "Мероприятия за данный период не были найдены.")]
     public async Task<IActionResult> GetFormatsAnalytics(
-        [FromQuery] DateTimeOffset start,
-        [FromQuery] DateTimeOffset end,
+        [FromQuery] DateTimeOffset? start,
+        [FromQuery] DateTimeOffset? end,
         CancellationToken cancellationToken)
     {
         var analytics = await mediator.Send(new GetEventFormatsAnalyticsQuery(start, end), cancellationToken);

@@ -1,5 +1,5 @@
-﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.Constraints;
+﻿using Events.Domain.Aggregates.Events;
+using Events.Domain.Aggregates.Events.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

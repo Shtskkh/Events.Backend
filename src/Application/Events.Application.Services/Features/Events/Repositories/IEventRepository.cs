@@ -1,22 +1,11 @@
 ﻿using Ardalis.Specification;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Repositories;
 
-/// <summary>
-///     Репозиторий мероприятий.
-/// </summary>
-public interface IEventRepository
+public interface IEventRepository : IRepository<Event>
 {
-    /// <summary>
-    ///     Получить мероприятие по ID.
-    /// </summary>
-    /// <param name="id">ID мероприятия.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <param name="includeParticipants">Включить участников.</param>
-    /// <returns>Сущность мероприятия.</returns>
-    Task<Event> GetByIdAsync(Guid id, CancellationToken cancellationToken, bool includeParticipants = false);
-
     /// <summary>
     ///     Получить мероприятия, удовлетворяющие фильтру.
     /// </summary>
@@ -24,41 +13,9 @@ public interface IEventRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <param name="textQuery">Запрос текстового поиска.</param>
     /// <returns>Коллекция мероприятий.</returns>
-    Task<IReadOnlyCollection<Event>> GetByFilterAsync(
-        Specification<Event> spec,
-        CancellationToken cancellationToken,
+    Task<List<Event>> ListAsync(
+        ISpecification<Event> spec,
+        CancellationToken cancellationToken = default,
         string? textQuery = null
     );
-
-    /// <summary>
-    ///     Добавить мероприятие.
-    /// </summary>
-    /// <param name="event">Объект мероприятия.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    Task AddAsync(Event @event, CancellationToken cancellationToken);
-
-    /// <summary>
-    ///     Обновить мероприятие.
-    /// </summary>
-    /// <param name="event">Мероприятие для обновления.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    Task UpdateAsync(Event @event, CancellationToken cancellationToken);
-
-    /// <summary>
-    ///     Удалить мероприятие.
-    /// </summary>
-    /// <param name="event">Сущность мероприятия для удаления.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    Task DeleteAsync(Event @event, CancellationToken cancellationToken);
-
-    /// <summary>
-    ///     Проверка на конфликты при бронировании.
-    /// </summary>
-    /// <param name="placeId">ID помещения.</param>
-    /// <param name="start">Дата и время начала.</param>
-    /// <param name="end">Дата и время окончания.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>True, если есть конфликт, false иначе.</returns>
-    Task<bool> HasBookingConflictAsync(int placeId, DateTimeOffset start, DateTimeOffset end,
-        CancellationToken cancellationToken);
 }

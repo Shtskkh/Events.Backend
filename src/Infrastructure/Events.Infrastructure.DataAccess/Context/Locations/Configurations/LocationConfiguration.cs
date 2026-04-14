@@ -1,5 +1,5 @@
-﻿using Events.Domain.Aggregates.LocationAggregate;
-using Events.Domain.Aggregates.LocationAggregate.Constraints;
+﻿using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

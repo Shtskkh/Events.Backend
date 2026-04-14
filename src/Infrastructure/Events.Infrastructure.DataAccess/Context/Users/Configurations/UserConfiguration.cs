@@ -1,5 +1,5 @@
-﻿using Events.Domain.Aggregates.UserAggregate;
-using Events.Domain.Aggregates.UserAggregate.Constraints;
+﻿using Events.Domain.Aggregates.Users;
+using Events.Domain.Aggregates.Users.Constraints;
 using Events.Domain.Shared.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;

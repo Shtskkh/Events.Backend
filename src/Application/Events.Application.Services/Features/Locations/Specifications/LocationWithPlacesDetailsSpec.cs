@@ -1,16 +1,19 @@
 ﻿using Ardalis.Specification;
+using Events.Domain.Aggregates.Locations;
 
 namespace Events.Application.Services.Features.Locations.Specifications;
 
 /// <summary>
 ///     Спецификация загрузки локации с деталями помещений.
 /// </summary>
-public class LocationWithPlacesDetailsSpec : LocationSpec
+public class LocationWithPlacesDetailsSpec : Specification<Location>
 {
-    public LocationWithPlacesDetailsSpec(int id)
+    public LocationWithPlacesDetailsSpec(int locationId)
     {
-        WithId(id);
-        Query.Include(l => l.Places)
-            .ThenInclude(p => p.Photos);
+        Query.Where(p => p.Id == locationId);
+
+        Query.Include(l => l.Places).ThenInclude(p => p.Photos);
+
+        Query.AsNoTracking();
     }
 }

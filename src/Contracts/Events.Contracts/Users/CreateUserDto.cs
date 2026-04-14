@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.UserAggregate.Constraints;
+using Events.Domain.Aggregates.Users.Constraints;
 using Events.Domain.Shared.Constraints;
 using Microsoft.AspNetCore.Http;
 

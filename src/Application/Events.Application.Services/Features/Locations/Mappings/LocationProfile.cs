@@ -2,7 +2,7 @@
 using Events.Application.Services.Features.Files;
 using Events.Contracts.Files;
 using Events.Contracts.Locations;
-using Events.Domain.Aggregates.LocationAggregate;
+using Events.Domain.Aggregates.Locations;
 
 namespace Events.Application.Services.Features.Locations.Mappings;
 

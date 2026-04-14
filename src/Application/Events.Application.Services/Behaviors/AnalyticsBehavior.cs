@@ -1,6 +1,6 @@
-﻿using Events.Application.Services.Features.Analytics.Repositories;
-using Events.Application.Services.Interfaces;
-using Events.Domain.Aggregates.AnalyticsAggregate;
+﻿using Events.Application.Services.Interfaces;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.Analytics;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,7 +12,7 @@ namespace Events.Application.Services.Behaviors;
 /// <typeparam name="TRequest">Тип запроса.</typeparam>
 /// <typeparam name="TResponse">Тип ответа.</typeparam>
 public class AnalyticsBehavior<TRequest, TResponse>(
-    IPageViewRepository pageViewRepository,
+    IRepository<PageView> pageViewRepository,
     ICurrentUserProvider currentUserProvider,
     ILogger<AnalyticsBehavior<TRequest, TResponse>> logger
 )

@@ -3,5 +3,4 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Events.Commands.Update;
 
-/// <inheritdoc />
 public sealed record UpdateEventCommand(Guid Id, UpdateEventDto Dto) : IRequest;

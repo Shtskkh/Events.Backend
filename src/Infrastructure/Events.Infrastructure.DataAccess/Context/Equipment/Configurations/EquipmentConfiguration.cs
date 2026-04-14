@@ -1,5 +1,6 @@
-﻿using Events.Domain.Aggregates.EquipmentAggregate.Constraints;
-using Events.Domain.Aggregates.LocationAggregate;
+﻿using Events.Domain.Aggregates.Equipment;
+using Events.Domain.Aggregates.Equipment.Constraints;
+using Events.Domain.Aggregates.Locations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,10 +10,10 @@ namespace Events.Infrastructure.DataAccess.Context.Equipment.Configurations;
 /// <summary>
 ///     Конфигурация оборудования.
 /// </summary>
-public class EquipmentConfiguration : IEntityTypeConfiguration<Domain.Aggregates.EquipmentAggregate.Equipment>
+public class EquipmentConfiguration : IEntityTypeConfiguration<EquipmentItem>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Domain.Aggregates.EquipmentAggregate.Equipment> builder)
+    public void Configure(EntityTypeBuilder<EquipmentItem> builder)
     {
         builder.ToTable("Equipment");
 

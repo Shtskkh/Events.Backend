@@ -2,12 +2,12 @@
 using Events.Application.Services.Features.Locations.Commands.Delete;
 using Events.Application.Services.Features.Locations.Commands.Update;
 using Events.Application.Services.Features.Locations.Queries.GetAll;
+using Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;
 using Events.Application.Services.Features.Locations.Queries.GetById;
 using Events.Application.Services.Features.Locations.Queries.GetPlaces;
 using Events.Application.Services.Features.Places.Commands.Create;
 using Events.Application.Services.Features.Places.Commands.Delete;
 using Events.Application.Services.Features.Places.Commands.Update;
-using Events.Application.Services.Features.Places.Queries.GetAvailable;
 using Events.Application.Services.Features.Places.Queries.GetById;
 using Events.Application.Services.Features.Places.Queries.GetTypes;
 using Events.Contracts.Errors;

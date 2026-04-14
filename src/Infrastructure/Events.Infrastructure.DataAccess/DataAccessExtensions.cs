@@ -1,17 +1,11 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
-using Events.Application.Services.Features.Equipment.Repositories;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Files;
-using Events.Application.Services.Features.Locations.Repositories;
-using Events.Application.Services.Features.Places.Repositories;
-using Events.Application.Services.Features.Users.Repositories;
-using Events.Infrastructure.DataAccess.Context.Equipment.Repositories;
+using Events.Application.Services.Shared;
 using Events.Infrastructure.DataAccess.Context.Events.Repositories;
-using Events.Infrastructure.DataAccess.Context.Locations.Repositories;
-using Events.Infrastructure.DataAccess.Context.Users.Repositories;
-using Events.Infrastructure.DataAccess.Repositories;
 using Events.Infrastructure.DataAccess.Services.RustFS;
+using Events.Infrastructure.DataAccess.Shared;
 using Events.Infrastructure.DataAccess.Shared.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,20 +48,8 @@ public static class DataAccessExtensions
 
         private void RegisterRepositories()
         {
-            services.AddScoped(typeof(IRepository<,,>), typeof(Repository<,,>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IEventTypeRepository, EventTypeRepository>();
-            services.AddScoped<IEventFormatRepository, EventFormatRepository>();
-
-            services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<IPlaceRepository, PlaceRepository>();
-            services.AddScoped<IPlaceTypeRepository, PlaceTypeRepository>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-
-            services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
-            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         }
 
         private void AddS3Client(IConfiguration configuration)

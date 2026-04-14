@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
-using Events.Application.Services.Features.Analytics.Repositories;
 using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Events;
-using Events.Domain.Aggregates.AnalyticsAggregate;
+using Events.Domain.Aggregates.Analytics;
+using Events.Domain.Aggregates.Users.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
 
-/// <inheritdoc />
 public sealed class GetRecentViewedEventsHandler(
-    IPageViewRepository pageViewRepository,
+    IRepository<PageView> pageViewRepository,
     IEventRepository eventRepository,
     IMapper mapper)
     : IRequestHandler<GetRecentViewedEventsQuery, IReadOnlyCollection<ShortEventDto>>
 {
-    /// <inheritdoc />
     public async Task<IReadOnlyCollection<ShortEventDto>> Handle(GetRecentViewedEventsQuery request,
         CancellationToken cancellationToken)
     {
@@ -25,7 +25,10 @@ public sealed class GetRecentViewedEventsHandler(
             .WithUserId(request.UserId)
             .AsNoTracking();
 
-        var userViews = await pageViewRepository.GetByFilterAsync(userViewsSpec, cancellationToken);
+        var userViews = await pageViewRepository.ListAsync(userViewsSpec, cancellationToken);
+
+        if (userViews.Count == 0)
+            throw new NotFoundException(UserErrorMessages.UserViewedEventsNotFoundById(request.UserId));
 
         var eventsIds = userViews
             .DistinctBy(v => v.EntityId)
@@ -33,8 +36,8 @@ public sealed class GetRecentViewedEventsHandler(
             .Select(v => v.EntityId)
             .ToList();
 
-        var eventsSpec = new EventSpec().WithIdList(eventsIds).AsNoTracking();
-        var events = await eventRepository.GetByFilterAsync(eventsSpec, cancellationToken);
+        var eventsByIdsSpec = new EventsByIdsSpec(eventsIds).AsNoTracking();
+        var events = await eventRepository.ListAsync(eventsByIdsSpec, cancellationToken);
 
         var eventMap = events.ToDictionary(e => e.Id);
         var orderedEvents = eventsIds

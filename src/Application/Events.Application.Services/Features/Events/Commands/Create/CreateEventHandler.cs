@@ -1,28 +1,30 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Files;
-using Events.Application.Services.Features.Locations.Repositories;
 using Events.Application.Services.Features.Locations.Specifications;
-using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.Errors;
-using Events.Domain.Aggregates.EventAggregate.Factories;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.Events;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Aggregates.Events.Factories;
+using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
 using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using EventType = Events.Domain.Aggregates.Events.EventType;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreateEventHandler(
     IEventRepository eventRepository,
-    IEventTypeRepository eventTypeRepository,
-    IEventFormatRepository eventFormatRepository,
-    ILocationRepository locationRepository,
+    IRepository<EventType> eventTypeRepository,
+    IRepository<EventFormat> eventFormatRepository,
+    IRepository<Location> locationRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
-    /// <inheritdoc />
     public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
         Guid? previewFilename = null;
@@ -32,8 +34,15 @@ public sealed class CreateEventHandler(
         {
             previewFilename = await UploadPreviewAsync(dto.Preview, cancellationToken);
 
-            var eventType = await eventTypeRepository.GetById(dto.EventTypeId, cancellationToken);
+            var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
+
+            if (eventType == null)
+                throw new NotFoundException(EventErrorMessages.Type.NotFoundById(dto.EventTypeId));
+
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
+
+            if (eventFormat == null)
+                throw new NotFoundException(EventErrorMessages.Format.NotFoundById(dto.EventFormatId));
 
             if (eventFormat.Id != EventFormat.Online.Id)
                 await ValidateBookingAsync(
@@ -47,8 +56,8 @@ public sealed class CreateEventHandler(
                 dto.Title,
                 dto.Announcement,
                 dto.Description,
-                ToUtc(dto.StartDateTime),
-                ToUtc(dto.EndDateTime),
+                dto.StartDateTime.ToUniversalTime(),
+                dto.EndDateTime.ToUniversalTime(),
                 eventType,
                 eventFormat,
                 dto.UserId,
@@ -66,7 +75,11 @@ public sealed class CreateEventHandler(
         }
         catch
         {
-            await DeletePreviewIfUploadedAsync(previewFilename, cancellationToken);
+            if (previewFilename.HasValue)
+                await fileStorageService.SafeDeleteObjectsAsync(
+                    S3Buckets.EventsPreviews,
+                    [previewFilename.Value.ToString()],
+                    cancellationToken);
             throw;
         }
     }
@@ -91,17 +104,6 @@ public sealed class CreateEventHandler(
         return filename;
     }
 
-    private async Task DeletePreviewIfUploadedAsync(Guid? previewFilename, CancellationToken cancellationToken)
-    {
-        if (!previewFilename.HasValue)
-            return;
-
-        await fileStorageService.SafeDeleteObjectsAsync(
-            S3Buckets.EventsPreviews,
-            [previewFilename.Value.ToString()],
-            cancellationToken);
-    }
-
     private async Task ValidateBookingAsync(
         int? locationId,
         int? placeId,
@@ -112,20 +114,25 @@ public sealed class CreateEventHandler(
         if (!locationId.HasValue || !placeId.HasValue)
             throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
 
-        var spec = new LocationSpec().WithId(locationId.Value).IncludePlaces().AsNoTracking();
-        var location = await locationRepository.GetAsync(spec, cancellationToken);
+        var locationByIdSpec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
+        var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
-        location.FindPlace(placeId.Value);
+        if (location == null)
+            throw new NotFoundException(LocationErrorMessages.NotFoundById(locationId.Value));
 
-        var hasConflict = await eventRepository.HasBookingConflictAsync(
-            placeId.Value, ToUtc(start), ToUtc(end), cancellationToken);
+        var placeExists = location.Places.Any(place => place.Id == placeId.Value);
+
+        if (!placeExists)
+            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId.Value));
+
+        var hasConflict = await eventRepository.AnyAsync(
+            new HasBookingConflictSpec(
+                placeId.Value,
+                start.ToUniversalTime(),
+                end.ToUniversalTime()),
+            cancellationToken);
 
         if (hasConflict)
             throw new DomainException(EventErrorMessages.Booking.TimeConflict);
-    }
-
-    private static DateTimeOffset ToUtc(DateTimeOffset dateTime)
-    {
-        return dateTime.Offset == TimeSpan.Zero ? dateTime : dateTime.ToUniversalTime();
     }
 }

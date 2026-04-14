@@ -1,29 +1,39 @@
 ﻿using Events.Application.Services.Features.Events.Repositories;
-using Events.Application.Services.Features.Users.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
 using Events.Application.Services.Features.Users.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Events.Participants;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Aggregates.Users;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetParticipants;
 
-/// <inheritdoc />
-public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUserRepository userRepository)
+public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRepository<User> userRepository)
     : IRequestHandler<GetParticipantsQuery, IReadOnlyCollection<ParticipantDto>>
 {
-    /// <inheritdoc />
     public async Task<IReadOnlyCollection<ParticipantDto>> Handle(GetParticipantsQuery request,
         CancellationToken cancellationToken)
     {
-        const bool includeParticipants = true;
-        var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken, includeParticipants);
+        var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeParticipants().AsNoTracking();
+
+        var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
+
+        if (@event == null)
+            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+
+        if (@event.Participants.Count == 0)
+            throw new NotFoundException(EventErrorMessages.Participant.NotFoundAny);
+
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
-        var spec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
-        var participants = await userRepository.GetByFilterAsync(spec, cancellationToken);
+        var usersByIdsSpec = new UsersByIdsSpec(participantsIds).AsNoTracking();
+        var participants = await userRepository.ListAsync(usersByIdsSpec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);
 
-        var dtoList = @event.Participants.Select(p =>
+        return @event.Participants.Select(p =>
         {
             var user = participantsById[p.UserId];
             return new ParticipantDto
@@ -35,7 +45,5 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IUs
                 RegistrationTime = p.RegistrationTime
             };
         }).ToList();
-
-        return dtoList;
     }
 }

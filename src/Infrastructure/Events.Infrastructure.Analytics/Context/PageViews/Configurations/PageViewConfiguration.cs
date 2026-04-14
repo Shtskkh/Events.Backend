@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.AnalyticsAggregate;
+﻿using Events.Domain.Aggregates.Analytics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
