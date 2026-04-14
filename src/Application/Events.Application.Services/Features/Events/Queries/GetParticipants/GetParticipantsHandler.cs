@@ -14,12 +14,9 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
     public async Task<IReadOnlyCollection<ParticipantDto>> Handle(GetParticipantsQuery request,
         CancellationToken cancellationToken)
     {
-        var eventSpec = new EventSpec()
-            .WithId(request.EventId)
-            .IncludeParticipants()
-            .AsNoTracking();
+        var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeParticipants().AsNoTracking();
 
-        var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
+        var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 

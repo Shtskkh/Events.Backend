@@ -16,8 +16,8 @@ public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, I
     /// <inheritdoc />
     public async Task<EventAnalyticsDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
     {
-        var eventSpec = new EventSpec().WithId(request.EventId).IncludeParticipants().AsNoTracking();
-        var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
+        var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeParticipants().AsNoTracking();
+        var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
         var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId).AsNoTracking();
         var views = await pageViewRepository.ListAsync(spec, cancellationToken);

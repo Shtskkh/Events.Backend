@@ -1,46 +1,45 @@
 ﻿using Ardalis.Specification;
 using Events.Contracts.Events;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Specifications;
 
-/// <summary>
-///     Спецификация фильтра мероприятий.
-/// </summary>
-public class EventFilterSpec : EventSpec
+public sealed class EventFilterSpec : Specification<Event>
 {
     public EventFilterSpec(EventFilterDto filter)
     {
-        if (filter.StartDateTime != null)
-            StartAfter(filter.StartDateTime.Value);
+        if (filter.StartDateTime.HasValue)
+            Query.Where(e => e.DateTimeRange.StartDateTime >= filter.StartDateTime.Value);
 
-        if (filter.EndDateTime != null)
-            EndBefore(filter.EndDateTime.Value);
+        if (filter.EndDateTime.HasValue)
+            Query.Where(e => e.DateTimeRange.StartDateTime <= filter.EndDateTime.Value);
 
-        if (filter.TypeId != null)
-            WithTypeId(filter.TypeId.Value);
+        if (filter.TypeId.HasValue)
+            Query.Where(e => e.Type.Id == filter.TypeId.Value);
 
-        if (filter.FormatId != null)
-            WithFormatId(filter.FormatId.Value);
+        if (filter.FormatId.HasValue)
+            Query.Where(e => e.Format.Id == filter.FormatId.Value);
 
-        if (filter.UserId != null)
-            WithUserId(filter.UserId.Value);
+        if (filter.UserId.HasValue)
+            Query.Where(e => e.UserId == filter.UserId.Value);
 
-        if (filter.LocationId != null)
-            WithLocationId(filter.LocationId.Value);
+        if (filter.LocationId.HasValue)
+            Query.Where(e => e.Booking != null && e.Booking.LocationId == filter.LocationId.Value);
 
-        if (filter.PlaceId != null)
-            WithPlaceId(filter.PlaceId.Value);
+        if (filter.PlaceId.HasValue)
+            Query.Where(e => e.Booking != null && e.Booking.PlaceId == filter.PlaceId.Value);
 
-        if (filter.CreatedAfter != null)
-            CreatedAfter(filter.CreatedAfter.Value);
+        if (filter.CreatedAfter.HasValue)
+            Query.Where(e => e.CreatedAt >= filter.CreatedAfter.Value);
 
         if (filter.CreatedBefore != null)
-            CreatedBefore(filter.CreatedBefore.Value);
+            Query.Where(e => e.CreatedAt >= filter.CreatedBefore.Value);
 
-        Query.OrderByDescending(e => e.CreatedAt);
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);
 
-        AsNoTracking();
+        Query.OrderByDescending(e => e.CreatedAt);
+
+        Query.AsNoTracking();
     }
 }
