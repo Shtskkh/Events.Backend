@@ -1,7 +1,11 @@
-﻿using Events.Application.Services.Shared;
+﻿using Events.Application.Services.Features.Places.Specifications;
+using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.Equipment;
+using Events.Domain.Aggregates.Equipment.Errors;
 using Events.Domain.Aggregates.Equipment.Factories;
 using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Equipment.Commands.Create;
@@ -18,8 +22,17 @@ public sealed class CreateEquipmentHandler(
 
         var type = await equipmentTypeRepository.GetByIdAsync(dto.EquipmentTypeId, cancellationToken);
 
+        if (type == null)
+            throw new NotFoundException(EquipmentErrorMessages.Type.NotFoundById(dto.EquipmentTypeId));
+
         if (dto.PlaceId.HasValue)
-            await placeRepository.GetByIdAsync(dto.PlaceId.Value, cancellationToken);
+        {
+            var placeByIdSpec = new PlaceByIdSpec(dto.PlaceId.Value);
+            var placeExists = await placeRepository.AnyAsync(placeByIdSpec, cancellationToken);
+
+            if (!placeExists)
+                throw new NotFoundException(PlaceErrorMessages.NotFoundById(dto.PlaceId.Value));
+        }
 
         var equipment = EquipmentFactory.Create(dto.Title, dto.InventoryNumber, type, dto.PlaceId);
 
