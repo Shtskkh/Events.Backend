@@ -276,7 +276,7 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекция типов мероприятий с количеством за период.</returns>
     [HttpGet("Formats/Analytics")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatAnalytics>),
+    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatAnalyticsDto>),
         StatusCodes.Status200OK,
         "application/json",
         Description = "Успех.")]
@@ -285,8 +285,8 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         "application/problem+json",
         Description = "Мероприятия за данный период не были найдены.")]
     public async Task<IActionResult> GetFormatsAnalytics(
-        [FromQuery] DateTimeOffset start,
-        [FromQuery] DateTimeOffset end,
+        [FromQuery] DateTimeOffset? start,
+        [FromQuery] DateTimeOffset? end,
         CancellationToken cancellationToken)
     {
         var analytics = await mediator.Send(new GetEventFormatsAnalyticsQuery(start, end), cancellationToken);

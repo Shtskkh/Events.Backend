@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель аналитики форматов мероприятий.
 /// </summary>
-public sealed record EventFormatAnalytics
+public sealed record EventFormatAnalyticsDto
 {
     /// <summary>
     ///     Формат.
