@@ -11,14 +11,12 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Places.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreatePlaceHandler(
     IRepository<Location> locationRepository,
     IRepository<PlaceType> placeTypeRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreatePlaceCommand, int>
 {
-    /// <inheritdoc />
     public async Task<int> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
@@ -36,10 +34,12 @@ public sealed class CreatePlaceHandler(
 
         var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, request.LocationId, dto.Title);
 
-        var uploadedFilenames = new List<string>(dto.Photos?.Count ?? 0);
+        List<string>? uploadedFilenames = null;
         try
         {
             if (dto.Photos is { Count: > 0 })
+            {
+                uploadedFilenames = [];
                 foreach (var photo in dto.Photos)
                 {
                     var filename = $"{Guid.NewGuid()}{Path.GetExtension(photo.FileName)}";
@@ -59,16 +59,18 @@ public sealed class CreatePlaceHandler(
                     uploadedFilenames.Add(filename);
                     place.AddPhoto(filename);
                 }
+            }
 
             location.AddPlace(place);
             await locationRepository.UpdateAsync(location, cancellationToken);
         }
         catch (Exception)
         {
-            await fileStorageService.SafeDeleteObjectsAsync(
-                S3Buckets.PlacesPhotos,
-                uploadedFilenames,
-                cancellationToken);
+            if (uploadedFilenames != null)
+                await fileStorageService.SafeDeleteObjectsAsync(
+                    S3Buckets.PlacesPhotos,
+                    uploadedFilenames,
+                    cancellationToken);
             throw;
         }
 
