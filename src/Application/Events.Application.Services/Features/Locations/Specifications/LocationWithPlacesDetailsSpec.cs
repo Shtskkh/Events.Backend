@@ -7,9 +7,9 @@ namespace Events.Application.Services.Features.Locations.Specifications;
 /// </summary>
 public class LocationWithPlacesDetailsSpec : LocationSpec
 {
-    public LocationWithPlacesDetailsSpec(int id)
+    public LocationWithPlacesDetailsSpec(int locationId)
     {
-        WithId(id);
+        Query.Where(p => p.Id == locationId);
         Query.Include(l => l.Places)
             .ThenInclude(p => p.Photos);
     }

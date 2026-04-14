@@ -8,24 +8,24 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Locations.Commands.Create;
 
-/// <inheritdoc />
 public sealed class CreateLocationHandler(
     IRepository<Location> locationRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateLocationCommand, int>
 {
-    /// <inheritdoc />
     public async Task<int> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
 
         var location = LocationFactory.Create(dto.Title, dto.Address);
 
-        var uploadedFilenames = new List<string>();
-
+        List<string>? uploadedFilenames = null;
         try
         {
             if (dto.Photos is { Count: > 0 })
+            {
+                uploadedFilenames = [];
+
                 foreach (var photo in dto.Photos)
                 {
                     var filename = $"{Guid.NewGuid()}{Path.GetExtension(photo.FileName)}";
@@ -45,13 +45,17 @@ public sealed class CreateLocationHandler(
                     uploadedFilenames.Add(filename);
                     location.AddPhoto(filename);
                 }
+            }
 
             await locationRepository.AddAsync(location, cancellationToken);
         }
         catch (Exception)
         {
-            await fileStorageService.SafeDeleteObjectsAsync(S3Buckets.LocationsPhotos, uploadedFilenames,
-                cancellationToken);
+            if (uploadedFilenames != null)
+                await fileStorageService.SafeDeleteObjectsAsync(
+                    S3Buckets.LocationsPhotos,
+                    uploadedFilenames,
+                    cancellationToken);
             throw;
         }
 

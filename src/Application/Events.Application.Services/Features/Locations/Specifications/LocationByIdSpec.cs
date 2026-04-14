@@ -16,6 +16,12 @@ public class LocationByIdSpec : Specification<Location>
         return this;
     }
 
+    public LocationByIdSpec IncludePhotos()
+    {
+        Query.Include(p => p.Photos);
+        return this;
+    }
+
     public LocationByIdSpec IncludePlaces()
     {
         Query.Include(l => l.Places);
