@@ -7,6 +7,7 @@ namespace Events.Domain.Aggregates.Users.Errors;
 /// </summary>
 public static class UserErrorMessages
 {
+    public const string Unauthorized = "Неверный почтовый адрес или пароль";
     public const string RoleAlreadyAssigned = "Роль уже присвоена.";
     public const string EmailAlreadyInUse = "Почтовый адрес уже используется.";
 
