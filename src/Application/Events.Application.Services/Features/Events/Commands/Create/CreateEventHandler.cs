@@ -115,7 +115,7 @@ public sealed class CreateEventHandler(
         if (!locationId.HasValue || !placeId.HasValue)
             throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
 
-        var spec = new LocationSpec().WithId(locationId.Value).IncludePlaces().AsNoTracking();
+        var spec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
         var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         location.FindPlace(placeId.Value);
