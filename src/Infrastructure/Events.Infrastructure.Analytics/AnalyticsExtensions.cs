@@ -1,6 +1,5 @@
 ﻿using ClickHouse.Driver;
-using Events.Application.Services.Features.Analytics.Repositories;
-using Events.Infrastructure.Analytics.Context.PageViews.Repositories;
+using Events.Application.Services.Shared;
 using Events.Infrastructure.Analytics.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,8 +30,7 @@ public static class AnalyticsExtensions
 
         private void RegisterRepositories()
         {
-            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
-            services.AddScoped<IPageViewRepository, PageViewRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Events.Application.Services.Features.Analytics.Repositories;
-using Events.Application.Services.Features.Analytics.Specifications;
+﻿using Events.Application.Services.Features.Analytics.Specifications;
 using Events.Application.Services.Features.Events.Repositories;
 using Events.Application.Services.Features.Events.Specifications;
+using Events.Application.Services.Shared;
 using Events.Contracts.Analytics;
 using Events.Contracts.Events;
 using Events.Domain.Aggregates.Analytics;
@@ -10,7 +10,7 @@ using MediatR;
 namespace Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 
 /// <inheritdoc />
-public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IPageViewRepository pageViewRepository)
+public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IRepository<PageView> pageViewRepository)
     : IRequestHandler<GetEventAnalyticsQuery, EventAnalyticsDto>
 {
     /// <inheritdoc />
@@ -20,7 +20,7 @@ public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, I
         var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
 
         var spec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId).AsNoTracking();
-        var views = await pageViewRepository.GetByFilterAsync(spec, cancellationToken);
+        var views = await pageViewRepository.ListAsync(spec, cancellationToken);
 
         var viewsByDay = views
             .GroupBy(v => DateOnly.FromDateTime(v.ViewedAt.Date))
