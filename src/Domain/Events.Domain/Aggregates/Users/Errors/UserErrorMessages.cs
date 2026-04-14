@@ -10,10 +10,16 @@ public static class UserErrorMessages
     public const string Unauthorized = "Неверный почтовый адрес или пароль";
     public const string RoleAlreadyAssigned = "Роль уже присвоена.";
     public const string EmailAlreadyInUse = "Почтовый адрес уже используется.";
+    public const string UsersNotFoundByFilter = "Пользователи по фильтру не найдены.";
 
     public static string UserNotFoundById(Guid userId)
     {
         return $"Пользователь с ID: {userId} не найден.";
+    }
+
+    public static string UserViewedEventsNotFoundById(Guid userId)
+    {
+        return $"Просмотры мероприятий пользователя с ID: {userId} не найдены.";
     }
 
     /// <summary>
