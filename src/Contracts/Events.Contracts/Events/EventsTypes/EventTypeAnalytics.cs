@@ -3,7 +3,7 @@
 /// <summary>
 ///     Модель аналитики типов мероприятий.
 /// </summary>
-public sealed record EventTypeAnalytics
+public sealed record EventTypeAnalyticsDto
 {
     /// <summary>
     ///     Тип.
