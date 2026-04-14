@@ -20,9 +20,10 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
             .AsNoTracking();
 
         var @event = await eventRepository.FirstOrDefaultAsync(eventSpec, cancellationToken);
+
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 
-        var userSpec = new UserSpec().WithIdList(participantsIds).AsNoTracking();
+        var userSpec = new UsersByIdsSpec(participantsIds).AsNoTracking();
         var participants = await userRepository.ListAsync(userSpec, cancellationToken);
 
         var participantsById = participants.ToDictionary(p => p.Id);

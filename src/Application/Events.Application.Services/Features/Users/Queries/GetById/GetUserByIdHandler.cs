@@ -3,6 +3,8 @@ using Events.Application.Services.Features.Users.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Users;
 using Events.Domain.Aggregates.Users;
+using Events.Domain.Aggregates.Users.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Users.Queries.GetById;
@@ -12,8 +14,11 @@ public sealed class GetUserByIdHandler(IRepository<User> userRepository, IMapper
 {
     public async Task<UserDto> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var spec = new UserSpec().WithId(request.Id).AsNoTracking();
-        var user = await userRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var userSpec = new UserByIdSpec(request.Id).AsNoTracking();
+        var user = await userRepository.FirstOrDefaultAsync(userSpec, cancellationToken);
+
+        if (user == null)
+            throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.Id));
 
         return mapper.Map<UserDto>(user);
     }

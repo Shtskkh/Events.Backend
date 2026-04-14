@@ -5,6 +5,11 @@
 /// </summary>
 public static class EventErrorMessages
 {
+    public static string EventNotFoundById(Guid eventId)
+    {
+        return $"Мероприятие с ID: {eventId} не найдено.";
+    }
+
     /// <summary>
     ///     Ошибки названия мероприятия.
     /// </summary>

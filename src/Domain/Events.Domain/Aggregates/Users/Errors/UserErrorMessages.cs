@@ -10,6 +10,11 @@ public static class UserErrorMessages
     public const string RoleAlreadyAssigned = "Роль уже присвоена.";
     public const string EmailAlreadyInUse = "Почтовый адрес уже используется.";
 
+    public static string UserNotFoundById(Guid userId)
+    {
+        return $"Пользователь с ID: {userId} не найден.";
+    }
+
     /// <summary>
     ///     Ошибки ролей пользователей.
     /// </summary>
