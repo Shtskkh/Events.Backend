@@ -1,13 +1,23 @@
 ﻿namespace Events.Application.Services.Shared;
 
 /// <summary>
-///     Делегат для построения типизированного запроса к хранилищу.
-///     Принимает базовый <see cref="IQueryable{T}" /> сущности и возвращает
-///     трансформированный запрос, не материализуя его —
-///     материализация происходит на стороне репозитория.
+///     Класс-обёртка над Func, позволяющая удобно описывать сложные запросы (с GroupBy, Count, Sum и т.д.).
 /// </summary>
-/// <typeparam name="TEntity">Тип сущности в хранилище.</typeparam>
+/// <typeparam name="TEntity">Тип сущности.</typeparam>
 /// <typeparam name="TResult">Тип результата после проекции.</typeparam>
-/// <param name="query">Базовый запрос к хранилищу.</param>
-/// <returns>Трансформированный запрос.</returns>
-public delegate IQueryable<TResult> QueryObject<in TEntity, out TResult>(IQueryable<TEntity> query);
+public sealed class QueryObject<TEntity, TResult>
+    where TEntity : class
+{
+    public QueryObject(Func<IQueryable<TEntity>, IQueryable<TResult>> build)
+    {
+        Build = build ?? throw new ArgumentNullException(nameof(build));
+    }
+
+    public Func<IQueryable<TEntity>, IQueryable<TResult>> Build { get; }
+
+    public static implicit operator Func<IQueryable<TEntity>, IQueryable<TResult>>(
+        QueryObject<TEntity, TResult> queryObject)
+    {
+        return queryObject.Build;
+    }
+}
