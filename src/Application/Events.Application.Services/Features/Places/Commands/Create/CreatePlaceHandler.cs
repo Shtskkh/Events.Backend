@@ -4,7 +4,9 @@ using Events.Application.Services.Features.Files;
 using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
 using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
 using Events.Domain.Aggregates.Locations.Factories.Places;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Places.Commands.Create;
@@ -21,13 +23,20 @@ public sealed class CreatePlaceHandler(
     {
         var dto = request.Dto;
 
-        var spec = new LocationSpec().WithId(request.LocationId).IncludePlaces();
-        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var locationByIdSpec = new LocationByIdSpec(request.LocationId).IncludePlaces().AsNoTracking();
+        var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
+
+        if (location == null)
+            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+
         var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
+
+        if (placeType == null)
+            throw new NotFoundException(PlaceErrorMessages.Type.NotFoundById(dto.Type));
 
         var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, request.LocationId, dto.Title);
 
-        var uploadedFilenames = new List<string>();
+        var uploadedFilenames = new List<string>(dto.Photos?.Count ?? 0);
         try
         {
             if (dto.Photos is { Count: > 0 })
@@ -56,7 +65,9 @@ public sealed class CreatePlaceHandler(
         }
         catch (Exception)
         {
-            await fileStorageService.SafeDeleteObjectsAsync(S3Buckets.PlacesPhotos, uploadedFilenames,
+            await fileStorageService.SafeDeleteObjectsAsync(
+                S3Buckets.PlacesPhotos,
+                uploadedFilenames,
                 cancellationToken);
             throw;
         }

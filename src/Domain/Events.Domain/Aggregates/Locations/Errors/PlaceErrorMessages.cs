@@ -7,8 +7,10 @@ namespace Events.Domain.Aggregates.Locations.Errors;
 /// </summary>
 public static class PlaceErrorMessages
 {
-    public const string NotFoundAny = "Помещения не найдены.";
-    public const string NotFound = "Помещение не найдено.";
+    public static string NotFoundById(int placeId)
+    {
+        return $"Помещение с ID: {placeId} не найдено.";
+    }
 
     /// <summary>
     ///     Ошибки названия помещения.
@@ -48,5 +50,12 @@ public static class PlaceErrorMessages
     {
         public static readonly string GreaterThanMaxLength =
             $"Название типа помещения больше максимальной длины в {PlaceConstraints.Type.MaxLength} символ(-ов).";
+
+        public static string NotFoundAny => "Типы помещений не найдены.";
+
+        public static string NotFoundById(int typeId)
+        {
+            return $"Тип помещения с ID: {typeId} не найдена.";
+        }
     }
 }

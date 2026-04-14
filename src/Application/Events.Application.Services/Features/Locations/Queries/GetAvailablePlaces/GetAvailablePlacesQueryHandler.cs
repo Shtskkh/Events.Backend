@@ -4,9 +4,11 @@ using Events.Application.Services.Features.Locations.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Places;
 using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
-namespace Events.Application.Services.Features.Places.Queries.GetAvailable;
+namespace Events.Application.Services.Features.Locations.Queries.GetAvailablePlaces;
 
 public sealed class GetAvailablePlacesQueryHandler(
     IRepository<Location> locationRepository,
@@ -16,10 +18,13 @@ public sealed class GetAvailablePlacesQueryHandler(
     public async Task<IReadOnlyCollection<PlaceAvailabilityDto>> Handle(GetAvailablePlacesQuery request,
         CancellationToken cancellationToken)
     {
-        var spec = new LocationSpec().WithId(request.LocationId).IncludePlaces().AsNoTracking();
-        var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var locationSpec = new LocationByIdSpec(request.LocationId).IncludePlaces().AsNoTracking();
+        var location = await locationRepository.FirstOrDefaultAsync(locationSpec, cancellationToken);
 
-        var conflictChecks = location.Places.Select(async place =>
+        if (location == null)
+            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+
+        var conflictChecksTasks = location.Places.Select(async place =>
         {
             var hasConflict = await eventRepository.AnyAsync(
                 new HasBookingConflictSpec(
@@ -39,8 +44,8 @@ public sealed class GetAvailablePlacesQueryHandler(
             };
         });
 
-        var places = await Task.WhenAll(conflictChecks);
+        var availablePlaces = await Task.WhenAll(conflictChecksTasks);
 
-        return places;
+        return availablePlaces;
     }
 }

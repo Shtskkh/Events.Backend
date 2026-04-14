@@ -99,8 +99,9 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public Place FindPlace(int placeId)
     {
         var place = _places.FirstOrDefault(p => p.Id == placeId);
+
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFound);
+            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId));
 
         return place;
     }
@@ -128,8 +129,9 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public void RemovePlace(int placeId)
     {
         var place = _places.FirstOrDefault(p => p.Id == placeId);
+
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFound);
+            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId));
 
         _places.Remove(place);
     }

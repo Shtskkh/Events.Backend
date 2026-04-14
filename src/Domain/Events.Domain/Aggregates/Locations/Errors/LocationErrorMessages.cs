@@ -7,6 +7,11 @@ namespace Events.Domain.Aggregates.Locations.Errors;
 /// </summary>
 public static class LocationErrorMessages
 {
+    public static string NotFoundById(int locationId)
+    {
+        return $"Локация с ID: {locationId} не найдена.";
+    }
+
     /// <summary>
     ///     Ошибки названия локации.
     /// </summary>
