@@ -32,7 +32,7 @@ public sealed class GetEventByIdHandler(
         var place = await placeRepository.GetByIdAsync(@event.Booking.PlaceId, cancellationToken);
 
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(@event.Booking.PlaceId));
+            throw new NotFoundException(PlaceErrors.NotFoundById(@event.Booking.PlaceId));
 
         dto.PlaceInfo = new BookedPlaceDto
         {

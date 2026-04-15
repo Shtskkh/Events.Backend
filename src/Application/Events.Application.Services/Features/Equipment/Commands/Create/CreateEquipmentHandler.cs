@@ -31,7 +31,7 @@ public sealed class CreateEquipmentHandler(
             var placeExists = await placeRepository.AnyAsync(placeByIdSpec, cancellationToken);
 
             if (!placeExists)
-                throw new NotFoundException(PlaceErrorMessages.NotFoundById(dto.PlaceId.Value));
+                throw new NotFoundException(PlaceErrors.NotFoundById(dto.PlaceId.Value));
         }
 
         var equipment = EquipmentFactory.Create(dto.Title, dto.InventoryNumber, type, dto.PlaceId);

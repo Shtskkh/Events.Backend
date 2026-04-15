@@ -19,7 +19,7 @@ public sealed class GetLocationPlacesHandler(IRepository<Location> locationRepos
         var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+            throw new NotFoundException(LocationErrors.NotFoundById(request.LocationId));
 
         return mapper.Map<IReadOnlyCollection<ShortPlaceDto>>(location.Places);
     }

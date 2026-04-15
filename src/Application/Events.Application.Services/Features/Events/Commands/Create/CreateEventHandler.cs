@@ -118,12 +118,12 @@ public sealed class CreateEventHandler(
         var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(locationId.Value));
+            throw new NotFoundException(LocationErrors.NotFoundById(locationId.Value));
 
         var placeExists = location.Places.Any(place => place.Id == placeId.Value);
 
         if (!placeExists)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId.Value));
+            throw new NotFoundException(PlaceErrors.NotFoundById(placeId.Value));
 
         var hasConflict = await eventRepository.AnyAsync(
             new HasBookingConflictSpec(

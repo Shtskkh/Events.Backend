@@ -17,7 +17,7 @@ public sealed class GetLocationsHandler(IRepository<Location> locationRepository
         var locations = await locationRepository.ListAsync(cancellationToken);
 
         if (locations.Count == 0)
-            throw new NotFoundException(LocationErrorMessages.NotFoundAny);
+            throw new NotFoundException(LocationErrors.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<ShortLocationDto>>(locations);
     }

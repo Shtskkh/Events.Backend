@@ -18,7 +18,7 @@ public sealed class GetPlacesTypesHandler(IRepository<PlaceType> placeTypeReposi
         var types = await placeTypeRepository.ListAsync(cancellationToken);
 
         if (types.Count == 0)
-            throw new NotFoundException(PlaceErrorMessages.Type.NotFoundAny);
+            throw new NotFoundException(PlaceTypeErrors.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<PlaceTypeDto>>(types);
     }

@@ -100,7 +100,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public void AddPlace(Place place)
     {
         if (_places.Any(p => p.Number == place.Number))
-            throw new DomainException(PlaceErrorMessages.Number.AlreadyExists);
+            throw new DomainException(PlaceNumberErrors.AlreadyExists(place.Number.Value));
 
         _places.Add(place);
     }
@@ -115,7 +115,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
         var place = _places.FirstOrDefault(p => p.Id == placeId);
 
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId));
+            throw new NotFoundException(PlaceErrors.NotFoundById(placeId));
 
         _places.Remove(place);
     }

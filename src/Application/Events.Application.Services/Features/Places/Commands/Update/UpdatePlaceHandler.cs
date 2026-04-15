@@ -14,7 +14,7 @@ public sealed class UpdatePlaceHandler(IRepository<Place> placeRepository, IRepo
         var place = await placeRepository.GetByIdAsync(request.PlaceId, cancellationToken);
 
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(request.PlaceId));
+            throw new NotFoundException(PlaceErrors.NotFoundById(request.PlaceId));
 
         var dto = request.UpdateDto;
 
@@ -25,7 +25,7 @@ public sealed class UpdatePlaceHandler(IRepository<Place> placeRepository, IRepo
         {
             var type = await placeTypeRepository.GetByIdAsync(dto.Type.Value, cancellationToken);
             if (type == null)
-                throw new NotFoundException(PlaceErrorMessages.NotFoundById(dto.Type.Value));
+                throw new NotFoundException(PlaceErrors.NotFoundById(dto.Type.Value));
 
             place.ChangeType(type);
         }

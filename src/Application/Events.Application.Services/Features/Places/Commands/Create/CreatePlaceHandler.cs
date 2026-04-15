@@ -25,12 +25,12 @@ public sealed class CreatePlaceHandler(
         var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+            throw new NotFoundException(LocationErrors.NotFoundById(request.LocationId));
 
         var placeType = await placeTypeRepository.GetByIdAsync(dto.Type, cancellationToken);
 
         if (placeType == null)
-            throw new NotFoundException(PlaceErrorMessages.Type.NotFoundById(dto.Type));
+            throw new NotFoundException(PlaceTypeErrors.NotFoundById(dto.Type));
 
         var place = PlaceFactory.Create(dto.Number, dto.Capacity, placeType, request.LocationId, dto.Title);
 

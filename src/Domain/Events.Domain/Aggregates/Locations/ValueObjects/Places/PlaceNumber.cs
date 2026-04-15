@@ -1,5 +1,4 @@
-﻿using Events.Domain.Aggregates.Locations.Constraints;
-using Events.Domain.Aggregates.Locations.Errors;
+﻿using Events.Domain.Aggregates.Locations.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -11,34 +10,25 @@ namespace Events.Domain.Aggregates.Locations.ValueObjects.Places;
 /// </summary>
 public class PlaceNumber : ValueObject
 {
+    public const int MaxLength = 4;
+
     private PlaceNumber()
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="number">Номер помещения.</param>
-    /// <exception cref="DomainException">
-    ///     Ошибка правил домена.
-    /// </exception>
     public PlaceNumber(string number)
     {
         Value = new Text(number).Value;
 
-        if (Value.Length > PlaceConstraints.Number.MaxLength)
-            throw new DomainException(PlaceErrorMessages.Number.GreaterThanMaxLength);
+        if (Value.Length > MaxLength)
+            throw new DomainException(PlaceNumberErrors.GreaterThanMaxLength);
 
         if (Value[0] == '-')
-            throw new DomainException(PlaceErrorMessages.Number.ContainsMinus);
+            throw new DomainException(PlaceNumberErrors.ContainsMinus);
     }
 
-    /// <summary>
-    ///     Строка номера помещения.
-    /// </summary>
     public string Value { get; } = null!;
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

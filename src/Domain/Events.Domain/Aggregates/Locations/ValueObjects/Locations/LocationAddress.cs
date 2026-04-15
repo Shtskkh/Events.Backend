@@ -1,5 +1,4 @@
-﻿using Events.Domain.Aggregates.Locations.Constraints;
-using Events.Domain.Aggregates.Locations.Errors;
+﻿using Events.Domain.Aggregates.Locations.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -11,31 +10,22 @@ namespace Events.Domain.Aggregates.Locations.ValueObjects.Locations;
 /// </summary>
 public class LocationAddress : ValueObject
 {
+    public const int MaxLength = 256;
+
     private LocationAddress()
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="address">Адрес.</param>
-    /// <exception cref="DomainException">
-    ///     Ошибка правил домена.
-    /// </exception>
     public LocationAddress(string address)
     {
         Value = new Text(address).Value;
 
-        if (Value.Length > LocationConstraints.Address.MaxLength)
-            throw new DomainException(LocationErrorMessages.Address.GreaterThanMaxLength);
+        if (Value.Length > MaxLength)
+            throw new DomainException(LocationAddressErrors.GreaterThanMaxLength);
     }
 
-    /// <summary>
-    ///     Строка адреса локации.
-    /// </summary>
     public string Value { get; } = null!;
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
