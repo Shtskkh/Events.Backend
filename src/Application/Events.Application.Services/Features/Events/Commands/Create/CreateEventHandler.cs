@@ -37,12 +37,12 @@ public sealed class CreateEventHandler(
             var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
 
             if (eventType == null)
-                throw new NotFoundException(EventErrorMessages.Type.NotFoundById(dto.EventTypeId));
+                throw new NotFoundException(EventTypeErrors.NotFoundById(dto.EventTypeId));
 
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
             if (eventFormat == null)
-                throw new NotFoundException(EventErrorMessages.Format.NotFoundById(dto.EventFormatId));
+                throw new NotFoundException(EventFormatErrors.NotFoundById(dto.EventFormatId));
 
             if (eventFormat.Id != EventFormat.Online.Id)
                 await ValidateBookingAsync(
@@ -112,18 +112,18 @@ public sealed class CreateEventHandler(
         CancellationToken cancellationToken)
     {
         if (!locationId.HasValue || !placeId.HasValue)
-            throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
+            throw new DomainException(EventBookingErrors.RequiredForOfflineAndHybrid);
 
         var locationByIdSpec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
         var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(locationId.Value));
+            throw new NotFoundException(LocationErrors.NotFoundById(locationId.Value));
 
         var placeExists = location.Places.Any(place => place.Id == placeId.Value);
 
         if (!placeExists)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId.Value));
+            throw new NotFoundException(PlaceErrors.NotFoundById(placeId.Value));
 
         var hasConflict = await eventRepository.AnyAsync(
             new HasBookingConflictSpec(
@@ -133,6 +133,6 @@ public sealed class CreateEventHandler(
             cancellationToken);
 
         if (hasConflict)
-            throw new DomainException(EventErrorMessages.Booking.TimeConflict);
+            throw new DomainException(EventBookingErrors.TimeConflict(start, end));
     }
 }

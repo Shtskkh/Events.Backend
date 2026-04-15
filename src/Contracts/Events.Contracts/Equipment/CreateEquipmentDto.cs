@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.Equipment.Constraints;
+using Events.Domain.Aggregates.Equipment.ValueObjects;
 
 namespace Events.Contracts.Equipment;
 
@@ -11,12 +11,13 @@ public sealed record CreateEquipmentDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MaxLength(EquipmentConstraints.MaxLength)]
+    [MaxLength(EquipmentTitle.MaxLength)]
     public required string Title { get; init; } = null!;
 
     /// <summary>
     ///     Инвентарный номер.
     /// </summary>
+    [MaxLength(Domain.Aggregates.Equipment.ValueObjects.InventoryNumber.MaxLength)]
     public required string InventoryNumber { get; init; } = null!;
 
     /// <summary>

@@ -13,25 +13,16 @@ public class PlaceCapacity : ValueObject
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="capacity">Вместимость.</param>
-    /// <exception cref="DomainException">Ошибка правил домена.</exception>
     public PlaceCapacity(int capacity)
     {
         if (capacity <= 0)
-            throw new DomainException(PlaceErrorMessages.Capacity.CapacityLessOrEqualZero);
+            throw new DomainException(PlaceCapacityErrors.LessOrEqualZero);
 
         Value = capacity;
     }
 
-    /// <summary>
-    ///     Значение вместимости.
-    /// </summary>
     public int Value { get; }
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

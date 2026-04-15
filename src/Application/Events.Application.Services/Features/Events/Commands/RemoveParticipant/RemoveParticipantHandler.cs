@@ -13,7 +13,7 @@ public sealed class RemoveParticipantHandler(IEventRepository eventRepository)
         var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
 
         if (@event == null)
-            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+            throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
 
         @event.RemoveParticipant(request.ParticipantId);
 

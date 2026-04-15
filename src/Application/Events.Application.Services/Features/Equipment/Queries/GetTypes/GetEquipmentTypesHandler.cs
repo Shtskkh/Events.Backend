@@ -17,7 +17,7 @@ public sealed class GetEquipmentTypesHandler(IRepository<EquipmentType> equipmen
         var types = await equipmentTypeRepository.ListAsync(cancellationToken);
 
         if (types.Count == 0)
-            throw new NotFoundException(EquipmentErrorMessages.Type.NotFoundAny);
+            throw new NotFoundException(EquipmentTypeErrors.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<EquipmentTypeDto>>(types);
     }

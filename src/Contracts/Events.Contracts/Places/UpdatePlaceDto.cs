@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.Locations.Constraints;
+using Events.Domain.Aggregates.Locations.ValueObjects.Places;
 
 namespace Events.Contracts.Places;
 
@@ -11,7 +11,7 @@ public sealed record UpdatePlaceDto
     /// <summary>
     ///     Название.
     /// </summary>
-    [MaxLength(PlaceConstraints.Title.MaxLength)]
+    [MaxLength(PlaceTitle.MaxLength)]
     public string? Title { get; init; }
 
     /// <summary>

@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
 
 /// <inheritdoc />
-public class EventParticipantConfiguration : IEntityTypeConfiguration<EventParticipant>
+public class EventParticipantConfiguration : IEntityTypeConfiguration<Participant>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<EventParticipant> builder)
+    public void Configure(EntityTypeBuilder<Participant> builder)
     {
         builder.ToTable("Participants");
 

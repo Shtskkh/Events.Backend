@@ -12,12 +12,12 @@ public sealed class CreateEventValidator : AbstractValidator<CreateEventDto>
     {
         RuleFor(x => x)
             .Must(x => x.Preview == null || string.IsNullOrWhiteSpace(x.Placeholder))
-            .WithMessage(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet)
+            .WithMessage(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeSet.ErrorMessage)
             .DependentRules(() =>
             {
                 RuleFor(x => x)
                     .Must(x => x.Preview != null || !string.IsNullOrWhiteSpace(x.Placeholder))
-                    .WithMessage(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+                    .WithMessage(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeEmpty.ErrorMessage);
             });
 
         RuleFor(x => x.Preview)

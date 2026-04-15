@@ -22,7 +22,7 @@ public sealed class GetEventAnalyticsHandler(
         var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
         if (@event == null)
-            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+            throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
 
         var pageViewSpec = new PageViewSpec().WithEntityType(EntityTypes.Event).WithEntityId(request.EventId)
             .AsNoTracking();

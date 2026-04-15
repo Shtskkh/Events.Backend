@@ -2,8 +2,8 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
+using Events.Domain.Aggregates.Files.Errors;
 using Events.Domain.Exceptions;
-using Events.Infrastructure.DataAccess.Shared;
 
 namespace Events.Infrastructure.DataAccess.Services.RustFS;
 
@@ -27,7 +27,7 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
         }
         catch (AmazonS3Exception e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
-            throw new NotFoundException(DataAccessErrorMessages.Files.NotFound);
+            throw new NotFoundException(FileErrors.FileNotFoundByName(request.Key));
         }
     }
 
@@ -46,7 +46,7 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
         }
         catch (AmazonS3Exception e) when (e.StatusCode == HttpStatusCode.NotFound)
         {
-            throw new NotFoundException(DataAccessErrorMessages.Files.NotFound);
+            throw new NotFoundException(FileErrors.FileNotFoundByName(request.Key));
         }
     }
 
@@ -57,7 +57,7 @@ public class RustFsFileStorageService(IAmazonS3 s3Client) : IFileStorageService
         var objects = await s3Client.ListObjectsV2Async(request, cancellationToken);
 
         if (objects.S3Objects == null || objects.S3Objects.Count == 0)
-            throw new NotFoundException(DataAccessErrorMessages.Files.NotFoundAny);
+            throw new NotFoundException(FileErrors.NotFoundAny);
 
         return objects;
     }

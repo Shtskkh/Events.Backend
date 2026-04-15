@@ -1,5 +1,4 @@
-﻿using Events.Domain.Exceptions;
-using Events.Domain.Shared.Constraints;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
@@ -9,40 +8,35 @@ namespace Events.Domain.Shared.ValueObjects;
 /// </summary>
 public class Password : ValueObject
 {
+    public const int MinLength = 6;
+    public const int MaxLength = 512;
+    public static readonly char[] InvalidCharacters = [' ', '\t', '\n'];
+
     private Password()
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="password">Пароль.</param>
-    /// <exception cref="DomainException">Ошибка правил домена.</exception>
     public Password(string password)
     {
         var value = new Text(password).Value;
 
-        if (value.ContainsAny(PasswordConstraints.InvalidCharacters))
-            throw new DomainException(PasswordErrorMessages.Invalid);
+        if (value.ContainsAny(InvalidCharacters))
+            throw new DomainException(PasswordErrors.Invalid);
 
         switch (value.Length)
         {
-            case < PasswordConstraints.MinLength:
-                throw new DomainException(PasswordErrorMessages.LessThanMinLength);
+            case < MinLength:
+                throw new DomainException(PasswordErrors.LessThanMinLength);
 
-            case > PasswordConstraints.MaxLength:
-                throw new DomainException(PasswordErrorMessages.GreaterThanMaxLength);
+            case > MaxLength:
+                throw new DomainException(PasswordErrors.GreaterThanMaxLength);
         }
 
         Value = value;
     }
 
-    /// <summary>
-    ///     Строка пароля.
-    /// </summary>
     public string Value { get; } = null!;
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

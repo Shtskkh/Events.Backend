@@ -28,7 +28,7 @@ public sealed class GetRecentViewedEventsHandler(
         var userViews = await pageViewRepository.ListAsync(userViewsSpec, cancellationToken);
 
         if (userViews.Count == 0)
-            throw new NotFoundException(UserErrorMessages.UserViewedEventsNotFoundById(request.UserId));
+            throw new NotFoundException(UserErrors.ViewedEventsNotFoundById(request.UserId));
 
         var eventsIds = userViews
             .DistinctBy(v => v.EntityId)

@@ -1,16 +1,8 @@
-﻿namespace Events.Application.Services.Exceptions;
+﻿using Events.Domain.Shared;
 
-/// <inheritdoc />
-public class UnauthorizedException : Exception
+namespace Events.Application.Services.Exceptions;
+
+public class UnauthorizedException(Error error) : Exception(error.ErrorMessage)
 {
-    /// <inheritdoc />
-    public UnauthorizedException()
-    {
-    }
-
-    /// <inheritdoc />
-    public UnauthorizedException(string message)
-        : base(message)
-    {
-    }
+    public Error Error { get; } = error;
 }

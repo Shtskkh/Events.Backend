@@ -17,7 +17,7 @@ public sealed class GetEventsFormatsHandler(IRepository<EventFormat> eventFormat
         var types = await eventFormatRepository.ListAsync(cancellationToken);
 
         if (types.Count == 0)
-            throw new NotFoundException(EventErrorMessages.Format.NotFoundAny);
+            throw new NotFoundException(EventFormatErrors.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<EventFormatDto>>(types);
     }

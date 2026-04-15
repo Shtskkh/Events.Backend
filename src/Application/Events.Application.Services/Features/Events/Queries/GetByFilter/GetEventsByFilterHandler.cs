@@ -18,7 +18,7 @@ public sealed class GetEventsByFilterHandler(IEventRepository repository, IMappe
         var events = await repository.ListAsync(eventFilterSpec, cancellationToken, request.Filter.Text);
 
         if (events.Count == 0)
-            throw new NotFoundException(EventErrorMessages.NotFoundByFilter);
+            throw new NotFoundException(EventErrors.NotFoundByFilter);
 
         return mapper.Map<IReadOnlyCollection<ShortEventDto>>(events);
     }

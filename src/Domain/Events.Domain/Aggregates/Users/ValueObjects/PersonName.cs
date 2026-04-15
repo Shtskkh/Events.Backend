@@ -1,4 +1,3 @@
-﻿using Events.Domain.Aggregates.Users.Constraints;
 using Events.Domain.Aggregates.Users.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
@@ -11,33 +10,28 @@ namespace Events.Domain.Aggregates.Users.ValueObjects;
 /// </summary>
 public class PersonName : ValueObject
 {
+    public const int MaxLength = 64;
+
     private PersonName()
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="lastName">Фамилия.</param>
-    /// <param name="firstName">Имя.</param>
-    /// <param name="patronymic">Отчество.</param>
-    /// <exception cref="DomainException"></exception>
     public PersonName(string lastName, string firstName, string? patronymic = null)
     {
         LastName = new Text(lastName).Value;
-        if (LastName.Length > UserConstrains.PersonName.MaxLength)
-            throw new DomainException(UserErrorMessages.PersonName.LastNameGreaterThanMaxLength);
+        if (LastName.Length > MaxLength)
+            throw new DomainException(PersonNameErrors.LastNameGreaterThanMaxLength);
 
         FirstName = new Text(firstName).Value;
-        if (FirstName.Length > UserConstrains.PersonName.MaxLength)
-            throw new DomainException(UserErrorMessages.PersonName.FirstNameGreaterThanMaxLength);
+        if (FirstName.Length > MaxLength)
+            throw new DomainException(PersonNameErrors.FirstNameGreaterThanMaxLength);
 
         if (patronymic != null)
         {
             Patronymic = new Text(patronymic).Value;
 
-            if (Patronymic.Length > UserConstrains.PersonName.MaxLength)
-                throw new DomainException(UserErrorMessages.PersonName.PatronymicGreaterThanMaxLength);
+            if (Patronymic.Length > MaxLength)
+                throw new DomainException(PersonNameErrors.PatronymicGreaterThanMaxLength);
         }
     }
 

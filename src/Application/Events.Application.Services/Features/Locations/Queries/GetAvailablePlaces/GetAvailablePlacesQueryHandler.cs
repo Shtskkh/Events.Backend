@@ -22,7 +22,7 @@ public sealed class GetAvailablePlacesQueryHandler(
         var location = await locationRepository.FirstOrDefaultAsync(locationSpec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+            throw new NotFoundException(LocationErrors.NotFoundById(request.LocationId));
 
         var conflictChecksTasks = location.Places.Select(async place =>
         {

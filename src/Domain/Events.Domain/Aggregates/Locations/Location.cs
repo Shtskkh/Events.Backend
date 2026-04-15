@@ -100,7 +100,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public void AddPlace(Place place)
     {
         if (_places.Any(p => p.Number == place.Number))
-            throw new DomainException(PlaceErrorMessages.Number.AlreadyExists);
+            throw new DomainException(PlaceNumberErrors.AlreadyExists(place.Number.Value));
 
         _places.Add(place);
     }
@@ -115,7 +115,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
         var place = _places.FirstOrDefault(p => p.Id == placeId);
 
         if (place == null)
-            throw new NotFoundException(PlaceErrorMessages.NotFoundById(placeId));
+            throw new NotFoundException(PlaceErrors.NotFoundById(placeId));
 
         _places.Remove(place);
     }
@@ -128,7 +128,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     public void AddPhoto(string filename)
     {
         if (_photos.Any(p => p.Filename == filename))
-            throw new DomainException(PhotoErrorMessages.AlreadyExists);
+            throw new DomainException(PhotoErrors.AlreadyExists(filename));
 
         _photos.Add(new OrderedPhoto(filename, _photos.Count));
     }
@@ -142,7 +142,7 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
     {
         var photo = _photos.FirstOrDefault(p => p.Filename == filename);
         if (photo == null)
-            throw new NotFoundException(PhotoErrorMessages.NotFound);
+            throw new NotFoundException(PhotoErrors.NotFound(filename));
 
         _photos.Remove(photo);
     }

@@ -19,7 +19,7 @@ public sealed class GetUsersByFilterHandler(IRepository<User> userRepository, IM
         var users = await userRepository.ListAsync(userFilterSpec, cancellationToken);
 
         if (users.Count == 0)
-            throw new NotFoundException(UserErrorMessages.UsersNotFoundByFilter);
+            throw new NotFoundException(UserErrors.NotFoundByFilter);
 
         return mapper.Map<List<ShortUserDto>>(users);
     }

@@ -22,7 +22,7 @@ public sealed class GetEquipmentByFilterHandler(
         var equipment = await equipmentRepository.ListAsync(equipmentFilterSpec, cancellationToken);
 
         if (equipment.Count == 0)
-            throw new NotFoundException(EquipmentErrorMessages.NotFoundByFilter);
+            throw new NotFoundException(EquipmentErrors.NotFoundByFilter);
 
         return mapper.Map<IReadOnlyCollection<EquipmentDto>>(equipment);
     }

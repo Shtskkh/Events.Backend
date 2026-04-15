@@ -1,4 +1,4 @@
-﻿using Events.Domain.Aggregates.Users.Errors;
+using Events.Domain.Aggregates.Users.Errors;
 using Events.Domain.Aggregates.Users.ValueObjects;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
@@ -93,7 +93,7 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
         var email = new Email(newEmail);
 
         if (Email == email)
-            throw new DomainException(UserErrorMessages.EmailAlreadyInUse);
+            throw new DomainException(UserErrors.EmailAlreadyInUse);
 
         Email = email;
     }
@@ -114,7 +114,7 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     public void ChangeRole(UserRole role)
     {
         if (Role == role)
-            throw new InvalidOperationException(UserErrorMessages.RoleAlreadyAssigned);
+            throw new DomainException(UserErrors.RoleAlreadyAssigned);
 
         Role = role;
     }

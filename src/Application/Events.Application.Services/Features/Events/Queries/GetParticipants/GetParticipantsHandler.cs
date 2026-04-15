@@ -21,10 +21,10 @@ public sealed class GetParticipantsHandler(IEventRepository eventRepository, IRe
         var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
         if (@event == null)
-            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+            throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
 
         if (@event.Participants.Count == 0)
-            throw new NotFoundException(EventErrorMessages.Participant.NotFoundAny);
+            throw new NotFoundException(EventParticipantErrors.NotFoundAny);
 
         var participantsIds = @event.Participants.Select(p => p.UserId).ToList();
 

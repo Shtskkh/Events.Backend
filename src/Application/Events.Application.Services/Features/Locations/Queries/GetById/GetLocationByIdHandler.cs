@@ -18,7 +18,7 @@ public sealed class GetLocationByIdHandler(IRepository<Location> locationReposit
         var location = await locationRepository.FirstOrDefaultAsync(spec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.Id));
+            throw new NotFoundException(LocationErrors.NotFoundById(request.Id));
 
         return mapper.Map<LocationDto>(location);
     }

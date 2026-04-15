@@ -15,7 +15,7 @@ public sealed class DeletePlaceHandler(IRepository<Location> locationRepository)
         var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
 
         if (location == null)
-            throw new NotFoundException(LocationErrorMessages.NotFoundById(request.LocationId));
+            throw new NotFoundException(LocationErrors.NotFoundById(request.LocationId));
 
         location.RemovePlace(request.PlaceId);
 

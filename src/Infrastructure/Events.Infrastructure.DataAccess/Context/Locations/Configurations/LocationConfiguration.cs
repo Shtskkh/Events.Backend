@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.Locations;
-using Events.Domain.Aggregates.Locations.Constraints;
+using Events.Domain.Aggregates.Locations.ValueObjects.Locations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +11,6 @@ namespace Events.Infrastructure.DataAccess.Context.Locations.Configurations;
 /// </summary>
 public class LocationConfiguration : IEntityTypeConfiguration<Location>
 {
-    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<Location> builder)
     {
         builder.ToTable("Locations");
@@ -25,13 +24,13 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
         builder.OwnsOne(l => l.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(LocationConstraints.Title.MaxLength)
+            .HasMaxLength(LocationTitle.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(l => l.Address)
             .Property(a => a.Value)
             .HasColumnName("Address")
-            .HasMaxLength(LocationConstraints.Address.MaxLength)
+            .HasMaxLength(LocationAddress.MaxLength)
             .IsRequired();
 
         builder.HasMany(l => l.Places)

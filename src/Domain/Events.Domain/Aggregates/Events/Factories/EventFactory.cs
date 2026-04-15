@@ -1,6 +1,7 @@
 ﻿using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Aggregates.Events.ValueObjects;
 using Events.Domain.Exceptions;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.Events.Factories;
 
@@ -49,10 +50,10 @@ public static class EventFactory
 
         var @event = new Event(
             Guid.NewGuid(),
-            new EventTitle(title),
-            new EventAnnouncement(announcement),
-            new EventDescription(description),
-            new EventDateTimeRange(startDateTime, endDateTime),
+            new Title(title),
+            new Announcement(announcement),
+            new Description(description),
+            new DateTimeRange(startDateTime, endDateTime),
             eventType,
             eventFormat,
             userId,
@@ -72,22 +73,22 @@ public static class EventFactory
     private static void ValidatePreview(string? previewFilename, string? placeholderFilename)
     {
         if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+            throw new DomainException(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeEmpty);
 
         if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet);
+            throw new DomainException(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeSet);
     }
 
     private static void ValidateRegistration(bool needRegistration, int? maxParticipants)
     {
         if (needRegistration && !maxParticipants.HasValue)
-            throw new DomainException(EventErrorMessages.Participant.MaxCountMustBeSet);
+            throw new DomainException(EventParticipantErrors.MaxCountMustBeSet);
     }
 
     private static void ValidateBooking(EventFormat eventFormat, int? locationId, int? placeId)
     {
         if (eventFormat.Id != EventFormat.Online.Id && (!locationId.HasValue || !placeId.HasValue))
-            throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
+            throw new DomainException(EventBookingErrors.RequiredForOfflineAndHybrid);
     }
 
     private static void ApplyPreview(Event @event, string? previewFilename, string? placeholderFilename)

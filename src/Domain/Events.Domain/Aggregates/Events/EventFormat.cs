@@ -7,19 +7,8 @@ namespace Events.Domain.Aggregates.Events;
 /// </summary>
 public class EventFormat : Entity<int>
 {
-    /// <summary>
-    ///     Онлайн мероприятие.
-    /// </summary>
     public static readonly EventFormat Online = new(1, "Онлайн");
-
-    /// <summary>
-    ///     Офлайн мероприятие.
-    /// </summary>
     public static readonly EventFormat Offline = new(2, "Офлайн");
-
-    /// <summary>
-    ///     Гибридное (онлайн + офлайн) мероприятие.
-    /// </summary>
     public static readonly EventFormat Hybrid = new(3, "Гибрид");
 
     private EventFormat(int id, string title) : base(id)
@@ -27,8 +16,5 @@ public class EventFormat : Entity<int>
         Title = title;
     }
 
-    /// <summary>
-    ///     Название формата.
-    /// </summary>
     public string Title { get; private set; }
 }

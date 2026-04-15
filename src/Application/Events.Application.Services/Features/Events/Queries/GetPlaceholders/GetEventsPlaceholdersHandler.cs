@@ -22,7 +22,7 @@ public sealed class GetEventsPlaceholdersHandler(IFileStorageService storageServ
         var placeholders = response.S3Objects.Select(obj => obj.Key).ToList();
 
         if (placeholders.Count == 0)
-            throw new NotFoundException(EventErrorMessages.Placeholders.NotFoundAny);
+            throw new NotFoundException(EventPreviewErrors.PlaceholdersNotFound);
 
         return response.S3Objects.Select(obj => obj.Key).ToList();
     }

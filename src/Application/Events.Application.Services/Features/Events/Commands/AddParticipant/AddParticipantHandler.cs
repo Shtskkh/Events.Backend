@@ -17,13 +17,13 @@ public sealed class AddParticipantHandler(IEventRepository eventRepository, IRep
         var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
 
         if (@event == null)
-            throw new NotFoundException(EventErrorMessages.NotFoundById(request.EventId));
+            throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
 
         var userSpec = new UserByIdSpec(request.UserId);
         var userExists = await userRepository.AnyAsync(userSpec, cancellationToken);
 
         if (!userExists)
-            throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.UserId));
+            throw new NotFoundException(UserErrors.NotFoundById(request.UserId));
 
         @event.AddParticipant(request.UserId);
 

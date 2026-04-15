@@ -14,10 +14,10 @@ public sealed class ChangePasswordHandler(IRepository<User> userRepository) : IR
         var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (user == null)
-            throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.UserId));
+            throw new NotFoundException(UserErrors.NotFoundById(request.UserId));
 
         if (user.Password.Value != request.Dto.OldPassword)
-            throw new DomainException(PasswordErrorMessages.OldPasswordDoesNotMatch);
+            throw new DomainException(PasswordErrors.OldPasswordDoesNotMatch);
 
         user.ChangePassword(request.Dto.NewPassword);
 
