@@ -14,7 +14,7 @@ public sealed class UpdateEventHandler(IEventRepository eventRepository) : IRequ
         var @event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (@event == null)
-            throw new NotFoundException(EventErrorMessages.NotFoundById(request.Id));
+            throw new NotFoundException(EventErrors.NotFoundById(request.Id));
 
         if (!string.IsNullOrEmpty(dto.Title))
             @event.ChangeTitle(dto.Title);
