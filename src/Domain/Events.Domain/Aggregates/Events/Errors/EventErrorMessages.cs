@@ -13,14 +13,6 @@ public static class EventErrorMessages
     }
 
     /// <summary>
-    ///     Ошибки описания мероприятия.
-    /// </summary>
-    public static class Description
-    {
-        public const string GreaterThanMaxLength = "Описание мероприятия больше максимальной длины.";
-    }
-
-    /// <summary>
     ///     Ошибки временного промежутка мероприятия.
     /// </summary>
     public static class DateTimeRange

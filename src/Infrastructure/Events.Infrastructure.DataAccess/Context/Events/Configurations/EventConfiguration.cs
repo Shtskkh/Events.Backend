@@ -1,5 +1,4 @@
 ﻿using Events.Domain.Aggregates.Events;
-using Events.Domain.Aggregates.Events.Constraints;
 using Events.Domain.Aggregates.Events.ValueObjects;
 using Events.Domain.Aggregates.Users;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +36,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .OwnsOne(e => e.Description)
             .Property(e => e.Value)
             .HasColumnName("Description")
-            .HasMaxLength(EventConstraints.Description.MaxLength)
+            .HasMaxLength(EventAnnouncement.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.DateTimeRange, rangeBuilder =>

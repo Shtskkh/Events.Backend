@@ -6,14 +6,6 @@
 public static class EventConstraints
 {
     /// <summary>
-    ///     Константы описания.
-    /// </summary>
-    public static class Description
-    {
-        public const int MaxLength = 512;
-    }
-
-    /// <summary>
     ///     Константы временного промежутка.
     /// </summary>
     public static class DateTimeRange
