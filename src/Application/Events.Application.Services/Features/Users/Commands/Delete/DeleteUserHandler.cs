@@ -13,7 +13,7 @@ public sealed class DeleteUserHandler(IRepository<User> userRepository) : IReque
         var user = await userRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (user == null)
-            throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.Id));
+            throw new NotFoundException(UserErrors.NotFoundById(request.Id));
 
         await userRepository.DeleteAsync(user, cancellationToken);
     }

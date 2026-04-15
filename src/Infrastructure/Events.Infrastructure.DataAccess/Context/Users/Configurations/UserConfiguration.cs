@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.Users;
-using Events.Domain.Aggregates.Users.Constraints;
+using Events.Domain.Aggregates.Users.ValueObjects;
 using Events.Domain.Shared.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -20,19 +20,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.FirstName)
             .HasColumnName("FirstName")
-            .HasMaxLength(UserConstrains.PersonName.MaxLength)
+            .HasMaxLength(PersonName.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.LastName)
             .HasColumnName("LastName")
-            .HasMaxLength(UserConstrains.PersonName.MaxLength)
+            .HasMaxLength(PersonName.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.PersonName)
             .Property(x => x.Patronymic)
             .HasColumnName("Patronymic")
-            .HasMaxLength(UserConstrains.PersonName.MaxLength);
+            .HasMaxLength(PersonName.MaxLength);
 
         builder.OwnsOne(e => e.Email, emailBuilder =>
         {

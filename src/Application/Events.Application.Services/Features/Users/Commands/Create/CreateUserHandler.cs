@@ -29,7 +29,7 @@ public sealed class CreateUserHandler(
             var userRole = await userRoleRepository.GetByIdAsync(UserRole.User.Id, cancellationToken);
 
             if (userRole == null)
-                throw new NotFoundException(UserErrorMessages.Role.RoleNotFoundById(UserRole.User.Id));
+                throw new NotFoundException(UserRoleErrors.NotFoundById(UserRole.User.Id));
 
             var user = UserFactory.Create(
                 dto.LastName,

@@ -1,4 +1,3 @@
-﻿using Events.Domain.Aggregates.Users.Constraints;
 using Events.Domain.Aggregates.Users.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
@@ -11,6 +10,8 @@ namespace Events.Domain.Aggregates.Users;
 /// </summary>
 public class UserRole : Entity<int>
 {
+    public const int MaxTitleLength = 16;
+
     /// <summary>
     ///     Администратор.
     /// </summary>
@@ -35,8 +36,8 @@ public class UserRole : Entity<int>
     {
         var value = new Text(title).Value;
 
-        if (value.Length > UserConstrains.Role.MaxLength)
-            throw new DomainException(UserErrorMessages.Role.GreaterThanMaxLength);
+        if (value.Length > MaxTitleLength)
+            throw new DomainException(UserRoleErrors.GreaterThanMaxLength);
 
         Title = value;
     }

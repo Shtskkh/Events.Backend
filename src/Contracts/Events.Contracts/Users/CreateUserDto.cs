@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Aggregates.Users.Constraints;
+using Events.Domain.Aggregates.Users.ValueObjects;
 using Events.Domain.Shared.Constraints;
 using Microsoft.AspNetCore.Http;
 
@@ -13,19 +13,19 @@ public sealed record CreateUserDto
     /// <summary>
     ///     Имя.
     /// </summary>
-    [MaxLength(UserConstrains.PersonName.MaxLength)]
+    [MaxLength(PersonName.MaxLength)]
     public required string FirstName { get; set; }
 
     /// <summary>
     ///     Фамилия.
     /// </summary>
-    [MaxLength(UserConstrains.PersonName.MaxLength)]
+    [MaxLength(PersonName.MaxLength)]
     public required string LastName { get; set; }
 
     /// <summary>
     ///     Отчество.
     /// </summary>
-    [MaxLength(UserConstrains.PersonName.MaxLength)]
+    [MaxLength(PersonName.MaxLength)]
     public string? Patronymic { get; set; }
 
     /// <summary>

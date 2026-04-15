@@ -23,7 +23,7 @@ public sealed class AddParticipantHandler(IEventRepository eventRepository, IRep
         var userExists = await userRepository.AnyAsync(userSpec, cancellationToken);
 
         if (!userExists)
-            throw new NotFoundException(UserErrorMessages.UserNotFoundById(request.UserId));
+            throw new NotFoundException(UserErrors.NotFoundById(request.UserId));
 
         @event.AddParticipant(request.UserId);
 

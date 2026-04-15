@@ -20,7 +20,7 @@ public sealed class AuthUserHandler(IRepository<User> userRepository, IJwtTokenS
         var user = await userRepository.FirstOrDefaultAsync(userByEmailSpec, cancellationToken);
 
         if (user == null || user.Password.Value != authDto.Password)
-            throw new UnauthorizedException(UserErrorMessages.Unauthorized);
+            throw new UnauthorizedException(UserErrors.Unauthorized);
 
         var accessToken = tokenService.GenerateAccessToken(user);
 
