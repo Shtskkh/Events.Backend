@@ -48,9 +48,4 @@ public static class EventErrorMessages
         public const string TimeConflict =
             "На выбранный временной промежуток уже существует бронирование, выберите другое время.";
     }
-
-    public static class Placeholders
-    {
-        public const string NotFoundAny = "Плейсхолдеры мероприятий не найдены.";
-    }
 }
