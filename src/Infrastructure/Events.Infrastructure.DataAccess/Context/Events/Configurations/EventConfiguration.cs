@@ -22,21 +22,21 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.OwnsOne(e => e.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(EventTitle.MaxLength)
+            .HasMaxLength(Title.MaxLength)
             .IsRequired();
 
         builder
             .OwnsOne(e => e.Announcement)
             .Property(a => a.Value)
             .HasColumnName("Announcement")
-            .HasMaxLength(EventAnnouncement.MaxLength)
+            .HasMaxLength(Announcement.MaxLength)
             .IsRequired();
 
         builder
             .OwnsOne(e => e.Description)
             .Property(e => e.Value)
             .HasColumnName("Description")
-            .HasMaxLength(EventAnnouncement.MaxLength)
+            .HasMaxLength(Announcement.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.DateTimeRange, rangeBuilder =>

@@ -7,13 +7,13 @@ namespace Events.Domain.Aggregates.Events.ValueObjects;
 /// <summary>
 ///     Информация о бронировании.
 /// </summary>
-public sealed class BookingInfo : ValueObject
+public sealed class Booking : ValueObject
 {
-    private BookingInfo()
+    private Booking()
     {
     }
 
-    public BookingInfo(int locationId, int placeId)
+    public Booking(int locationId, int placeId)
     {
         if (locationId <= 0)
             throw new DomainException(EventBookingErrors.LocationIdLessOrEqualToZero);

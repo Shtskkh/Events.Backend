@@ -8,15 +8,15 @@ namespace Events.Domain.Aggregates.Events.ValueObjects;
 /// <summary>
 ///     Описание мероприятия.
 /// </summary>
-public class EventDescription : ValueObject
+public class Description : ValueObject
 {
     public const int MaxLength = 512;
 
-    private EventDescription()
+    private Description()
     {
     }
 
-    public EventDescription(string description)
+    public Description(string description)
     {
         Value = new Text(description).Value;
 

@@ -6,27 +6,26 @@ using Events.Domain.Shared.ValueObjects;
 namespace Events.Domain.Aggregates.Events.ValueObjects;
 
 /// <summary>
-///     Название мероприятия.
+///     Анонс мероприятия.
 /// </summary>
-public class EventTitle : ValueObject
+public class Announcement : ValueObject
 {
-    public const int MaxLength = 128;
+    public const int MaxLength = 64;
 
-    private EventTitle()
+    private Announcement()
     {
     }
 
-    public EventTitle(string title)
+    public Announcement(string announcement)
     {
-        Value = new Text(title).Value;
+        Value = new Text(announcement).Value;
 
         if (Value.Length > MaxLength)
-            throw new DomainException(EventTitleErrors.GreaterThanMaxLength(MaxLength));
+            throw new DomainException(EventAnnouncementErrors.GreaterThanMaxLength(MaxLength));
     }
 
     public string Value { get; } = null!;
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

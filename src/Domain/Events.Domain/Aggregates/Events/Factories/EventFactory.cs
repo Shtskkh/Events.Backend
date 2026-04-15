@@ -1,6 +1,7 @@
 ﻿using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Aggregates.Events.ValueObjects;
 using Events.Domain.Exceptions;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.Events.Factories;
 
@@ -49,10 +50,10 @@ public static class EventFactory
 
         var @event = new Event(
             Guid.NewGuid(),
-            new EventTitle(title),
-            new EventAnnouncement(announcement),
-            new EventDescription(description),
-            new EventDateTimeRange(startDateTime, endDateTime),
+            new Title(title),
+            new Announcement(announcement),
+            new Description(description),
+            new DateTimeRange(startDateTime, endDateTime),
             eventType,
             eventFormat,
             userId,

@@ -5,9 +5,9 @@ namespace Events.Domain.Aggregates.Events.ValueObjects;
 /// <summary>
 ///     Участник мероприятия.
 /// </summary>
-public class EventParticipant : ValueObject
+public class Participant : ValueObject
 {
-    private EventParticipant()
+    private Participant()
     {
     }
 
@@ -16,7 +16,7 @@ public class EventParticipant : ValueObject
     /// </summary>
     /// <param name="eventId">Идентификатор мероприятия.</param>
     /// <param name="userId">Идентификатор пользователя.</param>
-    public EventParticipant(Guid eventId, Guid userId)
+    public Participant(Guid eventId, Guid userId)
     {
         EventId = eventId;
         UserId = userId;

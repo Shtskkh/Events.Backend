@@ -3,6 +3,7 @@ using Events.Domain.Aggregates.Events.ValueObjects;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.Interfaces;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Domain.Aggregates.Events;
 
@@ -11,7 +12,7 @@ namespace Events.Domain.Aggregates.Events;
 /// </summary>
 public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
 {
-    private readonly List<EventParticipant> _participants = [];
+    private readonly List<Participant> _participants = [];
 
     private Event()
     {
@@ -29,8 +30,8 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="eventFormat">Формат мероприятия.</param>
     /// <param name="userId">ID пользователя.</param>
     /// <param name="needsRegistration">Флаг необходимости регистрации.</param>
-    public Event(Guid id, EventTitle title, EventAnnouncement announcement, EventDescription description,
-        EventDateTimeRange dateTimeRange, EventType eventType, EventFormat eventFormat,
+    public Event(Guid id, Title title, Announcement announcement, Description description,
+        DateTimeRange dateTimeRange, EventType eventType, EventFormat eventFormat,
         Guid userId, bool needsRegistration) : base(id)
     {
         Title = title;
@@ -48,22 +49,22 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    public EventTitle Title { get; private set; } = null!;
+    public Title Title { get; private set; } = null!;
 
     /// <summary>
     ///     Анонс (краткое описание) мероприятия.
     /// </summary>
-    public EventAnnouncement Announcement { get; private set; } = null!;
+    public Announcement Announcement { get; private set; } = null!;
 
     /// <summary>
     ///     Описание мероприятия.
     /// </summary>
-    public EventDescription Description { get; private set; } = null!;
+    public Description Description { get; private set; } = null!;
 
     /// <summary>
     ///     Диапазон дат проведения мероприятия.
     /// </summary>
-    public EventDateTimeRange DateTimeRange { get; private set; } = null!;
+    public DateTimeRange DateTimeRange { get; private set; } = null!;
 
     /// <summary>
     ///     Тип мероприятия.
@@ -93,7 +94,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Информация о бронировании.
     /// </summary>
-    public BookingInfo? Booking { get; private set; }
+    public Booking? Booking { get; private set; }
 
     /// <summary>
     ///     Название файла превью.
@@ -108,7 +109,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <summary>
     ///     Участники мероприятия.
     /// </summary>
-    public IReadOnlyCollection<EventParticipant> Participants => _participants.AsReadOnly();
+    public IReadOnlyCollection<Participant> Participants => _participants.AsReadOnly();
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; }
@@ -122,7 +123,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="title">Новое название.</param>
     public void ChangeTitle(string title)
     {
-        Title = new EventTitle(title);
+        Title = new Title(title);
     }
 
     /// <summary>
@@ -131,7 +132,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="announcement">Новый анонс.</param>
     public void ChangeAnnouncement(string announcement)
     {
-        Announcement = new EventAnnouncement(announcement);
+        Announcement = new Announcement(announcement);
     }
 
     /// <summary>
@@ -140,7 +141,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="description">Новое описание.</param>
     public void ChangeDescription(string description)
     {
-        Description = new EventDescription(description);
+        Description = new Description(description);
     }
 
     /// <summary>
@@ -150,7 +151,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     /// <param name="newEnd">Новая дата и время окончания.</param>
     public void ChangeDateTimeRange(DateTimeOffset newStart, DateTimeOffset newEnd)
     {
-        DateTimeRange = new EventDateTimeRange(newStart, newEnd);
+        DateTimeRange = new DateTimeRange(newStart, newEnd);
     }
 
     /// <summary>
@@ -232,7 +233,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
         if (MaxParticipants.HasValue && _participants.Count >= MaxParticipants.Value)
             throw new DomainException(EventParticipantErrors.MaxCountReached);
 
-        _participants.Add(new EventParticipant(Id, userId));
+        _participants.Add(new Participant(Id, userId));
     }
 
     /// <summary>
@@ -261,7 +262,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
         if (Format.Id == EventFormat.Online.Id)
             throw new DomainException(EventBookingErrors.NotAllowedForOnline);
 
-        Booking = new BookingInfo(locationId, placeId);
+        Booking = new Booking(locationId, placeId);
     }
 
     /// <summary>
