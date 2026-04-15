@@ -21,7 +21,7 @@ public class Announcement : ValueObject
         Value = new Text(announcement).Value;
 
         if (Value.Length > MaxLength)
-            throw new DomainException(EventAnnouncementErrors.GreaterThanMaxLength(MaxLength));
+            throw new DomainException(EventAnnouncementErrors.GreaterThanMaxLength);
     }
 
     public string Value { get; } = null!;

@@ -1,12 +1,11 @@
-﻿using Events.Domain.Shared;
+﻿using Events.Domain.Aggregates.Events.ValueObjects;
+using Events.Domain.Shared;
 
 namespace Events.Domain.Aggregates.Events.Errors;
 
 public static class EventDescriptionErrors
 {
-    public static Error GreaterThanMaxLength(int max)
-    {
-        return new Error("EventDescription.GreaterThanMaxLength",
-            $"Описание мероприятия больше максимальной длины в {max} символ(-ов).");
-    }
+    public static Error GreaterThanMaxLength =>
+        new("EventDescription.GreaterThanMaxLength",
+            $"Описание мероприятия больше максимальной длины в {Description.MaxLength} символ(-ов).");
 }

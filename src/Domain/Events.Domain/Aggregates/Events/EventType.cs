@@ -25,7 +25,7 @@ public class EventType : Entity<int>
         Title = new Text(title).Value;
 
         if (Title.Length > MaxTitleLength)
-            throw new DomainException(EventTypeErrors.TitleGreaterThanMaxLenght(MaxTitleLength));
+            throw new DomainException(EventTypeErrors.TitleGreaterThanMaxLenght);
     }
 
     public string Title { get; } = null!;

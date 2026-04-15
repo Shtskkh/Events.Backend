@@ -21,7 +21,7 @@ public class Title : ValueObject
         Value = new Text(title).Value;
 
         if (Value.Length > MaxLength)
-            throw new DomainException(EventTitleErrors.GreaterThanMaxLength(MaxLength));
+            throw new DomainException(EventTitleErrors.GreaterThanMaxLength);
     }
 
     public string Value { get; } = null!;

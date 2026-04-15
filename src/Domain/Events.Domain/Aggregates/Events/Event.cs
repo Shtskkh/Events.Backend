@@ -228,10 +228,10 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
             throw new DomainException(EventParticipantErrors.RegistrationNotRequired);
 
         if (_participants.Any(p => p.UserId == userId))
-            throw new DomainException(EventParticipantErrors.AlreadyRegistered);
+            throw new DomainException(EventParticipantErrors.AlreadyRegistered(userId));
 
         if (MaxParticipants.HasValue && _participants.Count >= MaxParticipants.Value)
-            throw new DomainException(EventParticipantErrors.MaxCountReached);
+            throw new DomainException(EventParticipantErrors.MaxCountReached(MaxParticipants.Value));
 
         _participants.Add(new Participant(Id, userId));
     }

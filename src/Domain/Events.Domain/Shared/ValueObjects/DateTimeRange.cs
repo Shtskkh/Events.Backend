@@ -4,7 +4,7 @@ using Events.Domain.Exceptions;
 namespace Events.Domain.Shared.ValueObjects;
 
 /// <summary>
-///     Диапазона дат мероприятия.
+///     Диапазона дат.
 /// </summary>
 public class DateTimeRange : ValueObject
 {
@@ -20,19 +20,19 @@ public class DateTimeRange : ValueObject
             throw new DomainException(DateTimeRangeErrors.StartLaterThanEnd);
 
         if (end - start > TimeSpan.FromDays(MaxDurationInDays))
-            throw new DomainException(DateTimeRangeErrors.DurationGreaterThanMax(MaxDurationInDays));
+            throw new DomainException(DateTimeRangeErrors.DurationGreaterThanMax);
 
         StartDateTime = start.ToUniversalTime();
         EndDateTime = end.ToUniversalTime();
     }
 
     /// <summary>
-    ///     Дата и время начала мероприятия в UTC.
+    ///     Дата и время начала в UTC.
     /// </summary>
     public DateTimeOffset StartDateTime { get; }
 
     /// <summary>
-    ///     Дата и время окончания мероприятия в UTC.
+    ///     Дата и время окончания в UTC.
     /// </summary>
     public DateTimeOffset EndDateTime { get; }
 
