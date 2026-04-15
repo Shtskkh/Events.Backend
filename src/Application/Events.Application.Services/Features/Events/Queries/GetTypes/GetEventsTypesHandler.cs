@@ -17,7 +17,7 @@ public sealed class GetEventsTypesHandler(IRepository<EventType> eventTypeReposi
         var eventsTypes = await eventTypeRepository.ListAsync(cancellationToken);
 
         if (eventsTypes.Count == 0)
-            throw new NotFoundException(EventErrorMessages.Type.NotFoundAny);
+            throw new NotFoundException(EventTypeErrors.NotFoundAny);
 
         return mapper.Map<IReadOnlyCollection<EventTypeDto>>(eventsTypes);
     }

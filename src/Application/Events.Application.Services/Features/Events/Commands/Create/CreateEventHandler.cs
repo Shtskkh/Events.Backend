@@ -37,7 +37,7 @@ public sealed class CreateEventHandler(
             var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
 
             if (eventType == null)
-                throw new NotFoundException(EventErrorMessages.Type.NotFoundById(dto.EventTypeId));
+                throw new NotFoundException(EventTypeErrors.NotFoundById(dto.EventTypeId));
 
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 

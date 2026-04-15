@@ -12,20 +12,6 @@ public static class EventErrorMessages
         return $"Мероприятие с ID: {eventId} не найдено.";
     }
 
-    /// <summary>
-    ///     Ошибки типа мероприятия.
-    /// </summary>
-    public static class Type
-    {
-        public const string NotFoundAny = "Типы мероприятий не найдены.";
-        public const string GreaterThanMaxLenght = "Название типа мероприятия больше максимальной длины.";
-
-        public static string NotFoundById(int typeId)
-        {
-            return $"Тип мероприятия с ID: {typeId} не найден.";
-        }
-    }
-
     public static class Format
     {
         public const string NotFoundAny = "Форматы мероприятий не найдены.";
