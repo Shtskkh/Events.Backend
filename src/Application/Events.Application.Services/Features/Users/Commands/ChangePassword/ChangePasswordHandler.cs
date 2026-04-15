@@ -17,7 +17,7 @@ public sealed class ChangePasswordHandler(IRepository<User> userRepository) : IR
             throw new NotFoundException(UserErrors.NotFoundById(request.UserId));
 
         if (user.Password.Value != request.Dto.OldPassword)
-            throw new DomainException(PasswordErrorMessages.OldPasswordDoesNotMatch);
+            throw new DomainException(PasswordErrors.OldPasswordDoesNotMatch);
 
         user.ChangePassword(request.Dto.NewPassword);
 

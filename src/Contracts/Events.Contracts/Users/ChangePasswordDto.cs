@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Events.Domain.Shared.Constraints;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Contracts.Users;
 
@@ -16,6 +16,6 @@ public sealed record ChangePasswordDto
     /// <summary>
     ///     Новый пароль.
     /// </summary>
-    [MaxLength(PasswordConstraints.MaxLength)]
+    [MaxLength(Password.MaxLength)]
     public required string NewPassword { get; init; } = null!;
 }

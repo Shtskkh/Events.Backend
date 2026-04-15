@@ -114,7 +114,7 @@ public class Place : Entity<int>, IAuditable
     public void AddPhoto(string filename)
     {
         if (_photos.Any(p => p.Filename == filename))
-            throw new DomainException(PhotoErrorMessages.AlreadyExists);
+            throw new DomainException(PhotoErrors.AlreadyExists(filename));
 
         _photos.Add(new OrderedPhoto(filename, _photos.Count));
     }
@@ -128,7 +128,7 @@ public class Place : Entity<int>, IAuditable
     {
         var photo = _photos.FirstOrDefault(p => p.Filename == filename);
         if (photo == null)
-            throw new NotFoundException(PhotoErrorMessages.NotFound);
+            throw new NotFoundException(PhotoErrors.AlreadyExists(filename));
 
         _photos.Remove(photo);
     }

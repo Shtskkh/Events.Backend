@@ -1,6 +1,6 @@
 ﻿using Events.Domain.Aggregates.Users;
 using Events.Domain.Aggregates.Users.ValueObjects;
-using Events.Domain.Shared.Constraints;
+using Events.Domain.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -38,7 +38,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         {
             emailBuilder.Property(x => x.Value)
                 .HasColumnName("Email")
-                .HasMaxLength(EmailConstraints.MaxLength)
+                .HasMaxLength(Email.MaxLength)
                 .IsRequired();
 
             emailBuilder.HasIndex(x => x.Value)
@@ -48,7 +48,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(e => e.Password)
             .Property(x => x.Value)
             .HasColumnName("Password")
-            .HasMaxLength(PasswordConstraints.MaxLength)
+            .HasMaxLength(Password.MaxLength)
             .IsRequired();
 
         builder.HasOne(e => e.Role)

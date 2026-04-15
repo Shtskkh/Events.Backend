@@ -1,4 +1,4 @@
-﻿using Events.Domain.Exceptions;
+using Events.Domain.Exceptions;
 using Events.Domain.Shared.Errors;
 
 namespace Events.Domain.Shared.ValueObjects;
@@ -12,27 +12,18 @@ public class OrderedPhoto : ValueObject
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="filename">Название файла.</param>
-    /// <param name="order">Порядок отображения.</param>
-    /// <exception cref="DomainException">Ошибка правил домена.</exception>
     public OrderedPhoto(string filename, int order)
     {
         if (string.IsNullOrWhiteSpace(filename))
-            throw new DomainException(PhotoErrorMessages.FileNameNullOrWhiteSpace);
+            throw new DomainException(PhotoErrors.FileNameNullOrWhiteSpace);
 
         if (order < 0)
-            throw new DomainException(PhotoErrorMessages.InvalidOrder);
+            throw new DomainException(PhotoErrors.InvalidOrder);
 
         Filename = filename;
         Order = order;
     }
 
-    /// <summary>
-    ///     Название файла.
-    /// </summary>
     public string Filename { get; } = null!;
 
     /// <summary>
@@ -40,7 +31,6 @@ public class OrderedPhoto : ValueObject
     /// </summary>
     public int Order { get; }
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Filename;

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Events.Domain.Aggregates.Users.ValueObjects;
-using Events.Domain.Shared.Constraints;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Users;
@@ -31,13 +30,13 @@ public sealed record CreateUserDto
     /// <summary>
     ///     Почтовый адрес.
     /// </summary>
-    [MaxLength(EmailConstraints.MaxLength)]
+    [MaxLength(Domain.Shared.ValueObjects.Email.MaxLength)]
     public required string Email { get; set; }
 
     /// <summary>
     ///     Пароль.
     /// </summary>
-    [MaxLength(PasswordConstraints.MaxLength)]
+    [MaxLength(Domain.Shared.ValueObjects.Password.MaxLength)]
     public required string Password { get; set; }
 
     /// <summary>
