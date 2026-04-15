@@ -1,5 +1,5 @@
 ﻿using Events.Domain.Aggregates.Equipment;
-using Events.Domain.Aggregates.Equipment.Constraints;
+using Events.Domain.Aggregates.Equipment.ValueObjects;
 using Events.Domain.Aggregates.Locations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -26,14 +26,14 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<EquipmentItem>
         builder.OwnsOne(e => e.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(EquipmentConstraints.MaxLength)
+            .HasMaxLength(EquipmentTitle.MaxLength)
             .IsRequired();
 
         builder.OwnsOne(e => e.InventoryNumber, ownerBuilder =>
         {
             ownerBuilder.Property(e => e.Value)
                 .HasColumnName("InventoryNumber")
-                .HasMaxLength(EquipmentConstraints.InventoryNumber.MaxLength)
+                .HasMaxLength(InventoryNumber.MaxLength)
                 .IsRequired();
 
             ownerBuilder.HasIndex(e => e.Value).IsUnique();

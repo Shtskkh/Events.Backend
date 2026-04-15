@@ -15,7 +15,7 @@ public sealed class DeleteEquipmentHandler(
         var equipment = await equipmentRepository.GetByIdAsync(request.EquipmentItemId, cancellationToken);
 
         if (equipment == null)
-            throw new NotFoundException(EquipmentErrorMessages.NotFoundById(request.EquipmentItemId));
+            throw new NotFoundException(EquipmentErrors.NotFoundById(request.EquipmentItemId));
 
         await equipmentRepository.DeleteAsync(equipment, cancellationToken);
     }

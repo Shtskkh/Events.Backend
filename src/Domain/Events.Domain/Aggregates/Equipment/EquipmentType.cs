@@ -1,5 +1,4 @@
-﻿using Events.Domain.Aggregates.Equipment.Constraints;
-using Events.Domain.Aggregates.Equipment.Errors;
+﻿using Events.Domain.Aggregates.Equipment.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 using Events.Domain.Shared.ValueObjects;
@@ -11,10 +10,7 @@ namespace Events.Domain.Aggregates.Equipment;
 /// </summary>
 public class EquipmentType : Entity<int>
 {
-    public static readonly EquipmentType Projector = new(1, "Проектор");
-    public static readonly EquipmentType Tv = new(2, "Телевизор");
-    public static readonly EquipmentType ElectronicBoard = new(3, "Электронная доска");
-    public static readonly EquipmentType Pc = new(4, "Компьютер");
+    public const int MaxTitleLength = 32;
 
     private EquipmentType()
     {
@@ -24,9 +20,14 @@ public class EquipmentType : Entity<int>
     {
         Title = new Text(title).Value;
 
-        if (Title.Length > EquipmentConstraints.Type.MaxLength)
-            throw new DomainException(EquipmentErrorMessages.Type.GreaterThanMaxLength);
+        if (Title.Length > MaxTitleLength)
+            throw new DomainException(EquipmentTypeErrors.TitleGreaterThanMaxLength);
     }
+
+    public static EquipmentType Projector => new(1, "Проектор");
+    public static EquipmentType Tv => new(2, "Телевизор");
+    public static EquipmentType ElectronicBoard => new(3, "Электронная доска");
+    public static EquipmentType Pc => new(4, "Компьютер");
 
     public string Title { get; } = null!;
 }

@@ -2,21 +2,7 @@
 
 namespace Events.Application.Services.Exceptions;
 
-public class UnauthorizedException : Exception
+public class UnauthorizedException(Error error) : Exception(error.ErrorMessage)
 {
-    public UnauthorizedException()
-    {
-    }
-
-    public UnauthorizedException(string message)
-        : base(message)
-    {
-    }
-
-    public UnauthorizedException(Error error) : base(error.ErrorMessage)
-    {
-        Error = error;
-    }
-
-    public Error Error { get; }
+    public Error Error { get; } = error;
 }

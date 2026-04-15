@@ -23,7 +23,7 @@ public sealed class CreateEquipmentHandler(
         var type = await equipmentTypeRepository.GetByIdAsync(dto.EquipmentTypeId, cancellationToken);
 
         if (type == null)
-            throw new NotFoundException(EquipmentErrorMessages.Type.NotFoundById(dto.EquipmentTypeId));
+            throw new NotFoundException(EquipmentTypeErrors.NotFoundById(dto.EquipmentTypeId));
 
         if (dto.PlaceId.HasValue)
         {

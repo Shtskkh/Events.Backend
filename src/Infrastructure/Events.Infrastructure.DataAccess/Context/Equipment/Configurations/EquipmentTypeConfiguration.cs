@@ -1,5 +1,4 @@
 ﻿using Events.Domain.Aggregates.Equipment;
-using Events.Domain.Aggregates.Equipment.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,7 +20,7 @@ public class EquipmentTypeConfiguration : IEntityTypeConfiguration<EquipmentType
             .ValueGeneratedOnAdd();
 
         builder.Property(e => e.Title)
-            .HasMaxLength(EquipmentConstraints.Type.MaxLength)
+            .HasMaxLength(EquipmentType.MaxTitleLength)
             .IsRequired();
 
         builder.HasData(EquipmentType.Projector);
