@@ -1,17 +1,24 @@
-﻿namespace Events.Domain.Exceptions;
+﻿using Events.Domain.Shared;
+
+namespace Events.Domain.Exceptions;
 
 /// <summary>
 ///     Ошибка правил домена.
 /// </summary>
 public class DomainException : Exception
 {
-    /// <inheritdoc />
     public DomainException()
     {
     }
 
-    /// <inheritdoc />
     public DomainException(string message) : base(message)
     {
     }
+
+    public DomainException(Error error) : base(error.ErrorMessage)
+    {
+        Error = error;
+    }
+
+    public Error Error { get; }
 }

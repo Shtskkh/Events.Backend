@@ -1,17 +1,24 @@
-﻿namespace Events.Domain.Exceptions;
+﻿using Events.Domain.Shared;
+
+namespace Events.Domain.Exceptions;
 
 /// <summary>
-///     Ошибка не найденной сущности репозитория.
+///     Ошибка отсутствия запрашиваемого ресурса.
 /// </summary>
 public class NotFoundException : Exception
 {
-    /// <inheritdoc />
     public NotFoundException()
     {
     }
 
-    /// <inheritdoc />
     public NotFoundException(string message) : base(message)
     {
     }
+
+    public NotFoundException(Error error) : base(error.ErrorMessage)
+    {
+        Error = error;
+    }
+
+    public Error Error { get; }
 }
