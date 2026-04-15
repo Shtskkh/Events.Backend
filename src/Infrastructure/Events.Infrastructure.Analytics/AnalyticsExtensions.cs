@@ -30,7 +30,7 @@ public static class AnalyticsExtensions
 
         private void RegisterRepositories()
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IAnalyticsRepository<>), typeof(AnalyticsRepository<>));
         }
     }
 }
