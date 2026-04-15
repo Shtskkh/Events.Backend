@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Events.Domain.Aggregates.Events.Constraints;
+using Events.Domain.Aggregates.Events.ValueObjects;
 using Microsoft.AspNetCore.Http;
 
 namespace Events.Contracts.Events;
@@ -17,7 +18,7 @@ public sealed record CreateEventDto
     /// <summary>
     ///     Название мероприятия.
     /// </summary>
-    [MaxLength(EventConstraints.Title.MaxLength)]
+    [MaxLength(EventTitle.MaxLength)]
     public required string Title { get; init; }
 
     /// <summary>

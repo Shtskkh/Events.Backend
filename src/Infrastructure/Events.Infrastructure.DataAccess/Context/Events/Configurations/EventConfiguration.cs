@@ -1,5 +1,6 @@
 ﻿using Events.Domain.Aggregates.Events;
 using Events.Domain.Aggregates.Events.Constraints;
+using Events.Domain.Aggregates.Events.ValueObjects;
 using Events.Domain.Aggregates.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -22,7 +23,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.OwnsOne(e => e.Title)
             .Property(t => t.Value)
             .HasColumnName("Title")
-            .HasMaxLength(EventConstraints.Title.MaxLength)
+            .HasMaxLength(EventTitle.MaxLength)
             .IsRequired();
 
         builder

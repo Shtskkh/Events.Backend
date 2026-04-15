@@ -13,14 +13,6 @@ public static class EventErrorMessages
     }
 
     /// <summary>
-    ///     Ошибки названия мероприятия.
-    /// </summary>
-    public static class Title
-    {
-        public const string GreaterThanMaxLength = "Название мероприятия больше максимальной длины.";
-    }
-
-    /// <summary>
     ///     Ошибки анонса мероприятия.
     /// </summary>
     public static class Announcement
