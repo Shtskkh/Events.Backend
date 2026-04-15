@@ -30,7 +30,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .OwnsOne(e => e.Announcement)
             .Property(a => a.Value)
             .HasColumnName("Announcement")
-            .HasMaxLength(EventConstraints.Announcement.MaxLength)
+            .HasMaxLength(EventAnnouncement.MaxLength)
             .IsRequired();
 
         builder

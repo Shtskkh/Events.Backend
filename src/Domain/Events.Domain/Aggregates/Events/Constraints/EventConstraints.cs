@@ -6,14 +6,6 @@
 public static class EventConstraints
 {
     /// <summary>
-    ///     Константы анонса.
-    /// </summary>
-    public static class Announcement
-    {
-        public const int MaxLength = 64;
-    }
-
-    /// <summary>
     ///     Константы описания.
     /// </summary>
     public static class Description

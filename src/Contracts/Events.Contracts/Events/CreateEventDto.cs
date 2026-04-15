@@ -24,7 +24,7 @@ public sealed record CreateEventDto
     /// <summary>
     ///     Анонс мероприятия.
     /// </summary>
-    [MaxLength(EventConstraints.Announcement.MaxLength)]
+    [MaxLength(EventAnnouncement.MaxLength)]
     public required string Announcement { get; init; }
 
     /// <summary>
