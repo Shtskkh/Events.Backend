@@ -13,17 +13,6 @@ public static class EventErrorMessages
     }
 
     /// <summary>
-    ///     Ошибки временного промежутка мероприятия.
-    /// </summary>
-    public static class DateTimeRange
-    {
-        public const string StartLaterThanEnd =
-            "Дата и время начала мероприятия не может быть равно или позднее дате и времени окончания";
-
-        public const string DurationGreaterThanMax = "Длина мероприятия больше максимальной длины.";
-    }
-
-    /// <summary>
     ///     Ошибки типа мероприятия.
     /// </summary>
     public static class Type

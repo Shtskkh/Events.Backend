@@ -1,5 +1,4 @@
-﻿using Events.Domain.Aggregates.Events.Constraints;
-using Events.Domain.Aggregates.Events.Errors;
+﻿using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Exceptions;
 using Events.Domain.Shared;
 
@@ -10,23 +9,19 @@ namespace Events.Domain.Aggregates.Events.ValueObjects;
 /// </summary>
 public class EventDateTimeRange : ValueObject
 {
+    public const int MaxDurationInDays = 31;
+
     private EventDateTimeRange()
     {
     }
 
-    /// <summary>
-    ///     Конструктор.
-    /// </summary>
-    /// <param name="start">Дата и время начала.</param>
-    /// <param name="end">Дата и время окончания.</param>
-    /// <exception cref="DomainException">Ошибка правил домена.</exception>
     public EventDateTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
         if (start >= end)
-            throw new DomainException(EventErrorMessages.DateTimeRange.StartLaterThanEnd);
+            throw new DomainException(DateTimeRangeErrors.StartLaterThanEnd);
 
-        if (end - start > TimeSpan.FromDays(EventConstraints.DateTimeRange.MaxDurationInDays))
-            throw new DomainException(EventErrorMessages.DateTimeRange.DurationGreaterThanMax);
+        if (end - start > TimeSpan.FromDays(MaxDurationInDays))
+            throw new DomainException(DateTimeRangeErrors.DurationGreaterThanMax(MaxDurationInDays));
 
         StartDateTime = start.ToUniversalTime();
         EndDateTime = end.ToUniversalTime();
@@ -60,7 +55,6 @@ public class EventDateTimeRange : ValueObject
         return new EventDateTimeRange(StartDateTime, newEnd);
     }
 
-    /// <inheritdoc />
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return StartDateTime;
