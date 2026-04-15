@@ -16,10 +16,10 @@ public sealed class BookingInfo : ValueObject
     public BookingInfo(int locationId, int placeId)
     {
         if (locationId <= 0)
-            throw new DomainException(EventErrorMessages.Booking.LocationIdLessOrEqualToZero);
+            throw new DomainException(EventBookingErrors.LocationIdLessOrEqualToZero);
 
         if (placeId <= 0)
-            throw new DomainException(EventErrorMessages.Booking.PlaceIdLessOrEqualToZero);
+            throw new DomainException(EventBookingErrors.PlaceIdLessOrEqualToZero);
 
         LocationId = locationId;
         PlaceId = placeId;

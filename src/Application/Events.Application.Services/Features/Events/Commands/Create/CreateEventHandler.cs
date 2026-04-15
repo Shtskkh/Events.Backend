@@ -112,7 +112,7 @@ public sealed class CreateEventHandler(
         CancellationToken cancellationToken)
     {
         if (!locationId.HasValue || !placeId.HasValue)
-            throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
+            throw new DomainException(EventBookingErrors.RequiredForOfflineAndHybrid);
 
         var locationByIdSpec = new LocationByIdSpec(locationId.Value).IncludePlaces().AsNoTracking();
         var location = await locationRepository.FirstOrDefaultAsync(locationByIdSpec, cancellationToken);
@@ -133,6 +133,6 @@ public sealed class CreateEventHandler(
             cancellationToken);
 
         if (hasConflict)
-            throw new DomainException(EventErrorMessages.Booking.TimeConflict);
+            throw new DomainException(EventBookingErrors.TimeConflict(start, end));
     }
 }

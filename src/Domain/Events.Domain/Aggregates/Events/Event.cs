@@ -259,7 +259,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void Book(int locationId, int placeId)
     {
         if (Format.Id == EventFormat.Online.Id)
-            throw new DomainException(EventErrorMessages.Booking.NotAllowedForOnline);
+            throw new DomainException(EventBookingErrors.NotAllowedForOnline);
 
         Booking = new BookingInfo(locationId, placeId);
     }

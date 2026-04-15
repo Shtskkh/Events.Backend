@@ -87,7 +87,7 @@ public static class EventFactory
     private static void ValidateBooking(EventFormat eventFormat, int? locationId, int? placeId)
     {
         if (eventFormat.Id != EventFormat.Online.Id && (!locationId.HasValue || !placeId.HasValue))
-            throw new DomainException(EventErrorMessages.Booking.RequiredForOfflineAndHybrid);
+            throw new DomainException(EventBookingErrors.RequiredForOfflineAndHybrid);
     }
 
     private static void ApplyPreview(Event @event, string? previewFilename, string? placeholderFilename)
