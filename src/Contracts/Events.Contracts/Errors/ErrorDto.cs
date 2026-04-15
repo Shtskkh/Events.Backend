@@ -11,6 +11,11 @@ public sealed record ErrorDto
     public int StatusCode { get; init; }
 
     /// <summary>
+    ///     Код ошибки.
+    /// </summary>
+    public string? ErrorCode { get; init; }
+
+    /// <summary>
     ///     Текст ошибки.
     /// </summary>
     public string? Message { get; init; }

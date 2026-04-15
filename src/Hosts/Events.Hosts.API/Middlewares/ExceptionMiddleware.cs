@@ -3,16 +3,15 @@ using Events.Application.Services.Exceptions;
 using Events.Contracts.Errors;
 using Events.Domain.Exceptions;
 
-namespace Events.Hosts.API.Middlewares.Exceptions;
+namespace Events.Hosts.API.Middlewares;
 
 /// <summary>
 ///     Middleware для обработки ошибок слоёв.
 /// </summary>
-/// <param name="next">Следующий middleware в конвейере.</param>
 /// <param name="logger">Логгер.</param>
-public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+public class ExceptionMiddleware(ILogger<ExceptionMiddleware> logger) : IMiddleware
 {
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
         {
@@ -39,17 +38,19 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
     {
         return exception switch
         {
-            DomainException => new ErrorDto
+            DomainException domainException => new ErrorDto
             {
-                StatusCode = StatusCodes.Status400BadRequest,
-                Message = exception.Message,
+                StatusCode = StatusCodes.Status422UnprocessableEntity,
+                ErrorCode = domainException.Error.ErrorCode,
+                Message = domainException.Error.ErrorMessage,
                 TraceId = context.TraceIdentifier
             },
 
-            NotFoundException => new ErrorDto
+            NotFoundException notFoundException => new ErrorDto
             {
                 StatusCode = StatusCodes.Status404NotFound,
-                Message = exception.Message,
+                ErrorCode = notFoundException.Error.ErrorCode,
+                Message = notFoundException.Error.ErrorMessage,
                 TraceId = context.TraceIdentifier
             },
 
@@ -60,16 +61,18 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
                 TraceId = context.TraceIdentifier
             },
 
-            UnauthorizedException => new ErrorDto
+            UnauthorizedException unauthorizedException => new ErrorDto
             {
                 StatusCode = StatusCodes.Status401Unauthorized,
-                Message = exception.Message,
+                ErrorCode = unauthorizedException.Error.ErrorCode,
+                Message = unauthorizedException.Error.ErrorMessage,
                 TraceId = context.TraceIdentifier
             },
 
             _ => new ErrorDto
             {
                 StatusCode = StatusCodes.Status500InternalServerError,
+                ErrorCode = "Неизвестная ошибка.",
                 Message = "Неожиданная ошибка сервера.",
                 TraceId = context.TraceIdentifier
             }

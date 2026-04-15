@@ -31,6 +31,8 @@ builder.Services.AddRouting(options =>
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
+builder.Services.AddTransient<ExceptionMiddleware>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -42,7 +44,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.AddMiddlewares();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
