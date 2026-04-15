@@ -81,7 +81,7 @@ public static class EventFactory
     private static void ValidateRegistration(bool needRegistration, int? maxParticipants)
     {
         if (needRegistration && !maxParticipants.HasValue)
-            throw new DomainException(EventErrorMessages.Participant.MaxCountMustBeSet);
+            throw new DomainException(EventParticipantErrors.MaxCountMustBeSet);
     }
 
     private static void ValidateBooking(EventFormat eventFormat, int? locationId, int? placeId)

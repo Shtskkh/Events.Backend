@@ -13,25 +13,6 @@ public static class EventErrorMessages
     }
 
     /// <summary>
-    ///     Ошибки участников.
-    /// </summary>
-    public static class Participant
-    {
-        public const string NotFoundAny = "Участники мероприятия не найдены.";
-
-        public const string AlreadyRegistered = "Пользователь уже зарегистрирован на мероприятие.";
-
-        public const string RegistrationNotRequired = "Мероприятие не требует регистрации.";
-
-        public const string NotFound = "Пользователь не является участником мероприятия.";
-
-        public const string MaxCountMustBeSet =
-            "Для мероприятия с регистрацией необходимо указать максимальное количество участников.";
-
-        public const string MaxCountReached = "Достигнуто максимальное количество участников мероприятия.";
-    }
-
-    /// <summary>
     ///     Ошибки бронирования аудиторий.
     /// </summary>
     public static class Booking

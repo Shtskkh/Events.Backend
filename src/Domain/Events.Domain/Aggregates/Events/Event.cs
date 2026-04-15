@@ -224,13 +224,13 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public void AddParticipant(Guid userId)
     {
         if (!NeedsRegistration)
-            throw new DomainException(EventErrorMessages.Participant.RegistrationNotRequired);
+            throw new DomainException(EventParticipantErrors.RegistrationNotRequired);
 
         if (_participants.Any(p => p.UserId == userId))
-            throw new DomainException(EventErrorMessages.Participant.AlreadyRegistered);
+            throw new DomainException(EventParticipantErrors.AlreadyRegistered);
 
         if (MaxParticipants.HasValue && _participants.Count >= MaxParticipants.Value)
-            throw new DomainException(EventErrorMessages.Participant.MaxCountReached);
+            throw new DomainException(EventParticipantErrors.MaxCountReached);
 
         _participants.Add(new EventParticipant(Id, userId));
     }
@@ -245,7 +245,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
         var participant = _participants.FirstOrDefault(p => p.UserId == userId);
 
         if (participant == null)
-            throw new NotFoundException(EventErrorMessages.Participant.NotFound);
+            throw new NotFoundException(EventParticipantErrors.NotFoundById(userId));
 
         _participants.Remove(participant);
     }
