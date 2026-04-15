@@ -13,18 +13,6 @@ public static class EventErrorMessages
     }
 
     /// <summary>
-    ///     Ошибки превью мероприятия.
-    /// </summary>
-    public static class Preview
-    {
-        public const string PlaceholderAndPreviewCannotBothBeSet =
-            "Нельзя указать одновременно превью и плейсхолдер.";
-
-        public const string PlaceholderAndPreviewCannotBothBeEmpty =
-            "Необходимо указать либо превью, либо плейсхолдер.";
-    }
-
-    /// <summary>
     ///     Ошибки участников.
     /// </summary>
     public static class Participant

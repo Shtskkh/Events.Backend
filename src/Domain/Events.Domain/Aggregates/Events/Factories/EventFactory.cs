@@ -72,10 +72,10 @@ public static class EventFactory
     private static void ValidatePreview(string? previewFilename, string? placeholderFilename)
     {
         if (string.IsNullOrWhiteSpace(previewFilename) && string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeEmpty);
+            throw new DomainException(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeEmpty);
 
         if (!string.IsNullOrWhiteSpace(previewFilename) && !string.IsNullOrWhiteSpace(placeholderFilename))
-            throw new DomainException(EventErrorMessages.Preview.PlaceholderAndPreviewCannotBothBeSet);
+            throw new DomainException(EventPreviewErrors.PlaceholderAndPreviewCannotBothBeSet);
     }
 
     private static void ValidateRegistration(bool needRegistration, int? maxParticipants)
