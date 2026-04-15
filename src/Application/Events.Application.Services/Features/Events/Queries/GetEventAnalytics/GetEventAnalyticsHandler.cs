@@ -11,7 +11,9 @@ using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 
-public sealed class GetEventAnalyticsHandler(IEventRepository eventRepository, IRepository<PageView> pageViewRepository)
+public sealed class GetEventAnalyticsHandler(
+    IEventRepository eventRepository,
+    IAnalyticsRepository<PageView> pageViewRepository)
     : IRequestHandler<GetEventAnalyticsQuery, EventAnalyticsDto>
 {
     public async Task<EventAnalyticsDto> Handle(GetEventAnalyticsQuery request, CancellationToken cancellationToken)
