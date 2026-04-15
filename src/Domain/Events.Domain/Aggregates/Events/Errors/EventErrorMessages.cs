@@ -12,16 +12,6 @@ public static class EventErrorMessages
         return $"Мероприятие с ID: {eventId} не найдено.";
     }
 
-    public static class Format
-    {
-        public const string NotFoundAny = "Форматы мероприятий не найдены.";
-
-        public static string NotFoundById(int formatId)
-        {
-            return $"Формат мероприятия с ID: {formatId} не найден.";
-        }
-    }
-
     /// <summary>
     ///     Ошибки превью мероприятия.
     /// </summary>

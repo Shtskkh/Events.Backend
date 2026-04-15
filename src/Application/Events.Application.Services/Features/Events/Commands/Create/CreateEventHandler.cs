@@ -42,7 +42,7 @@ public sealed class CreateEventHandler(
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
 
             if (eventFormat == null)
-                throw new NotFoundException(EventErrorMessages.Format.NotFoundById(dto.EventFormatId));
+                throw new NotFoundException(EventFormatErrors.NotFoundById(dto.EventFormatId));
 
             if (eventFormat.Id != EventFormat.Online.Id)
                 await ValidateBookingAsync(
