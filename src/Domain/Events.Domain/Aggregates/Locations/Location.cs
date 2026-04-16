@@ -133,6 +133,22 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
         _photos.Add(new OrderedPhoto(filename, _photos.Count));
     }
 
+    public IReadOnlyCollection<string> SyncPhotos(IReadOnlyCollection<PhotoEntry> photos)
+    {
+        var existingPhotos = _photos.Select(p => p.Filename).ToHashSet();
+
+        foreach (var photo in photos.Where(p => !p.IsNew))
+            if (!existingPhotos.Contains(photo.Filename))
+                throw new DomainException(PhotoErrors.NotFound(photo.Filename));
+
+        var toDelete = existingPhotos.Except(photos.Select(p => p.Filename)).ToList();
+
+        _photos.Clear();
+        _photos.AddRange(photos.Select((entry, index) => new OrderedPhoto(entry.Filename, index)));
+
+        return toDelete;
+    }
+
     /// <summary>
     ///     Удалить фото.
     /// </summary>
