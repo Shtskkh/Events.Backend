@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Events.Application.Services.Features.Files;
+using Events.Application.Services.Features.Places.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Photos;
 using Events.Domain.Aggregates.Locations;
@@ -21,7 +22,8 @@ public sealed class UpdatePlaceHandler(
 {
     public async Task Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
-        var place = await placeRepository.GetByIdAsync(request.PlaceId, cancellationToken);
+        var placeByIdSpec = new PlaceByIdSpec(request.PlaceId).IncludePhotos();
+        var place = await placeRepository.FirstOrDefaultAsync(placeByIdSpec, cancellationToken);
 
         if (place == null)
             throw new NotFoundException(PlaceErrors.NotFoundById(request.PlaceId));
