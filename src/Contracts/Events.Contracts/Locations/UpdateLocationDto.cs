@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Events.Domain.Aggregates.Locations.ValueObjects.Locations;
+using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Contracts.Locations;
 
@@ -19,4 +20,9 @@ public sealed record UpdateLocationDto
     /// </summary>
     [MaxLength(LocationAddress.MaxLength)]
     public string? Address { get; init; }
+
+    /// <summary>
+    ///     Упорядоченный список фотографий.
+    /// </summary>
+    public IReadOnlyCollection<PhotoEntry>? Photos { get; init; }
 }
