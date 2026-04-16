@@ -12,7 +12,7 @@ namespace Events.Application.Services.Behaviors;
 /// <typeparam name="TRequest">Тип запроса.</typeparam>
 /// <typeparam name="TResponse">Тип ответа.</typeparam>
 public class AnalyticsBehavior<TRequest, TResponse>(
-    IRepository<PageView> pageViewRepository,
+    IAnalyticsRepository<PageView> pageViewRepository,
     ICurrentUserProvider currentUserProvider,
     ILogger<AnalyticsBehavior<TRequest, TResponse>> logger
 )
