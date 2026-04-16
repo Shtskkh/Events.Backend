@@ -7,6 +7,8 @@ public static class PhotoErrors
     public static Error FileNameNullOrWhiteSpace => new("Photo.FileNameNullOrWhiteSpace",
         "Название файла фотографии не может быть пустым.");
 
+    public static Error InvalidEntry => new("Photo.InvalidEntry", "Переданы неверные параметры для фото.");
+
     public static Error AlreadyExists(string filename)
     {
         return new Error("Photo.AlreadyExists", $"Фотография с названием: {filename} уже существует.");

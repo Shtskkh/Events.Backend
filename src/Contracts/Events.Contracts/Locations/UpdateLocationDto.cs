@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Events.Contracts.Photos;
 using Events.Domain.Aggregates.Locations.ValueObjects.Locations;
-using Events.Domain.Shared.ValueObjects;
 
 namespace Events.Contracts.Locations;
 
@@ -23,6 +23,9 @@ public sealed record UpdateLocationDto
 
     /// <summary>
     ///     Упорядоченный список фотографий.
+    ///     Если передан null, то фото не обновляются.
+    ///     Если передан [] (пустой массив), то удаляются все фотографии.
+    ///     Если передан массив с элементами, то происходит замена.
     /// </summary>
-    public IReadOnlyCollection<PhotoEntry>? Photos { get; init; }
+    public IReadOnlyCollection<PhotoEntryDto>? Photos { get; init; }
 }
