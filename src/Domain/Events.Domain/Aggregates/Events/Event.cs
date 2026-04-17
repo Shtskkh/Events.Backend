@@ -278,4 +278,22 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     {
         Booking = null;
     }
+
+    public void AddTag(Tag tag)
+    {
+        if (_tags.Any(t => t == tag))
+            throw new DomainException(TagErrors.AlreadyAssigned(tag));
+
+        _tags.Add(tag);
+    }
+
+    public void RemoveTag(int tagId)
+    {
+        var tagToRemove = _tags.FirstOrDefault(t => t.Id == tagId);
+
+        if (tagToRemove == null)
+            throw new NotFoundException(TagErrors.NotFoundById(tagId));
+
+        _tags.Remove(tagToRemove);
+    }
 }
