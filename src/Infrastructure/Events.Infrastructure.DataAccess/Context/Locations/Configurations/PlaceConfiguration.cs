@@ -60,6 +60,9 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             photoBuilder.WithOwner().HasForeignKey("PlaceId");
         });
 
+        builder.Navigation(p => p.Photos)
+            .AutoInclude(false);
+
         builder.HasOne<Location>()
             .WithMany(l => l.Places)
             .HasForeignKey(p => p.LocationId)

@@ -55,6 +55,9 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             photoBuilder.WithOwner().HasForeignKey("LocationId");
         });
 
+        builder.Navigation(p => p.Photos)
+            .AutoInclude(false);
+
         builder.Property(l => l.CreatedAt)
             .IsRequired()
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
