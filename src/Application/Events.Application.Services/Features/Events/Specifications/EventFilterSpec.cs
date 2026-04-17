@@ -35,7 +35,7 @@ public sealed class EventFilterSpec : Specification<Event>
             Query.Where(e => e.CreatedAt >= filter.CreatedAfter.Value);
 
         if (filter.CreatedBefore != null)
-            Query.Where(e => e.CreatedAt >= filter.CreatedBefore.Value);
+            Query.Where(e => e.CreatedAt <= filter.CreatedBefore.Value);
 
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);
