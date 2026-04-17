@@ -16,7 +16,7 @@ public sealed class Tag : Entity<int>
     {
     }
 
-    public Tag(string value)
+    public Tag(int id, string value) : base(id)
     {
         var text = new Text(value).Value;
 
