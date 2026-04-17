@@ -13,6 +13,7 @@ namespace Events.Domain.Aggregates.Events;
 public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
 {
     private readonly List<Participant> _participants = [];
+    private readonly List<Tag> _tags = [];
 
     private Event()
     {
@@ -110,6 +111,11 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     ///     Участники мероприятия.
     /// </summary>
     public IReadOnlyCollection<Participant> Participants => _participants.AsReadOnly();
+
+    /// <summary>
+    ///     Тэги.
+    /// </summary>
+    public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
 
     /// <inheritdoc />
     public DateTimeOffset CreatedAt { get; }

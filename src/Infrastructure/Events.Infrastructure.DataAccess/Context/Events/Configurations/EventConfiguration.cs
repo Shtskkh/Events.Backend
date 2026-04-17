@@ -92,6 +92,10 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasForeignKey(e => e.EventId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(e => e.Tags)
+            .WithMany()
+            .UsingEntity(e => e.ToTable("EventsTags"));
+
         builder.Property(e => e.CreatedAt)
             .IsRequired()
             .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
