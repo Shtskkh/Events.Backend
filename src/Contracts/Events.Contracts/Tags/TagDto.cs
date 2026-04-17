@@ -13,5 +13,5 @@ public sealed record TagDto
     /// <summary>
     ///     Тэг.
     /// </summary>
-    public int Value { get; init; }
+    public string Value { get; init; } = null!;
 }
