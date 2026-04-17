@@ -18,19 +18,19 @@ namespace Events.Hosts.API.Controllers;
 public class TagsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    ///     Создать тэги.
+    ///     Создать тэг.
     /// </summary>
-    /// <param name="tags">Коллекция новых тэгов.</param>
+    /// <param name="tag">Тэг.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданных тэгов в порядке изначальной передачи.</returns>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IReadOnlyCollection<int>))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> CreateAsync([FromBody] IReadOnlyCollection<string> tags,
+    public async Task<IActionResult> CreateAsync([FromBody] string tag,
         CancellationToken cancellationToken)
     {
-        var ids = await mediator.Send(new CreateTagsCommand(tags), cancellationToken);
+        var ids = await mediator.Send(new CreateTagCommand(tag), cancellationToken);
         return StatusCode(StatusCodes.Status201Created, ids);
     }
 

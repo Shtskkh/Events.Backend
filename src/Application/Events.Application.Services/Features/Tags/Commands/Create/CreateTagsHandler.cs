@@ -8,28 +8,19 @@ using Tag = Events.Domain.Aggregates.Events.Tag;
 namespace Events.Application.Services.Features.Tags.Commands.Create;
 
 public sealed class CreateTagsHandler(IRepository<Tag> tagRepository)
-    : IRequestHandler<CreateTagsCommand, IReadOnlyCollection<int>>
+    : IRequestHandler<CreateTagCommand, int>
 {
-    public async Task<IReadOnlyCollection<int>> Handle(CreateTagsCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateTagCommand request, CancellationToken cancellationToken)
     {
-        foreach (var tag in request.Tags)
-        {
-            var tagByTitleSpec = new TagByTitleSpec(tag);
-            var tagExists = await tagRepository.AnyAsync(tagByTitleSpec, cancellationToken);
+        var tagByTitleSpec = new TagByTitleSpec(request.Tag);
+        var tagExists = await tagRepository.AnyAsync(tagByTitleSpec, cancellationToken);
 
-            if (tagExists)
-                throw new DomainException(TagErrors.TagAlreadyExists(tag));
-        }
+        if (tagExists)
+            throw new DomainException(TagErrors.TagAlreadyExists(request.Tag));
 
-        var ids = new List<int>(request.Tags.Count);
-        foreach (var tag in request.Tags)
-        {
-            var tagEntity = new Tag(0, tag);
-            await tagRepository.AddAsync(tagEntity, cancellationToken);
+        var tag = new Tag(default, request.Tag);
+        await tagRepository.AddAsync(tag, cancellationToken);
 
-            ids.Add(tagEntity.Id);
-        }
-
-        return ids;
+        return tag.Id;
     }
 }
