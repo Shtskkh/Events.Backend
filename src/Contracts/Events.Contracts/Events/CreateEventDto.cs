@@ -80,4 +80,9 @@ public sealed record CreateEventDto
     ///     ID помещения в локации.
     /// </summary>
     public int? PlaceId { get; init; }
+
+    /// <summary>
+    ///     ID тэг
+    /// </summary>ов.
+    public IReadOnlyCollection<int>? TagsIds { get; init; }
 }
