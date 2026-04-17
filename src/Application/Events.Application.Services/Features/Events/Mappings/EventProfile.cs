@@ -40,7 +40,9 @@ public class EventProfile : Profile
                         {
                             Bucket = S3Buckets.EventsPreviews,
                             Key = src.PreviewFilename
-                        }));
+                        }))
+            .ForMember(dest => dest.PlaceInfo, opt => opt.Ignore())
+            .ForMember(dest => dest.Tags, opt => opt.Ignore());
 
 
         CreateMap<Event, ShortEventDto>()
