@@ -133,6 +133,22 @@ public class Location : Entity<int>, IAuditable, IAggregateRoot
         _photos.Add(new OrderedPhoto(filename, _photos.Count));
     }
 
+    /// <summary>
+    ///     Синхронизирует список фотографий с переданным набором записей.
+    ///     Существующие фото, отсутствующие в новом списке, удаляются.
+    ///     Порядок отображения переопределяется согласно порядку элементов в <paramref name="photos" />.
+    /// </summary>
+    /// <param name="photos">
+    ///     Новый упорядоченный список фотографий.
+    ///     Записи с <see cref="PhotoEntry.IsNew" /> = <c>false</c> должны присутствовать в текущем списке,
+    ///     иначе будет выброшено исключение.
+    /// </param>
+    /// <returns>
+    ///     Список названий файлов, которые были удалены и должны быть физически удалены из хранилища.
+    /// </returns>
+    /// <exception cref="DomainException">
+    ///     Если фотография с <see cref="PhotoEntry.IsNew" /> = <c>false</c> не найдена в текущем списке.
+    /// </exception>
     public IReadOnlyCollection<string> SyncPhotos(IReadOnlyCollection<PhotoEntry> photos)
     {
         var existingPhotos = _photos.Select(p => p.Filename).ToHashSet();
