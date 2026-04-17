@@ -82,7 +82,7 @@ public sealed record CreateEventDto
     public int? PlaceId { get; init; }
 
     /// <summary>
-    ///     ID тэг
-    /// </summary>ов.
+    ///     Коллекция ID тэгов.
+    /// </summary>
     public IReadOnlyCollection<int>? TagsIds { get; init; }
 }
