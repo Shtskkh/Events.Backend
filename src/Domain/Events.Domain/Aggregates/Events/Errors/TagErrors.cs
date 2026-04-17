@@ -18,4 +18,9 @@ public static class TagErrors
     {
         return new Error("Tag.NotFoundById", $"Тэг с ID: {tagId} не найден.");
     }
+
+    public static Error TagAlreadyExists(string tagName)
+    {
+        return new Error("Tag.AlreadyExists", $"Тэг: {tagName} уже существует.");
+    }
 }
