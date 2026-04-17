@@ -8,6 +8,8 @@ public sealed class EventFilterSpec : Specification<Event>
 {
     public EventFilterSpec(EventFilterDto filter)
     {
+        Query.Include(e => e.Tags);
+
         if (filter.StartDateTime.HasValue)
             Query.Where(e => e.DateTimeRange.StartDateTime >= filter.StartDateTime.Value);
 
