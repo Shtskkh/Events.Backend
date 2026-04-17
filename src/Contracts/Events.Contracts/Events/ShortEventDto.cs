@@ -56,5 +56,5 @@ public sealed record ShortEventDto
     /// <summary>
     ///     Тэги.
     /// </summary>
-    public IReadOnlyCollection<TagDto>? Tags { get; set; }
+    public IReadOnlyCollection<TagDto>? Tags { get; init; }
 }

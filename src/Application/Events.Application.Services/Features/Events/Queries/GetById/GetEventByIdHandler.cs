@@ -5,7 +5,6 @@ using Events.Application.Services.Features.Places.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events;
 using Events.Contracts.Places;
-using Events.Contracts.Tags;
 using Events.Domain.Aggregates.Events.Errors;
 using Events.Domain.Aggregates.Locations;
 using Events.Domain.Aggregates.Locations.Errors;
@@ -44,9 +43,6 @@ public sealed class GetEventByIdHandler(
                 Number = place.Number.Value
             };
         }
-
-        if (@event.Tags.Count > 0)
-            dto.Tags = mapper.Map<List<TagDto>>(@event.Tags);
 
         return dto;
     }
