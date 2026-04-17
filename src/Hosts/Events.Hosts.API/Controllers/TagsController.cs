@@ -1,5 +1,7 @@
 ﻿using Events.Application.Services.Features.Tags.Commands.Create;
+using Events.Application.Services.Features.Tags.Queries;
 using Events.Contracts.Errors;
+using Events.Contracts.Tags;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,7 @@ public class TagsController(IMediator mediator) : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>ID созданных тэгов в порядке изначальной передачи.</returns>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IReadOnlyList<int>))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IReadOnlyCollection<int>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
     public async Task<IActionResult> CreateAsync([FromBody] IReadOnlyCollection<string> tags,
@@ -29,5 +31,21 @@ public class TagsController(IMediator mediator) : ControllerBase
     {
         var ids = await mediator.Send(new CreateTagsCommand(tags), cancellationToken);
         return StatusCode(StatusCodes.Status201Created, ids);
+    }
+
+    /// <summary>
+    ///     Получить тэги по фильтру.
+    /// </summary>
+    /// <param name="filter">Модель фильтра.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Модели тэгов.</returns>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<TagDto>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByFilter([FromQuery] TagFilterDto filter, CancellationToken cancellationToken)
+    {
+        var tags = await mediator.Send(new GetTagsByFilterQuery(filter), cancellationToken);
+        return Ok(tags);
     }
 }

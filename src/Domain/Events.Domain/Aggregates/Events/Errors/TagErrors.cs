@@ -9,6 +9,8 @@ public static class TagErrors
     public static Error GreaterThanMaxLength =>
         new("Tag.GreaterThanMaxLength", $"Тэг больше максимальной длинны в {Tag.MaxLength}");
 
+    public static Error NotFoundByFilter => new("Tag.NotFoundByFilter", "Тэги по фильтру не найдены.");
+
     public static Error AlreadyAssigned(Tag tag)
     {
         return new Error("Tag.AlreadyAssigned", $"Тэг: {tag.Value} уже добавлен.");
