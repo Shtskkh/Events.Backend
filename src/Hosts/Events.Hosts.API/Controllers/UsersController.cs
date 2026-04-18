@@ -13,126 +13,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Events.Hosts.API.Controllers;
 
-/// <summary>
-///     Контроллер пользователей.
-/// </summary>
-/// <param name="mediator">Медиатор.</param>
 [ApiController]
 [Route("api/v/1/[controller]")]
-[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError, "application/problem+json",
-    Description = "Неожиданная ошибка сервера.")]
+[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
 public class UsersController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    ///     Получить всех пользователей, удовлетворяющих фильтру.
-    /// </summary>
-    /// <param name="filter">Фильтр.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция пользователей.</returns>
-    [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyCollection<ShortUserDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Пользователи по фильтру не найдены.")]
-    public async Task<IActionResult> GetByFilterAsync([FromQuery] UserFilterDto filter,
-        CancellationToken cancellationToken)
-    {
-        var result = await mediator.Send(new GetUsersByFilter(filter), cancellationToken);
-        return Ok(result);
-    }
-
-    /// <summary>
-    ///     Получить пользователя по ID.
-    /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Информация о пользователе.</returns>
-    [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Пользователь не найден.")]
-    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var user = await mediator.Send(new GetUserByIdQuery(id), cancellationToken);
-
-        return Ok(user);
-    }
-
-    /// <summary>
     ///     Создать пользователя.
     /// </summary>
-    /// <param name="dto">Форма создания пользователя.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>ID созданного пользователя.</returns>
     [HttpPost]
-    [Consumes("multipart/form-data")]
-    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain",
-        Description = "Пользователь создан.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    public async Task<IActionResult> CreateAsync([FromForm] CreateUserDto dto, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateUserDto createUserDto, CancellationToken ct)
     {
-        var id = await mediator.Send(new CreateUserCommand(dto), cancellationToken);
-
+        var id = await mediator.Send(new CreateUserCommand(createUserDto), ct);
         return StatusCode(StatusCodes.Status201Created, id);
-    }
-
-    [HttpPatch("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    ///     Изменить пароль.
-    /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="dto">Модель изменения пароля.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    [HttpPatch("{id:guid}/password")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Пользователь не найден.")]
-    public async Task<IActionResult> ChangePassword(Guid id, [FromForm] ChangePasswordDto dto,
-        CancellationToken cancellationToken)
-    {
-        await mediator.Send(new ChangePasswordCommand(id, dto), cancellationToken);
-
-        return Ok();
-    }
-
-    /// <summary>
-    ///     Удалить пользователя.
-    /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    [HttpDelete("{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Пользователь не найден.")]
-    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
-    {
-        await mediator.Send(new DeleteUserCommand(id), cancellationToken);
-
-        return Ok();
     }
 
     /// <summary>
     ///     Аутентифицировать пользователя.
     /// </summary>
-    /// <param name="dto">Модель аутентификации.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Модель Jwt токена.</returns>
     [HttpPost("login")]
-    [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden, "application/problem+json",
-        Description = "Пользователь не авторизован.")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenDto))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDto))]
     public async Task<IActionResult> AuthAsync([FromForm] AuthDto dto, CancellationToken cancellationToken)
     {
         var tokenDto = await mediator.Send(new AuthUserCommand(dto), cancellationToken);
@@ -141,20 +46,73 @@ public class UsersController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    ///     Получить всех пользователей, удовлетворяющих фильтру.
+    /// </summary>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<ShortUserDto>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] UserFilterDto userFilterDto, CancellationToken ct)
+    {
+        var result = await mediator.Send(new GetUsersByFilter(userFilterDto), ct);
+        return Ok(result);
+    }
+
+    /// <summary>
+    ///     Получить пользователя по ID.
+    /// </summary>
+    [HttpGet("{userId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByIdAsync(Guid userId, CancellationToken ct)
+    {
+        var user = await mediator.Send(new GetUserByIdQuery(userId), ct);
+        return Ok(user);
+    }
+
+    /// <summary>
     ///     Получить последние 10 просмотренных пользователем мероприятий.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция краткой информации о мероприятиях.</returns>
-    [HttpGet("{id:guid}/events/recent")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
+    [HttpGet("{userId:guid}/events/recent")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<ShortEventDto>))]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound,
         Description = "Просмотренные пользователем мероприятия найдены.")]
-    public async Task<IActionResult> GetRecentViewedEventsAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetRecentViewedEventsAsync(Guid userId, CancellationToken ct)
     {
-        var events = await mediator.Send(new GetRecentViewedEventsQuery(id), cancellationToken);
-
+        var events = await mediator.Send(new GetRecentViewedEventsQuery(userId), ct);
         return Ok(events);
+    }
+
+    [HttpPatch("{userId:guid}")]
+    public async Task<IActionResult> UpdateAsync(Guid userId, CancellationToken ct)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    ///     Изменить пароль.
+    /// </summary>
+    [HttpPatch("{userId:guid}/password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> ChangePassword(Guid userId, [FromForm] ChangePasswordDto changePasswordDto,
+        CancellationToken ct)
+    {
+        await mediator.Send(new ChangePasswordCommand(userId, changePasswordDto), ct);
+        return Ok();
+    }
+
+    /// <summary>
+    ///     Удалить пользователя.
+    /// </summary>
+    [HttpDelete("{userId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> DeleteAsync(Guid userId, CancellationToken ct)
+    {
+        await mediator.Send(new DeleteUserCommand(userId), ct);
+        return Ok();
     }
 }
