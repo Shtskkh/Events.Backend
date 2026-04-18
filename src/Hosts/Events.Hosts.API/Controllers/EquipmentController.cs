@@ -12,59 +12,45 @@ namespace Events.Hosts.API.Controllers;
 
 [ApiController]
 [Route("/api/v/1/[controller]")]
-[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError, "application/problem+json",
-    Description = "Неожиданная ошибка сервера.")]
+[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
 public class EquipmentController(IMediator mediator) : ControllerBase
 {
     /// <summary>
+    ///     Создать оборудование.
+    /// </summary>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateEquipmentDto dto, CancellationToken ct)
+    {
+        var equipmentId = await mediator.Send(new CreateEquipmentCommand(dto), ct);
+        return StatusCode(StatusCodes.Status201Created, equipmentId);
+    }
+
+    /// <summary>
     ///     Получить оборудование по фильтру.
     /// </summary>
-    /// <param name="filter">Фильтр.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция оборудования.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EquipmentDto>), StatusCodes.Status201Created, "text/plain",
-        Description = "Оборудование создано.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Оборудование по фильтру не найдено.")]
-    public async Task<IActionResult> GetByFilterAsync([FromQuery] EquipmentFilterDto filter,
-        CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EquipmentDto>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] EquipmentFilterDto equipmentFilterDto,
+        CancellationToken ct)
     {
-        var equipment = await mediator.Send(new GetEquipmentByFilterQuery(filter), cancellationToken);
-
+        var equipment = await mediator.Send(new GetEquipmentByFilterQuery(equipmentFilterDto), ct);
         return Ok(equipment);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    [HttpGet("{equipmentId:int}")]
+    public async Task<IActionResult> GetByIdAsync(int equipmentId)
     {
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    ///     Создать оборудование.
-    /// </summary>
-    /// <param name="dto">Модель создания оборудования.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>ID созданного оборудования.</returns>
-    [HttpPost]
-    [ProducesResponseType(typeof(int), StatusCodes.Status201Created, "text/plain",
-        Description = "Оборудование создано.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Представленные данные в запросе не найдены.")]
-    public async Task<IActionResult> CreateAsync([FromForm] CreateEquipmentDto dto, CancellationToken cancellationToken)
-    {
-        var id = await mediator.Send(new CreateEquipmentCommand(dto), cancellationToken);
-
-        return StatusCode(StatusCodes.Status201Created, id);
-    }
-
-    [HttpPatch("{id:int}")]
-    public async Task<IActionResult> UpdateAsync(int id)
+    [HttpPatch("{equipmentId:int}")]
+    public async Task<IActionResult> UpdateAsync(int equipmentId)
     {
         throw new NotImplementedException();
     }
@@ -72,33 +58,24 @@ public class EquipmentController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Удалить оборудование.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    [HttpDelete("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Оборудование удалено.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Оборудование не найдено.")]
-    public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
+    [HttpDelete("{equipmentId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> DeleteAsync(int equipmentId, CancellationToken ct)
     {
-        await mediator.Send(new DeleteEquipmentCommand(id), cancellationToken);
-
+        await mediator.Send(new DeleteEquipmentCommand(equipmentId), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Получить все типы оборудования.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция типов.</returns>
     [HttpGet("types")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EquipmentTypeDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Типы оборудования не найдены.")]
-    public async Task<IActionResult> GetTypes(CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EquipmentTypeDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetTypes(CancellationToken ct)
     {
-        var types = await mediator.Send(new GetEquipmentTypesQuery(), cancellationToken);
-
+        var types = await mediator.Send(new GetEquipmentTypesQuery(), ct);
         return Ok(types);
     }
 }
