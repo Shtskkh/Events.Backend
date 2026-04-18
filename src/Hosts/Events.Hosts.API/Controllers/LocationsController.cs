@@ -17,7 +17,7 @@ using Events.Contracts.Places.PlacesTypes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Events.Hosts.API.Controllers.Locations;
+namespace Events.Hosts.API.Controllers;
 
 /// <summary>
 ///     Контроллер локаций.

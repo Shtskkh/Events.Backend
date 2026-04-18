@@ -8,7 +8,7 @@ using Events.Contracts.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Events.Hosts.API.Controllers.Equipment;
+namespace Events.Hosts.API.Controllers;
 
 [ApiController]
 [Route("/api/v/1/[controller]")]

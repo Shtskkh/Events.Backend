@@ -20,7 +20,7 @@ using Events.Contracts.Events.Participants;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Events.Hosts.API.Controllers.Events;
+namespace Events.Hosts.API.Controllers;
 
 /// <summary>
 ///     Контроллер мероприятий.
