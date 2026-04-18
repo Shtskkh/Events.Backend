@@ -12,6 +12,7 @@ using Events.Application.Services.Features.Events.Queries.GetEventFormatsAnalyti
 using Events.Application.Services.Features.Events.Queries.GetFormats;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Application.Services.Features.Events.Queries.GetPlaceholders;
+using Events.Application.Services.Features.Events.Queries.GetTagsAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetTypes;
 using Events.Application.Services.Features.Events.Queries.GetTypesAnalytics;
 using Events.Contracts.Errors;
@@ -19,6 +20,7 @@ using Events.Contracts.Events;
 using Events.Contracts.Events.EventsFormats;
 using Events.Contracts.Events.EventsTypes;
 using Events.Contracts.Events.Participants;
+using Events.Contracts.Tags;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +55,24 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
         var events = await mediator.Send(new GetEventsByFilterQuery(filter), cancellationToken);
 
         return Ok(events);
+    }
+
+    /// <summary>
+    ///     Получить аналитику тэгов мероприятий.
+    /// </summary>
+    /// <param name="from">С какой даты.</param>
+    /// <param name="to">До какой даты.</param>
+    /// <param name="top">Топ выборки.</param>
+    /// <returns></returns>
+    [HttpGet("tags/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<TagAnalytics>))]
+    public async Task<IActionResult> GetTagsAnalyticsAsync(
+        [FromQuery] DateTimeOffset? from,
+        [FromQuery] DateTimeOffset? to,
+        [FromQuery] int? top)
+    {
+        var analytics = await mediator.Send(new GetEventsTagsAnalyticsQuery(from, to, top));
+        return Ok(analytics);
     }
 
     /// <summary>
