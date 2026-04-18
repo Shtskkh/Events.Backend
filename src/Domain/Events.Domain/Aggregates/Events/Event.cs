@@ -292,7 +292,7 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
         var tagToRemove = _tags.FirstOrDefault(t => t.Id == tagId);
 
         if (tagToRemove == null)
-            throw new NotFoundException(TagErrors.NotFoundById(tagId));
+            throw new NotFoundException(EventErrors.TagNotFoundById(tagId));
 
         _tags.Remove(tagToRemove);
     }

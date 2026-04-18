@@ -3,6 +3,7 @@ using Events.Application.Services.Features.Events.Commands.AddTag;
 using Events.Application.Services.Features.Events.Commands.Create;
 using Events.Application.Services.Features.Events.Commands.Delete;
 using Events.Application.Services.Features.Events.Commands.RemoveParticipant;
+using Events.Application.Services.Features.Events.Commands.RemoveTag;
 using Events.Application.Services.Features.Events.Commands.Update;
 using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
@@ -159,6 +160,18 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     public async Task<IActionResult> AddTagAsync(Guid eventId, int tagId, CancellationToken ct)
     {
         await mediator.Send(new AddTagCommand(eventId, tagId), ct);
+        return Ok();
+    }
+
+    /// <summary>
+    ///     Удалить тэг мероприятия.
+    /// </summary>
+    [HttpDelete("{eventId:guid}/tags/{tagId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> RemoveTagAsync(Guid eventId, int tagId, CancellationToken ct)
+    {
+        await mediator.Send(new RemoveTagCommand(eventId, tagId), ct);
         return Ok();
     }
 
