@@ -1,4 +1,5 @@
 ﻿using Events.Application.Services.Features.Events.Commands.AddParticipant;
+using Events.Application.Services.Features.Events.Commands.AddTag;
 using Events.Application.Services.Features.Events.Commands.Create;
 using Events.Application.Services.Features.Events.Commands.Delete;
 using Events.Application.Services.Features.Events.Commands.RemoveParticipant;
@@ -145,6 +146,19 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     {
         await mediator.Send(new DeleteEventQuery(id), cancellationToken);
 
+        return Ok();
+    }
+
+    /// <summary>
+    ///     Добавить тэг мероприятию.
+    /// </summary>
+    [HttpPost("{eventId:guid}/tags/{tagId:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> AddTagAsync(Guid eventId, int tagId, CancellationToken ct)
+    {
+        await mediator.Send(new AddTagCommand(eventId, tagId), ct);
         return Ok();
     }
 
