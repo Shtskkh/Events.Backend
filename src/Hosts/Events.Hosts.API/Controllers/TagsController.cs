@@ -13,7 +13,7 @@ namespace Events.Hosts.API.Controllers;
 /// </summary>
 /// <param name="mediator">Медиатор.</param>
 [ApiController]
-[Route("[controller]")]
+[Route("api/v/1/[controller]")]
 [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
 public class TagsController(IMediator mediator) : ControllerBase
 {
