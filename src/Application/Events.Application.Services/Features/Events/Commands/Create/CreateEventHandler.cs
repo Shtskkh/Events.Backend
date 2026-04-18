@@ -14,6 +14,7 @@ using Events.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using EventType = Events.Domain.Aggregates.Events.EventType;
+using Tag = Events.Domain.Aggregates.Events.Tag;
 
 namespace Events.Application.Services.Features.Events.Commands.Create;
 
@@ -22,6 +23,7 @@ public sealed class CreateEventHandler(
     IRepository<EventType> eventTypeRepository,
     IRepository<EventFormat> eventFormatRepository,
     IRepository<Location> locationRepository,
+    IRepository<Tag> tagRepository,
     IFileStorageService fileStorageService)
     : IRequestHandler<CreateEventCommand, Guid>
 {
@@ -32,15 +34,11 @@ public sealed class CreateEventHandler(
 
         try
         {
-            previewFilename = await UploadPreviewAsync(dto.Preview, cancellationToken);
-
             var eventType = await eventTypeRepository.GetByIdAsync(dto.EventTypeId, cancellationToken);
-
             if (eventType == null)
                 throw new NotFoundException(EventTypeErrors.NotFoundById(dto.EventTypeId));
 
             var eventFormat = await eventFormatRepository.GetByIdAsync(dto.EventFormatId, cancellationToken);
-
             if (eventFormat == null)
                 throw new NotFoundException(EventFormatErrors.NotFoundById(dto.EventFormatId));
 
@@ -51,6 +49,23 @@ public sealed class CreateEventHandler(
                     dto.StartDateTime,
                     dto.EndDateTime,
                     cancellationToken);
+
+            List<Tag>? tags = null;
+            if (dto.TagsIds != null && dto.TagsIds.Count > 0)
+            {
+                tags = new List<Tag>(dto.TagsIds.Count);
+
+                foreach (var tagId in dto.TagsIds)
+                {
+                    var tag = await tagRepository.GetByIdAsync(tagId, cancellationToken);
+                    if (tag == null)
+                        throw new NotFoundException(TagErrors.NotFoundById(tagId));
+
+                    tags.Add(tag);
+                }
+            }
+
+            previewFilename = await UploadPreviewAsync(dto.Preview, cancellationToken);
 
             var @event = EventFactory.Create(
                 dto.Title,
@@ -66,7 +81,8 @@ public sealed class CreateEventHandler(
                 dto.PlaceId,
                 dto.MaxParticipants,
                 previewFilename?.ToString(),
-                dto.Placeholder
+                dto.Placeholder,
+                tags
             );
 
             await eventRepository.AddAsync(@event, cancellationToken);

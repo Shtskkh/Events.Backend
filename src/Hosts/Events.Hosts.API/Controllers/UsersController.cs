@@ -11,7 +11,7 @@ using Events.Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Events.Hosts.API.Controllers.Users;
+namespace Events.Hosts.API.Controllers;
 
 /// <summary>
 ///     Контроллер пользователей.

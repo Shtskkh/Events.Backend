@@ -8,6 +8,8 @@ public sealed class EventFilterSpec : Specification<Event>
 {
     public EventFilterSpec(EventFilterDto filter)
     {
+        Query.Include(e => e.Tags);
+
         if (filter.StartDateTime.HasValue)
             Query.Where(e => e.DateTimeRange.StartDateTime >= filter.StartDateTime.Value);
 
@@ -33,7 +35,7 @@ public sealed class EventFilterSpec : Specification<Event>
             Query.Where(e => e.CreatedAt >= filter.CreatedAfter.Value);
 
         if (filter.CreatedBefore != null)
-            Query.Where(e => e.CreatedAt >= filter.CreatedBefore.Value);
+            Query.Where(e => e.CreatedAt <= filter.CreatedBefore.Value);
 
         Query.Skip(filter.Size * (filter.Page - 1));
         Query.Take(filter.Size);

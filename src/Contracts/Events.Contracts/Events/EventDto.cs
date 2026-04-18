@@ -1,5 +1,6 @@
 ﻿using Events.Contracts.Files;
 using Events.Contracts.Places;
+using Events.Contracts.Tags;
 
 namespace Events.Contracts.Events;
 
@@ -54,12 +55,17 @@ public sealed record EventDto
     public S3FileDto PreviewInfo { get; init; } = null!;
 
     /// <summary>
+    ///     Создатель.
+    /// </summary>
+    public Guid UserId { get; init; }
+
+    /// <summary>
     ///     Информация о помещении.
     /// </summary>
     public BookedPlaceDto? PlaceInfo { get; set; }
 
     /// <summary>
-    ///     Создатель.
+    ///     Тэги.
     /// </summary>
-    public Guid UserId { get; init; }
+    public IReadOnlyCollection<TagDto>? Tags { get; init; }
 }

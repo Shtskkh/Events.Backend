@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
+using Events.Application.Services.Features.Events.Specifications;
+using Events.Application.Services.Features.Places.Specifications;
 using Events.Application.Services.Shared;
 using Events.Contracts.Events;
 using Events.Contracts.Places;
@@ -19,26 +21,28 @@ public sealed class GetEventByIdHandler(
 {
     public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
-        var @event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+        var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeTags().AsNoTracking();
+        var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
 
         if (@event == null)
             throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
 
         var dto = mapper.Map<EventDto>(@event);
 
-        if (@event.Booking == null)
-            return dto;
-
-        var place = await placeRepository.GetByIdAsync(@event.Booking.PlaceId, cancellationToken);
-
-        if (place == null)
-            throw new NotFoundException(PlaceErrors.NotFoundById(@event.Booking.PlaceId));
-
-        dto.PlaceInfo = new BookedPlaceDto
+        if (@event.Booking != null)
         {
-            PlaceId = place.Id,
-            Number = place.Number.Value
-        };
+            var placeByIdSpec = new PlaceByIdSpec(@event.Booking.PlaceId).AsNoTracking();
+            var place = await placeRepository.FirstOrDefaultAsync(placeByIdSpec, cancellationToken);
+
+            if (place == null)
+                throw new NotFoundException(PlaceErrors.NotFoundById(@event.Booking.PlaceId));
+
+            dto.PlaceInfo = new BookedPlaceDto
+            {
+                PlaceId = place.Id,
+                Number = place.Number.Value
+            };
+        }
 
         return dto;
     }

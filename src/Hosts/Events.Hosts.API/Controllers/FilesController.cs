@@ -3,7 +3,7 @@ using Events.Contracts.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Events.Hosts.API.Controllers.Files;
+namespace Events.Hosts.API.Controllers;
 
 /// <summary>
 ///     Контроллер файлов.

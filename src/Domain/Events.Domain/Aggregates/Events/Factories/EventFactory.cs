@@ -27,6 +27,7 @@ public static class EventFactory
     /// <param name="maxParticipants">Максимальное количество участников.</param>
     /// <param name="previewFilename">Название файла превью.</param>
     /// <param name="placeholderFilename">Название плейсхолдера превью.</param>
+    /// <param name="tags">Тэги мероприятия.</param>
     /// <returns>Объект сущности мероприятия.</returns>
     public static Event Create(
         string title,
@@ -42,7 +43,8 @@ public static class EventFactory
         int? placeId = null,
         int? maxParticipants = null,
         string? previewFilename = null,
-        string? placeholderFilename = null)
+        string? placeholderFilename = null,
+        IReadOnlyCollection<Tag>? tags = null)
     {
         ValidatePreview(previewFilename, placeholderFilename);
         ValidateRegistration(needRegistration, maxParticipants);
@@ -66,6 +68,10 @@ public static class EventFactory
 
         if (locationId.HasValue && placeId.HasValue)
             @event.Book(locationId.Value, placeId.Value);
+
+        if (tags != null && tags.Count > 0)
+            foreach (var tag in tags)
+                @event.AddTag(tag);
 
         return @event;
     }

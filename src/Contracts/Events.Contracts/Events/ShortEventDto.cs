@@ -1,4 +1,5 @@
 ﻿using Events.Contracts.Files;
+using Events.Contracts.Tags;
 
 namespace Events.Contracts.Events;
 
@@ -51,4 +52,9 @@ public sealed record ShortEventDto
     ///     Создатель.
     /// </summary>
     public Guid UserId { get; init; }
+
+    /// <summary>
+    ///     Тэги.
+    /// </summary>
+    public IReadOnlyCollection<TagDto>? Tags { get; init; }
 }

@@ -10,4 +10,9 @@ public static class EventErrors
     {
         return new Error("Event.NotFoundById", $"Мероприятие с ID: {eventId} не найдено.");
     }
+
+    public static Error TagNotFoundById(int tagId)
+    {
+        return new Error("Event.TagNotFoundById", $"Тэг с ID: {tagId} в данном мероприятии не найден.");
+    }
 }

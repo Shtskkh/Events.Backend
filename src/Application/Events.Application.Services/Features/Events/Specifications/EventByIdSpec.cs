@@ -16,6 +16,12 @@ public sealed class EventByIdSpec : Specification<Event>
         return this;
     }
 
+    public EventByIdSpec IncludeTags()
+    {
+        Query.Include(e => e.Tags);
+        return this;
+    }
+
     public new EventByIdSpec AsNoTracking()
     {
         Query.AsNoTracking();
