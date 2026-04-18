@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 namespace Events.Contracts.Locations;
 
 /// <summary>
-///     Модель создания локации.
+///     Форма создания локации.
 /// </summary>
 public sealed record CreateLocationDto
 {
@@ -22,7 +22,7 @@ public sealed record CreateLocationDto
     public required string Address { get; init; }
 
     /// <summary>
-    ///     Фото.
+    ///     Фотографии (необязательно).
     /// </summary>
     public IFormFileCollection? Photos { get; set; }
 }

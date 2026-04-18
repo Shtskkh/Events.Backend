@@ -3,22 +3,22 @@
 namespace Events.Contracts.Equipment;
 
 /// <summary>
-///     Модель фильтра оборудования.
+///     Форма фильтра оборудования.
 /// </summary>
 public sealed record EquipmentFilterDto : IPagination
 {
     /// <summary>
-    ///     Инвентарный номер.
+    ///     Инвентарный номер (необязательно).
     /// </summary>
     public string? InventoryNumber { get; init; }
 
     /// <summary>
-    ///     Тип оборудования.
+    ///     Тип оборудования (необязательно).
     /// </summary>
     public int? EquipmentTypeId { get; init; }
 
     /// <summary>
-    ///     ID помещения.
+    ///     ID помещения (необязательно).
     /// </summary>
     public int? PlaceId { get; init; }
 

@@ -4,7 +4,7 @@ using Events.Domain.Shared.ValueObjects;
 namespace Events.Contracts.Users;
 
 /// <summary>
-///     Модель изменения пароля.
+///     Форма изменения пароля пользователя.
 /// </summary>
 public sealed record ChangePasswordDto
 {

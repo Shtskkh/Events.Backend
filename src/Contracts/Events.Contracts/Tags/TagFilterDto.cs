@@ -5,7 +5,7 @@ namespace Events.Contracts.Tags;
 public sealed record TagFilterDto : IPagination
 {
     /// <summary>
-    ///     Название тэга.
+    ///     Название тэга (необязательно).
     /// </summary>
     public string? TitleLike { get; init; }
 

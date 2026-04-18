@@ -4,57 +4,57 @@ using Events.Contracts.Shared;
 namespace Events.Contracts.Events;
 
 /// <summary>
-///     Фильтр мероприятий.
+///     Форма фильтра мероприятий.
 /// </summary>
 public sealed record EventFilterDto : IPagination
 {
     /// <summary>
-    ///     Текст.
+    ///     Текст (необязательно).
     /// </summary>
     public string? Text { get; init; }
 
     /// <summary>
-    ///     Дата начала.
+    ///     Дата и время начала (необязательно).
     /// </summary>
     public DateTimeOffset? StartDateTime { get; init; }
 
     /// <summary>
-    ///     Дата окончания.
+    ///     Дата и время окончания (необязательно).
     /// </summary>
     public DateTimeOffset? EndDateTime { get; init; }
 
     /// <summary>
-    ///     Тип мероприятия.
+    ///     ID типа мероприятия (необязательно).
     /// </summary>
     public int? TypeId { get; init; }
 
     /// <summary>
-    ///     Формат мероприятия.
+    ///     ID формата мероприятия (необязательно).
     /// </summary>
     public int? FormatId { get; init; }
 
     /// <summary>
-    ///     ID создателя мероприятия.
+    ///     ID создателя мероприятия (необязательно).
     /// </summary>
     public Guid? UserId { get; init; }
 
     /// <summary>
-    ///     ID локации.
+    ///     ID локации (необязательно).
     /// </summary>
     public int? LocationId { get; init; }
 
     /// <summary>
-    ///     ID помещения.
+    ///     ID помещения (необязательно).
     /// </summary>
     public int? PlaceId { get; init; }
 
     /// <summary>
-    ///     Дата создания после.
+    ///     Дата и время начала периода создания (необязательно).
     /// </summary>
     public DateTimeOffset? CreatedAfter { get; init; }
 
     /// <summary>
-    ///     Дата создания до.
+    ///     Дата и время начала периода создания (необязательно).
     /// </summary>
     public DateTimeOffset? CreatedBefore { get; init; }
 

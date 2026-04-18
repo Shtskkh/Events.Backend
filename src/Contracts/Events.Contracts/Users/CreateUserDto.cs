@@ -40,7 +40,7 @@ public sealed record CreateUserDto
     public required string Password { get; set; }
 
     /// <summary>
-    ///     Аватар пользователя.
+    ///     Файл аватара пользователя (необязательно).
     /// </summary>
     public IFormFile? Avatar { get; set; }
 }

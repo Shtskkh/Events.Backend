@@ -4,7 +4,7 @@ using Events.Contracts.Shared;
 namespace Events.Contracts.Users;
 
 /// <summary>
-///     Фильтр пользователей.
+///     Форма фильтра пользователей.
 /// </summary>
 public sealed record UserFilterDto : IPagination
 {

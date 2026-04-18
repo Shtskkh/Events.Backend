@@ -1,4 +1,4 @@
-﻿using Events.Application.Services.Features.Events.Commands.AddParticipant;
+using Events.Application.Services.Features.Events.Commands.AddParticipant;
 using Events.Application.Services.Features.Events.Commands.AddTag;
 using Events.Application.Services.Features.Events.Commands.Create;
 using Events.Application.Services.Features.Events.Commands.Delete;
@@ -26,153 +26,111 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Events.Hosts.API.Controllers;
 
-/// <summary>
-///     Контроллер мероприятий.
-/// </summary>
-/// <param name="mediator">Медиатор.</param>
 [ApiController]
 [Route("api/v/1/[controller]")]
-[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError, "application/problem+json",
-    Description = "Неожиданная ошибка сервера.")]
-public class EventsController(IMediator mediator, ILogger<EventsController> logger) : ControllerBase
+[ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+public class EventsController(IMediator mediator) : ControllerBase
 {
     /// <summary>
-    ///     Получить мероприятия, удовлетворяющие фильтру.
+    ///     Создать мероприятие.
     /// </summary>
-    /// <param name="filter">Фильтр.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns> Коллекция мероприятий.</returns>
-    [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyCollection<ShortEventDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятия по заданному фильтру не найдены.")]
-    public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto filter,
-        CancellationToken cancellationToken)
+    /// <param name="createEventDto">Форма создания мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>UUID созданного мероприятия.</returns>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto createEventDto, CancellationToken ct)
     {
-        var events = await mediator.Send(new GetEventsByFilterQuery(filter), cancellationToken);
-
-        return Ok(events);
+        var eventId = await mediator.Send(new CreateEventCommand(createEventDto), ct);
+        return StatusCode(StatusCodes.Status201Created, eventId);
     }
 
     /// <summary>
-    ///     Получить аналитику тэгов мероприятий.
+    ///     Получить мероприятия по фильтру.
     /// </summary>
-    /// <param name="from">С какой даты.</param>
-    /// <param name="to">До какой даты.</param>
-    /// <param name="top">Топ выборки.</param>
-    /// <returns></returns>
-    [HttpGet("tags/analytics")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<TagAnalytics>))]
-    public async Task<IActionResult> GetTagsAnalyticsAsync(
-        [FromQuery] DateTimeOffset? from,
-        [FromQuery] DateTimeOffset? to,
-        [FromQuery] int? top)
+    /// <param name="eventFilterDto">Фильтр для выборки мероприятий.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция мероприятий.</returns>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<ShortEventDto>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByFilterAsync([FromQuery] EventFilterDto eventFilterDto, CancellationToken ct)
     {
-        var analytics = await mediator.Send(new GetEventsTagsAnalyticsQuery(from, to, top));
-        return Ok(analytics);
+        var events = await mediator.Send(new GetEventsByFilterQuery(eventFilterDto), ct);
+        return Ok(events);
     }
 
     /// <summary>
     ///     Получить мероприятие по ID.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Полная информация о мероприятии. </returns>
-    [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK, "application/json", Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие не найдено.")]
-    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Полная информация о мероприятии.</returns>
+    [HttpGet("{eventId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EventDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetByIdAsync(Guid eventId, CancellationToken ct)
     {
-        var @event = await mediator.Send(new GetEventByIdQuery(id), cancellationToken);
-
+        var @event = await mediator.Send(new GetEventByIdQuery(eventId), ct);
         return Ok(@event);
     }
 
     /// <summary>
-    ///     Получить аналитику.
+    ///     Получить аналитику мероприятия.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Модель аналитики.</returns>
-    [HttpGet("{id:guid}/analytics")]
-    [ProducesResponseType(typeof(EventAnalyticsDto), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие не найдено.")]
-    public async Task<IActionResult> GetAnalyticsAsync(Guid id, CancellationToken cancellationToken)
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Модель аналитики мероприятия.</returns>
+    [HttpGet("{eventId:guid}/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EventAnalyticsDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetAnalyticsAsync(Guid eventId, CancellationToken ct)
     {
-        var analytics = await mediator.Send(new GetEventAnalyticsQuery(id), cancellationToken);
-
+        var analytics = await mediator.Send(new GetEventAnalyticsQuery(eventId), ct);
         return Ok(analytics);
     }
 
     /// <summary>
-    ///     Создать мероприятие.
-    /// </summary>
-    /// <param name="dto">Форма создания мероприятия.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>UUID созданного мероприятия.</returns>
-    [HttpPost]
-    [Consumes("multipart/form-data")]
-    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created, "text/plain",
-        Description = "Мероприятие создано.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    public async Task<IActionResult> CreateAsync([FromForm] CreateEventDto dto, CancellationToken cancellationToken)
-    {
-        var id = await mediator.Send(new CreateEventCommand(dto), cancellationToken);
-
-        return StatusCode(StatusCodes.Status201Created, id);
-    }
-
-
-    /// <summary>
     ///     Обновить мероприятие.
     /// </summary>
-    /// <param name="id">Идентификатор.</param>
-    /// <param name="dto">Модель обновления.</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    [HttpPatch("{id:guid}")]
-    [Consumes("multipart/form-data")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие не найдено.")]
-    public async Task<IActionResult> UpdateAsync(Guid id, [FromForm] UpdateEventDto dto,
-        CancellationToken cancellationToken)
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="updateEventDto">Форма обновления мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    [HttpPatch("{eventId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> UpdateAsync(Guid eventId, [FromForm] UpdateEventDto updateEventDto,
+        CancellationToken ct)
     {
-        await mediator.Send(new UpdateEventCommand(id, dto), cancellationToken);
-
+        await mediator.Send(new UpdateEventCommand(eventId, updateEventDto), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Удалить мероприятие.
     /// </summary>
-    /// <param name="id">Идентификатор мероприятия.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    [HttpDelete("{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Успешное удаление.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие не найдено.")]
-    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    [HttpDelete("{eventId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> DeleteAsync(Guid eventId, CancellationToken ct)
     {
-        await mediator.Send(new DeleteEventQuery(id), cancellationToken);
-
+        await mediator.Send(new DeleteEventQuery(eventId), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Добавить тэг мероприятию.
     /// </summary>
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="tagId">Идентификатор тэга.</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpPost("{eventId:guid}/tags/{tagId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
@@ -184,8 +142,32 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     }
 
     /// <summary>
+    ///     Получить аналитику тэгов мероприятий.
+    /// </summary>
+    /// <param name="from">Начало периода (необязательно).</param>
+    /// <param name="to">Окончание периода (необязательно).</param>
+    /// <param name="top">Количество записей в выборке (необязательно).</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция тэгов с количеством использований за период.</returns>
+    [HttpGet("tags/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<TagAnalytics>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetTagsAnalyticsAsync(
+        [FromQuery] DateTimeOffset? from,
+        [FromQuery] DateTimeOffset? to,
+        [FromQuery] int? top,
+        CancellationToken ct)
+    {
+        var analytics = await mediator.Send(new GetEventsTagsAnalyticsQuery(from, to, top), ct);
+        return Ok(analytics);
+    }
+
+    /// <summary>
     ///     Удалить тэг мероприятия.
     /// </summary>
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="tagId">Идентификатор тэга.</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpDelete("{eventId:guid}/tags/{tagId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
@@ -196,165 +178,130 @@ public class EventsController(IMediator mediator, ILogger<EventsController> logg
     }
 
     /// <summary>
-    ///     Получить участников мероприятия.
-    /// </summary>
-    /// <param name="id">Идентификатор мероприятия.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция участников мероприятия.</returns>
-    [HttpGet("{id:guid}/participants")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<ParticipantDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие или участники не найдены.")]
-    public async Task<IActionResult> GetParticipants(Guid id, CancellationToken cancellationToken)
-    {
-        var participants = await mediator.Send(new GetParticipantsQuery(id), cancellationToken);
-
-        return Ok(participants);
-    }
-
-    /// <summary>
     ///     Зарегистрироваться на мероприятие.
     /// </summary>
     /// <param name="eventId">Идентификатор мероприятия.</param>
-    /// <param name="participantId">Идентификатор участника.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="participantId">Идентификатор участника (пользователя).</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpPost("{eventId:guid}/participants")]
-    [ProducesResponseType(StatusCodes.Status201Created, Description = "Участник добавлен.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest, "application/problem+json",
-        Description = "Неправильный запрос.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие или пользователь не найден.")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
     public async Task<IActionResult> AddParticipantAsync([FromRoute] Guid eventId, [FromQuery] Guid participantId,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        await mediator.Send(new AddParticipantCommand(eventId, participantId), cancellationToken);
-
+        await mediator.Send(new AddParticipantCommand(eventId, participantId), ct);
         return Created();
+    }
+
+    /// <summary>
+    ///     Получить участников мероприятия.
+    /// </summary>
+    /// <param name="eventId">Идентификатор мероприятия.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция участников мероприятия.</returns>
+    [HttpGet("{eventId:guid}/participants")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<ParticipantDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetParticipantsAsync(Guid eventId, CancellationToken ct)
+    {
+        var participants = await mediator.Send(new GetParticipantsQuery(eventId), ct);
+        return Ok(participants);
     }
 
     /// <summary>
     ///     Покинуть мероприятие.
     /// </summary>
     /// <param name="eventId">Идентификатор мероприятия.</param>
-    /// <param name="participantId">Идентификатор участника.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="participantId">Идентификатор участника (пользователя).</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpDelete("{eventId:guid}/participants")]
-    [ProducesResponseType(StatusCodes.Status200OK, Description = "Мероприятие создано.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Мероприятие или пользователь не найден.")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
     public async Task<IActionResult> RemoveParticipantAsync([FromRoute] Guid eventId, [FromQuery] Guid participantId,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        await mediator.Send(new RemoveParticipantCommand(eventId, participantId), cancellationToken);
-
+        await mediator.Send(new RemoveParticipantCommand(eventId, participantId), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Получить все типы мероприятий.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="ct">Токен отмены.</param>
     /// <returns>Коллекция типов мероприятий.</returns>
-    [HttpGet("Types")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Типы мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllTypesAsync(CancellationToken cancellationToken)
+    [HttpGet("types")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EventTypeDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetAllTypesAsync(CancellationToken ct)
     {
-        var types = await mediator.Send(new GetEventsTypesQuery(), cancellationToken);
-
-        if (types.Count == 0) return NotFound();
-
+        var types = await mediator.Send(new GetEventsTypesQuery(), ct);
         return Ok(types);
     }
 
     /// <summary>
     ///     Получить аналитику по типам мероприятий.
     /// </summary>
-    /// <param name="start">Начало периода. Необязательный.</param>
-    /// <param name="end">Окончание периода.Необязательный.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция типов мероприятий с количеством за период (если указан).</returns>
-    [HttpGet("Types/Analytics")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventTypeAnalyticsDto>),
-        StatusCodes.Status200OK,
-        "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto),
-        StatusCodes.Status404NotFound,
-        "application/problem+json",
-        Description = "Мероприятия за данный период не были найдены.")]
-    public async Task<IActionResult> GetTypesAnalytics(
+    /// <param name="start">Начало периода (необязательно).</param>
+    /// <param name="end">Окончание периода (необязательно).</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция типов мероприятий с количеством за период.</returns>
+    [HttpGet("types/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EventTypeAnalyticsDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetTypesAnalyticsAsync(
         [FromQuery] DateTimeOffset? start,
         [FromQuery] DateTimeOffset? end,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        var analytics = await mediator.Send(new GetEventTypesAnalytics(start, end), cancellationToken);
-
+        var analytics = await mediator.Send(new GetEventTypesAnalytics(start, end), ct);
         return Ok(analytics);
     }
 
     /// <summary>
     ///     Получить все форматы мероприятий.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="ct">Токен отмены.</param>
     /// <returns>Коллекция форматов мероприятий.</returns>
-    [HttpGet("Formats")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatDto>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Форматы мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllFormatsAsync(CancellationToken cancellationToken)
+    [HttpGet("formats")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EventFormatDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetAllFormatsAsync(CancellationToken ct)
     {
-        var formats = await mediator.Send(new GetEventsFormatsQuery(), cancellationToken);
-
-        if (formats.Count == 0) return NotFound();
-
+        var formats = await mediator.Send(new GetEventsFormatsQuery(), ct);
         return Ok(formats);
     }
 
     /// <summary>
     ///     Получить аналитику по форматам мероприятий.
     /// </summary>
-    /// <param name="start">Начало периода (не обязательно).</param>
-    /// <param name="end">Окончание периода (не обязательно).</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция типов мероприятий с количеством за период (если указан).</returns>
-    [HttpGet("Formats/Analytics")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<EventFormatAnalyticsDto>),
-        StatusCodes.Status200OK,
-        "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto),
-        StatusCodes.Status404NotFound,
-        "application/problem+json",
-        Description = "Мероприятия за данный период не были найдены.")]
-    public async Task<IActionResult> GetFormatsAnalytics(
+    /// <param name="start">Начало периода (необязательно).</param>
+    /// <param name="end">Окончание периода (необязательно).</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция форматов мероприятий с количеством за период.</returns>
+    [HttpGet("formats/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<EventFormatAnalyticsDto>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetFormatsAnalyticsAsync(
         [FromQuery] DateTimeOffset? start,
         [FromQuery] DateTimeOffset? end,
-        CancellationToken cancellationToken)
+        CancellationToken ct)
     {
-        var analytics = await mediator.Send(new GetEventFormatsAnalyticsQuery(start, end), cancellationToken);
-
+        var analytics = await mediator.Send(new GetEventFormatsAnalyticsQuery(start, end), ct);
         return Ok(analytics);
     }
 
     /// <summary>
     ///     Получить ключи файлов плейсхолдеров для мероприятий.
     /// </summary>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>Коллекция плейсхолдеров.</returns>
-    [HttpGet("Placeholders")]
-    [ProducesResponseType(typeof(IReadOnlyCollection<string>), StatusCodes.Status200OK, "application/json",
-        Description = "Успех.")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound, "application/problem+json",
-        Description = "Плейсхолдеры мероприятий не найдены.")]
-    public async Task<IActionResult> GetAllEventsPlaceholders(CancellationToken cancellationToken)
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция ключей плейсхолдеров.</returns>
+    [HttpGet("placeholders")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<string>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> GetAllPlaceholdersAsync(CancellationToken ct)
     {
-        var dtoList = await mediator.Send(new GetEventsPlaceholdersQuery(), cancellationToken);
-
-        return Ok(dtoList);
+        var placeholders = await mediator.Send(new GetEventsPlaceholdersQuery(), ct);
+        return Ok(placeholders);
     }
 }

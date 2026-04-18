@@ -1,7 +1,7 @@
 ﻿namespace Events.Contracts.Users;
 
 /// <summary>
-///     Модель аутентификации пользователя.
+///     Форма аутентификации пользователя.
 /// </summary>
 public sealed record AuthDto
 {

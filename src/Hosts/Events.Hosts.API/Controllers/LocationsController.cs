@@ -1,4 +1,4 @@
-﻿using Events.Application.Services.Features.Locations.Commands.Create;
+using Events.Application.Services.Features.Locations.Commands.Create;
 using Events.Application.Services.Features.Locations.Commands.Delete;
 using Events.Application.Services.Features.Locations.Commands.Update;
 using Events.Application.Services.Features.Locations.Queries.GetAll;
@@ -27,6 +27,9 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Создать локацию.
     /// </summary>
+    /// <param name="createLocationDto">Форма создания локации.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Идентификатор созданной локации.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
@@ -40,6 +43,8 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить все локации.
     /// </summary>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция локаций.</returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<ShortLocationDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
@@ -52,6 +57,9 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить локацию по ID.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Полная информация о локации.</returns>
     [HttpGet("{locationId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LocationDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
@@ -64,33 +72,41 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Обновить локацию.
     /// </summary>
-    [HttpPatch("{id:int}")]
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="dto">Форма обновления локации.</param>
+    /// <param name="ct">Токен отмены.</param>
+    [HttpPatch("{locationId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> UpdateAsync(int id, [FromForm] UpdateLocationDto updateDto,
-        CancellationToken ct)
+    public async Task<IActionResult> UpdateAsync(int locationId, [FromForm] UpdateLocationDto dto, CancellationToken ct)
     {
-        await mediator.Send(new UpdateLocationCommand(id, updateDto), ct);
+        await mediator.Send(new UpdateLocationCommand(locationId, dto), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Удалить локацию.
     /// </summary>
-    [HttpDelete("{id:int}")]
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="ct">Токен отмены.</param>
+    [HttpDelete("{locationId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> DeleteAsync(int id, CancellationToken ct)
+    public async Task<IActionResult> DeleteAsync(int locationId, CancellationToken ct)
     {
-        await mediator.Send(new DeleteLocationCommand(id), ct);
+        await mediator.Send(new DeleteLocationCommand(locationId), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Создать помещение в локации.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="dto">Форма создания помещения.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Идентификатор созданного помещения.</returns>
     [HttpPost("{locationId:int}/places")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(int))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
@@ -99,17 +115,20 @@ public class LocationsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> CreatePlaceAsync([FromRoute] int locationId, [FromForm] CreatePlaceDto dto,
         CancellationToken ct)
     {
-        var id = await mediator.Send(new CreatePlaceCommand(locationId, dto), ct);
-        return StatusCode(StatusCodes.Status201Created, id);
+        var placeId = await mediator.Send(new CreatePlaceCommand(locationId, dto), ct);
+        return StatusCode(StatusCodes.Status201Created, placeId);
     }
 
     /// <summary>
     ///     Получить все помещения в локации.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция помещений локации.</returns>
     [HttpGet("{locationId:int}/places")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyList<ShortPlaceDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> GetAllPlaces(int locationId, CancellationToken ct)
+    public async Task<IActionResult> GetAllPlacesAsync(int locationId, CancellationToken ct)
     {
         var places = await mediator.Send(new GetLocationPlacesQuery(locationId), ct);
         return Ok(places);
@@ -118,15 +137,19 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить доступные для бронирования помещения.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="start">Начало запрашиваемого периода.</param>
+    /// <param name="end">Окончание запрашиваемого периода.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция помещений с информацией о доступности.</returns>
     [HttpGet("{locationId:int}/places/availability")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<PlaceAvailabilityDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> GetPlacesAvailability(
+    public async Task<IActionResult> GetPlacesAvailabilityAsync(
         [FromRoute] int locationId,
         [FromQuery] DateTimeOffset start,
         [FromQuery] DateTimeOffset end,
-        CancellationToken ct
-    )
+        CancellationToken ct)
     {
         var places = await mediator.Send(new GetAvailablePlacesQuery(locationId, start, end), ct);
         return Ok(places);
@@ -135,10 +158,14 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить помещение по ID.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Полная информация о помещении.</returns>
     [HttpGet("{locationId:int}/places/{placeId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlaceDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> GetPlaceById(int locationId, int placeId, CancellationToken ct)
+    public async Task<IActionResult> GetPlaceByIdAsync(int locationId, int placeId, CancellationToken ct)
     {
         var place = await mediator.Send(new GetPlaceByIdQuery(placeId), ct);
         return Ok(place);
@@ -147,23 +174,30 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Обновить помещение.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="dto">Форма обновления помещения.</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpPatch("{locationId:int}/places/{placeId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlaceDto))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> UpdatePlaceAsync(int locationId, int placeId, [FromForm] UpdatePlaceDto updateDto,
+    public async Task<IActionResult> UpdatePlaceAsync(int locationId, int placeId, [FromForm] UpdatePlaceDto dto,
         CancellationToken ct)
     {
-        await mediator.Send(new UpdatePlaceCommand(placeId, updateDto), ct);
+        await mediator.Send(new UpdatePlaceCommand(placeId, dto), ct);
         return Ok();
     }
 
     /// <summary>
     ///     Удалить помещение.
     /// </summary>
+    /// <param name="locationId">Идентификатор локации.</param>
+    /// <param name="placeId">Идентификатор помещения.</param>
+    /// <param name="ct">Токен отмены.</param>
     [HttpDelete("{locationId:int}/places/{placeId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlaceDto))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
     public async Task<IActionResult> DeletePlaceAsync(int locationId, int placeId, CancellationToken ct)
     {
@@ -174,10 +208,12 @@ public class LocationsController(IMediator mediator) : ControllerBase
     /// <summary>
     ///     Получить все типы помещений.
     /// </summary>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция типов помещений.</returns>
     [HttpGet("places/types")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<PlaceTypeDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
-    public async Task<IActionResult> GetAllPlacesTypes(CancellationToken ct)
+    public async Task<IActionResult> GetAllPlacesTypesAsync(CancellationToken ct)
     {
         var types = await mediator.Send(new GetPlacesTypesQuery(), ct);
         return Ok(types);

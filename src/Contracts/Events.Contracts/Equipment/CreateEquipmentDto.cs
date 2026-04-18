@@ -4,7 +4,7 @@ using Events.Domain.Aggregates.Equipment.ValueObjects;
 namespace Events.Contracts.Equipment;
 
 /// <summary>
-///     Модель создания оборудования.
+///     Форма создания оборудования.
 /// </summary>
 public sealed record CreateEquipmentDto
 {
@@ -26,7 +26,7 @@ public sealed record CreateEquipmentDto
     public required int EquipmentTypeId { get; init; }
 
     /// <summary>
-    ///     ID помещения для привязки.
+    ///     ID помещения для привязки (необязательно).
     /// </summary>
     public int? PlaceId { get; init; }
 }
