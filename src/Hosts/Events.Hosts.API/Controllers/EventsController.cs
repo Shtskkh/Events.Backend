@@ -13,6 +13,7 @@ using Events.Application.Services.Features.Events.Queries.GetFormats;
 using Events.Application.Services.Features.Events.Queries.GetLocationAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Application.Services.Features.Events.Queries.GetPlaceholders;
+using Events.Application.Services.Features.Events.Queries.GetPlacesAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetTagsAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetTypes;
 using Events.Application.Services.Features.Events.Queries.GetTypesAnalytics;
@@ -22,6 +23,7 @@ using Events.Contracts.Events.EventsFormats;
 using Events.Contracts.Events.EventsTypes;
 using Events.Contracts.Events.Participants;
 using Events.Contracts.Locations;
+using Events.Contracts.Places;
 using Events.Contracts.Tags;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -320,6 +322,24 @@ public class EventsController(IMediator mediator) : ControllerBase
         [FromQuery] DateTimeOffset? from, [FromQuery] DateTimeOffset? to, CancellationToken ct)
     {
         var analytics = await mediator.Send(new GetEventsLocationsAnalyticsQuery(from, to), ct);
+        return Ok(analytics);
+    }
+
+    /// <summary>
+    ///     Получить аналитику по помещениям мероприятий.
+    /// </summary>
+    /// <param name="from">Начало периода (необязательно).</param>
+    /// <param name="to">Окончание периода (необязательно).</param>
+    /// <param name="top">Количество записей в выборке (необязательно).</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция помещений с количеством их использования за период.</returns>
+    [HttpGet("places/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<PlaceAnalyticsDto>))]
+    public async Task<IActionResult> GetPlacesAnalyticsAsync(
+        [FromQuery] DateTimeOffset? from, [FromQuery] DateTimeOffset? to, [FromQuery] int? top,
+        CancellationToken ct)
+    {
+        var analytics = await mediator.Send(new GetEventsPlacesAnalyticsQuery(from, to, top), ct);
         return Ok(analytics);
     }
 }
