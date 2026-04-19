@@ -10,6 +10,7 @@ using Events.Application.Services.Features.Events.Queries.GetById;
 using Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetEventFormatsAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetFormats;
+using Events.Application.Services.Features.Events.Queries.GetLocationAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
 using Events.Application.Services.Features.Events.Queries.GetPlaceholders;
 using Events.Application.Services.Features.Events.Queries.GetTagsAnalytics;
@@ -20,6 +21,7 @@ using Events.Contracts.Events;
 using Events.Contracts.Events.EventsFormats;
 using Events.Contracts.Events.EventsTypes;
 using Events.Contracts.Events.Participants;
+using Events.Contracts.Locations;
 using Events.Contracts.Tags;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -303,5 +305,21 @@ public class EventsController(IMediator mediator) : ControllerBase
     {
         var placeholders = await mediator.Send(new GetEventsPlaceholdersQuery(), ct);
         return Ok(placeholders);
+    }
+
+    /// <summary>
+    ///     Получить аналитику по локациям мероприятий.
+    /// </summary>
+    /// <param name="from">Начало периода (необязательно).</param>
+    /// <param name="to">Окончание периода (необязательно).</param>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Коллекция локаций с количеством их использования за период.</returns>
+    [HttpGet("locations/analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<LocationAnalyticsDto>))]
+    public async Task<IActionResult> GetLocationsAnalyticsAsync(
+        [FromQuery] DateTimeOffset? from, [FromQuery] DateTimeOffset? to, CancellationToken ct)
+    {
+        var analytics = await mediator.Send(new GetEventsLocationsAnalyticsQuery(from, to), ct);
+        return Ok(analytics);
     }
 }
