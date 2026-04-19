@@ -26,7 +26,8 @@ public class GetEventsLocationsAnalyticsHandler(
             return source
                 .Where(e => e.Booking != null)
                 .GroupBy(e => e.Booking.LocationId)
-                .Select(g => new LocationCount(g.Key, g.Count()));
+                .Select(g => new LocationCount(g.Key, g.Count()))
+                .OrderByDescending(lc => lc.Count);
         });
 
         var analytics = await eventRepository.QueryAsync(query, cancellationToken);
