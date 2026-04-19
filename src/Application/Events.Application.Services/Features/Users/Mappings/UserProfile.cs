@@ -6,10 +6,8 @@ using Events.Domain.Aggregates.Users;
 
 namespace Events.Application.Services.Features.Users.Mappings;
 
-/// <inheritdoc />
 public class UserProfile : Profile
 {
-    /// <inheritdoc />
     public UserProfile()
     {
         CreateMap<User, ShortUserDto>()
@@ -20,7 +18,7 @@ public class UserProfile : Profile
             .ForMember(dest => dest.Patronymic,
                 opt => opt.MapFrom(src => src.PersonName.Patronymic))
             .ForMember(dest => dest.AvatarInfo,
-                opt => opt.MapFrom(src => src.AvatarFilename != null
+                opt => opt.MapFrom(src => !string.IsNullOrWhiteSpace(src.AvatarFilename)
                     ? new S3FileDto
                     {
                         Bucket = S3Buckets.UsersAvatars,
@@ -37,7 +35,7 @@ public class UserProfile : Profile
                 opt => opt.MapFrom(src => src.PersonName.Patronymic))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email.Value))
             .ForMember(dest => dest.AvatarInfo,
-                opt => opt.MapFrom(src => src.AvatarFilename != null
+                opt => opt.MapFrom(src => !string.IsNullOrWhiteSpace(src.AvatarFilename)
                     ? new S3FileDto
                     {
                         Bucket = S3Buckets.UsersAvatars,

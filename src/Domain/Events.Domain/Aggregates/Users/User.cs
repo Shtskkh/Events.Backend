@@ -79,9 +79,12 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
     /// <param name="firstName">Имя.</param>
     /// <param name="lastName">Фамилия.</param>
     /// <param name="patronymic">Отчество.</param>
-    public void ChangePersonName(string firstName, string lastName, string? patronymic = null)
+    public void ChangePersonName(string? firstName, string? lastName, string? patronymic = null)
     {
-        PersonName = new PersonName(firstName, lastName, patronymic);
+        PersonName = new PersonName(
+            firstName ?? PersonName.FirstName,
+            lastName ?? PersonName.LastName,
+            patronymic ?? PersonName.Patronymic);
     }
 
     /// <summary>
@@ -117,5 +120,10 @@ public class User : Entity<Guid>, IAggregateRoot, IAuditable
             throw new DomainException(UserErrors.RoleAlreadyAssigned);
 
         Role = role;
+    }
+
+    public void ChangeAvatar(string avatarFilename)
+    {
+        AvatarFilename = avatarFilename;
     }
 }

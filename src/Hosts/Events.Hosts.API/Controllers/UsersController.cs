@@ -2,6 +2,7 @@ using Events.Application.Services.Features.Users.Commands.Auth;
 using Events.Application.Services.Features.Users.Commands.ChangePassword;
 using Events.Application.Services.Features.Users.Commands.Create;
 using Events.Application.Services.Features.Users.Commands.Delete;
+using Events.Application.Services.Features.Users.Commands.Update;
 using Events.Application.Services.Features.Users.Queries.GetByFilter;
 using Events.Application.Services.Features.Users.Queries.GetById;
 using Events.Application.Services.Features.Users.Queries.GetRecentViewedEvents;
@@ -100,11 +101,18 @@ public class UsersController(IMediator mediator) : ControllerBase
     ///     Обновить пользователя.
     /// </summary>
     /// <param name="userId">Идентификатор пользователя.</param>
+    /// <param name="updateUserDto">Форма обновления пользователя.</param>
     /// <param name="ct">Токен отмены.</param>
     [HttpPatch("{userId:guid}")]
-    public async Task<IActionResult> UpdateAsync(Guid userId, CancellationToken ct)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ErrorDto))]
+    public async Task<IActionResult> UpdateAsync(Guid userId, [FromForm] UpdateUserDto updateUserDto,
+        CancellationToken ct)
     {
-        throw new NotImplementedException();
+        await mediator.Send(new UpdateUserCommand(userId, updateUserDto), ct);
+        return Ok();
     }
 
     /// <summary>
