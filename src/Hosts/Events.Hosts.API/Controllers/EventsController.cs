@@ -9,6 +9,7 @@ using Events.Application.Services.Features.Events.Queries.GetByFilter;
 using Events.Application.Services.Features.Events.Queries.GetById;
 using Events.Application.Services.Features.Events.Queries.GetEventAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetEventFormatsAnalytics;
+using Events.Application.Services.Features.Events.Queries.GetEventsAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetFormats;
 using Events.Application.Services.Features.Events.Queries.GetLocationAnalytics;
 using Events.Application.Services.Features.Events.Queries.GetParticipants;
@@ -65,6 +66,19 @@ public class EventsController(IMediator mediator) : ControllerBase
     {
         var events = await mediator.Send(new GetEventsByFilterQuery(eventFilterDto), ct);
         return Ok(events);
+    }
+
+    /// <summary>
+    ///     Получить аналитику мероприятий.
+    /// </summary>
+    /// <param name="ct">Токен отмены.</param>
+    /// <returns>Общее количество мероприятий, количество предстоящих и завершённых.</returns>
+    [HttpGet("analytics")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EventsAnalyticsDto))]
+    public async Task<IActionResult> GetEventsAnalyticsAsync(CancellationToken ct)
+    {
+        var analytics = await mediator.Send(new GetEventsAnalyticsQuery(), ct);
+        return Ok(analytics);
     }
 
     /// <summary>
