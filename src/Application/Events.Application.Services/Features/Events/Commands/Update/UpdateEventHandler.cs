@@ -38,6 +38,8 @@ public sealed class UpdateEventHandler(IEventRepository eventRepository) : IRequ
                 @event.ChangeEndDateTime(dto.EndDateTime.Value);
         }
 
+        if (dto.FinalParticipantsCount.HasValue)
+            @event.ChangeFinalParticipantsCount(dto.FinalParticipantsCount.Value);
 
         await eventRepository.UpdateAsync(@event, cancellationToken);
     }

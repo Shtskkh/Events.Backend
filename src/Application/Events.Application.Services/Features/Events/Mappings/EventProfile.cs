@@ -28,6 +28,7 @@ public class EventProfile : Profile
                 opt => opt.MapFrom(e => e.Type.Title))
             .ForMember(dest => dest.Format,
                 opt => opt.MapFrom(e => e.Format.Title))
+            .ForMember(dest => dest.FinalParticipantsCount, opt => opt.MapFrom(src => src.FinalParticipantsCount))
             .ForMember(dest => dest.PreviewInfo,
                 opt =>
                     opt.MapFrom(src => src.PreviewFilename == null

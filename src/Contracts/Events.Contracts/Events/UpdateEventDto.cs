@@ -29,4 +29,9 @@ public sealed record UpdateEventDto
     ///     Дата и время окончания.
     /// </summary>
     public DateTimeOffset? EndDateTime { get; init; }
+
+    /// <summary>
+    ///     Количество пришедших.
+    /// </summary>
+    public int? FinalParticipantsCount { get; init; }
 }

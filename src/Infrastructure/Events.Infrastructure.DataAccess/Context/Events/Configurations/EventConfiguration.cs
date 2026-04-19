@@ -68,6 +68,8 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(e => e.MaxParticipants);
 
+        builder.Property(e => e.FinalParticipantsCount);
+
         builder.HasOne(e => e.Type)
             .WithMany()
             .IsRequired()

@@ -23,12 +23,17 @@ public sealed record EventAnalyticsDto
     public int? ParticipantsCount { get; init; }
 
     /// <summary>
-    ///     Просмотры по дням.
+    ///     Количество пришедших участников мероприятия.
     /// </summary>
-    public List<ViewsDto> Views { get; init; } = [];
+    public int? FinalParticipantsCount { get; init; }
 
     /// <summary>
     ///     Общее количество просмотров.
     /// </summary>
-    public long ViewsCount { get; init; }
+    public long? ViewsCount { get; init; }
+
+    /// <summary>
+    ///     Просмотры по дням.
+    /// </summary>
+    public List<ViewsDto>? Views { get; init; }
 }

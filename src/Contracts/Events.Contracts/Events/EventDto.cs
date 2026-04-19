@@ -68,4 +68,9 @@ public sealed record EventDto
     ///     Тэги.
     /// </summary>
     public IReadOnlyCollection<TagDto>? Tags { get; init; }
+
+    /// <summary>
+    ///     Количество пришедших людей.
+    /// </summary>
+    public int? FinalParticipantsCount { get; init; }
 }

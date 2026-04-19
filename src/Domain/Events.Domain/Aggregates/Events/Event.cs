@@ -93,6 +93,11 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
     public int? MaxParticipants { get; private set; }
 
     /// <summary>
+    ///     Пришедшее количество участников.
+    /// </summary>
+    public int? FinalParticipantsCount { get; private set; }
+
+    /// <summary>
     ///     Информация о бронировании.
     /// </summary>
     public Booking? Booking { get; private set; }
@@ -255,6 +260,15 @@ public sealed class Event : Entity<Guid>, IAuditable, IAggregateRoot
             throw new NotFoundException(EventParticipantErrors.NotFoundById(userId));
 
         _participants.Remove(participant);
+    }
+
+    /// <summary>
+    ///     Изменить финальное количество участников.
+    /// </summary>
+    /// <param name="finalParticipantsCount">Количество пришедших.</param>
+    public void ChangeFinalParticipantsCount(int finalParticipantsCount)
+    {
+        FinalParticipantsCount = finalParticipantsCount;
     }
 
     /// <summary>
