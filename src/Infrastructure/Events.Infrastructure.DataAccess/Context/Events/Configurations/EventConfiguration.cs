@@ -1,37 +1,108 @@
-﻿using Events.Domain.Aggregates.EventAggregate;
-using Events.Domain.Aggregates.EventAggregate.ValueObjects;
-using Events.Domain.Shared;
+﻿using Events.Domain.Aggregates.Events;
+using Events.Domain.Aggregates.Events.ValueObjects;
+using Events.Domain.Aggregates.Users;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Configurations;
 
+/// <summary>
+///     Конфигурация сущности мероприятия.
+/// </summary>
 public class EventConfiguration : IEntityTypeConfiguration<Event>
 {
+    /// <inheritdoc />
     public void Configure(EntityTypeBuilder<Event> builder)
     {
+        builder.ToTable("Events");
+
         builder.HasKey(e => e.Id);
 
-        builder.Property(e => e.Title)
-            .HasConversion(
-                v => v.Value,
-                v => new EventTitle(v)
-            )
-            .HasMaxLength(DomainConstraints.Event.Title.MaxLength)
+        builder.OwnsOne(e => e.Title)
+            .Property(t => t.Value)
+            .HasColumnName("Title")
+            .HasMaxLength(Title.MaxLength)
             .IsRequired();
 
-        builder.Property(e => e.Announcement)
-            .HasConversion(
-                v => v.Value,
-                v => new EventAnnouncement(v))
-            .HasMaxLength(DomainConstraints.Event.Announcement.MaxLength)
+        builder
+            .OwnsOne(e => e.Announcement)
+            .Property(a => a.Value)
+            .HasColumnName("Announcement")
+            .HasMaxLength(Announcement.MaxLength)
             .IsRequired();
 
-        builder.Property(e => e.Description)
-            .HasConversion(
-                v => v.Value,
-                v => new EventDescription(v))
-            .HasMaxLength(DomainConstraints.Event.Description.MaxLength)
+        builder
+            .OwnsOne(e => e.Description)
+            .Property(e => e.Value)
+            .HasColumnName("Description")
+            .HasMaxLength(Announcement.MaxLength)
+            .IsRequired();
+
+        builder.OwnsOne(e => e.DateTimeRange, rangeBuilder =>
+        {
+            rangeBuilder.Property(e => e.StartDateTime)
+                .HasColumnName("StartDateTime")
+                .IsRequired();
+
+            rangeBuilder.Property(e => e.EndDateTime)
+                .HasColumnName("EndDateTime")
+                .IsRequired();
+        });
+
+        builder.OwnsOne(e => e.Booking, bookingBuilder =>
+        {
+            bookingBuilder.Property(b => b.LocationId)
+                .HasColumnName("LocationId");
+
+            bookingBuilder.Property(b => b.PlaceId)
+                .HasColumnName("PlaceId");
+        });
+
+        builder.Property(e => e.PreviewFilename);
+
+        builder.Property(e => e.PlaceholderFilename);
+
+        builder.Property(e => e.NeedsRegistration)
+            .IsRequired();
+
+        builder.Property(e => e.MaxParticipants);
+
+        builder.Property(e => e.FinalParticipantsCount);
+
+        builder.HasOne(e => e.Type)
+            .WithMany()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Type).AutoInclude();
+
+        builder.HasOne(e => e.Format)
+            .WithMany()
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation(e => e.Format).AutoInclude();
+
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(e => e.Participants)
+            .WithOne()
+            .HasForeignKey(e => e.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(e => e.Tags)
+            .WithMany()
+            .UsingEntity(e => e.ToTable("EventsTags"));
+
+        builder.Property(e => e.CreatedAt)
+            .IsRequired()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Throw);
+
+        builder.Property(e => e.UpdatedAt)
             .IsRequired();
     }
 }

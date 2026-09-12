@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Events.Application.Services.Behaviors;
+using Events.Application.Services.Features.Tokens.Jwt;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -17,13 +19,24 @@ public static class ApplicationDiExtensions
         /// </summary>
         public void AddApplication()
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                cfg.AddOpenBehavior(typeof(AnalyticsBehavior<,>));
+            });
 
             services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()));
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationAutoValidation(options => { options.DisableBuiltInModelValidation = true; });
+
+            services.RegisterServices();
+        }
+
+        private void RegisterServices()
+        {
+            services.AddSingleton<IJwtTokenService, JwtTokenService>();
         }
     }
 }

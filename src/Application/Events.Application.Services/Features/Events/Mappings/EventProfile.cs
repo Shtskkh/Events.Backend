@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using Events.Contracts.Features.Events.DTOs;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Application.Services.Features.Files;
+using Events.Contracts.Events;
+using Events.Contracts.Files;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Mappings;
 
@@ -9,18 +11,64 @@ namespace Events.Application.Services.Features.Events.Mappings;
 /// </summary>
 public class EventProfile : Profile
 {
+    /// <inheritdoc />
     public EventProfile()
     {
         CreateMap<Event, EventDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Title,
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Description,
-                opt => opt.MapFrom(src => src.Description.Value));
+                opt => opt.MapFrom(src => src.Description.Value))
+            .ForMember(dest => dest.StartDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.StartDateTime))
+            .ForMember(dest => dest.EndDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.EndDateTime))
+            .ForMember(dest => dest.Type,
+                opt => opt.MapFrom(e => e.Type.Title))
+            .ForMember(dest => dest.Format,
+                opt => opt.MapFrom(e => e.Format.Title))
+            .ForMember(dest => dest.FinalParticipantsCount, opt => opt.MapFrom(src => src.FinalParticipantsCount))
+            .ForMember(dest => dest.PreviewInfo,
+                opt =>
+                    opt.MapFrom(src => src.PreviewFilename == null
+                        ? new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPlaceholders,
+                            Key = src.PlaceholderFilename
+                        }
+                        : new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPreviews,
+                            Key = src.PreviewFilename
+                        }));
+
 
         CreateMap<Event, ShortEventDto>()
             .ForMember(dest => dest.Title,
                 opt => opt.MapFrom(src => src.Title.Value))
             .ForMember(dest => dest.Announcement,
-                opt => opt.MapFrom(src => src.Announcement.Value));
+                opt => opt.MapFrom(src => src.Announcement.Value))
+            .ForMember(dest => dest.StartDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.StartDateTime))
+            .ForMember(dest => dest.EndDateTime,
+                opt => opt.MapFrom(e => e.DateTimeRange.EndDateTime))
+            .ForMember(dest => dest.Type,
+                opt => opt.MapFrom(e => e.Type.Title))
+            .ForMember(dest => dest.Format,
+                opt => opt.MapFrom(e => e.Format.Title))
+            .ForMember(dest => dest.PreviewInfo,
+                opt =>
+                    opt.MapFrom(src => src.PreviewFilename == null
+                        ? new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPlaceholders,
+                            Key = src.PlaceholderFilename
+                        }
+                        : new S3FileDto
+                        {
+                            Bucket = S3Buckets.EventsPreviews,
+                            Key = src.PreviewFilename
+                        }));
     }
 }

@@ -1,26 +1,21 @@
 ﻿using Ardalis.Specification;
-using Events.Domain.Aggregates.EventAggregate;
+using Events.Application.Services.Shared;
+using Events.Domain.Aggregates.Events;
 
 namespace Events.Application.Services.Features.Events.Repositories;
 
-/// <summary>
-///     Репозиторий мероприятий.
-/// </summary>
-public interface IEventRepository
+public interface IEventRepository : IRepository<Event>
 {
-    /// <summary>
-    ///     Получить мероприятие по ID.
-    /// </summary>
-    /// <param name="id">ID мероприятия.</param>
-    /// <returns>
-    ///     Сущность мероприятия.
-    /// </returns>
-    Task<Event> GetByIdAsync(Guid id);
-
     /// <summary>
     ///     Получить мероприятия, удовлетворяющие фильтру.
     /// </summary>
     /// <param name="spec">Спецификация фильтра.</param>
-    /// <returns>Иммутабельная коллекция мероприятий.</returns>
-    Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec);
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="textQuery">Запрос текстового поиска.</param>
+    /// <returns>Коллекция мероприятий.</returns>
+    Task<List<Event>> ListAsync(
+        ISpecification<Event> spec,
+        CancellationToken cancellationToken = default,
+        string? textQuery = null
+    );
 }

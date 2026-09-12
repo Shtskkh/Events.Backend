@@ -1,0 +1,125 @@
+﻿receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+  postgresql:
+    endpoint: db_postgres:5432
+    transport: tcp
+    username: postgres
+    password: "1"
+    databases:
+      - Events
+    collection_interval: 60s
+    tls:
+      insecure: true
+
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 5000
+
+exporters:
+  clickhouse:
+    endpoint: tcp://clickhouse:9002
+    username: default
+    password: "1"
+    database: Events
+    logs_table_name: otel_logs
+    traces_table_name: otel_traces
+    metrics_table_name: otel_metrics
+    timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+  clickhouse/rustfs:
+    endpoint: tcp://clickhouse:9002?dial_timeout=10s&compress=lz4&async_insert=1
+    username: default
+    password: "1"
+    database: RustFS
+    logs_table_name: otel_logs
+    traces_table_name: otel_traces
+    metrics_table_name: otel_metrics
+    ttl: 72h
+    timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+  clickhouse/postgresql:
+    endpoint: tcp://clickhouse:9002?dial_timeout=10s&compress=lz4&async_insert=1
+    username: default
+    password: "1"
+    database: PostgreSQL
+    logs_table_name: otel_logs
+    traces_table_name: otel_traces
+    metrics_table_name: otel_metrics
+    ttl: 72h
+    timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+connectors:
+  routing/logs:
+    table:
+      - context: resource
+        condition: attributes["service.name"] == "RustFS"
+        pipelines: [ logs/rustfs ]
+
+  routing/traces:
+    table:
+      - context: resource
+        condition: attributes["service.name"] == "RustFS"
+        pipelines: [ traces/rustfs ]
+
+  routing/metrics:
+    table:
+      - context: resource
+        condition: resource.attributes["service.name"] == "RustFS"
+        pipelines: [ metrics/rustfs ]
+
+service:
+  pipelines:
+    logs:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ routing/logs ]
+
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ routing/traces ]
+
+    metrics:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ routing/metrics ]
+
+    logs/rustfs:
+      receivers: [ routing/logs ]
+      processors: [ batch ]
+      exporters: [ clickhouse/rustfs ]
+
+    traces/rustfs:
+      receivers: [ routing/traces ]
+      processors: [ batch ]
+      exporters: [ clickhouse/rustfs ]
+
+    metrics/rustfs:
+      receivers: [ routing/metrics ]
+      processors: [ batch ]
+      exporters: [ clickhouse/rustfs ]
+
+    metrics/postgresql:
+      receivers: [ postgresql ]
+      processors: [ batch ]
+      exporters: [ clickhouse/postgresql ]

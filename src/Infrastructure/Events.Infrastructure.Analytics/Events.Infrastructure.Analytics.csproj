@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1"/>
+        <PackageReference Include="ClickHouse.EntityFrameworkCore" Version="0.1.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.6"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Application\Events.Application.Services\Events.Application.Services.csproj"/>
+        <ProjectReference Include="..\..\Domain\Events.Domain\Events.Domain.csproj"/>
+    </ItemGroup>
+
+</Project>

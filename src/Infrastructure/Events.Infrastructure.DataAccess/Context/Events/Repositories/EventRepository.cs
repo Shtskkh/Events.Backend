@@ -1,35 +1,42 @@
 ﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Domain.Aggregates.EventAggregate;
-using Events.Infrastructure.DataAccess.Exceptions;
-using Events.Infrastructure.DataAccess.Repositories;
+using Events.Domain.Aggregates.Events;
 using Events.Infrastructure.DataAccess.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Events.Infrastructure.DataAccess.Context.Events.Repositories;
 
-/// <inheritdoc />
-public class EventRepository(IRepository<Event, Guid, EventsDbContext> repository) : IEventRepository
+public class EventRepository(EventsDbContext dbContext) : Repository<Event>(dbContext), IEventRepository
 {
     /// <inheritdoc />
-    public async Task<Event> GetByIdAsync(Guid id)
+    public async Task<List<Event>> ListAsync(ISpecification<Event> spec,
+        CancellationToken cancellationToken = default,
+        string? textQuery = null)
     {
-        var isExists = await repository.IsExistsAsync(id);
+        var query = ApplySpecification(spec);
 
-        if (!isExists) throw new NotFoundException(DataAccessErrorMessages.Event.NotFound);
+        if (textQuery != null)
+        {
+            var preparedText = PrepareQuery(textQuery);
+            query = query.Where(e =>
+                EF.Functions.ToTsVector(
+                        "russian",
+                        e.Title.Value + ' ' +
+                        e.Announcement.Value + ' ' +
+                        e.Description.Value)
+                    .Matches(EF.Functions.ToTsQuery("russian", preparedText)));
+        }
 
-        return (await repository.GetByIdAsync(id))!;
+        return await query.ToListAsync(cancellationToken);
     }
 
-    /// <inheritdoc />
-    public async Task<IReadOnlyCollection<Event>> GetByFilterAsync(Specification<Event> spec)
+    private static string PrepareQuery(string text)
     {
-        var events = await repository
-            .GetAllAsync()
-            .WithSpecification(spec)
-            .ToListAsync();
+        var tokens = text
+            .Split([' ', ',', '.', '\t', '\n'], StringSplitOptions.RemoveEmptyEntries)
+            .Distinct()
+            .Select(w => w.Trim() + ":*");
 
-        return events.AsReadOnly();
+        return string.Join(" & ", tokens);
     }
 }

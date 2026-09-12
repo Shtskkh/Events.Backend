@@ -1,29 +1,49 @@
 ﻿using AutoMapper;
 using Events.Application.Services.Features.Events.Repositories;
-using Events.Contracts.Features.Events.DTOs;
+using Events.Application.Services.Features.Events.Specifications;
+using Events.Application.Services.Features.Places.Specifications;
+using Events.Application.Services.Shared;
+using Events.Contracts.Events;
+using Events.Contracts.Places;
+using Events.Domain.Aggregates.Events.Errors;
+using Events.Domain.Aggregates.Locations;
+using Events.Domain.Aggregates.Locations.Errors;
+using Events.Domain.Exceptions;
 using MediatR;
 
 namespace Events.Application.Services.Features.Events.Queries.GetById;
 
-/// <summary>
-///     Handler для получения мероприятия по ID.
-/// </summary>
-/// <param name="eventRepository">Репозиторий мероприятий.</param>
-/// <param name="mapper">Маппер.</param>
-public class GetEventByIdHandler(IEventRepository eventRepository, IMapper mapper)
+public sealed class GetEventByIdHandler(
+    IEventRepository eventRepository,
+    IRepository<Place> placeRepository,
+    IMapper mapper)
     : IRequestHandler<GetEventByIdQuery, EventDto>
 {
-    /// <summary>
-    ///     Метод исполнения запрос.
-    /// </summary>
-    /// <param name="request">Запрос.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>
-    ///     DTO мероприятия.
-    /// </returns>
     public async Task<EventDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
     {
-        var @event = await eventRepository.GetByIdAsync(request.Id);
-        return mapper.Map<EventDto>(@event);
+        var eventByIdSpec = new EventByIdSpec(request.EventId).IncludeTags().AsNoTracking();
+        var @event = await eventRepository.FirstOrDefaultAsync(eventByIdSpec, cancellationToken);
+
+        if (@event == null)
+            throw new NotFoundException(EventErrors.NotFoundById(request.EventId));
+
+        var dto = mapper.Map<EventDto>(@event);
+
+        if (@event.Booking != null)
+        {
+            var placeByIdSpec = new PlaceByIdSpec(@event.Booking.PlaceId).AsNoTracking();
+            var place = await placeRepository.FirstOrDefaultAsync(placeByIdSpec, cancellationToken);
+
+            if (place == null)
+                throw new NotFoundException(PlaceErrors.NotFoundById(@event.Booking.PlaceId));
+
+            dto.PlaceInfo = new BookedPlaceDto
+            {
+                PlaceId = place.Id,
+                Number = place.Number.Value
+            };
+        }
+
+        return dto;
     }
 }
